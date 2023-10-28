@@ -30,8 +30,6 @@ public class TinyGP {
             FSET_START = ADD,
             FSET_END = DIV;
     static double [] x = new double[FSET_START];
-    static char [] program;
-    static int PC;
     static double fbestpop = 0.0, favgpop = 0.0;
     long seed;
     static double avg_len;
@@ -47,31 +45,6 @@ public class TinyGP {
     private final InputData inputData;
     private final ArrayList<Statistics> performanceHistory;
 
-    double run() { /* Interpreter */
-        char primitive = program[PC++];
-        if ( primitive < FSET_START )
-            return(x[primitive]);
-        switch (primitive) {
-            case ADD -> {
-                return (run() + run());
-            }
-            case SUB -> {
-                return (run() - run());
-            }
-            case MUL -> {
-                return (run() * run());
-            }
-            case DIV -> {
-                double num = run(), den = run();
-                if (Math.abs(den) <= 0.001)
-                    return (num);
-                else
-                    return (num / den);
-            }
-        }
-        return( 0.0 ); // should never get here
-    }
-
     int traverse( char [] buffer, int buffercount ) {
         if ( buffer[buffercount] < FSET_START )
             return( ++buffercount );
@@ -84,15 +57,15 @@ public class TinyGP {
 
     double fitness_function( char [] Prog ) {
         int i;
-        double result, fit = 0.0;
+        double fit = 0.0;
 
         traverse( Prog, 0 );
         for (i = 0; i < this.inputData.header().fitnessCases(); i ++ ) {
             if (this.inputData.header().variableNumber() >= 0)
                 System.arraycopy(this.inputData.targets()[i], 0, x, 0, this.inputData.header().variableNumber());
-            program = Prog;
-            PC = 0;
-            result = run();
+
+            var interpreter = new Interpreter(Prog, x);
+            var result = interpreter.run();
             fit += Math.abs( result - this.inputData.targets()[i][this.inputData.header().variableNumber()]);
         }
         return(-fit );
