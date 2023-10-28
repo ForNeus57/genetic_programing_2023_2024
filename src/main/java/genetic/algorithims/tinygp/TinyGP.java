@@ -1,4 +1,4 @@
-package genetic.algorithims;
+package genetic.algorithims.tinygp;
 
 /*
  * Program:   tiny_gp.java
@@ -7,6 +7,8 @@ package genetic.algorithims;
  *
  */
 
+import genetic.algorithims.tinygp.statistics.ConfigurationStatistics;
+import genetic.algorithims.tinygp.statistics.Statistics;
 import genetic.data.InputData;
 
 import java.util.*;
@@ -43,6 +45,7 @@ public class TinyGP {
             PMUT_PER_NODE  = 0.05,
             CROSSOVER_PROB = 0.9;
     private final InputData inputData;
+    private final ArrayList<Statistics> performanceHistory;
 
     double run() { /* Interpreter */
         char primitive = program[PC++];
@@ -125,42 +128,44 @@ public class TinyGP {
         return( 0 ); // should never get here
     }
 
-    int print_indiv( char []buffer, int buffercounter ) {
-        int a1=0, a2;
-        if ( buffer[buffercounter] < FSET_START ) {
-            if ( buffer[buffercounter] < this.inputData.header().variableNumber() )
-                System.out.print( "X"+ (buffer[buffercounter] + 1 )+ " ");
+    /**
+     * Why is it recursive instead of iterative...
+     */
+    int print_individual(char []buffer, int buffercounter ) {
+        int a1 = 0, a2;
+        if (buffer[buffercounter] < FSET_START) {
+            if (buffer[buffercounter] < this.inputData.header().variableNumber())
+                System.out.print("X"+ (buffer[buffercounter] + 1)+ " ");
             else
-                System.out.print( x[buffer[buffercounter]]);
-            return( ++buffercounter );
+                System.out.print(x[buffer[buffercounter]]);
+            return ++buffercounter;
         }
         switch (buffer[buffercounter]) {
             case ADD -> {
                 System.out.print("(");
-                a1 = print_indiv(buffer, ++buffercounter);
+                a1 = print_individual(buffer, ++buffercounter);
                 System.out.print(" + ");
             }
             case SUB -> {
                 System.out.print("(");
-                a1 = print_indiv(buffer, ++buffercounter);
+                a1 = print_individual(buffer, ++buffercounter);
                 System.out.print(" - ");
             }
             case MUL -> {
                 System.out.print("(");
-                a1 = print_indiv(buffer, ++buffercounter);
+                a1 = print_individual(buffer, ++buffercounter);
                 System.out.print(" * ");
             }
             case DIV -> {
                 System.out.print("(");
-                a1 = print_indiv(buffer, ++buffercounter);
+                a1 = print_individual(buffer, ++buffercounter);
                 System.out.print(" / ");
             }
         }
-        a2=print_indiv( buffer, a1 );
+        a2 = print_individual(buffer, a1);
         System.out.print( ")");
-        return( a2);
+        return a2;
     }
-
 
     static char [] buffer = new char[MAX_LEN];
     char [] create_random_indiv() {
@@ -178,7 +183,7 @@ public class TinyGP {
         return( ind );
     }
 
-    char [][] create_random_pop(double [] fitness ) {
+    char [][] create_random_pop(double [] fitness) {
         char [][]pop = new char[TinyGP.POPSIZE][];
         int i;
 
@@ -186,7 +191,7 @@ public class TinyGP {
             pop[i] = create_random_indiv();
             fitness[i] = fitness_function( pop[i] );
         }
-        return( pop );
+        return pop;
     }
 
 
@@ -196,10 +201,10 @@ public class TinyGP {
         fbestpop = fitness[best];
         favgpop = 0.0;
 
-        for ( i = 0; i < POPSIZE; i ++ ) {
-            node_count +=  traverse( pop[i], 0 );
+        for (i = 0; i < POPSIZE; i++) {
+            node_count +=  traverse(pop[i], 0);
             favgpop += fitness[i];
-            if ( fitness[i] > fbestpop ) {
+            if (fitness[i] > fbestpop) {
                 best = i;
                 fbestpop = fitness[i];
             }
@@ -209,7 +214,7 @@ public class TinyGP {
         System.out.print("Generation="+gen+" Avg Fitness="+(-favgpop)+
                 " Best Fitness="+(-fbestpop)+" Avg Size="+avg_len+
                 "\nBest Individual: ");
-        print_indiv( pop[best], 0 );
+        print_individual( pop[best], 0 );
         System.out.print( "\n");
         System.out.flush();
     }
@@ -262,9 +267,7 @@ public class TinyGP {
         System.arraycopy( parent1, 0, offspring, 0, xo1start );
         System.arraycopy( parent2, xo2start, offspring, xo1start,
                 (xo2end - xo2start) );
-        System.arraycopy( parent1, xo1end, offspring,
-                xo1start + (xo2end - xo2start),
-                (len1-xo1end) );
+        System.arraycopy(parent1, xo1end, offspring, xo1start + (xo2end - xo2start), (len1-xo1end));
 
         return( offspring );
     }
@@ -291,24 +294,6 @@ public class TinyGP {
         return( parentcopy );
     }
 
-    void print_params() {
-        System.out.printf("""
-            -- TINY GP (Java version) --
-            SEED=%d
-            MAX_LEN=%d
-            POPSIZE=%d
-            DEPTH=%d
-            CROSSOVER_PROB=%.2f
-            PMUT_PER_NODE=%.2f
-            MIN_RANDOM=%.2f
-            MAX_RANDOM=%.2f
-            GENERATIONS=%d
-            TSIZE=%d
-            ----------------------------------
-        """, seed, MAX_LEN, POPSIZE, DEPTH, CROSSOVER_PROB, PMUT_PER_NODE, this.inputData.header().lowerRange(),
-        this.inputData.header().upperRange(), GENERATIONS, TSIZE);
-    }
-
     /**
      * Why is this constructor so low in a file.....???
      */
@@ -317,6 +302,7 @@ public class TinyGP {
         TinyGP.rd.setSeed(seed);
 
         this.inputData = input;
+        this.performanceHistory = new ArrayList<>();
 
         fitness =  new double[POPSIZE];
         for ( int i = 0; i < FSET_START; i++)
@@ -324,20 +310,22 @@ public class TinyGP {
         pop = create_random_pop(fitness);
     }
 
-    public boolean evolve() {
+    public boolean evolve(double precision) {
         int gen, indivs, offspring, parent1, parent2, parent;
         double newfit;
         char []newind;
 
-        this.print_params();
+        System.out.println(new ConfigurationStatistics(seed, MAX_LEN, POPSIZE, DEPTH, CROSSOVER_PROB, PMUT_PER_NODE,
+            this.inputData.header().lowerRange(),
+            this.inputData.header().upperRange(), GENERATIONS, TSIZE).toString()
+        );
+
         stats(fitness, pop, 0);
         for (gen = 1; gen < GENERATIONS; gen++) {
-            if (  fbestpop > -1e-5 ) {
-                System.out.print("PROBLEM SOLVED\n");
+            if (fbestpop > precision)
                 return true;
-            }
-            for ( indivs = 0; indivs < POPSIZE; indivs++ ) {
-                if ( rd.nextDouble() < CROSSOVER_PROB  ) {
+            for (indivs = 0; indivs < POPSIZE; indivs++) {
+                if (rd.nextDouble() < CROSSOVER_PROB) {
                     parent1 = tournament( fitness);
                     parent2 = tournament( fitness);
                     newind = crossover( pop[parent1],pop[parent2] );
@@ -350,9 +338,8 @@ public class TinyGP {
                 pop[offspring] = newind;
                 fitness[offspring] = newfit;
             }
-            stats( fitness, pop, gen );
+            stats(fitness, pop, gen);
         }
-        System.out.print("PROBLEM *NOT* SOLVED\n");
         return false;
     }
 }

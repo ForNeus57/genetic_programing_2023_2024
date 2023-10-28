@@ -17,7 +17,7 @@ public class TargetsDeserializer {
         this.dataFile = dataFile;
     }
 
-    public double[][] serialize() throws IOException {
+    public double[][] deserialize() throws IOException {
         //  + 1 at the end because we also need to store the f(x)
         //  TODO: Make ArrayList<ArrayList<Double>>....
         var output = new double[this.header.fitnessCases()][this.header.variableNumber() + 1];

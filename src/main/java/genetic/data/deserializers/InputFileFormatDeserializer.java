@@ -33,18 +33,18 @@ public class InputFileFormatDeserializer {
         }
     }
 
-    public InputData serialize() {
+    public InputData deserialize() {
         return data;
     }
 
     private Header parseHeader(String headerLine) {
-        var serializer = new HeaderDeserializer(headerLine);
-        return serializer.serialize();
+        var deserializer = new HeaderDeserializer(headerLine);
+        return deserializer.deserialize();
     }
 
     private double[][] parseData(Header header, BufferedReader inputFile) throws IOException {
-        var serializer = new TargetsDeserializer(header, inputFile);
-        return serializer.serialize();
+        var deserializer = new TargetsDeserializer(header, inputFile);
+        return deserializer.deserialize();
     }
 
 }

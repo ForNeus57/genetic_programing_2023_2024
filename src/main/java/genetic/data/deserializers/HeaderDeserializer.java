@@ -11,7 +11,7 @@ public class HeaderDeserializer {
         this.line = headerLine;
     }
 
-    public Header serialize() {
+    public Header deserialize() {
         var tokens = new StringTokenizer(this.line);
 
         var varNumber = Integer.parseInt(tokens.nextToken().trim());

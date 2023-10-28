@@ -1,6 +1,6 @@
 package genetic;
 
-import genetic.algorithims.TinyGP;
+import genetic.algorithims.tinygp.TinyGP;
 import genetic.data.deserializers.InputFileFormatDeserializer;
 import genetic.data.serializers.ExcelSerializer;
 import genetic.utility.arguments.Parser;
@@ -13,11 +13,15 @@ public class Main {
         var parser = new Parser(args);
         var config = parser.parse();
 
-        var serializer = new InputFileFormatDeserializer(config.inputFile());
-        var inputData = serializer.serialize();
+        var deserializer = new InputFileFormatDeserializer(config.inputFile());
+        var inputData = deserializer.deserialize();
 
         var gp = new TinyGP(inputData, config.seed());
-        gp.evolve();
+        if (gp.evolve(-1e-5))
+            System.out.println("PROBLEM SOLVED");
+        else
+            System.out.println("PROBLEM *NOT* SOLVED");
+
 
         //  Excel...
         try {
