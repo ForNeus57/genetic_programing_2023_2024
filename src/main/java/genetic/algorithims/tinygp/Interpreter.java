@@ -1,41 +1,46 @@
 package genetic.algorithims.tinygp;
 
 
-import static genetic.algorithims.tinygp.TinyGP.*;
+import static genetic.algorithims.tinygp.TinyGP.*;  //  Remove this and make some sens with ADD, FSET_START and so on
 
 public class Interpreter {
-    private final char [] program;
+    private final char [] program;      //  The program is the values ie the String (1231.1 * X1) + 1.234 ....
     private final double [] x;
-    private int pc;     //  Change later to better name
+    private int currentPosition;
 
     Interpreter(char[] program, double[] x) {
         this.program = program;
         this.x = x;
-        this.pc = 0;
+        this.currentPosition = 0;
     }
 
     public double run() {
-        char primitive = this.program[this.pc++];
-        if ( primitive < FSET_START )       //  Max array length for given
+        char primitive = this.program[this.currentPosition++];   //  It is stupid to use char as index for nodes positions and also as a token type.
+        if (primitive < FSET_START)     //  If a node is not an operation then return its value like 2.123314 ... I guess?
             return(x[primitive]);
+
+        return handleOperation(primitive);
+    }
+
+    private double handleOperation(char primitive) {
         switch (primitive) {
             case ADD -> {
-                return (run() + run());
+                return run() + run();
             }
             case SUB -> {
-                return (run() - run());
+                return run() - run();
             }
             case MUL -> {
-                return (run() * run());
+                return run() * run();
             }
             case DIV -> {
                 double num = run(), den = run();
                 if (Math.abs(den) <= 0.001)
-                    return (num);
+                    return num;
                 else
-                    return (num / den);
+                    return num / den;
             }
         }
-        return 0.0;
+        return 0.0;     //  Should never execute
     }
 }

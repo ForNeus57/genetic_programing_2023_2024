@@ -167,7 +167,6 @@ public class TinyGP {
         return pop;
     }
 
-
     void stats( double [] fitness, char [][] pop, int gen ) {
         int i, best = rd.nextInt(POPSIZE);
         int node_count = 0;
@@ -184,12 +183,13 @@ public class TinyGP {
         }
         avg_len = (double) node_count / POPSIZE;
         favgpop /= POPSIZE;
+        var statistic = new Statistics(gen, (-favgpop), (-fbestpop), avg_len, "...");
+        this.performanceHistory.add(statistic);
+        System.out.println(statistic);
         System.out.print("Generation="+gen+" Avg Fitness="+(-favgpop)+
                 " Best Fitness="+(-fbestpop)+" Avg Size="+avg_len+
                 "\nBest Individual: ");
         print_individual( pop[best], 0 );
-        System.out.print( "\n");
-        System.out.flush();
     }
 
     int tournament( double [] fitness ) {
