@@ -1,4 +1,4 @@
-package genetic.data.serializers;
+package genetic.data.deserializers;
 
 import genetic.data.Header;
 
@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 
-public class TargetsSerializer {
+public class TargetsDeserializer {
 
     private final Header header;
     private final BufferedReader dataFile;
 
-    public TargetsSerializer(Header header, BufferedReader dataFile) {
+    public TargetsDeserializer(Header header, BufferedReader dataFile) {
         this.header = header;
         this.dataFile = dataFile;
     }

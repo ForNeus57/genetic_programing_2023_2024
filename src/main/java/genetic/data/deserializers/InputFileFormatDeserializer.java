@@ -1,10 +1,9 @@
-package genetic.data.serializers;
+package genetic.data.deserializers;
 
 import genetic.data.Header;
 import genetic.data.InputData;
 
 import java.io.*;
-import java.util.ArrayList;
 
 
 /**
@@ -12,12 +11,12 @@ import java.util.ArrayList;
  * No clue why this input file is not a binary file, it would have saved space and improved runtime...
  * I guess it is more visible that way.
  */
-public class InputFileFormatSerializer {
+public class InputFileFormatDeserializer {
 
     //  Cannot make final, because it marks red due to there being a possibility that program will execute code after the catch block if exception found... Stupid JAVA
     private InputData data;
 
-    public InputFileFormatSerializer(File input) {
+    public InputFileFormatDeserializer(File input) {
         try {
             BufferedReader in = new BufferedReader(new FileReader(input));
 
@@ -39,12 +38,12 @@ public class InputFileFormatSerializer {
     }
 
     private Header parseHeader(String headerLine) {
-        var serializer = new HeaderSerializer(headerLine);
+        var serializer = new HeaderDeserializer(headerLine);
         return serializer.serialize();
     }
 
     private double[][] parseData(Header header, BufferedReader inputFile) throws IOException {
-        var serializer = new TargetsSerializer(header, inputFile);
+        var serializer = new TargetsDeserializer(header, inputFile);
         return serializer.serialize();
     }
 

@@ -9,11 +9,6 @@ import java.io.File;
  */
 public record Config(File inputFile, Long seed) {
 
-    /**
-     *
-     * @param value
-     * @return
-     */
     public Config setInputFile(String value) {
         return new Config(new File(value), seed);
     }

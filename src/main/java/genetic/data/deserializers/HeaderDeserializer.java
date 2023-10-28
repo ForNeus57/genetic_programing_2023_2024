@@ -1,13 +1,13 @@
-package genetic.data.serializers;
+package genetic.data.deserializers;
 
 import genetic.data.Header;
 
 import java.util.StringTokenizer;
 
-public class HeaderSerializer {
+public class HeaderDeserializer {
     private final String line;
 
-    public HeaderSerializer(String headerLine) {
+    public HeaderDeserializer(String headerLine) {
         this.line = headerLine;
     }
 
