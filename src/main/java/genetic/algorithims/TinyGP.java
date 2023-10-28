@@ -92,8 +92,6 @@ public class TinyGP {
             maxrandom =  Double.parseDouble(tokens.nextToken().trim());
             fitnesscases = Integer.parseInt(tokens.nextToken().trim());
             targets = new double[fitnesscases][varnumber+1];
-            if (varnumber + randomnumber >= FSET_START )
-                System.out.println("too many variables and constants");
 
             for (i = 0; i < fitnesscases; i ++ ) {
                 line = in.readLine();

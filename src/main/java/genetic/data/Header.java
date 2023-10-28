@@ -10,4 +10,5 @@ package genetic.data;
  * @param fitnessCases - Number of fitness cases - how many different key-value pairs (x, f(x)) there are in a program. AKA the number of lines with values - 1. No clue why to include it, but ok - it can be counted on the fly by BufferReader(new FileReader(...)).
  */
 public record Header(int variableNumber, int randomConstraintsSize, double lowerRange, double upperRange, int fitnessCases) {
+
 }

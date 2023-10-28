@@ -4,22 +4,14 @@ import genetic.data.Header;
 
 import java.util.StringTokenizer;
 
-public class HeaderDataSerializer {
+public class HeaderSerializer {
     private final String line;
 
-    private Header header;
-
-    public HeaderDataSerializer(String headerLine) {
+    public HeaderSerializer(String headerLine) {
         this.line = headerLine;
-
-        this.serialize();
     }
 
-    public Header getHeader() {
-        return this.header;
-    }
-
-    private void serialize() {
+    public Header serialize() {
         var tokens = new StringTokenizer(this.line);
 
         var varNumber = Integer.parseInt(tokens.nextToken().trim());
@@ -28,6 +20,6 @@ public class HeaderDataSerializer {
         var maxRandom =  Double.parseDouble(tokens.nextToken().trim());
         var fitnessCases = Integer.parseInt(tokens.nextToken().trim());
 
-        this.header = new Header(varNumber, randomNumber, minRandom, maxRandom, fitnessCases);
+        return new Header(varNumber, randomNumber, minRandom, maxRandom, fitnessCases);
     }
 }
