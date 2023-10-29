@@ -7,7 +7,9 @@ package genetic.algorithims.tinygp;
  *
  */
 
+import genetic.algorithims.tinygp.fitness.Calculator;
 import genetic.algorithims.tinygp.fitness.Interpreter;
+import genetic.algorithims.tinygp.individual.Individual;
 import genetic.algorithims.tinygp.individual.IndividualCreator;
 import genetic.algorithims.tinygp.statistics.ConfigurationStatistics;
 import genetic.algorithims.tinygp.statistics.Statistics;
@@ -57,20 +59,6 @@ public class TinyGP {
         };
     }
 
-    double fitness_function( char [] Prog ) {
-        double fit = 0.0;
-
-        traverse( Prog, 0 );    //  What is the purpose of it??? the value is not used, and it appears that the class itself is not changed in any way.
-        for (int i = 0; i < this.inputData.header().fitnessCases(); i++) {
-            if (this.inputData.header().variableNumber() >= 0)
-                System.arraycopy(this.inputData.targets()[i], 0, x, 0, this.inputData.header().variableNumber());
-
-            var interpreter = new Interpreter(Prog, x);
-            var result = interpreter.run();
-            fit += Math.abs( result - this.inputData.targets()[i][this.inputData.header().variableNumber()]);
-        }
-        return(-fit);
-    }
 
     int print_individual(char []buffer, int buffercounter ) {
         int a1 = 0, a2;
@@ -238,7 +226,8 @@ public class TinyGP {
                 this.inputData.header().randomConstraintsSize()
             );
             pop[i] = creator.createRandomIndividual().body();
-            fitness[i] = fitness_function(pop[i]);
+            var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.header().fitnessCases(), this.inputData.targets(), x);
+            fitness[i] = calculator.calculateFitness(new Individual(pop[i]));
         }
         return pop;
     }
@@ -275,7 +264,9 @@ public class TinyGP {
                     parent = tournament( fitness);
                     newind = mutation( pop[parent]);
                 }
-                newfit = fitness_function( newind );
+                var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.header().fitnessCases(), this.inputData.targets(), x);
+                newfit = calculator.calculateFitness(new Individual(newind));
+
                 offspring = negative_tournament( fitness);
                 pop[offspring] = newind;
                 fitness[offspring] = newfit;
