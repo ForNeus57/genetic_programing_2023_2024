@@ -7,6 +7,7 @@ package genetic.algorithims.tinygp;
  *
  */
 
+import genetic.algorithims.tinygp.individual.IndividualCreator;
 import genetic.algorithims.tinygp.statistics.ConfigurationStatistics;
 import genetic.algorithims.tinygp.statistics.Statistics;
 import genetic.data.InputData;
@@ -23,12 +24,12 @@ public class TinyGP {
     char [][] pop;
     static Random rd = new Random();
     static final int
-            ADD = 110,
-            SUB = 111,
-            MUL = 112,
-            DIV = 113,
-            FSET_START = ADD,
-            FSET_END = DIV;
+            ADD = 110;
+    static final int SUB = 111;
+    static final int MUL = 112;
+    static final int DIV = 113;
+    public static final int FSET_START = ADD;
+    public static final int FSET_END = DIV;
     static double [] x = new double[FSET_START];
     static double fbestpop = 0.0, favgpop = 0.0;
     long seed;
@@ -107,53 +108,18 @@ public class TinyGP {
         return a2;
     }
 
-    int grow(char [] buffer, int pos, int max, int depth) {
-        char prim = (char) rd.nextInt(2);
-
-        if (pos >= max)
-            return -1;
-
-        if (pos == 0)
-            prim = 1;
-
-        if ( prim == 0 || depth == 0 ) {
-            prim = (char) rd.nextInt(this.inputData.header().variableNumber() + this.inputData.header().randomConstraintsSize());
-            buffer[pos] = prim;
-            return pos + 1;
-        }   //  There was an else here. I have removed it because unnecessary nesting.
-
-        prim = (char) (rd.nextInt(FSET_END - FSET_START + 1) + FSET_START);     //  Choose random operation
-        switch (prim) {                                                                //  No clue for the reasoning of switch here
-            case ADD, SUB, MUL, DIV -> {
-                buffer[pos] = prim;
-                var one_child = grow(buffer, pos + 1, max, depth - 1);
-                if (one_child < 0)
-                    return -1;
-                return grow(buffer, one_child, max, depth - 1);
-            }
-        }
-        return 0; // should never get here
-    }
-
-    char [] buffer = new char[MAX_LEN];
-    char [] create_random_individual() {
-        int len;
-
-        do {
-            len = grow(buffer, 0, MAX_LEN, TinyGP.DEPTH);       //  I think we try to run it until created individual is valid, because randomness in grow function can mess up given individual.
-        } while (len < 0);                                           //  -1 from grow function means algorithm fucked up
-
-        var ind = new char[len];
-
-        System.arraycopy(buffer, 0, ind, 0, len);
-        return ind;
-    }
-
     char [][] create_random_pop(double [] fitness) {
         char [][]pop = new char[TinyGP.POPSIZE][];
 
         for (int i = 0; i < TinyGP.POPSIZE; i++) {
-            pop[i] = create_random_individual();
+            var creator = new IndividualCreator(
+                MAX_LEN,
+                rd,
+                TinyGP.DEPTH,
+                this.inputData.header().variableNumber(),
+                this.inputData.header().randomConstraintsSize()
+            );
+            pop[i] = creator.createRandomIndividual().body();
             fitness[i] = fitness_function( pop[i] );
         }
         return pop;
