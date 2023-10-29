@@ -1,5 +1,7 @@
 package genetic.algorithims.tinygp.statistics;
 
+import java.util.Locale;
+
 public record ConfigurationStatistics(
     long seed,
     int maxLength,
@@ -17,16 +19,16 @@ public record ConfigurationStatistics(
      */
     @Override
     public String toString() {
-        return String.format("""
+        return String.format(Locale.US, """
             -- TINY GP (Java version) --
             SEED=%d
             MAX_LEN=%d
             POPSIZE=%d
             DEPTH=%d
-            CROSSOVER_PROB=%.3f
-            PMUT_PER_NODE=%.3f
-            MIN_RANDOM=%.3f
-            MAX_RANDOM=%.3f
+            CROSSOVER_PROB=%.1f
+            PMUT_PER_NODE=%.2f
+            MIN_RANDOM=%.1f
+            MAX_RANDOM=%.1f
             GENERATIONS=%d
             TSIZE=%d
             ----------------------------------

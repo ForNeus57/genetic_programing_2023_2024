@@ -1,4 +1,4 @@
-package genetic.algorithims.tinygp;
+package genetic.algorithims.tinygp.fitness;
 
 
 import static genetic.algorithims.tinygp.TinyGP.*;  //  Remove this and make some sens with ADD, FSET_START and so on
@@ -8,7 +8,7 @@ public class Interpreter {
     private final double [] x;          //  Still no clue what it is...
     private int currentPosition;
 
-    Interpreter(char[] program, double[] x) {
+    public Interpreter(char[] program, double[] x) {
         this.program = program;
         this.x = x;
         this.currentPosition = 0;

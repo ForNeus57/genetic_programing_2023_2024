@@ -7,6 +7,7 @@ package genetic.algorithims.tinygp;
  *
  */
 
+import genetic.algorithims.tinygp.fitness.Interpreter;
 import genetic.algorithims.tinygp.individual.IndividualCreator;
 import genetic.algorithims.tinygp.statistics.ConfigurationStatistics;
 import genetic.algorithims.tinygp.statistics.Statistics;
@@ -23,11 +24,11 @@ public class TinyGP {
     double [] fitness;
     char [][] pop;
     static Random rd = new Random();
-    static final int
+    public static final int
             ADD = 110;
-    static final int SUB = 111;
-    static final int MUL = 112;
-    static final int DIV = 113;
+    public static final int SUB = 111;
+    public static final int MUL = 112;
+    public static final int DIV = 113;
     public static final int FSET_START = ADD;
     public static final int FSET_END = DIV;
     static double [] x = new double[FSET_START];
@@ -46,22 +47,21 @@ public class TinyGP {
     private final InputData inputData;
     private final ArrayList<Statistics> performanceHistory;
 
-    int traverse( char [] buffer, int buffercount ) {
-        if ( buffer[buffercount] < FSET_START )
-            return( ++buffercount );
+    int traverse(char [] buffer, int buffercount) {
+        if (buffer[buffercount] < FSET_START)
+            return ++buffercount;
 
         return switch (buffer[buffercount]) {
-            case ADD, SUB, MUL, DIV -> (traverse(buffer, traverse(buffer, ++buffercount)));
-            default -> (0);
+            case ADD, SUB, MUL, DIV -> traverse(buffer, traverse(buffer, ++buffercount));
+            default -> 0;
         };
     }
 
     double fitness_function( char [] Prog ) {
-        int i;
         double fit = 0.0;
 
-        traverse( Prog, 0 );
-        for (i = 0; i < this.inputData.header().fitnessCases(); i ++ ) {
+        traverse( Prog, 0 );    //  What is the purpose of it??? the value is not used, and it appears that the class itself is not changed in any way.
+        for (int i = 0; i < this.inputData.header().fitnessCases(); i++) {
             if (this.inputData.header().variableNumber() >= 0)
                 System.arraycopy(this.inputData.targets()[i], 0, x, 0, this.inputData.header().variableNumber());
 
@@ -69,7 +69,7 @@ public class TinyGP {
             var result = interpreter.run();
             fit += Math.abs( result - this.inputData.targets()[i][this.inputData.header().variableNumber()]);
         }
-        return(-fit );
+        return(-fit);
     }
 
     int print_individual(char []buffer, int buffercounter ) {
@@ -108,23 +108,6 @@ public class TinyGP {
         return a2;
     }
 
-    char [][] create_random_pop(double [] fitness) {
-        char [][]pop = new char[TinyGP.POPSIZE][];
-
-        for (int i = 0; i < TinyGP.POPSIZE; i++) {
-            var creator = new IndividualCreator(
-                MAX_LEN,
-                rd,
-                TinyGP.DEPTH,
-                this.inputData.header().variableNumber(),
-                this.inputData.header().randomConstraintsSize()
-            );
-            pop[i] = creator.createRandomIndividual().body();
-            fitness[i] = fitness_function( pop[i] );
-        }
-        return pop;
-    }
-
     void stats( double [] fitness, char [][] pop, int gen ) {
         int i, best = rd.nextInt(POPSIZE);
         int node_count = 0;
@@ -143,11 +126,12 @@ public class TinyGP {
         favgpop /= POPSIZE;
         var statistic = new Statistics(gen, (-favgpop), (-fbestpop), avg_len, "...");
         this.performanceHistory.add(statistic);
-        System.out.println(statistic);
+//        System.out.println(statistic);
         System.out.print("Generation="+gen+" Avg Fitness="+(-favgpop)+
                 " Best Fitness="+(-fbestpop)+" Avg Size="+avg_len+
                 "\nBest Individual: ");
         print_individual(pop[best], 0);
+        System.out.print("\n");
     }
 
     int tournament( double [] fitness ) {
@@ -204,12 +188,12 @@ public class TinyGP {
     }
 
     char [] mutation(char [] parent) {
-        int len = traverse( parent, 0 ), i;
+        int len = traverse( parent, 0 );
         int mutsite;
         char [] parentcopy = new char [len];
 
         System.arraycopy( parent, 0, parentcopy, 0, len );
-        for (i = 0; i < len; i ++ ) {
+        for (int i = 0; i < len; i ++ ) {
             if ( rd.nextDouble() < TinyGP.PMUT_PER_NODE) {
                 mutsite =  i;
                 if ( parentcopy[mutsite] < FSET_START )
@@ -238,7 +222,25 @@ public class TinyGP {
         fitness =  new double[POPSIZE];
         for ( int i = 0; i < FSET_START; i++)
             x[i] = (this.inputData.header().upperRange() - this.inputData.header().lowerRange()) * rd.nextDouble() + this.inputData.header().lowerRange();
+
         pop = create_random_pop(fitness);
+
+    }
+    char [][] create_random_pop(double [] fitness) {
+        char [][]pop = new char[TinyGP.POPSIZE][];
+
+        for (int i = 0; i < TinyGP.POPSIZE; i++) {
+            var creator = new IndividualCreator(
+                MAX_LEN,
+                rd,
+                TinyGP.DEPTH,
+                this.inputData.header().variableNumber(),
+                this.inputData.header().randomConstraintsSize()
+            );
+            pop[i] = creator.createRandomIndividual().body();
+            fitness[i] = fitness_function(pop[i]);
+        }
+        return pop;
     }
 
     public boolean evolve(double precision) {
@@ -246,9 +248,18 @@ public class TinyGP {
         double newfit;
         char []newind;
 
-        System.out.println(new ConfigurationStatistics(seed, MAX_LEN, POPSIZE, DEPTH, CROSSOVER_PROB, PMUT_PER_NODE,
-            this.inputData.header().lowerRange(),
-            this.inputData.header().upperRange(), GENERATIONS, TSIZE).toString()
+        System.out.print(new ConfigurationStatistics(
+                seed,
+                MAX_LEN,
+                POPSIZE,
+                DEPTH,
+                CROSSOVER_PROB,
+                PMUT_PER_NODE,
+                this.inputData.header().lowerRange(),
+                this.inputData.header().upperRange(),
+                GENERATIONS,
+                TSIZE
+            )
         );
 
         stats(fitness, pop, 0);
