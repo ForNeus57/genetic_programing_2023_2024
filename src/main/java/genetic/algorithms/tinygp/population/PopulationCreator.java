@@ -1,11 +1,10 @@
-package genetic.algorithims.tinygp.population;
+package genetic.algorithms.tinygp.population;
 
-import genetic.algorithims.tinygp.individual.Individual;
-import genetic.algorithims.tinygp.individual.IndividualCreator;
+import genetic.algorithms.tinygp.individual.Individual;
+import genetic.algorithms.tinygp.individual.IndividualCreator;
 import genetic.data.InputData;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class PopulationCreator {

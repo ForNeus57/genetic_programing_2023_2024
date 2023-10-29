@@ -1,4 +1,4 @@
-package genetic.algorithims.tinygp.orginal;
+package genetic.algorithms.tinygp.orginal;
 
 /*
  * Program:   tiny_gp.java
@@ -248,9 +248,13 @@ public class tiny_gp {
         }
         avg_len = (double) node_count / POPSIZE;
         favgpop /= POPSIZE;
-        System.out.print("Generation="+gen+" Avg Fitness="+(-favgpop)+
-                " Best Fitness="+(-fbestpop)+" Avg Size="+avg_len+
-                "\nBest Individual: ");
+
+        System.out.print(String.format(
+                """
+                Generation=%d Avg Fitness=%.10f Best Fitness=%.10f Avg Size=%.10f
+                Best Individual:\s""",
+                gen, (-favgpop), (-fbestpop), avg_len
+        ));
         print_indiv( pop[best], 0 );
         System.out.print( "\n");
         System.out.flush();

@@ -1,9 +1,8 @@
-package genetic.algorithims.tinygp.fitness;
+package genetic.algorithms.tinygp.fitness;
 
 
-import genetic.algorithims.tinygp.individual.Individual;
-
-import static genetic.algorithims.tinygp.TinyGP.*;  //  Remove this and make some sens with ADD, FSET_START and so on
+import genetic.algorithms.tinygp.individual.Individual;
+import genetic.algorithms.tinygp.TinyGP;
 
 public class Interpreter {
     private final Individual program;      //  The program is the values ie the String (1231.1 * X1) + 1.234 ....
@@ -18,7 +17,7 @@ public class Interpreter {
 
     public double run() {
         char primitive = this.program.body()[this.currentPosition++];   //  It is stupid to use char as index for nodes positions and also as a token type.
-        if (primitive < FSET_START)     //  If a node is not an operation then return its value like 2.123314 ... I guess?
+        if (primitive < TinyGP.FSET_START)     //  If a node is not an operation then return its value like 2.123314 ... I guess?
             return(x[primitive]);
 
         return handleOperation(primitive);
@@ -26,16 +25,16 @@ public class Interpreter {
 
     private double handleOperation(char primitive) {
         switch (primitive) {
-            case ADD -> {
+            case TinyGP.ADD -> {
                 return run() + run();
             }
-            case SUB -> {
+            case TinyGP.SUB -> {
                 return run() - run();
             }
-            case MUL -> {
+            case TinyGP.MUL -> {
                 return run() * run();
             }
-            case DIV -> {
+            case TinyGP.DIV -> {
                 double num = run(), den = run();
                 if (Math.abs(den) <= 0.001)
                     return num;

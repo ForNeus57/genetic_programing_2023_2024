@@ -1,6 +1,6 @@
 package genetic;
 
-import genetic.algorithims.tinygp.TinyGP;
+import genetic.algorithms.tinygp.TinyGP;
 import genetic.data.deserializers.InputFileFormatDeserializer;
 import genetic.data.serializers.ExcelSerializer;
 import genetic.utility.arguments.Parser;
@@ -17,16 +17,13 @@ public class Main {
         var inputData = deserializer.deserialize();
 
         var gp = new TinyGP(inputData, config.seed());
-        if (gp.evolve(-1e-5))
-            System.out.println("PROBLEM SOLVED");
-        else
-            System.out.println("PROBLEM *NOT* SOLVED");
+        var history = gp.evolve(-1e-5);
 
 
         //  Excel...
         try {
             var excelWriter = new ExcelSerializer();
-            excelWriter.write(inputData);
+            excelWriter.write(inputData, history);
             excelWriter.save(new File("./data/generated/excel/problem.xlsx"));
         } catch (IOException e) {
             throw new RuntimeException(e);

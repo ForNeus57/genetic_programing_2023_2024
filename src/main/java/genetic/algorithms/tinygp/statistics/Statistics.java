@@ -1,4 +1,4 @@
-package genetic.algorithims.tinygp.statistics;
+package genetic.algorithms.tinygp.statistics;
 
 import static java.lang.String.format;
 

@@ -1,4 +1,4 @@
-package genetic.algorithims.tinygp;
+package genetic.algorithms.tinygp;
 
 /*
  * Program:   tiny_gp.java
@@ -7,13 +7,13 @@ package genetic.algorithims.tinygp;
  *
  */
 
-import genetic.algorithims.tinygp.fitness.Calculator;
-import genetic.algorithims.tinygp.individual.Individual;
-import genetic.algorithims.tinygp.individual.IndividualCreator;
-import genetic.algorithims.tinygp.population.Population;
-import genetic.algorithims.tinygp.population.PopulationCreator;
-import genetic.algorithims.tinygp.statistics.ConfigurationStatistics;
-import genetic.algorithims.tinygp.statistics.Statistics;
+import genetic.algorithms.tinygp.fitness.Calculator;
+import genetic.algorithms.tinygp.individual.Individual;
+import genetic.algorithms.tinygp.individual.IndividualPrinter;
+import genetic.algorithms.tinygp.population.Population;
+import genetic.algorithms.tinygp.population.PopulationCreator;
+import genetic.algorithms.tinygp.statistics.ConfigurationStatistics;
+import genetic.algorithms.tinygp.statistics.Statistics;
 import genetic.data.InputData;
 
 import java.util.*;
@@ -58,44 +58,7 @@ public class TinyGP {
         return traverse(buffer, traverse(buffer, ++buffercount));
     }
 
-
-    int print_individual(char []buffer, int buffercounter) {
-        int a1 = 0, a2;
-        if (buffer[buffercounter] < FSET_START) {
-            if (buffer[buffercounter] < this.inputData.header().variableNumber())
-                System.out.print("X"+ (buffer[buffercounter] + 1) + " ");
-            else
-                System.out.print(x[buffer[buffercounter]]);
-            return ++buffercounter;
-        }
-        switch (buffer[buffercounter]) {
-            case ADD -> {
-                System.out.print("(");
-                a1 = print_individual(buffer, ++buffercounter);
-                System.out.print(" + ");
-            }
-            case SUB -> {
-                System.out.print("(");
-                a1 = print_individual(buffer, ++buffercounter);
-                System.out.print(" - ");
-            }
-            case MUL -> {
-                System.out.print("(");
-                a1 = print_individual(buffer, ++buffercounter);
-                System.out.print(" * ");
-            }
-            case DIV -> {
-                System.out.print("(");
-                a1 = print_individual(buffer, ++buffercounter);
-                System.out.print(" / ");
-            }
-        }
-        a2 = print_individual(buffer, a1);
-        System.out.print( ")");
-        return a2;
-    }
-
-    void stats( double [] fitness, int gen ) {
+    void stats(double [] fitness, int gen) {
         int i, best = rd.nextInt(POPSIZE);
         int node_count = 0;
         fbestpop = fitness[best];
@@ -111,14 +74,14 @@ public class TinyGP {
         }
         avg_len = (double) node_count / POPSIZE;
         favgpop /= POPSIZE;
-        var statistic = new Statistics(gen, (-favgpop), (-fbestpop), avg_len, "...");
+
+        //  Print the best individual -- get the string representation of him....
+        //  TODO: Make this overload the .toString() method of Individual class.
+        var printer = new IndividualPrinter(this.population.population().get(best), x, this.inputData.header().variableNumber());
+
+        var statistic = new Statistics(gen, (-favgpop), (-fbestpop), avg_len, printer.print());
         this.performanceHistory.add(statistic);
-//        System.out.println(statistic);
-        System.out.print("Generation="+gen+" Avg Fitness="+(-favgpop)+
-                " Best Fitness="+(-fbestpop)+" Avg Size="+avg_len+
-                "\nBest Individual: ");
-        print_individual(this.population.population().get(best).body(), 0);
-        System.out.print("\n");
+        System.out.print(statistic);
     }
 
     int tournament( double [] fitness ) {
@@ -141,7 +104,7 @@ public class TinyGP {
 
         for (i = 0; i < TinyGP.TSIZE; i ++ ) {
             competitor = rd.nextInt(POPSIZE);
-            if ( fitness[competitor] < fworst ) {
+            if (fitness[competitor] < fworst) {
                 fworst = fitness[competitor];
                 worst = competitor;
             }
@@ -152,15 +115,15 @@ public class TinyGP {
     char [] crossover(Individual parent1, Individual parent2) {
         int xo1start, xo1end, xo2start, xo2end;
         char [] offspring;
-        int len1 = traverse( parent1.body(), 0 );
-        int len2 = traverse( parent2.body(), 0 );
+        int len1 = traverse(parent1.body(), 0);
+        int len2 = traverse(parent2.body(), 0);
         int lenoff;
 
         xo1start =  rd.nextInt(len1);
-        xo1end = traverse( parent1.body(), xo1start );
+        xo1end = traverse(parent1.body(), xo1start);
 
         xo2start =  rd.nextInt(len2);
-        xo2end = traverse( parent2.body(), xo2start );
+        xo2end = traverse(parent2.body(), xo2start);
 
         lenoff = xo1start + (xo2end - xo2start) + (len1-xo1end);
 
@@ -171,15 +134,15 @@ public class TinyGP {
                 (xo2end - xo2start) );
         System.arraycopy(parent1.body(), xo1end, offspring, xo1start + (xo2end - xo2start), (len1-xo1end));
 
-        return( offspring );
+        return offspring;
     }
 
     char [] mutation(Individual parent) {
-        int len = traverse(parent.body(), 0 );
+        int len = traverse(parent.body(), 0);
         int mutsite;
         char [] parentcopy = new char [len];
 
-        System.arraycopy( parent.body(), 0, parentcopy, 0, len );
+        System.arraycopy(parent.body(), 0, parentcopy, 0, len);
         for (int i = 0; i < len; i ++ ) {
             if ( rd.nextDouble() < TinyGP.PMUT_PER_NODE) {
                 mutsite =  i;
@@ -213,16 +176,15 @@ public class TinyGP {
         var creator = new PopulationCreator(TinyGP.POPSIZE, this.inputData);
         this.population = creator.createRandomPopulation(MAX_LEN, rd, DEPTH);
 
-        //  Calculate fitness
+        //  Calculate fitness for population used by generation 0
         fitness =  new double[POPSIZE];
-        var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.header().fitnessCases(), this.inputData.targets(), x);
+        var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.targets(), x);
         for (int i = 0; i < TinyGP.POPSIZE; i++)
             fitness[i] = calculator.calculateFitness(this.population.population().get(i));
     }
 
-    public boolean evolve(double precision) {
+    public ArrayList<Statistics> evolve(double precision) {
         int gen, indivs, offspring, parent1, parent2, parent;
-        double newfit;
         char []newind;
 
         System.out.print(
@@ -242,8 +204,10 @@ public class TinyGP {
 
         stats(fitness, 0);
         for (gen = 1; gen < GENERATIONS; gen++) {
-            if (fbestpop > precision)
-                return true;
+            if (fbestpop > precision) {
+                System.out.print("PROBLEM SOLVED\n");
+                return this.performanceHistory;
+            }
             for (indivs = 0; indivs < POPSIZE; indivs++) {
                 if (rd.nextDouble() < CROSSOVER_PROB) {
                     parent1 = tournament( fitness);
@@ -253,15 +217,17 @@ public class TinyGP {
                     parent = tournament( fitness);
                     newind = mutation(this.population.population().get(parent));
                 }
-                var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.header().fitnessCases(), this.inputData.targets(), x);
-                newfit = calculator.calculateFitness(new Individual(newind));
+                var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.targets(), x);
+                var newfit = calculator.calculateFitness(new Individual(newind));
 
-                offspring = negative_tournament( fitness);
+                offspring = negative_tournament(fitness);
                 this.population.population().set(offspring, new Individual(newind));
                 fitness[offspring] = newfit;
             }
             stats(fitness, gen);
         }
-        return false;
+
+        System.out.print("PROBLEM *NOT* SOLVED\n");
+        return this.performanceHistory;
     }
 }

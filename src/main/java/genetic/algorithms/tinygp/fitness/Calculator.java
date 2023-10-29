@@ -1,6 +1,6 @@
-package genetic.algorithims.tinygp.fitness;
+package genetic.algorithms.tinygp.fitness;
 
-import genetic.algorithims.tinygp.individual.Individual;
+import genetic.algorithms.tinygp.individual.Individual;
 
 
 /**
@@ -8,13 +8,11 @@ import genetic.algorithims.tinygp.individual.Individual;
  */
 public class Calculator {
     private final int variableNumber;
-    private final int fitnessCases;
     private final double [][] targets;
     private final double [] x;
 
-    public Calculator(int variableNumber, int fitnessCases, double[][] targets, double[] x) {
+    public Calculator(int variableNumber, double[][] targets, double[] x) {
         this.variableNumber = variableNumber;
-        this.fitnessCases = fitnessCases;
         this.targets = targets;
         this.x = x;
     }
@@ -22,12 +20,12 @@ public class Calculator {
     public double calculateFitness(Individual program) {
         double fit = 0.0;
 
-        for (int i = 0; i < this.fitnessCases; i++) {
+        for (double[] target : targets) {
             if (this.variableNumber >= 0)      //  Isn't it always true, because variable number cannot be 0, since it would be constant function.
-                System.arraycopy(this.targets[i], 0, x, 0, this.variableNumber);
+                System.arraycopy(target, 0, x, 0, this.variableNumber);
 
             var interpreter = new Interpreter(program, x);
-            fit += Math.abs(interpreter.run() - this.targets[i][this.variableNumber]);
+            fit += Math.abs(interpreter.run() - target[this.variableNumber]);
         }
         return -fit;
     }

@@ -1,9 +1,9 @@
-package genetic.algorithims.tinygp.individual;
+package genetic.algorithms.tinygp.individual;
+
+import genetic.algorithms.tinygp.TinyGP;
 
 import java.util.Random;
 
-import static genetic.algorithims.tinygp.TinyGP.FSET_END;   //  TODO: remove it
-import static genetic.algorithims.tinygp.TinyGP.FSET_START;
 
 public class IndividualCreator {
     private final char[] temporaryIndividualBody;
@@ -52,7 +52,7 @@ public class IndividualCreator {
             return pos + 1;
         }   //  There was an else here. I have removed it because unnecessary nesting.
 
-        prim = (char) (this.randomDevice.nextInt(FSET_END - FSET_START + 1) + FSET_START);     //  Choose random operation
+        prim = (char) (this.randomDevice.nextInt(TinyGP.FSET_END - TinyGP.FSET_START + 1) + TinyGP.FSET_START);     //  Choose random operation
 
         //  Removed funny switch here...
         buffer[pos] = prim;

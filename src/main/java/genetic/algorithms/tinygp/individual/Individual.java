@@ -1,6 +1,4 @@
-package genetic.algorithims.tinygp.individual;
-
-import static genetic.algorithims.tinygp.TinyGP.FSET_START; //  TODO remove this...
+package genetic.algorithms.tinygp.individual;
 
 
 public class Individual {
