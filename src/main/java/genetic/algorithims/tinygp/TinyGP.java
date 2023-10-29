@@ -71,39 +71,6 @@ public class TinyGP {
         return(-fit );
     }
 
-    int grow( char [] buffer, int pos, int max, int depth ) {
-        char prim = (char) rd.nextInt(2);
-        int one_child;
-
-        if ( pos >= max )
-            return( -1 );
-
-        if ( pos == 0 )
-            prim = 1;
-
-        if ( prim == 0 || depth == 0 ) {
-            prim = (char) rd.nextInt(this.inputData.header().variableNumber() + this.inputData.header().randomConstraintsSize());
-            buffer[pos] = prim;
-            return(pos+1);
-        }
-        else  {
-            prim = (char) (rd.nextInt(FSET_END - FSET_START + 1) + FSET_START);
-            switch (prim) {
-                case ADD, SUB, MUL, DIV -> {
-                    buffer[pos] = prim;
-                    one_child = grow(buffer, pos + 1, max, depth - 1);
-                    if (one_child < 0)
-                        return (-1);
-                    return (grow(buffer, one_child, max, depth - 1));
-                }
-            }
-        }
-        return( 0 ); // should never get here
-    }
-
-    /**
-     * Why is it recursive instead of iterative...
-     */
     int print_individual(char []buffer, int buffercounter ) {
         int a1 = 0, a2;
         if (buffer[buffercounter] < FSET_START) {
@@ -140,28 +107,53 @@ public class TinyGP {
         return a2;
     }
 
-    static char [] buffer = new char[MAX_LEN];
-    char [] create_random_indiv() {
-        char [] ind;
+    int grow(char [] buffer, int pos, int max, int depth) {
+        char prim = (char) rd.nextInt(2);
+
+        if (pos >= max)
+            return -1;
+
+        if (pos == 0)
+            prim = 1;
+
+        if ( prim == 0 || depth == 0 ) {
+            prim = (char) rd.nextInt(this.inputData.header().variableNumber() + this.inputData.header().randomConstraintsSize());
+            buffer[pos] = prim;
+            return pos + 1;
+        }   //  There was an else here. I have removed it because unnecessary nesting.
+
+        prim = (char) (rd.nextInt(FSET_END - FSET_START + 1) + FSET_START);     //  Choose random operation
+        switch (prim) {                                                                //  No clue for the reasoning of switch here
+            case ADD, SUB, MUL, DIV -> {
+                buffer[pos] = prim;
+                var one_child = grow(buffer, pos + 1, max, depth - 1);
+                if (one_child < 0)
+                    return -1;
+                return grow(buffer, one_child, max, depth - 1);
+            }
+        }
+        return 0; // should never get here
+    }
+
+    char [] buffer = new char[MAX_LEN];
+    char [] create_random_individual() {
         int len;
 
-        len = grow( buffer, 0, MAX_LEN, TinyGP.DEPTH);
+        do {
+            len = grow(buffer, 0, MAX_LEN, TinyGP.DEPTH);       //  I think we try to run it until created individual is valid, because randomness in grow function can mess up given individual.
+        } while (len < 0);                                           //  -1 from grow function means algorithm fucked up
 
-        while (len < 0 )
-            len = grow( buffer, 0, MAX_LEN, TinyGP.DEPTH);
+        var ind = new char[len];
 
-        ind = new char[len];
-
-        System.arraycopy(buffer, 0, ind, 0, len );
-        return( ind );
+        System.arraycopy(buffer, 0, ind, 0, len);
+        return ind;
     }
 
     char [][] create_random_pop(double [] fitness) {
         char [][]pop = new char[TinyGP.POPSIZE][];
-        int i;
 
-        for (i = 0; i < TinyGP.POPSIZE; i ++ ) {
-            pop[i] = create_random_indiv();
+        for (int i = 0; i < TinyGP.POPSIZE; i++) {
+            pop[i] = create_random_individual();
             fitness[i] = fitness_function( pop[i] );
         }
         return pop;
@@ -189,7 +181,7 @@ public class TinyGP {
         System.out.print("Generation="+gen+" Avg Fitness="+(-favgpop)+
                 " Best Fitness="+(-fbestpop)+" Avg Size="+avg_len+
                 "\nBest Individual: ");
-        print_individual( pop[best], 0 );
+        print_individual(pop[best], 0);
     }
 
     int tournament( double [] fitness ) {

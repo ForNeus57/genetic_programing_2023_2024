@@ -5,7 +5,7 @@ import static genetic.algorithims.tinygp.TinyGP.*;  //  Remove this and make som
 
 public class Interpreter {
     private final char [] program;      //  The program is the values ie the String (1231.1 * X1) + 1.234 ....
-    private final double [] x;
+    private final double [] x;          //  Still no clue what it is...
     private int currentPosition;
 
     Interpreter(char[] program, double[] x) {
