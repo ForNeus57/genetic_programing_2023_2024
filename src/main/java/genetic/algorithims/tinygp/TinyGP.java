@@ -53,10 +53,7 @@ public class TinyGP {
         if (buffer[buffercount] < FSET_START)
             return ++buffercount;
 
-        return switch (buffer[buffercount]) {
-            case ADD, SUB, MUL, DIV -> traverse(buffer, traverse(buffer, ++buffercount));
-            default -> 0;
-        };
+        return traverse(buffer, traverse(buffer, ++buffercount));
     }
 
 
