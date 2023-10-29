@@ -8,9 +8,10 @@ package genetic.algorithims.tinygp;
  */
 
 import genetic.algorithims.tinygp.fitness.Calculator;
-import genetic.algorithims.tinygp.fitness.Interpreter;
 import genetic.algorithims.tinygp.individual.Individual;
 import genetic.algorithims.tinygp.individual.IndividualCreator;
+import genetic.algorithims.tinygp.population.Population;
+import genetic.algorithims.tinygp.population.PopulationCreator;
 import genetic.algorithims.tinygp.statistics.ConfigurationStatistics;
 import genetic.algorithims.tinygp.statistics.Statistics;
 import genetic.data.InputData;
@@ -24,7 +25,8 @@ import java.util.*;
  */
 public class TinyGP {
     double [] fitness;
-    char [][] pop;
+
+    private final Population population;
     static Random rd = new Random();
     public static final int
             ADD = 110;
@@ -57,11 +59,11 @@ public class TinyGP {
     }
 
 
-    int print_individual(char []buffer, int buffercounter ) {
+    int print_individual(char []buffer, int buffercounter) {
         int a1 = 0, a2;
         if (buffer[buffercounter] < FSET_START) {
             if (buffer[buffercounter] < this.inputData.header().variableNumber())
-                System.out.print("X"+ (buffer[buffercounter] + 1)+ " ");
+                System.out.print("X"+ (buffer[buffercounter] + 1) + " ");
             else
                 System.out.print(x[buffer[buffercounter]]);
             return ++buffercounter;
@@ -93,14 +95,14 @@ public class TinyGP {
         return a2;
     }
 
-    void stats( double [] fitness, char [][] pop, int gen ) {
+    void stats( double [] fitness, int gen ) {
         int i, best = rd.nextInt(POPSIZE);
         int node_count = 0;
         fbestpop = fitness[best];
         favgpop = 0.0;
 
         for (i = 0; i < POPSIZE; i++) {
-            node_count +=  traverse(pop[i], 0);
+            node_count +=  traverse(this.population.population().get(i).body(), 0);
             favgpop += fitness[i];
             if (fitness[i] > fbestpop) {
                 best = i;
@@ -115,7 +117,7 @@ public class TinyGP {
         System.out.print("Generation="+gen+" Avg Fitness="+(-favgpop)+
                 " Best Fitness="+(-fbestpop)+" Avg Size="+avg_len+
                 "\nBest Individual: ");
-        print_individual(pop[best], 0);
+        print_individual(this.population.population().get(best).body(), 0);
         System.out.print("\n");
     }
 
@@ -147,37 +149,37 @@ public class TinyGP {
         return( worst );
     }
 
-    char [] crossover( char []parent1, char [] parent2 ) {
+    char [] crossover(Individual parent1, Individual parent2) {
         int xo1start, xo1end, xo2start, xo2end;
         char [] offspring;
-        int len1 = traverse( parent1, 0 );
-        int len2 = traverse( parent2, 0 );
+        int len1 = traverse( parent1.body(), 0 );
+        int len2 = traverse( parent2.body(), 0 );
         int lenoff;
 
         xo1start =  rd.nextInt(len1);
-        xo1end = traverse( parent1, xo1start );
+        xo1end = traverse( parent1.body(), xo1start );
 
         xo2start =  rd.nextInt(len2);
-        xo2end = traverse( parent2, xo2start );
+        xo2end = traverse( parent2.body(), xo2start );
 
         lenoff = xo1start + (xo2end - xo2start) + (len1-xo1end);
 
         offspring = new char[lenoff];
 
-        System.arraycopy( parent1, 0, offspring, 0, xo1start );
-        System.arraycopy( parent2, xo2start, offspring, xo1start,
+        System.arraycopy( parent1.body(), 0, offspring, 0, xo1start );
+        System.arraycopy( parent2.body(), xo2start, offspring, xo1start,
                 (xo2end - xo2start) );
-        System.arraycopy(parent1, xo1end, offspring, xo1start + (xo2end - xo2start), (len1-xo1end));
+        System.arraycopy(parent1.body(), xo1end, offspring, xo1start + (xo2end - xo2start), (len1-xo1end));
 
         return( offspring );
     }
 
-    char [] mutation(char [] parent) {
-        int len = traverse( parent, 0 );
+    char [] mutation(Individual parent) {
+        int len = traverse(parent.body(), 0 );
         int mutsite;
         char [] parentcopy = new char [len];
 
-        System.arraycopy( parent, 0, parentcopy, 0, len );
+        System.arraycopy( parent.body(), 0, parentcopy, 0, len );
         for (int i = 0; i < len; i ++ ) {
             if ( rd.nextDouble() < TinyGP.PMUT_PER_NODE) {
                 mutsite =  i;
@@ -191,7 +193,7 @@ public class TinyGP {
                     }
             }
         }
-        return( parentcopy );
+        return parentcopy;
     }
 
     /**
@@ -204,29 +206,18 @@ public class TinyGP {
         this.inputData = input;
         this.performanceHistory = new ArrayList<>();
 
-        fitness =  new double[POPSIZE];
+        //  Fill the x register with values....
         for ( int i = 0; i < FSET_START; i++)
             x[i] = (this.inputData.header().upperRange() - this.inputData.header().lowerRange()) * rd.nextDouble() + this.inputData.header().lowerRange();
 
-        pop = create_random_pop(fitness);
+        var creator = new PopulationCreator(TinyGP.POPSIZE, this.inputData);
+        this.population = creator.createRandomPopulation(MAX_LEN, rd, DEPTH);
 
-    }
-    char [][] create_random_pop(double [] fitness) {
-        char [][]pop = new char[TinyGP.POPSIZE][];
-
-        for (int i = 0; i < TinyGP.POPSIZE; i++) {
-            var creator = new IndividualCreator(
-                MAX_LEN,
-                rd,
-                TinyGP.DEPTH,
-                this.inputData.header().variableNumber(),
-                this.inputData.header().randomConstraintsSize()
-            );
-            pop[i] = creator.createRandomIndividual().body();
-            var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.header().fitnessCases(), this.inputData.targets(), x);
-            fitness[i] = calculator.calculateFitness(new Individual(pop[i]));
-        }
-        return pop;
+        //  Calculate fitness
+        fitness =  new double[POPSIZE];
+        var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.header().fitnessCases(), this.inputData.targets(), x);
+        for (int i = 0; i < TinyGP.POPSIZE; i++)
+            fitness[i] = calculator.calculateFitness(this.population.population().get(i));
     }
 
     public boolean evolve(double precision) {
@@ -234,7 +225,8 @@ public class TinyGP {
         double newfit;
         char []newind;
 
-        System.out.print(new ConfigurationStatistics(
+        System.out.print(
+            new ConfigurationStatistics(
                 seed,
                 MAX_LEN,
                 POPSIZE,
@@ -248,7 +240,7 @@ public class TinyGP {
             )
         );
 
-        stats(fitness, pop, 0);
+        stats(fitness, 0);
         for (gen = 1; gen < GENERATIONS; gen++) {
             if (fbestpop > precision)
                 return true;
@@ -256,19 +248,19 @@ public class TinyGP {
                 if (rd.nextDouble() < CROSSOVER_PROB) {
                     parent1 = tournament( fitness);
                     parent2 = tournament( fitness);
-                    newind = crossover( pop[parent1],pop[parent2] );
+                    newind = crossover(this.population.population().get(parent1), this.population.population().get(parent2));
                 } else {
                     parent = tournament( fitness);
-                    newind = mutation( pop[parent]);
+                    newind = mutation(this.population.population().get(parent));
                 }
                 var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.header().fitnessCases(), this.inputData.targets(), x);
                 newfit = calculator.calculateFitness(new Individual(newind));
 
                 offspring = negative_tournament( fitness);
-                pop[offspring] = newind;
+                this.population.population().set(offspring, new Individual(newind));
                 fitness[offspring] = newfit;
             }
-            stats(fitness, pop, gen);
+            stats(fitness, gen);
         }
         return false;
     }
