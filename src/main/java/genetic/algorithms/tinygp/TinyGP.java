@@ -12,7 +12,6 @@ import genetic.algorithms.tinygp.individual.Individual;
 import genetic.algorithms.tinygp.individual.IndividualPrinter;
 import genetic.algorithms.tinygp.mutations.Crossover;
 import genetic.algorithms.tinygp.mutations.Mutation;
-import genetic.algorithms.tinygp.mutations.Tournament;
 import genetic.algorithms.tinygp.population.Population;
 import genetic.algorithms.tinygp.population.PopulationCreator;
 import genetic.algorithms.tinygp.statistics.ConfigurationStatistics;
@@ -48,6 +47,7 @@ public class TinyGP {
     private final InputData inputData;
     private final ArrayList<Statistics> performanceHistory;
 
+    //  TODO: Refactor to its own class.
     void stats(double [] fitness, int gen) {
         int i, best = rd.nextInt(POPSIZE);
         int node_count = 0;
@@ -74,11 +74,12 @@ public class TinyGP {
         System.out.print(statistic);
     }
 
+    //  TODO: Refactor to its own class.
     int tournament(double [] fitness) {
-        int best = rd.nextInt(POPSIZE), i, competitor;
+        int best = rd.nextInt(POPSIZE), competitor;
         double  fbest = -1.0e34;
 
-        for (i = 0; i < TinyGP.TSIZE; i++) {
+        for (int i = 0; i < TinyGP.TSIZE; ++i) {
             competitor = rd.nextInt(POPSIZE);
             if (fitness[competitor] > fbest) {
                 fbest = fitness[competitor];
@@ -88,11 +89,12 @@ public class TinyGP {
         return best;
     }
 
-    int negative_tournament( double [] fitness ) {
-        int worst = rd.nextInt(POPSIZE), i, competitor;
+    //  TODO: Refactor to its own class.
+    int negative_tournament(double [] fitness) {
+        int worst = rd.nextInt(POPSIZE), competitor;
         double fworst = 1e34;
 
-        for (i = 0; i < TinyGP.TSIZE; i ++ ) {
+        for (int i = 0; i < TinyGP.TSIZE; ++i) {
             competitor = rd.nextInt(POPSIZE);
             if (fitness[competitor] < fworst) {
                 fworst = fitness[competitor];

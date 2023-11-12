@@ -19,14 +19,13 @@ public class Main {
         var gp = new TinyGP(inputData, config.seed());
         var history = gp.evolve(-1e-5);
 
-
         //  Excel...
         try {
             var excelWriter = new ExcelSerializer();
             excelWriter.write(inputData, history);
-            excelWriter.save(new File("./data/generated/excel/problem.xlsx"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            excelWriter.save(new File(config.inputFile().getParent() + "/generated/excel/" + config.inputFile().getName().split("\\.")[0] + ".xlsx"));
+        } catch (IOException err) {
+            throw new RuntimeException(err);
         }
     }
 }

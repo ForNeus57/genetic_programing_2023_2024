@@ -5,6 +5,7 @@ import genetic.data.Header;
 import genetic.data.InputData;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -22,7 +23,7 @@ public class ExcelSerializer {
 
     public void write(InputData input, ArrayList<Statistics> history) throws IOException {
         var index = this.writeHeader(input.header());
-        this.writeBody(index, convertToIterable(input.targets()));
+        this.writeBody(input.header(), index, convertToIterable(input.targets()), history);
     }
 
     private int writeHeader(Header header) {
@@ -39,16 +40,29 @@ public class ExcelSerializer {
         return 1;
     }
 
-    private void writeBody(int availableIndex, ArrayList<ArrayList<Double>> targets) {
+    private void writeBody(Header header, int availableIndex, ArrayList<ArrayList<Double>> targets, ArrayList<Statistics> history) {
         final int[] indexes = {availableIndex, 0};
 
         targets.forEach(row -> {
-            Row excelRow = this.sheet.createRow(indexes[0]++);
+            var excelRow = this.sheet.createRow(indexes[0]++);
             indexes[1] = 0;
             row.forEach(
                 value -> excelRow.createCell(indexes[1]++).setCellValue(value)
             );
+
+            var formatter = new BestIndividualToExcelFormatConverter(header.variableNumber());
+            var formulaString = formatter.convert(history.get(history.size() - 1).bestIndividual(), indexes[0]);
+
+            var cell = excelRow.createCell(row.size());
+            cell.setCellFormula(formulaString);
+
+            //  Evaluate the value of formula.
+            XSSFFormulaEvaluator formulaEvaluator = this.workbook.getCreationHelper().createFormulaEvaluator();
+            formulaEvaluator.evaluateFormulaCell(cell);
         });
+
+
+
     }
 
     private ArrayList<ArrayList<Double>> convertToIterable(double[][] target) {
