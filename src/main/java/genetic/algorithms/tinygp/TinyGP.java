@@ -18,14 +18,8 @@ import genetic.data.InputData;
 
 import java.util.*;
 
-/**
- * I'm not refactoring this, it has no comments and I lack technical knowledge to do it - sorry...
- * I don't want to risk fucking something up due to some edge condition...
- * Therefore, I refactored everything around the data flow and output of an algorithm.
- */
 public class TinyGP {
     double [] fitness;
-
     private final Population population;
     static Random rd = new Random();
     public static final int
@@ -65,7 +59,7 @@ public class TinyGP {
         favgpop = 0.0;
 
         for (i = 0; i < POPSIZE; i++) {
-            node_count +=  traverse(this.population.population().get(i).body(), 0);
+            node_count += traverse(this.population.population().get(i).body(), 0);
             favgpop += fitness[i];
             if (fitness[i] > fbestpop) {
                 best = i;
@@ -95,7 +89,7 @@ public class TinyGP {
                 best = competitor;
             }
         }
-        return( best );
+        return best;
     }
 
     int negative_tournament( double [] fitness ) {
@@ -109,7 +103,7 @@ public class TinyGP {
                 worst = competitor;
             }
         }
-        return( worst );
+        return worst;
     }
 
     char [] crossover(Individual parent1, Individual parent2) {
@@ -170,7 +164,7 @@ public class TinyGP {
         this.performanceHistory = new ArrayList<>();
 
         //  Fill the x register with values....
-        for ( int i = 0; i < FSET_START; i++)
+        for (int i = 0; i < FSET_START; i++)
             x[i] = (this.inputData.header().upperRange() - this.inputData.header().lowerRange()) * rd.nextDouble() + this.inputData.header().lowerRange();
 
         var creator = new PopulationCreator(TinyGP.POPSIZE, this.inputData);
@@ -210,11 +204,11 @@ public class TinyGP {
             }
             for (indivs = 0; indivs < POPSIZE; indivs++) {
                 if (rd.nextDouble() < CROSSOVER_PROB) {
-                    parent1 = tournament( fitness);
-                    parent2 = tournament( fitness);
+                    parent1 = tournament(fitness);
+                    parent2 = tournament(fitness);
                     newind = crossover(this.population.population().get(parent1), this.population.population().get(parent2));
                 } else {
-                    parent = tournament( fitness);
+                    parent = tournament(fitness);
                     newind = mutation(this.population.population().get(parent));
                 }
                 var calculator = new Calculator(this.inputData.header().variableNumber(), this.inputData.targets(), x);

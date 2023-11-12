@@ -1,6 +1,8 @@
 package genetic.algorithms.tinygp.individual;
 
 
+import static genetic.algorithms.tinygp.TinyGP.FSET_START;
+
 public class Individual {
     private final char [] body;
     private int size;
@@ -10,18 +12,18 @@ public class Individual {
     }
 
     //  DOES NOT WORK
-//    public int size() {
-//        this.size = 0;
-//        return this.getSizeByTraversing();
-//    }
-//
-//    private int getSizeByTraversing() {
-//        if (this.body[this.size] < FSET_START)
-//            return ++this.size;
-//
-//        ++this.size;
-//        return this.getSizeByTraversing();
-//    }
+    public int size() {
+        this.size = 0;
+        this.size = this.getSizeByTraversing(this.size);
+        return this.size;
+    }
+
+    private int getSizeByTraversing(int traversingSize) {
+        if (this.body[traversingSize] < FSET_START)
+            return ++traversingSize;
+
+        return this.getSizeByTraversing(this.getSizeByTraversing(++traversingSize));
+    }
 
     public char[] body() {
         return this.body;
