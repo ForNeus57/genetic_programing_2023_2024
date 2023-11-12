@@ -61,9 +61,17 @@ public class ExcelSerializer {
             formulaEvaluator.evaluateFormulaCell(cell);
         });
 
+        history.forEach(statistics -> {
+            var excelRow = this.sheet.createRow(indexes[0]++);
 
+            excelRow.createCell(0).setCellValue(statistics.generationNumber());
+            excelRow.createCell(1).setCellValue(statistics.averageFitness());
+            excelRow.createCell(2).setCellValue(statistics.bestFitness());
+            excelRow.createCell(3).setCellValue(statistics.averageSize());
+        });
 
     }
+
 
     private ArrayList<ArrayList<Double>> convertToIterable(double[][] target) {
         ArrayList<ArrayList<Double>> output = new ArrayList<>();
