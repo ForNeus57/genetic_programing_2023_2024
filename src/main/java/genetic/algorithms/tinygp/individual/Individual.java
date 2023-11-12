@@ -11,9 +11,14 @@ public class Individual {
         this.size = 0;
     }
 
-    //  DOES NOT WORK
     public int size() {
         this.size = 0;
+        this.size = this.getSizeByTraversing(this.size);
+        return this.size;
+    }
+
+    public int size(int point) {
+        this.size = point;
         this.size = this.getSizeByTraversing(this.size);
         return this.size;
     }
