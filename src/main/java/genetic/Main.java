@@ -5,14 +5,17 @@ import genetic.data.deserializers.ExcelDataDeserializer;
 import genetic.data.deserializers.InputFileFormatDeserializer;
 import genetic.data.serializers.ExcelSerializer;
 import genetic.utility.arguments.Parser;
-import genetic.visualtsation.GenerationGraphCreator;
-import genetic.visualtsation.GraphCreator;
-import genetic.visualtsation.GraphCreator2D;
-import genetic.visualtsation.GraphCreator3D;
+import genetic.visualization.GenerationGraphCreator;
+import genetic.visualization.GraphCreator;
+import genetic.visualization.GraphCreator2D;
+import genetic.visualization.GraphCreator3D;
 
 import java.io.File;
 
 public class Main {
+
+
+
     public static void main(String[] args) {
         var parser = new Parser(args);
         var config = parser.parse();
@@ -51,6 +54,8 @@ public class Main {
             creator.create();
             creator.save();
 
+            //  Temporary fix to close program after screenshot.
+//            System.exit(0);
         } catch (Exception err) {
             throw new RuntimeException(err);
         }

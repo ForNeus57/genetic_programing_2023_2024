@@ -1,6 +1,5 @@
-package genetic.visualtsation;
+package genetic.visualization;
 
-import genetic.algorithms.tinygp.statistics.Statistics;
 import genetic.data.ExcelData;
 import genetic.data.InputData;
 import org.jfree.chart.ChartFactory;
