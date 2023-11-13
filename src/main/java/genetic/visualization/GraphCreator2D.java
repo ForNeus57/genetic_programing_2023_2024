@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class GraphCreator2D implements GraphCreator {
 
-    private File savePath;
+    private final File savePath;
     private final InputData inputData;
     private final ExcelData excelInputData;
 
@@ -32,7 +32,7 @@ public class GraphCreator2D implements GraphCreator {
 
         for (int i = 0; i < excelInputData.calculatedValues().size(); ++i) {
             functionSeries.add(inputData.targets()[i][0], inputData.targets()[i][1]);
-            functionSeries.add(inputData.targets()[i][0], excelInputData.calculatedValues().get(i));
+            tinyGPSeries.add(inputData.targets()[i][0], excelInputData.calculatedValues().get(i));
         }
 
         var collection = new XYSeriesCollection();

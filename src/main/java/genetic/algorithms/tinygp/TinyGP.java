@@ -40,7 +40,7 @@ public class TinyGP {
             MAX_LEN = 10000,
             POPSIZE = 100000,
             DEPTH   = 5,
-            GENERATIONS = 70,       // Change so the learning process doesn't take too long.
+            GENERATIONS = 50,       // Change so the learning process doesn't take too long.
             TSIZE = 2;
     public static final double
             CROSSOVER_PROB = 0.9;
@@ -69,7 +69,7 @@ public class TinyGP {
         //  TODO: Make this overload the .toString() method of Individual class.
         var printer = new IndividualPrinter(this.population.population().get(best), x, this.inputData.header().variableNumber());
 
-        var statistic = new Statistics(gen, (-favgpop), (-fbestpop), avg_len, printer.print());
+        var statistic = new Statistics(gen, (-favgpop), (-fbestpop), avg_len, printer.print(), this.population.population().get(best), x);
         this.performanceHistory.add(statistic);
         System.out.print(statistic);
     }
@@ -158,7 +158,6 @@ public class TinyGP {
                     newind = cross.crossover(this.population.population().get(parent1), this.population.population().get(parent2)).body();
                 } else {
                     parent = tournament(fitness);
-                    var cross = new Crossover(rd);
                     var mutator = new Mutation(rd, this.inputData.header().variableNumber(), this.inputData.header().randomConstraintsSize());
                     newind = mutator.mutation(this.population.population().get(parent)).body();
                 }

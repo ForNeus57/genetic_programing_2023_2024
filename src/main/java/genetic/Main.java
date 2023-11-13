@@ -1,16 +1,17 @@
 package genetic;
 
 import genetic.algorithms.tinygp.TinyGP;
-import genetic.data.deserializers.ExcelDataDeserializer;
+import genetic.algorithms.tinygp.fitness.Calculator;
+import genetic.data.ExcelData;
 import genetic.data.deserializers.InputFileFormatDeserializer;
 import genetic.data.serializers.ExcelSerializer;
 import genetic.utility.arguments.Parser;
 import genetic.visualization.GenerationGraphCreator;
-import genetic.visualization.GraphCreator;
 import genetic.visualization.GraphCreator2D;
 import genetic.visualization.GraphCreator3D;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -36,8 +37,15 @@ public class Main {
             excelWriter.write(inputData, history);
             excelWriter.save(savePath);
 
-            var excelDeserializer = new ExcelDataDeserializer(savePath);
-            var excelData = excelDeserializer.deserialize();
+
+            var calc = new Calculator(inputData.header().variableNumber(), inputData.targets(), history.get(history.size() - 1).x());
+            var excelTinyGPOutput = new ArrayList<Double>();
+
+            for (var target : inputData.targets()) {
+                excelTinyGPOutput.add(calc.calculateTinyGPValue(target, history.get(history.size() - 1).bestProgram()));
+            }
+
+            var excelData = new ExcelData(excelTinyGPOutput);
 
             if (inputData.header().variableNumber() > 1) {
                 var creator = new GraphCreator3D(

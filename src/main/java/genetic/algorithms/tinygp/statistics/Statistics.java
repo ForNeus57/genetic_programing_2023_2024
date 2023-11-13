@@ -1,13 +1,15 @@
 package genetic.algorithms.tinygp.statistics;
 
-import static java.lang.String.format;
+import genetic.algorithms.tinygp.individual.Individual;
 
 public record Statistics(
     int generationNumber,
     double averageFitness,
     double bestFitness,
     double averageSize,
-    String bestIndividual
+    String bestIndividual,
+    Individual bestProgram,
+    double [] x
 ) {
     @Override
     public String toString() {

@@ -1,45 +1,31 @@
 package genetic.visualization;
 
-import com.jogamp.opengl.util.stereo.ViewerPose;
-import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.texture.TextureData;
-import com.jogamp.opengl.util.texture.TextureIO;
 import genetic.data.ExcelData;
 import genetic.data.InputData;
 import org.jzy3d.analysis.AWTAbstractAnalysis;
 import org.jzy3d.chart.Chart;
-import org.jzy3d.chart.ChartLauncher;
-import org.jzy3d.chart.Settings;
 import org.jzy3d.chart.factories.AWTChartFactory;
 import org.jzy3d.chart.factories.IChartFactory;
-import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
-import org.jzy3d.colors.colormaps.ColorMapGrayscale;
 import org.jzy3d.colors.colormaps.ColorMapRBG;
-import org.jzy3d.colors.colormaps.ColorMapRainbow;
 import org.jzy3d.maths.Coord3d;
-import org.jzy3d.maths.Range;
-import org.jzy3d.plot3d.builder.Func3D;
 import org.jzy3d.plot3d.builder.SurfaceBuilder;
-import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.view.modes.ViewPositionMode;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class GraphCreator3D  extends AWTAbstractAnalysis {
 
-    private File savePath;
+    private final File savePath;
     private final InputData inputData;
     private final ExcelData excelInputData;
-    private Chart graph;
     public GraphCreator3D(File savePath, InputData inputData, ExcelData excelInputData) {
         this.savePath = savePath;
         this.inputData = inputData;
@@ -117,7 +103,7 @@ public class GraphCreator3D  extends AWTAbstractAnalysis {
     }
 
     @Override
-    public void init() throws Exception {
+    public void init() {
 
     }
 }

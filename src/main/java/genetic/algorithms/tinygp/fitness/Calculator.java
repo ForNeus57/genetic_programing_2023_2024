@@ -21,13 +21,17 @@ public class Calculator {
         double fit = 0.0;
 
         for (double[] target : targets) {
-            if (this.variableNumber >= 0)      //  Isn't it always true, because variable number cannot be 0, since it would be constant function.
-                System.arraycopy(target, 0, x, 0, this.variableNumber);
-
-            var interpreter = new Interpreter(program, x);
-            fit += Math.abs(interpreter.run() - target[this.variableNumber]);
+            var tinyGPValue = calculateTinyGPValue(target, program);
+            fit += Math.abs(tinyGPValue - target[this.variableNumber]);
         }
         return -fit;
     }
 
+    public double calculateTinyGPValue(double[] target, Individual program) {
+        if (this.variableNumber >= 0)      //  Isn't it always true, because variable number cannot be 0, since it would be constant function. May be it is something leftover after std::memcopy(...)
+            System.arraycopy(target, 0, x, 0, this.variableNumber);
+
+        var interpreter = new Interpreter(program, x);
+        return interpreter.run();
+    }
 }

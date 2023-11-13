@@ -1,11 +1,11 @@
 package genetic.data.serializers;
 
+import genetic.algorithms.tinygp.fitness.Calculator;
 import genetic.algorithms.tinygp.statistics.Statistics;
 import genetic.data.Header;
 import genetic.data.InputData;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -21,9 +21,9 @@ public class ExcelSerializer {
         this.sheet = this.workbook.createSheet("Exercise");
     }
 
-    public void write(InputData input, ArrayList<Statistics> history) throws IOException {
+    public void write(InputData input, ArrayList<Statistics> history) {
         var index = this.writeHeader(input.header());
-        this.writeBody(input.header(), index, convertToIterable(input.targets()), history);
+        this.writeBody(input.header(), index, input.targets(), convertToIterable(input.targets()), history);
     }
 
     private int writeHeader(Header header) {
@@ -40,7 +40,7 @@ public class ExcelSerializer {
         return 1;
     }
 
-    private void writeBody(Header header, int availableIndex, ArrayList<ArrayList<Double>> targets, ArrayList<Statistics> history) {
+    private void writeBody(Header header, int availableIndex, double[][] t, ArrayList<ArrayList<Double>> targets, ArrayList<Statistics> history) {
         final int[] indexes = {availableIndex, 0};
 
         targets.forEach(row -> {
@@ -50,15 +50,17 @@ public class ExcelSerializer {
                 value -> excelRow.createCell(indexes[1]++).setCellValue(value)
             );
 
-            var formatter = new BestIndividualToExcelFormatConverter(header.variableNumber());
-            var formulaString = formatter.convert(history.get(history.size() - 1).bestIndividual(), indexes[0]);
-
             var cell = excelRow.createCell(row.size());
-            cell.setCellFormula(formulaString);
 
-            //  Evaluate the value of formula.
-            XSSFFormulaEvaluator formulaEvaluator = this.workbook.getCreationHelper().createFormulaEvaluator();
-            formulaEvaluator.evaluateFormulaCell(cell);
+            var calc = new Calculator(header.variableNumber(), t, history.get(history.size() - 1).x());
+
+            var g = new double [row.size()];
+
+            for (int i = 0; i < row.size(); ++i) {
+                g[i] = row.get(i);
+            }
+
+            cell.setCellValue(calc.calculateTinyGPValue(g, history.get(history.size() - 1).bestProgram()));
         });
 
         history.forEach(statistics -> {
