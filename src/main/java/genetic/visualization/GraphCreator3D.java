@@ -12,8 +12,10 @@ import org.jzy3d.chart.ChartLauncher;
 import org.jzy3d.chart.Settings;
 import org.jzy3d.chart.factories.AWTChartFactory;
 import org.jzy3d.chart.factories.IChartFactory;
+import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
+import org.jzy3d.colors.colormaps.ColorMapGrayscale;
 import org.jzy3d.colors.colormaps.ColorMapRBG;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
 import org.jzy3d.maths.Coord3d;
@@ -32,7 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GraphCreator3D  extends AWTAbstractAnalysis implements GraphCreator {
+public class GraphCreator3D  extends AWTAbstractAnalysis {
 
     private File savePath;
     private final InputData inputData;
@@ -44,12 +46,7 @@ public class GraphCreator3D  extends AWTAbstractAnalysis implements GraphCreator
         this.excelInputData = excelInputData;
     }
 
-    @Override
-    public void create() {
-        Func3D func = new Func3D((x, y) -> x * Math.sin(x * y));
-        Range range = new Range(-3, 3);
-        int steps = 80;
-
+    public void create() throws IOException, InterruptedException, AWTException {
         var dataTinyGP = new ArrayList<Coord3d>();
         var dataFunction = new ArrayList<Coord3d>();
 
@@ -60,27 +57,63 @@ public class GraphCreator3D  extends AWTAbstractAnalysis implements GraphCreator
             dataFunction.add(functionPoint);
         }
 
+        var data = new ArrayList<ArrayList<Coord3d>>();
+        data.add(dataTinyGP);
+        data.add(dataFunction);
+
+        var modes = new ArrayList<ViewPositionMode>();
+        modes.add(ViewPositionMode.PROFILE);
+        modes.add(ViewPositionMode.FREE);
+        modes.add(ViewPositionMode.YZ);
+        modes.add(ViewPositionMode.XZ);
+        modes.add(ViewPositionMode.TOP);
+
+        var extension = new ArrayList<String>();
+        extension.add("tiny_gp");
+        extension.add("function");
+
+        for (int i = 0; i < data.size(); ++i) {
+            for (var mode : modes) {
+                var chart = this.createChart(data.get(i), mode);
+                chart.open("Graph");
+                this.save(chart, new File(savePath.getAbsolutePath() + "_" + extension.get(i)+ "_" + mode.toString() + ".png"));
+                chart.dispose();
+            }
+        }
+    }
+
+    private Chart createChart(ArrayList<Coord3d> data, ViewPositionMode mode) {
         // Create the object to represent the function over the given range.
-        final var surface = new SurfaceBuilder().delaunay(dataFunction);
+        final var surface = new SurfaceBuilder().delaunay(data);
         surface.setColorMapper(new ColorMapper(new ColorMapRBG(), surface, new Color(1, 1, 1, .5f)));
         surface.setFaceDisplayed(true);
         surface.setWireframeDisplayed(true);
-        surface.setWireframeColor(Color.WHITE);
+        surface.setWireframeColor(Color.BLACK);
 
         // Create a chart
         IChartFactory f = new AWTChartFactory();
-        this.chart = f.newChart(Quality.Advanced().setHiDPIEnabled(true));
-        this.chart.getScene().getGraph().add(surface);
-        this.chart.getView().setViewPositionMode(ViewPositionMode.PROFILE);
-        this.chart.open();
-        this.chart.addMouse();
+        var chart = f.newChart(Quality.Advanced().setHiDPIEnabled(true));
+        chart.getScene().getGraph().add(surface);
+        chart.getView().setViewPositionMode(mode);
+        chart.getView().setMaximized(true);
+
+        return chart;
     }
 
-    @Override
-    public void save() throws IOException, AWTException {
-        Settings.getInstance().setHardwareAccelerated(true);
-        chart.getCanvas().setPixelScale(new float[] { 1, 1 });
-        chart.getCanvas().screenshot(this.savePath);
+    public void save(Chart chart, File savePath) throws IOException, AWTException, InterruptedException {
+        Thread.sleep(200);
+        double x = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
+        double y = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
+
+        Image image = new Robot()
+            .createMultiResolutionScreenCapture(new Rectangle(
+                5,
+                0,
+                chart.getCanvas().getRendererWidth(),
+                chart.getCanvas().getRendererHeight() + 30)
+            )
+            .getResolutionVariant(x, y);
+        ImageIO.write((BufferedImage) image, "png", savePath);
     }
 
     @Override

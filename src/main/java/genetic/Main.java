@@ -39,23 +39,23 @@ public class Main {
             var excelDeserializer = new ExcelDataDeserializer(savePath);
             var excelData = excelDeserializer.deserialize();
 
-            GraphCreator creator = null;
             if (inputData.header().variableNumber() > 1) {
-                creator = new GraphCreator3D(resultsImagePath, inputData, excelData);
+                var creator = new GraphCreator3D(
+                        new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_results"),
+                        inputData, excelData);
+                creator.create();
             } else {
-                creator = new GraphCreator2D(resultsImagePath, inputData, excelData);
+                var creator = new GraphCreator2D(resultsImagePath, inputData, excelData);
+                creator.create();
+                creator.save();
             }
 
-            creator.create();
-            creator.save();
-
-            creator = new GenerationGraphCreator(generationsImagePath, history);
-
+            var creator = new GenerationGraphCreator(generationsImagePath, history);
             creator.create();
             creator.save();
 
             //  Temporary fix to close program after screenshot.
-//            System.exit(0);
+            System.exit(0);
         } catch (Exception err) {
             throw new RuntimeException(err);
         }
