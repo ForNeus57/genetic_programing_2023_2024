@@ -40,7 +40,7 @@ public class TinyGP {
             MAX_LEN = 10000,
             POPSIZE = 100000,
             DEPTH   = 5,
-            GENERATIONS = 50,       // Change so the learning process doesn't take too long.
+            GENERATIONS = 70,       // Change so the learning process doesn't take too long.
             TSIZE = 2;
     public static final double
             CROSSOVER_PROB = 0.9;
