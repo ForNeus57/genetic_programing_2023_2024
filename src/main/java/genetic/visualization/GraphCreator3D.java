@@ -5,11 +5,11 @@ import genetic.data.InputData;
 import org.jzy3d.analysis.AWTAbstractAnalysis;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.AWTChartFactory;
-import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRBG;
 import org.jzy3d.maths.Coord3d;
+import org.jzy3d.painters.Font;
 import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.view.modes.ViewPositionMode;
@@ -77,11 +77,12 @@ public class GraphCreator3D  extends AWTAbstractAnalysis {
         surface.setWireframeColor(Color.BLACK);
 
         // Create a chart
-        IChartFactory f = new AWTChartFactory();
+        var f = new AWTChartFactory();
         var chart = f.newChart(Quality.Advanced().setHiDPIEnabled(true));
         chart.getScene().getGraph().add(surface);
         chart.getView().setViewPositionMode(mode);
         chart.getView().setMaximized(true);
+        chart.getAxisLayout().setFont(new Font("Arial", Font.TimesRoman_24.getStyle(), 28));
 
         return chart;
     }

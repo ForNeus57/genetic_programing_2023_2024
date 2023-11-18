@@ -21,7 +21,6 @@ import genetic.data.InputData;
 import java.util.*;
 
 public class TinyGP {
-    //  TODO: move fitness value to Individual class.
     double [] fitness;
     private final Population population;
     static Random rd = new Random();
@@ -47,7 +46,6 @@ public class TinyGP {
     private final InputData inputData;
     private final ArrayList<Statistics> performanceHistory;
 
-    //  TODO: Refactor to its own class.
     void stats(double [] fitness, int gen) {
         int i, best = rd.nextInt(POPSIZE);
         int node_count = 0;
@@ -74,7 +72,6 @@ public class TinyGP {
         System.out.print(statistic);
     }
 
-    //  TODO: Refactor to its own class.
     int tournament(double [] fitness) {
         int best = rd.nextInt(POPSIZE), competitor;
         double  fbest = -1.0e34;
@@ -89,7 +86,6 @@ public class TinyGP {
         return best;
     }
 
-    //  TODO: Refactor to its own class.
     int negative_tournament(double [] fitness) {
         int worst = rd.nextInt(POPSIZE), competitor;
         double fworst = 1e34;

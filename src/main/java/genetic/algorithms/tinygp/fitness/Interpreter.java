@@ -5,6 +5,7 @@ import genetic.algorithms.tinygp.individual.Individual;
 import genetic.algorithms.tinygp.TinyGP;
 
 public class Interpreter {
+    public final static double minimalDivisorThreshold = 0.001;
     private final Individual program;      //  The program is the values ie the String (1231.1 * X1) + 1.234 ....
     private final double [] x;          //  Still no clue what it is...
     private int currentPosition;
@@ -36,12 +37,9 @@ public class Interpreter {
             }
             case TinyGP.DIV -> {
                 double num = run(), den = run();
-                if (Math.abs(den) <= 0.001)
-                    return num;
-                else
-                    return num / den;
+                return Math.abs(den) <= Interpreter.minimalDivisorThreshold ? num : num / den;
             }
         }
-        return 0.0;     //  Should never execute
+        throw new IndexOutOfBoundsException("Primitive " + primitive + " is not a valid operation.");
     }
 }
