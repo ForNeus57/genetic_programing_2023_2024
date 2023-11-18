@@ -33,19 +33,11 @@ public class Function2DGraphDataSupplier {
                 add(Pair.of(
                         new ArrayList<>() {
                             {
-                                add(functionSeries);
                                 add(tinyGPSeries);
+                                add(functionSeries);
                             }
                         },
                         new File(savePath.getAbsolutePath() + "_both.png")
-                ));
-                add(Pair.of(
-                        new ArrayList<>() {
-                            {
-                                add(tinyGPSeries);
-                            }
-                        },
-                        new File(savePath.getAbsolutePath() + "_tiny_gp.png")
                 ));
                 add(Pair.of(
                         new ArrayList<>() {
@@ -54,6 +46,14 @@ public class Function2DGraphDataSupplier {
                             }
                         },
                         new File(savePath.getAbsolutePath() + "_function.png")
+                ));
+                add(Pair.of(
+                        new ArrayList<>() {
+                            {
+                                add(tinyGPSeries);
+                            }
+                        },
+                        new File(savePath.getAbsolutePath() + "_tiny_gp.png")
                 ));
             }
         };

@@ -30,8 +30,8 @@ public class GenerationGraphDataSupplier {
                 add(Pair.of(
                         new ArrayList<>() {
                             {
-                                add(bestFitnessSeries);
                                 add(averageFitnessSeries);
+                                add(bestFitnessSeries);
                             }
                         },
                         new File(savePath.getAbsolutePath() + "_both.png")
