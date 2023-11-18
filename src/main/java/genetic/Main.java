@@ -6,7 +6,8 @@ import genetic.data.ExcelData;
 import genetic.data.deserializers.InputFileFormatDeserializer;
 import genetic.data.serializers.ExcelSerializer;
 import genetic.utility.arguments.Parser;
-import genetic.visualization.GenerationGraphCreator;
+import genetic.visualization.Function2DGraphDataSupplier;
+import genetic.visualization.GenerationGraphDataSupplier;
 import genetic.visualization.GraphCreator2D;
 import genetic.visualization.GraphCreator3D;
 
@@ -14,8 +15,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
-
-
 
     public static void main(String[] args) {
         var parser = new Parser(args);
@@ -47,19 +46,21 @@ public class Main {
 
             var excelData = new ExcelData(excelTinyGPOutput);
 
+            var creator = new GraphCreator2D();
+
             if (inputData.header().variableNumber() > 1) {
-                var creator = new GraphCreator3D(
+                var creator3D = new GraphCreator3D(
                         new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_results"),
                         inputData, excelData);
-                creator.create();
+                creator3D.create();
             } else {
-                var creator = new GraphCreator2D(resultsImagePath, inputData, excelData);
-                creator.create();
+                var converter = new Function2DGraphDataSupplier(resultsImagePath, inputData, excelData);
+                creator.create(converter.convertToXYData(), "TinyGP vs f(x) = y", "X", "Y");
                 creator.save();
             }
 
-            var creator = new GenerationGraphCreator(generationsImagePath, history);
-            creator.create();
+            var converter = new GenerationGraphDataSupplier(generationsImagePath, history);
+            creator.create(converter.convertToXYData(), "TinyGP generations", "Generation", "Fitness");
             creator.save();
 
             //  Temporary fix to close program after screenshot.
