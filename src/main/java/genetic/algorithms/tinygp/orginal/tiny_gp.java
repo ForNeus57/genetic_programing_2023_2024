@@ -44,7 +44,7 @@ public class tiny_gp {
         MAX_LEN = 10000,
                 POPSIZE = 100000,
                 DEPTH   = 5,
-                GENERATIONS = 70,       // Change so the learning process doesn't take too long.
+                GENERATIONS = 100,       // Change so the learning process doesn't take too long.
                 TSIZE = 2;
     public final double
         PMUT_PER_NODE  = 0.05,

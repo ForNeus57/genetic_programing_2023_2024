@@ -25,7 +25,7 @@ public class Main {
         var inputData = deserializer.deserialize();
 
         var gp = new TinyGP(inputData, config.seed());
-        var history = gp.evolve(-1e-5);
+        var history = gp.evolve(config.precision());
 
         //  Excel...
         try {

@@ -26,7 +26,7 @@ public class Parser {
         //  C style array here, because for some reason in JAVA you cannot capture non-final objects with lambda functions to its scope.
         //  So yes it is a wrapper around it
         //  And yes its evil
-        final Config[] output = {new Config(new File("problem.dat"), new Random().nextLong())};
+        final Config[] output = {new Config(new File("problem.dat"), new Random().nextLong(), -1e-5)};
         final int[] idx = {0};
 
         this.tokens.forEach(token -> {
@@ -34,6 +34,7 @@ public class Parser {
                 //  Extra assigment, because records in JAVA have final fields by default....
                 case InputFile -> output[0] = output[0].setInputFile(args.get(idx[0]++));
                 case SeedValue -> output[0] = output[0].setSeed(args.get(idx[0]++));
+                case PrecisionValue -> output[0] = output[0].setPrecision(args.get(idx[0]++));
             }
         });
 

@@ -39,7 +39,7 @@ public class TinyGP {
             MAX_LEN = 10000,
             POPSIZE = 100000,
             DEPTH   = 5,
-            GENERATIONS = 70,       // Change so the learning process doesn't take too long.
+            GENERATIONS = 100, //   Change so the learning process doesn't take too long.
             TSIZE = 2;
     public static final double
             CROSSOVER_PROB = 0.9;
@@ -123,7 +123,7 @@ public class TinyGP {
 
     public ArrayList<Statistics> evolve(double precision) {
         int offspring, parent1, parent2, parent;
-        char []newind;
+        char [] newind;
 
         System.out.print(
             new ConfigurationStatistics(
@@ -141,7 +141,7 @@ public class TinyGP {
         );
 
         stats(fitness, 0);
-        for (int gen = 1; gen < GENERATIONS; ++gen) {
+        for (int generationNumber = 1; generationNumber < GENERATIONS; ++generationNumber) {
             if (fbestpop > precision) {
                 System.out.print("PROBLEM SOLVED\n");
                 return this.performanceHistory;
@@ -164,7 +164,7 @@ public class TinyGP {
                 this.population.population().set(offspring, new Individual(newind));
                 fitness[offspring] = newfit;
             }
-            stats(fitness, gen);
+            stats(fitness, generationNumber);
         }
 
         System.out.print("PROBLEM *NOT* SOLVED\n");
