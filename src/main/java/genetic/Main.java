@@ -29,8 +29,8 @@ public class Main {
         //  Excel...
         try {
             var savePath = new File(config.inputFile().getParent() + "/generated/excel/" + config.inputFile().getName().split("\\.")[0] + ".xlsx");
-            var resultsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_results.png");
-            var generationsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_generations.png");
+            var resultsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_results");
+            var generationsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_generations");
 
             var excelWriter = new ExcelSerializer();
             excelWriter.write(inputData, history);

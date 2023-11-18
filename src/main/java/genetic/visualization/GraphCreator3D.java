@@ -82,7 +82,7 @@ public class GraphCreator3D  extends AWTAbstractAnalysis {
         chart.getScene().getGraph().add(surface);
         chart.getView().setViewPositionMode(mode);
         chart.getView().setMaximized(true);
-        chart.getAxisLayout().setFont(new Font("Arial", Font.TimesRoman_24.getStyle(), 28));
+        chart.getAxisLayout().setFont(new Font("Arial", Font.TimesRoman_24.getStyle(), 32));
 
         return chart;
     }
