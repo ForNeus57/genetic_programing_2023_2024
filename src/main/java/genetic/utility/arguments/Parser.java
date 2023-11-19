@@ -19,7 +19,7 @@ public class Parser {
         this.getTokens();
 
         if (!this.checkTokensList())
-            throw new IllegalArgumentException("Some commandline arguments were given more than one!");
+            throw new IllegalArgumentException("Some commandline arguments were given more than once!");
     }
 
     public Config parse() {

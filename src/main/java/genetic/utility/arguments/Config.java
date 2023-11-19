@@ -15,7 +15,6 @@ public record Config(File inputFile, Long seed, Double precision) {
     public Config setSeed(String value) {
         return new Config(inputFile, Long.parseLong(value), precision);
     }
-
     public Config setPrecision(String value) {
         return new Config(inputFile, seed, Double.parseDouble(value));
     }
