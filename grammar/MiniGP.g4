@@ -1,5 +1,3 @@
-grammar MiniGP;
-
 prog:   (statement)+;
 
 statement: 
@@ -12,18 +10,19 @@ statement:
 
 varDeclaration: 'int' ID ('=' expr)? ';';
 assignment: ID '=' expr ';';
-ifStatement: 'if' '(' expr ')' statement ('else' statement)?;
-loopStatement: 'while' '(' expr ')' statement;
+ifStatement: 'if' '(' condition ')' statement ('else' statement)?;
+loopStatement: 'while' '(' condition ')' statement;
 ioStatement: ('read' | 'write') '(' ID ')' ';';
 
+condition: expr ('>' | '<' | '==' | '!=' | '>=' | '<=') expr
+         | expr ('&&' | '||') expr
+         | '!' condition;
+
 expr: expr ('*' | '/' | '+' | '-') expr
-    | expr ('>' | '<' | '==' | '!=' | '>=' | '<=') expr
-    | expr ('&&' | '||') expr
-    | '!' expr
     | ID
     | INT
     | '(' expr ')';
 
 ID: [a-zA-Z]+;
-INT: [1-9][0-9]* | '0';
+INT: [1-9][0-9]* | '0';y
 WS: [ \t\r\n]+ -> skip ;
