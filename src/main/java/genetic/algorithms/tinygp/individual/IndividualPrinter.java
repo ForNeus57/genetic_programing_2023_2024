@@ -55,13 +55,13 @@ public class IndividualPrinter {
             case TinyGP.SIN -> {
                 this.builder.append("sin(");
                 a1 = printBody(++buffercounter);
-                this.builder.append(")");
+                this.builder.append("))");
                 return a1;
             }
             case TinyGP.COS -> {
                 this.builder.append("cos(");
                 a1 = printBody(++buffercounter);
-                this.builder.append(")");
+                this.builder.append("))");
                 return a1;
             }
         }

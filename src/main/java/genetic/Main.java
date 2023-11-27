@@ -28,7 +28,7 @@ public class Main {
 
         try {
             //  Create logs.
-            var logPath = new File(config.inputFile().getParent() + "/generated/logs/" + config.inputFile().getName().split("\\.")[0] + ".txt");
+            var logPath = new File(config.inputFile().getParent() + "/generated/logs/" + config.inputFile().getName().split("\\.")[0] + "_new.txt");
             var logFile = new File(logPath.getAbsolutePath());
             var output = gp.output.toString();
 
@@ -38,9 +38,9 @@ public class Main {
             writer.close();
 
             //  Excel....
-            var savePath = new File(config.inputFile().getParent() + "/generated/excel/" + config.inputFile().getName().split("\\.")[0] + ".xlsx");
-            var resultsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_results");
-            var generationsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_generations");
+            var savePath = new File(config.inputFile().getParent() + "/generated/excel/" + config.inputFile().getName().split("\\.")[0] + "_new.xlsx");
+            var resultsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_new_results");
+            var generationsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_new_generations");
 
             var excelWriter = new ExcelSerializer();
             excelWriter.write(inputData, history);
@@ -60,8 +60,9 @@ public class Main {
 
             if (inputData.header().variableNumber() > 1) {
                 var creator3D = new GraphCreator3D(
-                        new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_results"),
-                        inputData, excelData);
+                    new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_new_results"),
+                    inputData,
+                    excelData);
                 creator3D.create();
             } else {
                 var converter = new Function2DGraphDataSupplier(resultsImagePath, inputData, excelData);
