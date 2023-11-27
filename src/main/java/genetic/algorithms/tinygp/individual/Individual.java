@@ -1,6 +1,8 @@
 package genetic.algorithms.tinygp.individual;
 
 
+import genetic.algorithms.tinygp.TinyGP;
+
 import static genetic.algorithms.tinygp.TinyGP.FSET_START;
 
 public class Individual {
@@ -27,7 +29,18 @@ public class Individual {
         if (this.body[traversingSize] < FSET_START)
             return ++traversingSize;
 
-        return this.getSizeByTraversing(this.getSizeByTraversing(++traversingSize));
+        switch(this.body[traversingSize]) {
+            case TinyGP.ADD:
+            case TinyGP.SUB:
+            case TinyGP.MUL:
+            case TinyGP.DIV:
+                return this.getSizeByTraversing(this.getSizeByTraversing(++traversingSize));
+            case TinyGP.SIN:
+            case TinyGP.COS:
+                return this.getSizeByTraversing(++traversingSize);
+        }
+
+        throw new IndexOutOfBoundsException("Unknown operation");
     }
 
     public char[] body() {

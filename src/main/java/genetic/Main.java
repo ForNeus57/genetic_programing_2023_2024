@@ -26,8 +26,18 @@ public class Main {
         var gp = new TinyGP(inputData, config.seed());
         var history = gp.evolve(config.precision());
 
-        //  Excel...
         try {
+            //  Create logs.
+            var logPath = new File(config.inputFile().getParent() + "/generated/logs/" + config.inputFile().getName().split("\\.")[0] + ".txt");
+            var logFile = new File(logPath.getAbsolutePath());
+            var output = gp.output.toString();
+
+            logFile.createNewFile();
+            var writer = new java.io.FileWriter(logFile);
+            writer.write(output);
+            writer.close();
+
+            //  Excel....
             var savePath = new File(config.inputFile().getParent() + "/generated/excel/" + config.inputFile().getName().split("\\.")[0] + ".xlsx");
             var resultsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_results");
             var generationsImagePath = new File(config.inputFile().getParent() + "/generated/images/" + config.inputFile().getName().split("\\.")[0] + "_generations");
