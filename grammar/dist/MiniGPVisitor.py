@@ -44,6 +44,11 @@ class MiniGPVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by MiniGPParser#condition.
+    def visitCondition(self, ctx:MiniGPParser.ConditionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by MiniGPParser#expr.
     def visitExpr(self, ctx:MiniGPParser.ExprContext):
         return self.visitChildren(ctx)
