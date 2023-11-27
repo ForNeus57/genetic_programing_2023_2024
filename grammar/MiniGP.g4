@@ -1,3 +1,5 @@
+grammar MiniGP;
+
 prog:   (statement)+;
 
 statement: 
@@ -24,5 +26,5 @@ expr: expr ('*' | '/' | '+' | '-') expr
     | '(' expr ')';
 
 ID: [a-zA-Z]+;
-INT: [1-9][0-9]* | '0';y
+INT: [1-9][0-9]* | '0';
 WS: [ \t\r\n]+ -> skip ;
