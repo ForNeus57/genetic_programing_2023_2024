@@ -9,27 +9,25 @@ import java.util.Random;
 
 public class PopulationCreator {
 
-    private final int populationSize;
+    public static final int populationSize = 100000;
     private final InputData data;
 
-    public PopulationCreator(int populationSize, InputData inputData) {
-        this.populationSize = populationSize;
+    public PopulationCreator(InputData inputData) {
         this.data = inputData;
     }
 
-    public Population createRandomPopulation(int maxLength, Random randomDevice, int maxDepth) {
+    public Population createRandomPopulation(int maxLength, Random randomDevice) {
         ArrayList<Individual> populationHolder = new ArrayList<>();
 
         var creator = new IndividualCreator(
             maxLength,
             randomDevice,
-            maxDepth,
             this.data.header().variableNumber(),
             this.data.header().randomConstraintsSize()
         );
 
         //  TODO: Rewrite it to be better.
-        for (int i = 0; i < this.populationSize; ++i) {
+        for (int i = 0; i < populationSize; ++i) {
             populationHolder.add(creator.createRandomIndividual());
         }
 

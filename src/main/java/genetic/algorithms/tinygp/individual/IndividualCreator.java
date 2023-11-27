@@ -6,17 +6,16 @@ import java.util.Random;
 
 
 public class IndividualCreator {
+    public static final int maximumTreeDepth = 5;
     private final char[] temporaryIndividualBody;
     private final Random randomDevice;
-    private final int maximumTreeDepth;
     private final int variableNumber;
     private final int randomConstraintsSize;
 
     //  Random device is passed, because there is a need to make this deterministic for a random seed.
-    public IndividualCreator(int maximumSizeOfIndividual, Random randomDevice, int maximumTreeDepth, int variableNumber, int randomConstraintsSize) {
+    public IndividualCreator(int maximumSizeOfIndividual, Random randomDevice, int variableNumber, int randomConstraintsSize) {
         this.temporaryIndividualBody = new char[maximumSizeOfIndividual];
         this.randomDevice = randomDevice;
-        this.maximumTreeDepth = maximumTreeDepth;
         this.variableNumber = variableNumber;
         this.randomConstraintsSize = randomConstraintsSize;
     }
@@ -26,7 +25,7 @@ public class IndividualCreator {
 
         do {
             //  I think we try to run it until created individual is valid, because randomness in grow function can mess up given individual.
-            len = grow(this.temporaryIndividualBody, 0, this.temporaryIndividualBody.length, this.maximumTreeDepth);
+            len = grow(this.temporaryIndividualBody, 0, this.temporaryIndividualBody.length, maximumTreeDepth);
         } while (len < 0);                                           //  -1 from grow function means algorithm fucked up
 
         var ind = new char[len];
@@ -54,12 +53,23 @@ public class IndividualCreator {
 
         prim = (char) (this.randomDevice.nextInt(TinyGP.FSET_END - TinyGP.FSET_START + 1) + TinyGP.FSET_START);     //  Choose random operation
 
-        //  Removed funny switch here...
         buffer[pos] = prim;
-        var one_child = grow(buffer, pos + 1, max, depth - 1);              //  If one child is invalid then all the rest
-        if (one_child < 0)
-            return -1;
+        switch(prim) {
+            case TinyGP.ADD:
+            case TinyGP.SUB:
+            case TinyGP.MUL:
+            case TinyGP.DIV:
+                var one_child = grow(buffer, pos + 1, max, depth - 1);              //  If one child is invalid then all the rest
+                if (one_child < 0)
+                    return -1;
 
-        return grow(buffer, one_child, max, depth - 1);
+                return grow(buffer, one_child, max, depth - 1);
+
+            case TinyGP.SIN:
+            case TinyGP.COS:
+                return grow(buffer, pos + 1, max, depth - 1);
+        }
+
+        throw new IndexOutOfBoundsException("Invalid primitive: " + prim);
     }
 }

@@ -39,6 +39,12 @@ public class Interpreter {
                 double num = run(), den = run();
                 return Math.abs(den) <= Interpreter.minimalDivisorThreshold ? num : num / den;
             }
+            case TinyGP.SIN -> {
+                return Math.sin(run());
+            }
+            case TinyGP.COS -> {
+                return Math.cos(run());
+            }
         }
         throw new IndexOutOfBoundsException("Primitive " + primitive + " is not a valid operation.");
     }
