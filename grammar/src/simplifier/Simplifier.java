@@ -12,14 +12,13 @@ package src.simplifier;
 
  */
 public class Simplifier {
-    private String orgProg;
     private String newProg;
-    private int   subFormLocIndex;
+    private int subFormLocIndex;
     private double lfVal;
     private String ctFunction;
     private double rtVal;
     private double result;
-    private int initialSubFormulaCount;
+
     public Simplifier() { } // constructor
     /**
      * Main simplification algorithm is performed here.
@@ -32,11 +31,8 @@ public class Simplifier {
      *       original program.
      */
     public String simplify(String program) {
-        orgProg = program;
 
-        newProg = orgProg.substring(1, orgProg.length() - 1); // strip-off outlying final parentheses.
-
-        this.initialSubFormulaCount = countSimplifiableSubFormulasInNewProgram();
+        newProg = program.substring(1, program.length() - 1); // strip-off outlying final parentheses.
 
         while ( countSimplifiableSubFormulasInNewProgram() > 0 ) {  // while there are any sub formulas left...
             locateAvailableSubFormula();
@@ -48,30 +44,6 @@ public class Simplifier {
         newProg = "("+newProg+")"; // add in outlying final parentheses again.
 
         return newProg;
-    }
-
-    /**
-     * Shows information about how the class simplified the original program to
-     * the new program.
-     */
-    public String toString() {
-        String newline = System.getProperty("line.separator");
-
-        int programSizeReduction = orgProg.length() - newProg.length();
-
-        int percentReduced = (int)(((float) programSizeReduction /(float)orgProg.length())*100f) ;
-        String str = "";
-
-        str += "org. program size:" + this.orgProg.length() + newline;
-        str += "new program size :" + this.newProg.length() + newline;
-        str += "size reduction   :" + programSizeReduction + " ("+percentReduced+")%"  + newline;
-        str += "initial subformula count and simplifications: " + initialSubFormulaCount + newline;
-        str += "simplified program: " + newline;
-        str +=  this.newProg + newline;
-        str += "original program: " + newline;
-        str +=  this.orgProg;
-
-        return str;
     }
 
     /**
@@ -216,7 +188,7 @@ public class Simplifier {
     }
 
     /**
-     * Take the subformula at hand and replace it with it's numerical result
+     * Take the subformula at hand and replace it with its numerical result
      * (details). For example, (1 / 2) would be replaced by the value of .5
      */
     public void replaceSubFormulaWithItsResult() {

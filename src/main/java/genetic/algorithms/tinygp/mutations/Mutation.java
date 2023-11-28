@@ -36,10 +36,13 @@ public class Mutation {
                         case TinyGP.SUB:
                         case TinyGP.MUL:
                         case TinyGP.DIV:
-                            parentCopy[i] = (char) (this.randomDevice.nextInt(FSET_END - FSET_START + 1) + FSET_START);
+                            parentCopy[i] = (char) (this.randomDevice.nextInt(TinyGP.DIV - FSET_START + 1) + FSET_START);
                             break;
                         case TinyGP.SIN:
+                            parentCopy[i] = TinyGP.COS;
+                            break;
                         case TinyGP.COS:
+                            parentCopy[i] = TinyGP.SIN;
                             break;
                     }
             }
