@@ -13,7 +13,7 @@ class Simplifier:
     def simplify(self) -> str:
         out = Simplifier.parse_conditions(self.output)
         print(out)
-        return f'({Simplifier.calculate(out)})'
+        return f'({Simplifier.calculate(out)})\n'
 
     @staticmethod
     def tokenize(s):
@@ -44,20 +44,47 @@ class Simplifier:
         return _helper(Simplifier.tokenize(expr))[0]
 
     @staticmethod
-    def calculate(expression: list) -> Optional[float]:
+    def calculate(expression: list) -> Union[float, list]:
         match expression:
 
-            case [left, operation, right] if isinstance(left, list) and isinstance(right, list):
-                left_out: float = Simplifier.calculate(left)
-                right_out: float = Simplifier.calculate(right)
+            case [str(left), _, str(right)] as option if 'X' in left and 'X' in right:
+                return option
+
+            case [str(left), ('+' | '-' | '*' | '/') as operation, right] if 'X' in left:
+                if isinstance(right, list):
+                    right: Union[list, float] = Simplifier.calculate(right)
+
+                return [left, operation, right]
+
+            case [left, ('+' | '-' | '*' | '/') as operation, str(right)] if 'X' in right:
+                if isinstance(left, list):
+                    left: Union[list, float] = Simplifier.calculate(left)
+
+                return [left, operation, right]
+
+            case [list(left), ('+' | '-' | '*' | '/') as operation, list(right)]:
+                left_out: Union[float, list] = Simplifier.calculate(left)
+                right_out: Union[float, list] = Simplifier.calculate(right)
+
+                if isinstance(left_out, list) or isinstance(right_out, list):
+                    return [left_out, operation, right_out]
+
                 return Simplifier.calculate([left_out, operation, right_out])
 
-            case [left, operation, right] if isinstance(left, list):
-                left_out = Simplifier.calculate(left)
+            case [list(left), ('+' | '-' | '*' | '/') as operation, right]:
+                left_out: Union[float, list] = Simplifier.calculate(left)
+
+                if isinstance(left_out, list):
+                    return [left_out, operation, right]
+
                 return Simplifier.calculate([left_out, operation, right])
 
-            case [left, operation, right] if isinstance(right, list):
-                right_out = Simplifier.calculate(right)
+            case [left, ('+' | '-' | '*' | '/') as operation, list(right)]:
+                right_out: Union[float, list] = Simplifier.calculate(right)
+
+                if isinstance(right_out, list):
+                    return [right_out, operation, right]
+
                 return Simplifier.calculate([left, operation, right_out])
 
             case [left, '+', right]:
@@ -70,20 +97,28 @@ class Simplifier:
                 return left * right
 
             case [left, '/', right]:
-                return left / right if abs(right) <= 0.001 else right
+                return left / right if abs(right) > 0.001 else right
 
             case ['sin', val]:
-                val: float = Simplifier.calculate(val)
+                val: Union[float, list] = Simplifier.calculate(val)
+
+                if isinstance(val, list):
+                    return ['sin', val]
+
                 return sin(val)
 
             case ['cos', val]:
-                val: float = Simplifier.calculate(val)
+                val: Union[float, list] = Simplifier.calculate(val)
+
+                if isinstance(val, list):
+                    return ['cos', val]
+
                 return cos(val)
 
-            case [val] if isinstance(val, list):
+            case [list(val)]:
                 return Simplifier.calculate(val)
 
-            case [val] if isinstance(val, float):
+            case [float(val)]:
                 return val
 
             case _:
@@ -111,6 +146,15 @@ if __name__ == '__main__':
     print(simplifier.simplify())
 
     simplifier: Simplifier = Simplifier("(((sin(1)) + 1))")
+    print(simplifier.simplify())
+
+    simplifier: Simplifier = Simplifier("(((sin(1)) + X1))")
+    print(simplifier.simplify())
+
+    simplifier: Simplifier = Simplifier("((X1  * ( 3.2 + 3.4)) * 2)")
+    print(simplifier.simplify())
+
+    simplifier: Simplifier = Simplifier("(X1  * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
     print(simplifier.simplify())
 
 # with open(argv[2], 'w') as output_file:
