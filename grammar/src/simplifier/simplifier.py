@@ -1,87 +1,93 @@
+from typing import Optional, Tuple, Union, Callable
 from math import sin, cos
 from sys import argv
-from typing import Optional, Tuple
+import re
 
 
 class Simplifier:
+    _tokenizer = re.compile(r'([()])|\s+').split
 
-    def __init__(self, program: str):
-        self.program: str = program
-        self.output: str = self.program.lstrip('(').rstrip(')')
+    def __init__(self, input_formula: str):
+        self.output: str = input_formula[1: -1]
 
     def simplify(self) -> str:
-        formulas_count: int = self.count_simplifiable()
-
-        while True:
-
-
-            if  formulas_count == 0:
-                break
-
-        return f'({self.output})'
-
-    def count_simplifiable(self) -> int:
-        pass
-
-    def locate_simplifiable(self) -> int:
-        pass
-
-    def locate_formulas(self) -> Tuple[int, int]:
-        count: int = 0
-
-    def is_satisfiable(self, opening_parenthesis_index: int, closing_parenthesis_index: int) -> bool:
-        """
-        Checks if the sub-formula is satisfiable.
-
-        :param opening_parenthesis_index:
-        :param closing_parenthesis_index:
-        :return:
-        """
-        if self.program[opening_parenthesis_index] == '(':
-            raise ValueError('Invalid opening parenthesis index')
-
-        if self.program[closing_parenthesis_index] == ')':
-            raise ValueError('Invalid closing parenthesis index')
-
-        sub_formula: str = self.program[opening_parenthesis_index: closing_parenthesis_index]
-
-        return 'X' in sub_formula
+        out = Simplifier.parse_conditions(self.output)
+        print(out)
+        return f'({Simplifier.calculate(out)})'
 
     @staticmethod
-    def locate_parentheses(input_sequence: str) -> Tuple[Optional[int], Optional[int]]:
-        opening_parenthesis_index: int = input_sequence.find('(')
-        closing_parenthesis_index: int = input_sequence.find(')')
+    def tokenize(s):
+        def _helper(val: str) -> Union[float, str]:
+            try:
+                return float(val)
+            except ValueError:
+                return val
 
-        opening_parenthesis_index = None if opening_parenthesis_index == -1 else opening_parenthesis_index
-        closing_parenthesis_index = None if closing_parenthesis_index == -1 else closing_parenthesis_index
-
-        return opening_parenthesis_index, closing_parenthesis_index
-
-    def split_to_tokens(self, sub_formula: str) -> Tuple[str, float, Optional[float]]:
-        tokens: list[str] = sub_formula.split()
-
-
+        return map(_helper, filter(None, Simplifier._tokenizer(s)))
 
     @staticmethod
-    def calculate_result(function: str, left_element: float, right_element: Optional[float] = None) -> float:
-        match function:
-            case "+":
-                return left_element + right_element
-            case "-":
-                return left_element - right_element
-            case "*":
-                return left_element * right_element
-            case "/":
-                return left_element / right_element if abs(right_element) <= 0.001 else right_element
-            case "sin":
-                return sin(left_element)
-            case "cos":
-                return cos(left_element)
+    def parse_conditions(expr) -> list:
+        def _helper(tokens) -> Tuple[list, bool]:
+            items = []
+            for item in tokens:
+                if item == '(':
+                    result, closeparen = _helper(tokens)
+                    if not closeparen:
+                        raise ValueError("Unbalanced parentheses")
+                    items.append(result)
+                elif item == ')':
+                    return items, True
+                else:
+                    items.append(item)
+            return items, False
+
+        return _helper(Simplifier.tokenize(expr))[0]
+
+    @staticmethod
+    def calculate(expression: list) -> Optional[float]:
+        match expression:
+
+            case [left, operation, right] if isinstance(left, list) and isinstance(right, list):
+                left_out: float = Simplifier.calculate(left)
+                right_out: float = Simplifier.calculate(right)
+                return Simplifier.calculate([left_out, operation, right_out])
+
+            case [left, operation, right] if isinstance(left, list):
+                left_out = Simplifier.calculate(left)
+                return Simplifier.calculate([left_out, operation, right])
+
+            case [left, operation, right] if isinstance(right, list):
+                right_out = Simplifier.calculate(right)
+                return Simplifier.calculate([left, operation, right_out])
+
+            case [left, '+', right]:
+                return left + right
+
+            case [left, '-', right]:
+                return left - right
+
+            case [left, '*', right]:
+                return left * right
+
+            case [left, '/', right]:
+                return left / right if abs(right) <= 0.001 else right
+
+            case ['sin', val]:
+                val: float = Simplifier.calculate(val)
+                return sin(val)
+
+            case ['cos', val]:
+                val: float = Simplifier.calculate(val)
+                return cos(val)
+
+            case [val] if isinstance(val, list):
+                return Simplifier.calculate(val)
+
+            case [val] if isinstance(val, float):
+                return val
+
             case _:
-                raise ValueError(f'Invalid function: {function}')
-
-    def replace_sub_formula(self, sub_formula: str):
-        pass
+                raise ValueError(f'Invalid expression: {expression}')
 
 
 def cut_program_from_file(file_path: str) -> str:
@@ -90,11 +96,22 @@ def cut_program_from_file(file_path: str) -> str:
 
         lines = raw_input.split('\n')
 
-        return lines[len(lines) - 2].lstrip("Best Individual: ")
+        return lines[len(lines) - 3].lstrip("Best Individual: ")
 
 
 if __name__ == '__main__':
-    program: str = cut_program_from_file(argv[1])
-    simplifier = Simplifier(program)
-    with open(argv[2], 'w') as output_file:
-        output_file.write(simplifier.simplify())
+    # print("((cos(1)) + 1)")
+
+    # program: str = cut_program_from_file(argv[1])
+    # simplifier: Simplifier = Simplifier(program)
+    simplifier: Simplifier = Simplifier("((1 * (3.2 + 3.4)) * 3)")
+    print(simplifier.simplify())
+
+    simplifier: Simplifier = Simplifier("(1 * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
+    print(simplifier.simplify())
+
+    simplifier: Simplifier = Simplifier("(((sin(1)) + 1))")
+    print(simplifier.simplify())
+
+# with open(argv[2], 'w') as output_file:
+#     output_file.write(simplifier.simplify())

@@ -17,14 +17,16 @@ loopStatement: 'while' '(' condition ')' statement;
 ioStatement: ('read' | 'write') '(' ID ')' ';';
 
 condition: expr ('>' | '<' | '==' | '!=' | '>=' | '<=') expr
-         | expr ('&&' | '||') expr
-         | '!' condition;
+         | condition ('&&' | '||') condition
+         | '!' condition
+         | BOOL;
 
 expr: expr ('*' | '/' | '+' | '-') expr
     | ID
     | INT
     | '(' expr ')';
 
+BOOL: 'true' | 'false';
 ID: [a-zA-Z]+;
 INT: [1-9][0-9]* | '0';
 WS: [ \t\r\n]+ -> skip ;
