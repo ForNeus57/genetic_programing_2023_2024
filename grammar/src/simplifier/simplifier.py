@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union, Callable
+from typing import Tuple, Union, Any
 from math import sin, cos
 from sys import argv
 import re
@@ -16,7 +16,11 @@ class Simplifier:
         return f'({Simplifier.calculate(out)})\n'
 
     @staticmethod
-    def tokenize(s):
+    def custom_divide(first: float, second: float) -> float:
+        return first / second if abs(second) > 0.001 else second
+
+    @staticmethod
+    def tokenize(s) -> map:
         def _helper(val: str) -> Union[float, str]:
             try:
                 return float(val)
@@ -30,18 +34,54 @@ class Simplifier:
         def _helper(tokens) -> Tuple[list, bool]:
             items = []
             for item in tokens:
-                if item == '(':
-                    result, closeparen = _helper(tokens)
-                    if not closeparen:
-                        raise ValueError("Unbalanced parentheses")
-                    items.append(result)
-                elif item == ')':
-                    return items, True
-                else:
-                    items.append(item)
-            return items, False
+                match item:
+                    case '(':
+                        result, close_parentheses_status = _helper(tokens)
+                        if close_parentheses_status:
+                            raise ValueError("Unbalanced parentheses")
+
+                        items.append(result)
+
+                    case ')':
+                        return items, False
+
+                    case _:
+                        items.append(item)
+
+            return items, True
 
         return _helper(Simplifier.tokenize(expr))[0]
+
+    @staticmethod
+    def correct_chaining_standard(un_simplifiable: Union[list, str], left_operation: str, right_operation: str, first_val: float, second_val: float, default_output: Any):
+        match (left_operation, right_operation):
+            case ('+', '+'):
+                return [un_simplifiable, '+', first_val + second_val]
+
+            case ('+', '-'):
+                result: float = first_val - second_val
+                return [un_simplifiable, '+' if result >= 0.0 else '-', abs(result)]
+
+            case ('-', '+'):
+                result: float = -first_val + second_val
+                return [un_simplifiable, '+' if result >= 0.0 else '-', abs(result)]
+
+            case ('-', '-'):
+                return [un_simplifiable, '-', first_val + second_val]
+
+            case ('*', '*'):
+                return [un_simplifiable, '*', first_val * second_val]
+
+            case ('*', '/'):
+                return [un_simplifiable, '*', first_val * Simplifier.custom_divide(1.0, second_val)]
+
+            case ('/', '*'):
+                return [un_simplifiable, '*', Simplifier.custom_divide(1.0, first_val) * second_val]
+
+            case ('/', '/'):
+                return [un_simplifiable, '/', first_val * second_val]
+
+        return default_output
 
     @staticmethod
     def calculate(expression: list) -> Union[float, list]:
@@ -75,7 +115,16 @@ class Simplifier:
                 left_out: Union[float, list] = Simplifier.calculate(left)
 
                 if isinstance(left_out, list):
-                    return [left_out, operation, right]
+                    output: list[Any] = [left_out, operation, right]
+
+                    match output:
+                        case [[left_left_val, left_operation, float(left_right_val)], right_operation, float(right_val)] if (isinstance(left_left_val, list) or 'X' in left_left_val):
+                            return Simplifier.correct_chaining_standard(left_left_val, left_operation, right_operation, left_right_val, right_val, output)
+
+                        case [[float(left_left_val), left_operation, left_right_val], right_operation, float(right_val)] if (isinstance(left_right_val, list) or 'X' in left_right_val):
+                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_left_val, right_val, output)[::-1]
+
+                    return output
 
                 return Simplifier.calculate([left_out, operation, right])
 
@@ -97,7 +146,7 @@ class Simplifier:
                 return left * right
 
             case [left, '/', right]:
-                return left / right if abs(right) > 0.001 else right
+                return Simplifier.custom_divide(left, right)
 
             case ['sin', val]:
                 val: Union[float, list] = Simplifier.calculate(val)
@@ -151,7 +200,13 @@ if __name__ == '__main__':
     simplifier: Simplifier = Simplifier("(((sin(1)) + X1))")
     print(simplifier.simplify())
 
-    simplifier: Simplifier = Simplifier("((X1  * ( 3.2 + 3.4)) * 2)")
+    simplifier: Simplifier = Simplifier("((X1 * ( 3.2 + 3.4)) * 2)")
+    print(simplifier.simplify())
+
+    simplifier: Simplifier = Simplifier("((( 3.2 + 3.4) * X1) * 2)")
+    print(simplifier.simplify())
+
+    simplifier: Simplifier = Simplifier("((( 3.2 + 3.4) + X1) + 2)")
     print(simplifier.simplify())
 
     simplifier: Simplifier = Simplifier("(X1  * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
