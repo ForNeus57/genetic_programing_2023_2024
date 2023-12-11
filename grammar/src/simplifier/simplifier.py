@@ -197,6 +197,9 @@ class Simplifier:
 
                 return cos(val)
 
+            case [str(val)] if 'X' in val:
+                return [val]
+
             case [list(val)]:
                 return Simplifier.calculate(val)
 
