@@ -108,7 +108,7 @@ class Simplifier:
                 output: list[Any] = [left_out, operation, right_out]
 
                 if isinstance(left_out, list) and isinstance(right_out, list):
-                    pass
+                    return output
 
                 if isinstance(left_out, list) and not isinstance(right_out, list):
 
@@ -125,10 +125,10 @@ class Simplifier:
 
                     match output:
                         case [float(left_val), left_operation, [float(left_right_val), right_operation, right_right_val]] if isinstance(right_right_val, list) or 'X' in right_right_val:
-                            return Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val, output)[::-1]
+                            return Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val, output)
 
                         case [float(left_val), left_operation, [left_right_val, right_operation, float(right_right_val)]] if isinstance(left_right_val, list) or 'X' in left_right_val:
-                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val, output)
+                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val, output)[::-1]
 
 
                     return output
@@ -181,7 +181,7 @@ class Simplifier:
             case [left, '/', right]:
                 return Simplifier.custom_divide(left, right)
 
-            case ['sin', val]:
+            case ['sin', list(val)]:
                 val: Union[float, list] = Simplifier.calculate(val)
 
                 if isinstance(val, list):
@@ -189,7 +189,7 @@ class Simplifier:
 
                 return sin(val)
 
-            case ['cos', val]:
+            case ['cos', list(val)]:
                 val: Union[float, list] = Simplifier.calculate(val)
 
                 if isinstance(val, list):
@@ -215,6 +215,7 @@ def cut_program_from_file(file_path: str) -> str:
 
 
 if __name__ == '__main__':
+
     program: str = cut_program_from_file(argv[1])
     simplifier: Simplifier = Simplifier(program)
 
