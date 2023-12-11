@@ -107,6 +107,9 @@ class Simplifier:
 
                 output: list[Any] = [left_out, operation, right_out]
 
+                if isinstance(left_out, list) and isinstance(right_out, list):
+                    pass
+
                 if isinstance(left_out, list) and not isinstance(right_out, list):
 
                     match output:
