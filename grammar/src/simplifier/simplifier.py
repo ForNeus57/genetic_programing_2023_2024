@@ -12,8 +12,7 @@ class Simplifier:
 
     def simplify(self) -> str:
         out = Simplifier.parse_conditions(self.output)
-        print(out)
-        return f'({Simplifier.calculate(out)})\n'
+        return str(Simplifier.calculate(out))
 
     @staticmethod
     def custom_divide(first: float, second: float) -> float:
@@ -87,7 +86,7 @@ class Simplifier:
     def calculate(expression: list) -> Union[float, list]:
         match expression:
 
-            case [str(left), _, str(right)] as option if 'X' in left and 'X' in right:
+            case [str(left), ('+' | '-' | '*' | '/'), str(right)] as option if 'X' in left and 'X' in right:
                 return option
 
             case [str(left), ('+' | '-' | '*' | '/') as operation, right] if 'X' in left:
@@ -106,33 +105,64 @@ class Simplifier:
                 left_out: Union[float, list] = Simplifier.calculate(left)
                 right_out: Union[float, list] = Simplifier.calculate(right)
 
-                if isinstance(left_out, list) or isinstance(right_out, list):
-                    return [left_out, operation, right_out]
+                output: list[Any] = [left_out, operation, right_out]
+
+                if isinstance(left_out, list) and not isinstance(right_out, list):
+
+                    match output:
+                        case [[left_left_val, left_operation, float(left_right_val)], right_operation, float(right_val)] if isinstance(left_left_val, list) or 'X' in left_left_val:
+                            return Simplifier.correct_chaining_standard(left_left_val, left_operation, right_operation, left_right_val, right_val, output)
+
+                        case [[float(left_left_val), left_operation, left_right_val], right_operation, float(right_val)] if isinstance(left_right_val, list) or 'X' in left_right_val:
+                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_left_val, right_val, output)[::-1]
+
+                    return output
+
+                if not isinstance(left_out, list) and isinstance(right_out, list):
+
+                    match output:
+                        case [float(left_val), left_operation, [float(left_right_val), right_operation, right_right_val]] if isinstance(right_right_val, list) or 'X' in right_right_val:
+                            return Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val, output)[::-1]
+
+                        case [float(left_val), left_operation, [left_right_val, right_operation, float(right_right_val)]] if isinstance(left_right_val, list) or 'X' in left_right_val:
+                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val, output)
+
+
+                    return output
 
                 return Simplifier.calculate([left_out, operation, right_out])
 
-            case [list(left), ('+' | '-' | '*' | '/') as operation, right]:
+            case [list(left), ('+' | '-' | '*' | '/') as operation, float(right)]:
                 left_out: Union[float, list] = Simplifier.calculate(left)
 
                 if isinstance(left_out, list):
                     output: list[Any] = [left_out, operation, right]
 
                     match output:
-                        case [[left_left_val, left_operation, float(left_right_val)], right_operation, float(right_val)] if (isinstance(left_left_val, list) or 'X' in left_left_val):
+                        case [[left_left_val, left_operation, float(left_right_val)], right_operation, float(right_val)] if isinstance(left_left_val, list) or 'X' in left_left_val:
                             return Simplifier.correct_chaining_standard(left_left_val, left_operation, right_operation, left_right_val, right_val, output)
 
-                        case [[float(left_left_val), left_operation, left_right_val], right_operation, float(right_val)] if (isinstance(left_right_val, list) or 'X' in left_right_val):
+                        case [[float(left_left_val), left_operation, left_right_val], right_operation, float(right_val)] if isinstance(left_right_val, list) or 'X' in left_right_val:
                             return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_left_val, right_val, output)[::-1]
 
                     return output
 
                 return Simplifier.calculate([left_out, operation, right])
 
-            case [left, ('+' | '-' | '*' | '/') as operation, list(right)]:
+            case [float(left), ('+' | '-' | '*' | '/') as operation, list(right)]:
                 right_out: Union[float, list] = Simplifier.calculate(right)
 
                 if isinstance(right_out, list):
-                    return [right_out, operation, right]
+                    output: list[Any] = [left, operation, right_out]
+
+                    match output:
+                        case [float(left_val), left_operation, [float(left_right_val), right_operation, right_right_val]] if isinstance(right_right_val, list) or 'X' in right_right_val:
+                            return Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val, output)[::-1]
+
+                        case [float(left_val), left_operation, [left_right_val, right_operation, float(right_right_val)]] if isinstance(left_right_val, list) or 'X' in left_right_val:
+                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val, output)
+
+                    return output
 
                 return Simplifier.calculate([left, operation, right_out])
 
@@ -176,41 +206,52 @@ class Simplifier:
 
 def cut_program_from_file(file_path: str) -> str:
     with open(file_path, 'r') as input_file:
-        raw_input = input_file.read()
+        raw_input = input_file.readlines()
 
-        lines = raw_input.split('\n')
-
-        return lines[len(lines) - 3].lstrip("Best Individual: ")
+        return raw_input[-2].lstrip("Best Individual: ")
 
 
 if __name__ == '__main__':
-    # print("((cos(1)) + 1)")
-
     # program: str = cut_program_from_file(argv[1])
     # simplifier: Simplifier = Simplifier(program)
-    simplifier: Simplifier = Simplifier("((1 * (3.2 + 3.4)) * 3)")
+
+    # simplifier: Simplifier = Simplifier("((1 * (3.2 + 3.4)) * 3)")
+    # print(simplifier.simplify())
+    #
+    simplifier: Simplifier = Simplifier('(((cos((sin((0.15792111801538056 / ((sin((((cos(4.390922989460659)) - (cos((sin(((3.9378125013554417 - (4.567186184882816 + (4.9798113857157915 - (2.879804272999489 + 1.8159963035888813)))) * 1.636289987009465)))))) - 4.167758199134466))) - 2.0531718571910895)))))) / 2.637638162486309) + (1.6247319950636392 + (X1 * X1)))')
     print(simplifier.simplify())
 
-    simplifier: Simplifier = Simplifier("(1 * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
-    print(simplifier.simplify())
+    # simplifier: Simplifier = Simplifier('(0.3752679242505537 + (1.6247319950636392 + (X1 * X1)))')
+    # print(simplifier.simplify())
 
-    simplifier: Simplifier = Simplifier("(((sin(1)) + 1))")
-    print(simplifier.simplify())
 
-    simplifier: Simplifier = Simplifier("(((sin(1)) + X1))")
-    print(simplifier.simplify())
+# simplifier: Simplifier = Simplifier("(1 * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
+    # print(simplifier.simplify())
+    #
+    # simplifier: Simplifier = Simplifier("(((sin(1)) + 1))")
+    # print(simplifier.simplify())
+    #
+    # simplifier: Simplifier = Simplifier("(((sin(1)) + X1))")
+    # print(simplifier.simplify())
+    #
+    # simplifier: Simplifier = Simplifier("((X1 * ( 3.2 + 3.4)) * 2)")
+    # print(simplifier.simplify())
+    #
+    # simplifier: Simplifier = Simplifier("((( 3.2 + 3.4) * X1) * 2)")
+    # print(simplifier.simplify())
+    #
+    # simplifier: Simplifier = Simplifier("((( 3.2 + 3.4) + X1) + 2)")
+    # print(simplifier.simplify())
+    #
+    # simplifier: Simplifier = Simplifier("(2 + (( 3.2 + 3.4) + X1))")
+    # print(simplifier.simplify())
+    #
+    # simplifier: Simplifier = Simplifier("(2 + (X1 + ( 3.2 + 3.4)))")
+    # print(simplifier.simplify())
+    #
+    #
+    # simplifier: Simplifier = Simplifier("(X1  * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
+    # print(simplifier.simplify())
 
-    simplifier: Simplifier = Simplifier("((X1 * ( 3.2 + 3.4)) * 2)")
-    print(simplifier.simplify())
-
-    simplifier: Simplifier = Simplifier("((( 3.2 + 3.4) * X1) * 2)")
-    print(simplifier.simplify())
-
-    simplifier: Simplifier = Simplifier("((( 3.2 + 3.4) + X1) + 2)")
-    print(simplifier.simplify())
-
-    simplifier: Simplifier = Simplifier("(X1  * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
-    print(simplifier.simplify())
-
-# with open(argv[2], 'w') as output_file:
-#     output_file.write(simplifier.simplify())
+    # with open(argv[2], 'w') as output_file:
+    #     output_file.write(simplifier.simplify())
