@@ -17,8 +17,7 @@ statement:
     ;
 
 varDeclaration:
-	integerDeclaration
-	|	booleanDeclaration
+	('const')? (integerDeclaration | booleanDeclaration)
 	;
 
 integerDeclaration:
