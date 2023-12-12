@@ -207,7 +207,7 @@ class Simplifier:
                 return val
 
             case _:
-                raise ValueError(f'Invalid expression: {expression}')
+                raise ValueError(f'Invalid expresion: {expression}')
 
 
 def cut_program_from_file(file_path: str) -> str:
