@@ -3,7 +3,7 @@ from antlr4 import *
 if "." in __name__:
     from .MiniGPParser import MiniGPParser
 else:
-    from MiniGPParser import MiniGPParser
+    from dist.MiniGPParser import MiniGPParser
 
 # This class defines a complete generic visitor for a parse tree produced by MiniGPParser.
 

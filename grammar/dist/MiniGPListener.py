@@ -1,4 +1,4 @@
-# Generated from MiniGP.g4 by ANTLR 4.13.1
+# Generated from ./grammar/MiniGP.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .MiniGPParser import MiniGPParser
@@ -17,6 +17,15 @@ class MiniGPListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by MiniGPParser#executionBlock.
+    def enterExecutionBlock(self, ctx:MiniGPParser.ExecutionBlockContext):
+        pass
+
+    # Exit a parse tree produced by MiniGPParser#executionBlock.
+    def exitExecutionBlock(self, ctx:MiniGPParser.ExecutionBlockContext):
+        pass
+
+
     # Enter a parse tree produced by MiniGPParser#statement.
     def enterStatement(self, ctx:MiniGPParser.StatementContext):
         pass
@@ -32,6 +41,24 @@ class MiniGPListener(ParseTreeListener):
 
     # Exit a parse tree produced by MiniGPParser#varDeclaration.
     def exitVarDeclaration(self, ctx:MiniGPParser.VarDeclarationContext):
+        pass
+
+
+    # Enter a parse tree produced by MiniGPParser#integerDeclaration.
+    def enterIntegerDeclaration(self, ctx:MiniGPParser.IntegerDeclarationContext):
+        pass
+
+    # Exit a parse tree produced by MiniGPParser#integerDeclaration.
+    def exitIntegerDeclaration(self, ctx:MiniGPParser.IntegerDeclarationContext):
+        pass
+
+
+    # Enter a parse tree produced by MiniGPParser#booleanDeclaration.
+    def enterBooleanDeclaration(self, ctx:MiniGPParser.BooleanDeclarationContext):
+        pass
+
+    # Exit a parse tree produced by MiniGPParser#booleanDeclaration.
+    def exitBooleanDeclaration(self, ctx:MiniGPParser.BooleanDeclarationContext):
         pass
 
 

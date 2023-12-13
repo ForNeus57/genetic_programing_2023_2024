@@ -49,6 +49,7 @@ condition:
 	|	condition ('==' | '!=') condition
 	|   condition ('&&' | '||' | '^') condition
 	|   '!' condition
+	|	'(' condition ')'
 	|   BOOL
 	|   VAR
 	;
