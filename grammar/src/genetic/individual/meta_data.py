@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from typing import Any
+
+from src.genetic.individual.tokens.tokens import VariableNameToken
 
 
 @dataclass(frozen=True)
 class MetaData:
-    variables: dict[str, Any]
+    variables: set[VariableNameToken]
 

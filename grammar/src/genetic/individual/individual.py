@@ -17,23 +17,19 @@ class Individual:
         pass
 
     def __str__(self) -> str:
-        pass
+        raise NotImplementedError()
 
     def execute(self, *args, **kwargs) -> tuple:
-        pass
+        raise NotImplementedError()
 
     def evaluate(self, *args, **kwargs) -> float:
-        pass
+        raise NotImplementedError()
 
     def mutate(self) -> Individual:
-        pass
+        raise NotImplementedError()
 
     def crossover(self, other: Individual) -> Individual:
-        if isinstance(other, Individual):
-            crossover_program: Program = self.program.crossover(other.program)
-            return Individual(crossover_program)
-
-        raise TypeError(f"Cannot crossover with {type(other)}.")
+        raise NotImplementedError()
 
     def save_to_file(self, path: str):
-        pass
+        raise NotImplementedError()

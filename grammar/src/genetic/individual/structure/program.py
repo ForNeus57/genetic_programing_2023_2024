@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional
+from typing import ClassVar
 
 from src.genetic.individual.structure.execution_block import ExecutionBlock
 from src.genetic.individual.structure.grammar_node import GrammarNode
@@ -9,25 +9,25 @@ from src.genetic.individual.structure.grammar_node import GrammarNode
 @dataclass(slots=True, frozen=True)
 class Program(GrammarNode):
     body: ExecutionBlock
+    self_size: ClassVar[int] = 1
 
     @classmethod
-    def from_random(cls, max_size: int) -> Optional[Program]:
-        if max_size <= 2:
-            return None
+    def from_random(cls, max_size: int) -> Program:
+        if max_size < cls.minimum_size():
+            raise ValueError("Unable to construct program, because maximum size constraints are too harsh.")
 
-        block: ExecutionBlock = ExecutionBlock.from_random(max_size - 1)
-        return cls(block.size + 1, block)
+        block: ExecutionBlock = ExecutionBlock.from_random(max_size - cls.self_size)
+        return cls(block.size + cls.self_size, block)
+
+    @classmethod
+    def minimum_size(cls) -> int:
+        return ExecutionBlock.minimum_size() + cls.self_size
 
     def mutate(self) -> Program:
-        mutated_body: ExecutionBlock = self.body.mutate()
-        return Program(mutated_body.size + 1, mutated_body)
+        pass
 
     def crossover(self, other: Program) -> Program:
-        if isinstance(other, Program):
-            crossover_body: ExecutionBlock = self.body.crossover(other.body)
-            return Program(crossover_body.size + 1, crossover_body)
-
-        raise TypeError(f"Cannot crossover with {type(other)}.")
+        pass
 
     def __str__(self) -> str:
         return str(self.body)

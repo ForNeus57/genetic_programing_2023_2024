@@ -62,3 +62,5 @@ class VariableNameToken(Token):
 
         return output
 
+
+VariableTypes = BooleanToken | IntegerToken
