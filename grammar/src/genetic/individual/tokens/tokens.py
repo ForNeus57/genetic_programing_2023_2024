@@ -28,6 +28,9 @@ class BooleanToken(Token):
         value: bool = choice([True, False])
         return cls(str(value), value)
 
+    def __str__(self):
+        return str(self.value)
+
 
 @dataclass(slots=True, frozen=True)
 class IntegerToken(Token):
@@ -40,6 +43,9 @@ class IntegerToken(Token):
         value: int = randint(cls.min_value, cls.max_value)
         return cls(str(value), value)
 
+    def __str__(self):
+        return str(self.value)
+
 
 @dataclass(slots=True, frozen=True, order=True)
 class VariableNameToken(Token):
@@ -47,11 +53,11 @@ class VariableNameToken(Token):
 
     @classmethod
     def from_random(cls) -> VariableNameToken:
-        name: str = cls.generate_random_name()
+        name: str = cls._generate_random_name()
         return cls(f'\"{name}\"', name)
 
     @classmethod
-    def generate_random_name(cls) -> str:
+    def _generate_random_name(cls) -> str:
         output = choice(ascii_letters)
 
         probability_generator: SubsequentNodeProbabilityGenerator = SubsequentNodeProbabilityGenerator()
@@ -61,6 +67,9 @@ class VariableNameToken(Token):
             output += choice(full_character_set)
 
         return output
+
+    def __str__(self):
+        return str(self.value)
 
 
 VariableTypes = BooleanToken | IntegerToken

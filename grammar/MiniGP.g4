@@ -17,15 +17,15 @@ statement:
     ;
 
 varDeclaration:
-	('const')? (integerDeclaration | booleanDeclaration)
+	('const')? (integerDeclaration | booleanDeclaration) ';'
 	;
 
 integerDeclaration:
-	'int' VAR ('=' expression)? ';'
+	'int' VAR ('=' expression)?
 	;
 
 booleanDeclaration:
-	'bool' VAR ('=' condition)? ';'
+	'bool' VAR ('=' condition)?
 	;
 
 assignment:
@@ -46,19 +46,16 @@ ioStatement:
 
 condition:
 	expression ('>' | '<' | '==' | '!=' | '>=' | '<=') expression
-	|	condition ('==' | '!=') condition
 	|   condition ('&&' | '||' | '^') condition
 	|   '!' condition
-	|	'(' condition ')'
-	|   BOOL
 	|   VAR
+	|   BOOL
 	;
 
 expression:
 	expression ('*' | '/' | '+' | '-') expression
     |   VAR
     |   INT
-    |   '(' expression ')'
     ;
 
 BOOL: 'True' | 'False';
