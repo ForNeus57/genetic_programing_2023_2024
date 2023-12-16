@@ -1,22 +1,19 @@
-from typing import Tuple, Union, Any
-from math import sin, cos
+from typing import Tuple, Union, Any, Optional, Literal
+from re import compile
 from sys import argv
-import re
+
+from src.tiny_gp.operator_logic import OperatorLogic
 
 
 class Simplifier:
-    _tokenizer = re.compile(r'([()])|\s+').split
+    _tokenizer = compile(r'([()])|\s+').split
 
     def __init__(self, input_formula: str):
         self.output: str = input_formula[1: -1]
 
     def simplify(self) -> str:
-        out = Simplifier.parse_conditions(self.output)
+        out = self.parse_conditions()
         return str(Simplifier.calculate(out))
-
-    @staticmethod
-    def custom_divide(first: float, second: float) -> float:
-        return first / second if abs(second) > 0.001 else second
 
     @staticmethod
     def tokenize(s) -> map:
@@ -28,8 +25,7 @@ class Simplifier:
 
         return map(_helper, filter(None, Simplifier._tokenizer(s)))
 
-    @staticmethod
-    def parse_conditions(expr) -> list:
+    def parse_conditions(self) -> list:
         def _helper(tokens) -> Tuple[list, bool]:
             items = []
             for item in tokens:
@@ -37,7 +33,7 @@ class Simplifier:
                     case '(':
                         result, close_parentheses_status = _helper(tokens)
                         if close_parentheses_status:
-                            raise ValueError("Unbalanced parentheses")
+                            raise ValueError(f'Unbalanced parentheses found in expression: \"{self.output}\".')
 
                         items.append(result)
 
@@ -49,38 +45,39 @@ class Simplifier:
 
             return items, True
 
-        return _helper(Simplifier.tokenize(expr))[0]
+        return _helper(Simplifier.tokenize(self.output))[0]
 
     @staticmethod
-    def correct_chaining_standard(un_simplifiable: Union[list, str], left_operation: str, right_operation: str, first_val: float, second_val: float, default_output: Any):
+    def correct_chaining_standard(un_simplifiable: Union[list, str], left_operation: str, right_operation: str, first_val: float, second_val: float) -> Optional[list]:
         match (left_operation, right_operation):
             case ('+', '+'):
-                return [un_simplifiable, '+', first_val + second_val]
+                return [un_simplifiable, '+', OperatorLogic.add(first_val, second_val)]
 
             case ('+', '-'):
-                result: float = first_val - second_val
+                result: float = OperatorLogic.sub(first_val, second_val)
                 return [un_simplifiable, '+' if result >= 0.0 else '-', abs(result)]
 
             case ('-', '+'):
-                result: float = -first_val + second_val
+                result: float = OperatorLogic.add(-first_val, second_val)
                 return [un_simplifiable, '+' if result >= 0.0 else '-', abs(result)]
 
             case ('-', '-'):
-                return [un_simplifiable, '-', first_val + second_val]
+                return [un_simplifiable, '-', OperatorLogic.add(first_val, second_val)]
 
             case ('*', '*'):
-                return [un_simplifiable, '*', first_val * second_val]
+                return [un_simplifiable, '*', OperatorLogic.multiply(first_val, second_val)]
 
             case ('*', '/'):
-                return [un_simplifiable, '*', first_val * Simplifier.custom_divide(1.0, second_val)]
+                return [un_simplifiable, '*', OperatorLogic.multiply(first_val, OperatorLogic.divide(1.0, second_val))]
 
             case ('/', '*'):
-                return [un_simplifiable, '*', Simplifier.custom_divide(1.0, first_val) * second_val]
+                return [un_simplifiable, '*', OperatorLogic.multiply(OperatorLogic.divide(1.0, first_val), second_val)]
 
             case ('/', '/'):
-                return [un_simplifiable, '/', first_val * second_val]
+                return [un_simplifiable, '/', OperatorLogic.multiply(first_val, second_val)]
 
-        return default_output
+            case _:
+                return None
 
     @staticmethod
     def calculate(expression: list) -> Union[float, list]:
@@ -114,24 +111,41 @@ class Simplifier:
 
                     match output:
                         case [[left_left_val, left_operation, float(left_right_val)], right_operation, float(right_val)] if isinstance(left_left_val, list) or 'X' in left_left_val:
-                            return Simplifier.correct_chaining_standard(left_left_val, left_operation, right_operation, left_right_val, right_val, output)
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(left_left_val, left_operation, right_operation, left_right_val, right_val)
+                            if chain_output is None:
+                                return output
+
+                            return chain_output
 
                         case [[float(left_left_val), left_operation, left_right_val], right_operation, float(right_val)] if isinstance(left_right_val, list) or 'X' in left_right_val:
-                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_left_val, right_val, output)[::-1]
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_left_val, right_val)[::-1]
+                            if chain_output is None:
+                                return output
 
-                    return output
+                            return chain_output
+
+                        case _:
+                            return output
 
                 if not isinstance(left_out, list) and isinstance(right_out, list):
 
                     match output:
                         case [float(left_val), left_operation, [float(left_right_val), right_operation, right_right_val]] if isinstance(right_right_val, list) or 'X' in right_right_val:
-                            return Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val, output)
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val)[::-1]
+                            if chain_output is None:
+                                return output
+
+                            return chain_output
 
                         case [float(left_val), left_operation, [left_right_val, right_operation, float(right_right_val)]] if isinstance(left_right_val, list) or 'X' in left_right_val:
-                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val, output)[::-1]
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val)
+                            if chain_output is None:
+                                return output
 
+                            return chain_output
 
-                    return output
+                        case _:
+                            return output
 
                 return Simplifier.calculate([left_out, operation, right_out])
 
@@ -143,12 +157,21 @@ class Simplifier:
 
                     match output:
                         case [[left_left_val, left_operation, float(left_right_val)], right_operation, float(right_val)] if isinstance(left_left_val, list) or 'X' in left_left_val:
-                            return Simplifier.correct_chaining_standard(left_left_val, left_operation, right_operation, left_right_val, right_val, output)
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(left_left_val, left_operation, right_operation, left_right_val, right_val)
+                            if chain_output is None:
+                                return output
+
+                            return chain_output
 
                         case [[float(left_left_val), left_operation, left_right_val], right_operation, float(right_val)] if isinstance(left_right_val, list) or 'X' in left_right_val:
-                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_left_val, right_val, output)[::-1]
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_left_val, right_val)[::-1]
+                            if chain_output is None:
+                                return output
 
-                    return output
+                            return chain_output
+
+                        case _:
+                            return output
 
                 return Simplifier.calculate([left_out, operation, right])
 
@@ -160,26 +183,35 @@ class Simplifier:
 
                     match output:
                         case [float(left_val), left_operation, [float(left_right_val), right_operation, right_right_val]] if isinstance(right_right_val, list) or 'X' in right_right_val:
-                            return Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val, output)[::-1]
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(right_right_val, left_operation, right_operation, left_val, left_right_val)[::-1]
+                            if chain_output is None:
+                                return output
+
+                            return chain_output
 
                         case [float(left_val), left_operation, [left_right_val, right_operation, float(right_right_val)]] if isinstance(left_right_val, list) or 'X' in left_right_val:
-                            return Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val, output)
+                            chain_output: Optional[list] = Simplifier.correct_chaining_standard(left_right_val, left_operation, right_operation, left_val, right_right_val)
+                            if chain_output is None:
+                                return output
 
-                    return output
+                            return chain_output
+
+                        case _:
+                            return output
 
                 return Simplifier.calculate([left, operation, right_out])
 
             case [left, '+', right]:
-                return left + right
+                return OperatorLogic.add(left, right)
 
             case [left, '-', right]:
-                return left - right
+                return OperatorLogic.sub(left, right)
 
             case [left, '*', right]:
-                return left * right
+                return OperatorLogic.multiply(left, right)
 
             case [left, '/', right]:
-                return Simplifier.custom_divide(left, right)
+                return OperatorLogic.divide(left, right)
 
             case ['sin', list(val)]:
                 val: Union[float, list] = Simplifier.calculate(val)
@@ -187,7 +219,7 @@ class Simplifier:
                 if isinstance(val, list):
                     return ['sin', val]
 
-                return sin(val)
+                return OperatorLogic.sin(val)
 
             case ['cos', list(val)]:
                 val: Union[float, list] = Simplifier.calculate(val)
@@ -195,7 +227,7 @@ class Simplifier:
                 if isinstance(val, list):
                     return ['cos', val]
 
-                return cos(val)
+                return OperatorLogic.cos(val)
 
             case [str(val)] if 'X' in val:
                 return [val]
@@ -207,7 +239,11 @@ class Simplifier:
                 return val
 
             case _:
-                raise ValueError(f'Invalid expression: {expression}')
+                raise ValueError(f'Invalid expression: \"{expression}\". No rule was found.')
+
+
+class ExpressionSimplifier:
+    pass
 
 
 def cut_program_from_file(file_path: str) -> str:
@@ -217,8 +253,7 @@ def cut_program_from_file(file_path: str) -> str:
         return raw_input[-2].lstrip("Best Individual: ")
 
 
-if __name__ == '__main__':
-
+def main() -> None:
     program: str = cut_program_from_file(argv[1])
     simplifier: Simplifier = Simplifier(program)
 
@@ -255,9 +290,12 @@ if __name__ == '__main__':
     # simplifier: Simplifier = Simplifier("(2 + (X1 + ( 3.2 + 3.4)))")
     # print(simplifier.simplify())
 
-
     # simplifier: Simplifier = Simplifier("(X1  * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
     # print(simplifier.simplify())
 
     with open(argv[2], 'w') as output_file:
         output_file.write(simplifier.simplify())
+
+
+if __name__ == '__main__':
+    main()

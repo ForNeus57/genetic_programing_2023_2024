@@ -1,4 +1,4 @@
-from tree import Node
+from src.genetic.programming.tree import Node
 from src.utils import simplify_expression
 import random
 
