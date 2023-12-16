@@ -6,7 +6,7 @@ from random import choice, randint, random
 from typing import ClassVar
 from string import ascii_letters, digits
 
-from src.genetic.individual.probability.subsequent_node_probability_generator import SubsequentNodeProbabilityGenerator
+from src.genetic.individual.probability.subsequent_node_probability import SubsequentNodeProbability
 
 
 @dataclass(slots=True, frozen=True)
@@ -60,7 +60,7 @@ class VariableNameToken(Token):
     def _generate_random_name(cls) -> str:
         output = choice(ascii_letters)
 
-        probability_generator: SubsequentNodeProbabilityGenerator = SubsequentNodeProbabilityGenerator()
+        probability_generator: SubsequentNodeProbability = SubsequentNodeProbability()
         full_character_set = ascii_letters + digits + '_'
 
         while next(probability_generator) > random():

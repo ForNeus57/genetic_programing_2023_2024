@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 
-from src.genetic.individual.structure.program import Program
+from src.genetic.individual.structure.nodes import Program
 
 
 @dataclass(slots=True, frozen=True, order=False)
