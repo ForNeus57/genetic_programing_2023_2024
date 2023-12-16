@@ -49,8 +49,8 @@ class ExecutionBlock(GrammarNode):
         pass
 
     def __str__(self) -> str:
-        statements_print = ''.join([str(statement) for statement in self.statements])
-        return f'{{\n{statements_print}}}\n'
+        statements_print = '\n'.join([str(statement) for statement in self.statements])
+        return f'{{\n{statements_print}\n}}\n'
 
 
 @dataclass(slots=True, frozen=True)
@@ -301,7 +301,7 @@ class Condition(GrammarNode):
                 return f'{left} {operation} {right}'
 
             case Condition(_) as value:
-                return f'!{str(value)}'
+                return f'!({str(value)})'
 
             case _ as value:
                 return str(value)

@@ -47,7 +47,7 @@ ioStatement:
 condition:
 	expression ('>' | '<' | '==' | '!=' | '>=' | '<=') expression
 	|   condition ('&&' | '||' | '^') condition
-	|   '!' condition
+	|   '!' '(' condition ')'
 	|   VAR
 	|   BOOL
 	;
