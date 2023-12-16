@@ -107,12 +107,12 @@ class MiniGPListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MiniGPParser#expr.
-    def enterExpr(self, ctx:MiniGPParser.ExprContext):
+    # Enter a parse tree produced by MiniGPParser#expression.
+    def enterExpression(self, ctx:MiniGPParser.ExpressionContext):
         pass
 
-    # Exit a parse tree produced by MiniGPParser#expr.
-    def exitExpr(self, ctx:MiniGPParser.ExprContext):
+    # Exit a parse tree produced by MiniGPParser#expression.
+    def exitExpression(self, ctx:MiniGPParser.ExpressionContext):
         pass
 
 

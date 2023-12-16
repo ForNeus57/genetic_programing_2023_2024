@@ -80,7 +80,7 @@ ifStatement
 loopStatement
 ioStatement
 condition
-expr
+expression
 
 
 atn:

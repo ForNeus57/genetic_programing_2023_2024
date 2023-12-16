@@ -1,33 +1,25 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import Optional, ClassVar
+from random import random
 
-from src.genetic.individual.meta_data import MetaData
+from src.genetic.individual.probability.subsequent_node_probability_generator import SubsequentNodeProbabilityGenerator
 from src.genetic.individual.structure.grammar_node import GrammarNode
 from src.genetic.individual.structure.statement import Statement
 
 
 @dataclass(slots=True, frozen=True)
 class ExecutionBlock(GrammarNode):
-    meta_data: MetaData
     statements: list[Statement] = field(default_factory=list)
-    self_size: ClassVar[int] = 1
 
     @classmethod
-    def from_random(cls, max_size: int) -> Optional[ExecutionBlock]:
-        if max_size < cls.minimum_size():
-            return None
-
+    def from_random(cls) -> ExecutionBlock:
         body: list[Statement] = []
+        probability: SubsequentNodeProbabilityGenerator = SubsequentNodeProbabilityGenerator()
 
+        while next(probability) > random():
+            body.append(Statement.from_random())
 
-
-
-        return cls(sum([child.size for child in body]) + 1, None, body)
-
-    @classmethod
-    def minimum_size(cls) -> int:
-        return cls.self_size + Statement.minimum_size()
+        return cls(body)
 
     def mutate(self) -> ExecutionBlock:
         pass

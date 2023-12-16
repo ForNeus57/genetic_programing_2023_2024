@@ -1,7 +1,7 @@
 grammar MiniGP;
 
 program:
-	executionBlock
+	executionBlock EOF
 	;
 
 executionBlock:
@@ -21,7 +21,7 @@ varDeclaration:
 	;
 
 integerDeclaration:
-	'int' VAR ('=' expr)? ';'
+	'int' VAR ('=' expression)? ';'
 	;
 
 booleanDeclaration:
@@ -29,7 +29,7 @@ booleanDeclaration:
 	;
 
 assignment:
-	VAR '=' (expr | condition) ';'
+	VAR '=' (expression | condition) ';'
 	;
 
 ifStatement:
@@ -45,7 +45,7 @@ ioStatement:
 	;
 
 condition:
-	expr ('>' | '<' | '==' | '!=' | '>=' | '<=') expr
+	expression ('>' | '<' | '==' | '!=' | '>=' | '<=') expression
 	|	condition ('==' | '!=') condition
 	|   condition ('&&' | '||' | '^') condition
 	|   '!' condition
@@ -54,14 +54,15 @@ condition:
 	|   VAR
 	;
 
-expr:
-	expr ('*' | '/' | '+' | '-') expr
+expression:
+	expression ('*' | '/' | '+' | '-') expression
     |   VAR
     |   INT
-    |   '(' expr ')'
+    |   '(' expression ')'
     ;
 
 BOOL: 'True' | 'False';
 INT: (('-')?[1-9][0-9]*) | '0';
 VAR: [a-zA-Z][a-zA-Z0-9_]*;
+
 WHITESPACE: [ \t\r\n]+ -> skip;

@@ -37,11 +37,11 @@ class IntegerToken(Token):
 
     @classmethod
     def from_random(cls) -> IntegerToken:
-        value: int = randint(IntegerToken.min_value, IntegerToken.max_value)
+        value: int = randint(cls.min_value, cls.max_value)
         return cls(str(value), value)
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True, frozen=True, order=True)
 class VariableNameToken(Token):
     value: str
 
@@ -54,7 +54,7 @@ class VariableNameToken(Token):
     def generate_random_name(cls) -> str:
         output = choice(ascii_letters)
 
-        probability_generator: SubsequentNodeProbabilityGenerator = SubsequentNodeProbabilityGenerator(0.9, 0.8)
+        probability_generator: SubsequentNodeProbabilityGenerator = SubsequentNodeProbabilityGenerator()
         full_character_set = ascii_letters + digits + '_'
 
         while next(probability_generator) > random():

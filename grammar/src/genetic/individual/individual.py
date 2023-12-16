@@ -13,11 +13,12 @@ class Individual:
         pass
 
     @classmethod
-    def from_random(cls, max_size: int) -> Individual:
-        pass
+    def from_random(cls) -> Individual:
+        program: Program = Program.from_random()
+        return cls(program)
 
     def __str__(self) -> str:
-        raise NotImplementedError()
+        return str(self.program)
 
     def execute(self, *args, **kwargs) -> tuple:
         raise NotImplementedError()

@@ -94,12 +94,12 @@ class MiniGPParser ( Parser ):
     RULE_loopStatement = 8
     RULE_ioStatement = 9
     RULE_condition = 10
-    RULE_expr = 11
+    RULE_expression = 11
 
     ruleNames =  [ "program", "executionBlock", "statement", "varDeclaration", 
                    "integerDeclaration", "booleanDeclaration", "assignment", 
                    "ifStatement", "loopStatement", "ioStatement", "condition", 
-                   "expr" ]
+                   "expression" ]
 
     EOF = Token.EOF
     T__0=1
@@ -409,8 +409,8 @@ class MiniGPParser ( Parser ):
         def VAR(self):
             return self.getToken(MiniGPParser.VAR, 0)
 
-        def expr(self):
-            return self.getTypedRuleContext(MiniGPParser.ExprContext,0)
+        def expression(self):
+            return self.getTypedRuleContext(MiniGPParser.ExpressionContext,0)
 
 
         def getRuleIndex(self):
@@ -445,7 +445,7 @@ class MiniGPParser ( Parser ):
                 self.state = 50
                 self.match(MiniGPParser.T__4)
                 self.state = 51
-                self.expr(0)
+                self.expression(0)
 
 
             self.state = 54
@@ -529,8 +529,8 @@ class MiniGPParser ( Parser ):
         def VAR(self):
             return self.getToken(MiniGPParser.VAR, 0)
 
-        def expr(self):
-            return self.getTypedRuleContext(MiniGPParser.ExprContext,0)
+        def expression(self):
+            return self.getTypedRuleContext(MiniGPParser.ExpressionContext,0)
 
 
         def condition(self):
@@ -566,7 +566,7 @@ class MiniGPParser ( Parser ):
             la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 self.state = 66
-                self.expr(0)
+                self.expression(0)
                 pass
 
             elif la_ == 2:
@@ -770,11 +770,11 @@ class MiniGPParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def expr(self, i:int=None):
+        def expression(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(MiniGPParser.ExprContext)
+                return self.getTypedRuleContexts(MiniGPParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(MiniGPParser.ExprContext,i)
+                return self.getTypedRuleContext(MiniGPParser.ExpressionContext,i)
 
 
         def condition(self, i:int=None):
@@ -818,7 +818,7 @@ class MiniGPParser ( Parser ):
             la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
             if la_ == 1:
                 self.state = 94
-                self.expr(0)
+                self.expression(0)
                 self.state = 95
                 _la = self._input.LA(1)
                 if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 2064384) != 0)):
@@ -827,7 +827,7 @@ class MiniGPParser ( Parser ):
                     self._errHandler.reportMatch(self)
                     self.consume()
                 self.state = 96
-                self.expr(0)
+                self.expression(0)
                 pass
 
             elif la_ == 2:
@@ -919,7 +919,7 @@ class MiniGPParser ( Parser ):
         return localctx
 
 
-    class ExprContext(ParserRuleContext):
+    class ExpressionContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -932,33 +932,33 @@ class MiniGPParser ( Parser ):
         def INT(self):
             return self.getToken(MiniGPParser.INT, 0)
 
-        def expr(self, i:int=None):
+        def expression(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(MiniGPParser.ExprContext)
+                return self.getTypedRuleContexts(MiniGPParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(MiniGPParser.ExprContext,i)
+                return self.getTypedRuleContext(MiniGPParser.ExpressionContext,i)
 
 
         def getRuleIndex(self):
-            return MiniGPParser.RULE_expr
+            return MiniGPParser.RULE_expression
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpr" ):
-                listener.enterExpr(self)
+            if hasattr( listener, "enterExpression" ):
+                listener.enterExpression(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpr" ):
-                listener.exitExpr(self)
+            if hasattr( listener, "exitExpression" ):
+                listener.exitExpression(self)
 
 
 
-    def expr(self, _p:int=0):
+    def expression(self, _p:int=0):
         _parentctx = self._ctx
         _parentState = self.state
-        localctx = MiniGPParser.ExprContext(self, self._ctx, _parentState)
+        localctx = MiniGPParser.ExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
         _startState = 22
-        self.enterRecursionRule(localctx, 22, self.RULE_expr, _p)
+        self.enterRecursionRule(localctx, 22, self.RULE_expression, _p)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
@@ -977,7 +977,7 @@ class MiniGPParser ( Parser ):
                 self.state = 122
                 self.match(MiniGPParser.T__8)
                 self.state = 123
-                self.expr(0)
+                self.expression(0)
                 self.state = 124
                 self.match(MiniGPParser.T__9)
                 pass
@@ -993,8 +993,8 @@ class MiniGPParser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    localctx = MiniGPParser.ExprContext(self, _parentctx, _parentState)
-                    self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
+                    localctx = MiniGPParser.ExpressionContext(self, _parentctx, _parentState)
+                    self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                     self.state = 128
                     if not self.precpred(self._ctx, 4):
                         from antlr4.error.Errors import FailedPredicateException
@@ -1007,7 +1007,7 @@ class MiniGPParser ( Parser ):
                         self._errHandler.reportMatch(self)
                         self.consume()
                     self.state = 130
-                    self.expr(5) 
+                    self.expression(5) 
                 self.state = 135
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,12,self._ctx)
@@ -1026,7 +1026,7 @@ class MiniGPParser ( Parser ):
         if self._predicates == None:
             self._predicates = dict()
         self._predicates[10] = self.condition_sempred
-        self._predicates[11] = self.expr_sempred
+        self._predicates[11] = self.expression_sempred
         pred = self._predicates.get(ruleIndex, None)
         if pred is None:
             raise Exception("No predicate with index:" + str(ruleIndex))
@@ -1042,7 +1042,7 @@ class MiniGPParser ( Parser ):
                 return self.precpred(self._ctx, 5)
          
 
-    def expr_sempred(self, localctx:ExprContext, predIndex:int):
+    def expression_sempred(self, localctx:ExpressionContext, predIndex:int):
             if predIndex == 2:
                 return self.precpred(self._ctx, 4)
          

@@ -5,14 +5,14 @@ from src.genetic.individual.structure.grammar_node import GrammarNode
 
 
 @dataclass(slots=True, frozen=True)
-class Statement(GrammarNode):
+class BooleanDeclaration(GrammarNode):
     @classmethod
-    def from_random(cls) -> Statement:
-        
+    def from_random(cls) -> BooleanDeclaration:
+
         pass
 
-    def mutate(self) -> Statement:
+    def mutate(self) -> BooleanDeclaration:
         pass
 
-    def crossover(self, other: Statement) -> Statement:
+    def crossover(self, other: BooleanDeclaration) -> BooleanDeclaration:
         pass
