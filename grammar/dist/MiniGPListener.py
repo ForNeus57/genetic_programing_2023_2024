@@ -8,12 +8,12 @@ else:
 # This class defines a complete listener for a parse tree produced by MiniGPParser.
 class MiniGPListener(ParseTreeListener):
 
-    # Enter a parse tree produced by MiniGPParser#prog.
-    def enterProg(self, ctx:MiniGPParser.ProgContext):
+    # Enter a parse tree produced by MiniGPParser#program.
+    def enterProgram(self, ctx:MiniGPParser.ProgramContext):
         pass
 
-    # Exit a parse tree produced by MiniGPParser#prog.
-    def exitProg(self, ctx:MiniGPParser.ProgContext):
+    # Exit a parse tree produced by MiniGPParser#program.
+    def exitProgram(self, ctx:MiniGPParser.ProgramContext):
         pass
 
 

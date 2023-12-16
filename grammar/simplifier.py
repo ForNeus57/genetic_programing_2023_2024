@@ -1,8 +1,8 @@
-from typing import Tuple, Union, Any, Optional, Literal
+from typing import Tuple, Union, Any, Optional
 from re import compile
 from sys import argv
 
-from src.tiny_gp.operator_logic import OperatorLogic
+from src.genetic.tiny_gp.operator_logic import OperatorLogic
 
 
 class Simplifier:

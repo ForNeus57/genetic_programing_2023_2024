@@ -1,6 +1,6 @@
 grammar MiniGP;
 
-prog:
+program:
 	executionBlock
 	;
 
@@ -61,7 +61,7 @@ expr:
     |   '(' expr ')'
     ;
 
-BOOL: 'true' | 'false';
+BOOL: 'True' | 'False';
 INT: (('-')?[1-9][0-9]*) | '0';
 VAR: [a-zA-Z][a-zA-Z0-9_]*;
 WHITESPACE: [ \t\r\n]+ -> skip;

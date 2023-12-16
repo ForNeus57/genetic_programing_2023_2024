@@ -83,7 +83,7 @@ class MiniGPParser ( Parser ):
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "BOOL", "INT", "VAR", "WHITESPACE" ]
 
-    RULE_prog = 0
+    RULE_program = 0
     RULE_executionBlock = 1
     RULE_statement = 2
     RULE_varDeclaration = 3
@@ -96,7 +96,7 @@ class MiniGPParser ( Parser ):
     RULE_condition = 10
     RULE_expr = 11
 
-    ruleNames =  [ "prog", "executionBlock", "statement", "varDeclaration", 
+    ruleNames =  [ "program", "executionBlock", "statement", "varDeclaration", 
                    "integerDeclaration", "booleanDeclaration", "assignment", 
                    "ifStatement", "loopStatement", "ioStatement", "condition", 
                    "expr" ]
@@ -144,7 +144,7 @@ class MiniGPParser ( Parser ):
 
 
 
-    class ProgContext(ParserRuleContext):
+    class ProgramContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -156,23 +156,23 @@ class MiniGPParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return MiniGPParser.RULE_prog
+            return MiniGPParser.RULE_program
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterProg" ):
-                listener.enterProg(self)
+            if hasattr( listener, "enterProgram" ):
+                listener.enterProgram(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitProg" ):
-                listener.exitProg(self)
+            if hasattr( listener, "exitProgram" ):
+                listener.exitProgram(self)
 
 
 
 
-    def prog(self):
+    def program(self):
 
-        localctx = MiniGPParser.ProgContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 0, self.RULE_prog)
+        localctx = MiniGPParser.ProgramContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 0, self.RULE_program)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 24
