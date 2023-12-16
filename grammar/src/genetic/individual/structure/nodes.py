@@ -1,11 +1,11 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
-from enum import Enum, auto
-from random import random, choice
 from typing import Union, Optional, List, Tuple
+from random import random, choice, randint
+from enum import Enum, auto
 
-from src.genetic.individual.probability.subsequent_node_probability import SubsequentNodeProbability
 from src.genetic.individual.structure.grammar_node import GrammarNode
+from src.genetic.individual.probability.subsequent_node_probability import SubsequentNodeProbability
 from src.genetic.individual.tokens.tokens import VariableNameToken, IntegerToken, BooleanToken
 
 
@@ -14,9 +14,9 @@ class Program(GrammarNode):
     body: ExecutionBlock
 
     @classmethod
-    def from_random(cls) -> Program:
-        block: ExecutionBlock = ExecutionBlock.from_random()
-        return cls(block)
+    def from_random(cls, depth: int = 0) -> Program:
+        block: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
+        return cls(depth, block)
 
     def mutate(self) -> Program:
         pass
@@ -33,14 +33,14 @@ class ExecutionBlock(GrammarNode):
     statements: list[Statement] = field(default_factory=list)
 
     @classmethod
-    def from_random(cls) -> ExecutionBlock:
+    def from_random(cls, depth: int) -> ExecutionBlock:
         body: list[Statement] = []
         probability: SubsequentNodeProbability = SubsequentNodeProbability()
 
         while next(probability) > random():
-            body.append(Statement.from_random())
+            body.append(Statement.from_random(depth))
 
-        return cls(body)
+        return cls(depth, body)
 
     def mutate(self) -> ExecutionBlock:
         pass
@@ -49,8 +49,9 @@ class ExecutionBlock(GrammarNode):
         pass
 
     def __str__(self) -> str:
-        statements_print = '\n'.join([str(statement) for statement in self.statements])
-        return f'{{\n{statements_print}\n}}\n'
+        tabs: str = '\t' * self.depth
+        statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
+        return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
 
 
 @dataclass(slots=True, frozen=True)
@@ -58,10 +59,19 @@ class Statement(GrammarNode):
     body: StatementBodyTypes
 
     @classmethod
-    def from_random(cls) -> Statement:
-        statement_constructor = choice([VarDeclaration, Assigment, IfStatement, LoopStatement, IOStatement])
-        body: StatementBodyTypes = statement_constructor.from_random()
-        return cls(body)
+    def from_random(cls, depth: int) -> Statement:
+        statement_constructor_table = [VarDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
+        chosen_index: int = randint(0, len(statement_constructor_table) - 1)
+
+        statement_constructor = statement_constructor_table[chosen_index]
+        match chosen_index:
+            case 2 | 3:
+                body: StatementBodyTypes = statement_constructor.from_random(depth + 1)
+
+            case _:
+                body: StatementBodyTypes = statement_constructor.from_random(depth)
+
+        return cls(depth, body)
 
     def mutate(self) -> Statement:
         pass
@@ -79,11 +89,11 @@ class VarDeclaration(GrammarNode):
     declaration: DeclarationTypes
 
     @classmethod
-    def from_random(cls) -> VarDeclaration:
+    def from_random(cls, depth: int) -> VarDeclaration:
         is_constant = choice([True, False])
-        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random()
+        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(depth + 1)
 
-        return cls(is_constant, declaration)
+        return cls(depth, is_constant, declaration)
 
     def mutate(self) -> VarDeclaration:
         pass
@@ -101,11 +111,11 @@ class Assigment(GrammarNode):
     assigment_value: AssigmentValueType
 
     @classmethod
-    def from_random(cls) -> Assigment:
+    def from_random(cls, depth: int) -> Assigment:
         name: VariableNameToken = VariableNameToken.from_random()
-        value: AssigmentValueType = choice([Expression, Condition]).from_random()  # Don't forget Validation...
+        value: AssigmentValueType = choice([Expression, Condition]).from_random(depth + 1)  # Don't forget Validation...
 
-        return cls(name, value)
+        return cls(depth, name, value)
 
     def mutate(self) -> Assigment:
         pass
@@ -114,7 +124,7 @@ class Assigment(GrammarNode):
         pass
 
     def __str__(self):
-        return f'{self.name} = {self.assigment_value}'
+        return f'{self.name} = {self.assigment_value};'
 
 
 @dataclass(slots=True, frozen=True)
@@ -124,17 +134,17 @@ class IfStatement(GrammarNode):
     else_statement: Optional[ExecutionBlock]
 
     @classmethod
-    def from_random(cls) -> IfStatement:
-        condition: Condition = Condition.from_random()
-        body: ExecutionBlock = ExecutionBlock.from_random()
+    def from_random(cls, depth: int) -> IfStatement:
+        condition: Condition = Condition.from_random(depth + 1)
+        body: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
 
         else_constructor = choice([ExecutionBlock, None])
         if else_constructor is not None:
-            else_statement: Optional[ExecutionBlock] = ExecutionBlock.from_random()
+            else_statement: Optional[ExecutionBlock] = ExecutionBlock.from_random(depth + 1)
         else:
             else_statement = None
 
-        return cls(condition, body, else_statement)
+        return cls(depth, condition, body, else_statement)
 
     def mutate(self) -> IfStatement:
         pass
@@ -146,7 +156,8 @@ class IfStatement(GrammarNode):
         base: str = f'if ({self.condition}) {self.body}'
 
         if self.else_statement is not None:
-            return base + f' else {self.else_statement}'
+            indentation: str = '\t' * (self.depth - 1)
+            return base + f'{indentation} else {self.else_statement}'
 
         return base
 
@@ -157,11 +168,11 @@ class LoopStatement(GrammarNode):
     body: ExecutionBlock
 
     @classmethod
-    def from_random(cls) -> LoopStatement:
-        condition: Condition = Condition.from_random()
-        body: ExecutionBlock = ExecutionBlock.from_random()
+    def from_random(cls, depth: int) -> LoopStatement:
+        condition: Condition = Condition.from_random(depth + 1)
+        body: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
 
-        return cls(condition, body)
+        return cls(depth, condition, body)
 
     def mutate(self) -> LoopStatement:
         pass
@@ -191,10 +202,10 @@ class IOStatement(GrammarNode):
     name: VariableNameToken
 
     @classmethod
-    def from_random(cls) -> IOStatement:
+    def from_random(cls, depth: int) -> IOStatement:
         io_type: IOType = IOType.from_random()
         name: VariableNameToken = VariableNameToken.from_random()
-        return cls(io_type, name)
+        return cls(depth, io_type, name)
 
     def mutate(self) -> IOStatement:
         pass
@@ -212,16 +223,16 @@ class IntegerDeclaration(GrammarNode):
     expression: Optional[Expression]
 
     @classmethod
-    def from_random(cls) -> IntegerDeclaration:
+    def from_random(cls, depth: int) -> IntegerDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
 
         expression_constructor = choice([Expression, None])
         if expression_constructor is not None:
-            expression = expression_constructor.from_random()
+            expression = expression_constructor.from_random(depth + 1)
         else:
             expression = None
 
-        return cls(name, expression)
+        return cls(depth, name, expression)
 
     def mutate(self) -> IntegerDeclaration:
         pass
@@ -243,16 +254,16 @@ class BooleanDeclaration(GrammarNode):
     condition: Optional[Condition]
 
     @classmethod
-    def from_random(cls) -> BooleanDeclaration:
+    def from_random(cls, depth: int) -> BooleanDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
 
         condition_constructor = choice([Condition, None])
         if condition_constructor is not None:
-            condition = condition_constructor.from_random()
+            condition = condition_constructor.from_random(depth + 1)
         else:
             condition = None
 
-        return cls(name, condition)
+        return cls(depth, name, condition)
 
     def mutate(self) -> BooleanDeclaration:
         pass
@@ -273,7 +284,7 @@ class Condition(GrammarNode):
     body: ConditionType
 
     @classmethod
-    def from_random(cls) -> Condition:
+    def from_random(cls, depth: int) -> Condition:
         table_of_choices: List = [
             (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
             (Condition, choice(['&&', '||', '^']), Condition),
@@ -282,12 +293,20 @@ class Condition(GrammarNode):
             BooleanToken,
         ]
 
-        match choice(table_of_choices):
-            case (right, operation, left):
-                return cls((left.from_random(), operation, right.from_random()))
+        random_constructor_index = randint(0, len(table_of_choices) - 1)
 
-            case _ as option:
-                return cls(option.from_random())
+        match random_constructor_index:
+            case 0 | 1:
+                left, operation, right = table_of_choices[random_constructor_index]
+                return cls(depth, (left.from_random(depth + 1), operation, right.from_random(depth + 1)))
+
+            case 2:
+                option = table_of_choices[random_constructor_index]
+                return cls(depth, option.from_random(depth + 1))
+
+            case 3 | 4:
+                option = table_of_choices[random_constructor_index]
+                return cls(depth, option.from_random())
 
     def mutate(self) -> Condition:
         pass
@@ -300,7 +319,7 @@ class Condition(GrammarNode):
             case (left, operation, right):
                 return f'{left} {operation} {right}'
 
-            case Condition(_) as value:
+            case Condition() as value:
                 return f'!({str(value)})'
 
             case _ as value:
@@ -312,7 +331,7 @@ class Expression(GrammarNode):
     body: ExpressionType
 
     @classmethod
-    def from_random(cls) -> Expression:
+    def from_random(cls, depth: int) -> Expression:
         table_of_choices: List = [
             (Expression, choice(['+', '-', '*', '/']), Expression),
             VariableNameToken,
@@ -321,10 +340,10 @@ class Expression(GrammarNode):
 
         match choice(table_of_choices):
             case (right, operation, left):
-                return cls((left.from_random(), operation, right.from_random()))
+                return cls(depth, (left.from_random(depth + 1), operation, right.from_random(depth + 1)))
 
             case _ as option:
-                return cls(option.from_random())
+                return cls(depth, option.from_random())
 
     def mutate(self) -> Expression:
         pass
@@ -334,7 +353,7 @@ class Expression(GrammarNode):
 
     def __str__(self):
         match self.body:
-            case (Expression(_) as left, operation, Expression(_) as right):
+            case (left, operation, right):
                 return f'{left} {operation} {right}'
 
             case _ as value:
