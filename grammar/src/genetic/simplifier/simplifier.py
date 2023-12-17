@@ -9,20 +9,20 @@ class Simplifier:
 
     def __init__(self, input_formula: str):
         self.output: str = input_formula[1: -1]
+        self.tokens: map = self.tokenize()
 
     def simplify(self) -> str:
         out = self.parse_conditions()
         return str(Simplifier.calculate(out))
 
-    @staticmethod
-    def tokenize(s) -> map:
+    def tokenize(self) -> map:
         def _helper(val: str) -> Union[float, str]:
             try:
                 return float(val)
             except ValueError:
                 return val
 
-        return map(_helper, filter(None, Simplifier._tokenizer(s)))
+        return map(_helper, filter(None, Simplifier._tokenizer(self.output)))
 
     def parse_conditions(self) -> list:
         def _helper(tokens) -> Tuple[list, bool]:
@@ -44,7 +44,7 @@ class Simplifier:
 
             return items, True
 
-        return _helper(Simplifier.tokenize(self.output))[0]
+        return _helper(self.tokens)[0]
 
     @staticmethod
     def correct_chaining_standard(un_simplifiable: Union[list, str], left_operation: str, right_operation: str, first_val: float, second_val: float) -> Optional[list]:
