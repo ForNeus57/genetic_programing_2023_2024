@@ -4,10 +4,10 @@ from typing import Union, Optional, List, Tuple
 from random import random, choice, randint
 from enum import Enum, auto
 
-from src.genetic.individual.interfaces.node_types import Rule
-from src.genetic.individual.probability.exponential_probability import ExponentialProbability
-from src.genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize
-from src.genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
+from genetic.individual.interfaces.node_types import Rule
+from genetic.individual.probability.exponential_probability import ExponentialProbability
+from genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize
+from genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
 
 
 @dataclass(slots=True, frozen=True)

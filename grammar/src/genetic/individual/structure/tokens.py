@@ -5,9 +5,9 @@ from random import choice, randint, random
 from typing import ClassVar
 from string import ascii_letters, digits
 
-from src.genetic.individual.probability.exponential_probability import ExponentialProbability
-from src.genetic.individual.interfaces.node_types import Token
-from src.genetic.individual.interfaces.randomize import Randomize
+from genetic.individual.probability.exponential_probability import ExponentialProbability
+from genetic.individual.interfaces.node_types import Token
+from genetic.individual.interfaces.randomize import Randomize
 
 
 @dataclass(slots=True, frozen=True)
