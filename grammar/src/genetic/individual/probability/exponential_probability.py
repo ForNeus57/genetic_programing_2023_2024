@@ -1,7 +1,11 @@
 from typing import Generator
 
 
-class SubsequentNodeProbability(Generator):
+class ExponentialProbability(Generator):
+    """
+    TODO: Make use of numpy.random.exponential
+    """
+    __slots__ = ('base_probability', 'common_ratio')
 
     def __init__(self, base_probability: float = 1.0, common_ration: float = 0.8):
         if 0.0 > base_probability or 1.0 < base_probability:

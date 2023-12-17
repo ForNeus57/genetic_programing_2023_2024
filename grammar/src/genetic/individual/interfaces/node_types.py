@@ -5,26 +5,20 @@ from typing import ClassVar
 
 
 @dataclass(slots=True, frozen=True)
-class GrammarNode(ABC):
+class Rule(ABC):
     mutation_node_probability: ClassVar[float] = 0.2
-    depth: int
     max_depth: ClassVar[int] = 5
+    depth: int
 
-    @classmethod
     @abstractmethod
-    def from_random(cls, depth: int) -> GrammarNode:
+    def mutate(self) -> Rule:
         pass
 
     @abstractmethod
-    def mutate(self) -> GrammarNode:
-        pass
-
-    @abstractmethod
-    def crossover(self, other: GrammarNode) -> GrammarNode:
+    def crossover(self, other: Rule) -> Rule:
         pass
 
 
-
-
-
-
+@dataclass(slots=True, frozen=True)
+class Token(ABC):
+    raw: str

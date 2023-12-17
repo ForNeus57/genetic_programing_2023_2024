@@ -1,7 +1,8 @@
 from __future__ import annotations
 from dataclasses import dataclass
+from pickle import dump, load
 
-from src.genetic.individual.structure.nodes import Program
+from genetic.individual.structure.rules import Program
 
 
 @dataclass(slots=True, frozen=True, order=False)
@@ -10,7 +11,8 @@ class Individual:
 
     @classmethod
     def from_file(cls, path: str) -> Individual:
-        pass
+        with open(path, 'rb') as file:
+            return load(file)
 
     @classmethod
     def from_random(cls) -> Individual:
@@ -33,4 +35,5 @@ class Individual:
         raise NotImplementedError()
 
     def save_to_file(self, path: str):
-        raise NotImplementedError()
+        with open(path, 'wb') as file:
+            dump(self, file)

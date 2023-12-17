@@ -1,4 +1,3 @@
-from src.utils import read_input_params, read_config, read_input_data
 from src.genetic.individual.individual import Individual
 
 
@@ -10,6 +9,7 @@ def main():
     # random_tree = generate_random_tree(config["DEPTH"], params["minrand"], params["maxrand"])
     # print("Wygenerowane losowe drzewo:")
     # print(random_tree)
+    # seed(6)
 
     ind = Individual.from_random()
     print(ind)

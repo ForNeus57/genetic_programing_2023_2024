@@ -1,6 +1,6 @@
 from antlr4 import FileStream, CommonTokenStream
-from dist.MiniGPLexer import MiniGPLexer
-from dist.MiniGPParser import MiniGPParser
+from antlr4.MiniGPLexer import MiniGPLexer
+from antlr4.MiniGPParser import MiniGPParser
 
 def parse(input_file):
     input_stream = FileStream(input_file)
@@ -12,12 +12,12 @@ def parse(input_file):
 
 if __name__ == '__main__':
     print ('\n----- Test 1 -----\n')
-    parse('test/test1.mgp')
+    parse('test1.mgp')
     print('\n----- Test 2 -----\n')
-    parse('test/test2.mgp')
+    parse('test2.mgp')
     print('\n----- Test 3 -----\n')
-    parse('test/test3.mgp')
+    parse('test3.mgp')
     print('\n----- Test 4 -----\n')
-    parse('test/test4.mgp')
+    parse('test4.mgp')
     print('\n----- Test 5 -----\n')
-    parse('test/test5.mgp')
+    parse('test5.mgp')

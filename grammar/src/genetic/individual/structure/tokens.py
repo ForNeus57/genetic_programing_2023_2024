@@ -1,26 +1,17 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from random import choice, randint, random
 from typing import ClassVar
 from string import ascii_letters, digits
 
-from src.genetic.individual.probability.subsequent_node_probability import SubsequentNodeProbability
+from src.genetic.individual.probability.exponential_probability import ExponentialProbability
+from src.genetic.individual.interfaces.node_types import Token
+from src.genetic.individual.interfaces.randomize import Randomize
 
 
 @dataclass(slots=True, frozen=True)
-class Token(ABC):
-    raw: str
-
-    @classmethod
-    @abstractmethod
-    def from_random(cls) -> Token:
-        pass
-
-
-@dataclass(slots=True, frozen=True)
-class BooleanToken(Token):
+class BooleanToken(Token, Randomize):
     value: bool
 
     @classmethod
@@ -33,7 +24,7 @@ class BooleanToken(Token):
 
 
 @dataclass(slots=True, frozen=True)
-class IntegerToken(Token):
+class IntegerToken(Token, Randomize):
     value: int
     min_value: ClassVar[int] = -255
     max_value: ClassVar[int] = 255
@@ -48,7 +39,7 @@ class IntegerToken(Token):
 
 
 @dataclass(slots=True, frozen=True, order=True)
-class VariableNameToken(Token):
+class VariableNameToken(Token, Randomize):
     value: str
 
     @classmethod
@@ -60,7 +51,7 @@ class VariableNameToken(Token):
     def _generate_random_name(cls) -> str:
         output = choice(ascii_letters)
 
-        probability_generator: SubsequentNodeProbability = SubsequentNodeProbability()
+        probability_generator: ExponentialProbability = ExponentialProbability()
         full_character_set = ascii_letters + digits + '_'
 
         while next(probability_generator) > random():

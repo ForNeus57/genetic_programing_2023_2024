@@ -45,15 +45,15 @@ ioStatement:
 	;
 
 condition:
-	expression ('>' | '<' | '==' | '!=' | '>=' | '<=') expression
-	|   condition ('&&' | '||' | '^') condition
+	'(' expression ('>' | '<' | '==' | '!=' | '>=' | '<=') expression ')'
+	|   '(' condition ('&&' | '||' | '^') condition ')'
 	|   '!' '(' condition ')'
 	|   VAR
 	|   BOOL
 	;
 
 expression:
-	expression ('*' | '/' | '+' | '-') expression
+	'(' expression ('*' | '/' | '+' | '-') expression ')'
     |   VAR
     |   INT
     ;

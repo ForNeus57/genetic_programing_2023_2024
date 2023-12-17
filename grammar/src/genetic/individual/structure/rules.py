@@ -4,19 +4,20 @@ from typing import Union, Optional, List, Tuple
 from random import random, choice, randint
 from enum import Enum, auto
 
-from src.genetic.individual.structure.grammar_node import GrammarNode
-from src.genetic.individual.probability.subsequent_node_probability import SubsequentNodeProbability
-from src.genetic.individual.tokens.tokens import VariableNameToken, IntegerToken, BooleanToken
+from src.genetic.individual.interfaces.node_types import Rule
+from src.genetic.individual.probability.exponential_probability import ExponentialProbability
+from src.genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize
+from src.genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
 
 
 @dataclass(slots=True, frozen=True)
-class Program(GrammarNode):
+class Program(Rule, Randomize):
     body: ExecutionBlock
 
     @classmethod
-    def from_random(cls, depth: int = 0) -> Program:
-        block: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
-        return cls(depth, block)
+    def from_random(cls) -> Program:
+        block: ExecutionBlock = ExecutionBlock.from_random(1)
+        return cls(0, block)
 
     def mutate(self) -> Program:
         pass
@@ -29,13 +30,13 @@ class Program(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class ExecutionBlock(GrammarNode):
+class ExecutionBlock(Rule, RestrictedRandomize):
     statements: list[Statement] = field(default_factory=list)
 
     @classmethod
     def from_random(cls, depth: int) -> ExecutionBlock:
         body: list[Statement] = []
-        probability: SubsequentNodeProbability = SubsequentNodeProbability()
+        probability: ExponentialProbability = ExponentialProbability()
 
         while next(probability) > random():
             body.append(Statement.from_random(depth))
@@ -55,12 +56,16 @@ class ExecutionBlock(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class Statement(GrammarNode):
+class Statement(Rule, RestrictedRandomize):
     body: StatementBodyTypes
 
     @classmethod
     def from_random(cls, depth: int) -> Statement:
-        statement_constructor_table = [VarDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
+        if depth > cls.max_depth:
+            statement_constructor_table = [VarDeclaration, Assigment, IOStatement]
+        else:
+            statement_constructor_table = [VarDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
+
         chosen_index: int = randint(0, len(statement_constructor_table) - 1)
 
         statement_constructor = statement_constructor_table[chosen_index]
@@ -84,7 +89,7 @@ class Statement(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class VarDeclaration(GrammarNode):
+class VarDeclaration(Rule, RestrictedRandomize):
     is_constant: bool
     declaration: DeclarationTypes
 
@@ -106,7 +111,7 @@ class VarDeclaration(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class Assigment(GrammarNode):
+class Assigment(Rule, RestrictedRandomize):
     name: VariableNameToken
     assigment_value: AssigmentValueType
 
@@ -128,7 +133,7 @@ class Assigment(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class IfStatement(GrammarNode):
+class IfStatement(Rule, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
     else_statement: Optional[ExecutionBlock]
@@ -140,9 +145,9 @@ class IfStatement(GrammarNode):
 
         else_constructor = choice([ExecutionBlock, None])
         if else_constructor is not None:
-            else_statement: Optional[ExecutionBlock] = ExecutionBlock.from_random(depth + 1)
+            else_statement: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
         else:
-            else_statement = None
+            else_statement: Optional[ExecutionBlock] = None
 
         return cls(depth, condition, body, else_statement)
 
@@ -163,7 +168,7 @@ class IfStatement(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class LoopStatement(GrammarNode):
+class LoopStatement(Rule, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
 
@@ -197,7 +202,7 @@ class IOType(Enum):
 
 
 @dataclass(slots=True, frozen=True)
-class IOStatement(GrammarNode):
+class IOStatement(Rule, RestrictedRandomize):
     io_type: IOType
     name: VariableNameToken
 
@@ -218,7 +223,7 @@ class IOStatement(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class IntegerDeclaration(GrammarNode):
+class IntegerDeclaration(Rule, RestrictedRandomize):
     name: VariableNameToken
     expression: Optional[Expression]
 
@@ -249,7 +254,7 @@ class IntegerDeclaration(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class BooleanDeclaration(GrammarNode):
+class BooleanDeclaration(Rule, RestrictedRandomize):
     name: VariableNameToken
     condition: Optional[Condition]
 
@@ -280,7 +285,7 @@ class BooleanDeclaration(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class Condition(GrammarNode):
+class Condition(Rule, RestrictedRandomize):
     body: ConditionType
 
     @classmethod
@@ -317,7 +322,7 @@ class Condition(GrammarNode):
     def __str__(self):
         match self.body:
             case (left, operation, right):
-                return f'{left} {operation} {right}'
+                return f'({left} {operation} {right})'
 
             case Condition() as value:
                 return f'!({str(value)})'
@@ -327,7 +332,7 @@ class Condition(GrammarNode):
 
 
 @dataclass(slots=True, frozen=True)
-class Expression(GrammarNode):
+class Expression(Rule, RestrictedRandomize):
     body: ExpressionType
 
     @classmethod
@@ -354,7 +359,7 @@ class Expression(GrammarNode):
     def __str__(self):
         match self.body:
             case (left, operation, right):
-                return f'{left} {operation} {right}'
+                return f'({left} {operation} {right})'
 
             case _ as value:
                 return str(value)
