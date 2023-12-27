@@ -163,6 +163,12 @@ class MiniGPParser ( Parser ):
             if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -209,6 +215,12 @@ class MiniGPParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExecutionBlock" ):
                 listener.exitExecutionBlock(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExecutionBlock" ):
+                return visitor.visitExecutionBlock(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -282,6 +294,12 @@ class MiniGPParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatement" ):
                 listener.exitStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatement" ):
+                return visitor.visitStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -357,6 +375,12 @@ class MiniGPParser ( Parser ):
             if hasattr( listener, "exitVarDeclaration" ):
                 listener.exitVarDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVarDeclaration" ):
+                return visitor.visitVarDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -425,6 +449,12 @@ class MiniGPParser ( Parser ):
             if hasattr( listener, "exitIntegerDeclaration" ):
                 listener.exitIntegerDeclaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIntegerDeclaration" ):
+                return visitor.visitIntegerDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -482,6 +512,12 @@ class MiniGPParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitBooleanDeclaration" ):
                 listener.exitBooleanDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBooleanDeclaration" ):
+                return visitor.visitBooleanDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -544,6 +580,12 @@ class MiniGPParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAssignment" ):
                 listener.exitAssignment(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignment" ):
+                return visitor.visitAssignment(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -612,6 +654,12 @@ class MiniGPParser ( Parser ):
             if hasattr( listener, "exitIfStatement" ):
                 listener.exitIfStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIfStatement" ):
+                return visitor.visitIfStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -677,6 +725,12 @@ class MiniGPParser ( Parser ):
             if hasattr( listener, "exitLoopStatement" ):
                 listener.exitLoopStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLoopStatement" ):
+                return visitor.visitLoopStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -725,6 +779,12 @@ class MiniGPParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIoStatement" ):
                 listener.exitIoStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIoStatement" ):
+                return visitor.visitIoStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -797,6 +857,12 @@ class MiniGPParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCondition" ):
                 listener.exitCondition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCondition" ):
+                return visitor.visitCondition(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -912,6 +978,12 @@ class MiniGPParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExpression" ):
                 listener.exitExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpression" ):
+                return visitor.visitExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
