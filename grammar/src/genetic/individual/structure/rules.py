@@ -1,7 +1,11 @@
 from __future__ import annotations
+
+import importlib
+import inspect
 from dataclasses import dataclass, field
-from typing import Union, Optional, List, Tuple
-from random import random, choice, randint
+from types import SimpleNamespace
+from typing import Union, Optional, Tuple
+from random import random, choice
 from enum import Enum, auto
 
 from genetic.individual.interfaces.node_types import Rule
@@ -61,22 +65,33 @@ class Statement(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, depth: int) -> Statement:
-        if depth > cls.max_depth:
-            statement_constructor_table = [VarDeclaration, Assigment, IOStatement]
-        else:
-            statement_constructor_table = [VarDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
+        table_of_choices: list = cls.generate_choices(depth)
 
-        chosen_index: int = randint(0, len(statement_constructor_table) - 1)
+        match choice(table_of_choices):
+            case namespace.IfStatement | namespace.LoopStatement as option:
+                body: StatementBodyTypes = option.from_random(depth + 1)
 
-        statement_constructor = statement_constructor_table[chosen_index]
-        match chosen_index:
-            case 2 | 3:
-                body: StatementBodyTypes = statement_constructor.from_random(depth + 1)
-
-            case _:
-                body: StatementBodyTypes = statement_constructor.from_random(depth)
+            case _ as option:
+                body: StatementBodyTypes = option.from_random(depth)
 
         return cls(depth, body)
+
+    @classmethod
+    def generate_choices(cls, depth: int) -> list:
+        if depth > cls.max_depth:
+            return [
+                VarDeclaration,
+                Assigment,
+                IOStatement
+            ]
+
+        return [
+            VarDeclaration,
+            Assigment,
+            IfStatement,
+            LoopStatement,
+            IOStatement
+        ]
 
     def mutate(self) -> Statement:
         pass
@@ -142,12 +157,14 @@ class IfStatement(Rule, RestrictedRandomize):
     def from_random(cls, depth: int) -> IfStatement:
         condition: Condition = Condition.from_random(depth + 1)
         body: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
+        table_of_choices: list = [ExecutionBlock, None]
 
-        else_constructor = choice([ExecutionBlock, None])
-        if else_constructor is not None:
-            else_statement: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
-        else:
-            else_statement: Optional[ExecutionBlock] = None
+        match choice(table_of_choices):
+            case namespace.ExecutionBlock as option:
+                else_statement: Optional[ExecutionBlock] = option.from_random(depth + 1)
+
+            case _:
+                else_statement: Optional[ExecutionBlock] = None
 
         return cls(depth, condition, body, else_statement)
 
@@ -230,12 +247,14 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, depth: int) -> IntegerDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
+        table_of_choices: list = [Expression, None]
 
-        expression_constructor = choice([Expression, None])
-        if expression_constructor is not None:
-            expression = expression_constructor.from_random(depth + 1)
-        else:
-            expression = None
+        match choice(table_of_choices):
+            case namespace.Expression as option:
+                expression: Optional[Expression] = option.from_random(depth + 1)
+
+            case _:
+                expression: Optional[Expression] = None
 
         return cls(depth, name, expression)
 
@@ -261,12 +280,14 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, depth: int) -> BooleanDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
+        table_of_choices: list = [Condition, None]
 
-        condition_constructor = choice([Condition, None])
-        if condition_constructor is not None:
-            condition = condition_constructor.from_random(depth + 1)
-        else:
-            condition = None
+        match choice(table_of_choices):
+            case namespace.Condition as option:
+                condition: Optional[Condition] = option.from_random(depth + 1)
+
+            case _:
+                condition: Optional[Condition] = None
 
         return cls(depth, name, condition)
 
@@ -290,28 +311,33 @@ class Condition(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, depth: int) -> Condition:
-        table_of_choices: List = [
+        table_of_choices: list = cls.generate_choices(depth)
+
+        match choice(table_of_choices):
+            case(left, operation, right):
+                return cls(depth, (left.from_random(depth + 1), operation, right.from_random(depth + 1)))
+
+            case namespace.Condition as option:
+                return cls(depth, option.from_random(depth + 1))
+
+            case namespace.VariableNameToken | namespace.BooleanToken as option:
+                return cls(depth, option.from_random())
+
+    @classmethod
+    def generate_choices(cls, depth: int) -> list:
+        if depth > cls.max_depth:
+            return [
+                VariableNameToken,
+                BooleanToken
+            ]
+
+        return [
             (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
             (Condition, choice(['&&', '||', '^']), Condition),
             Condition,
             VariableNameToken,
-            BooleanToken,
+            BooleanToken
         ]
-
-        random_constructor_index = randint(0, len(table_of_choices) - 1)
-
-        match random_constructor_index:
-            case 0 | 1:
-                left, operation, right = table_of_choices[random_constructor_index]
-                return cls(depth, (left.from_random(depth + 1), operation, right.from_random(depth + 1)))
-
-            case 2:
-                option = table_of_choices[random_constructor_index]
-                return cls(depth, option.from_random(depth + 1))
-
-            case 3 | 4:
-                option = table_of_choices[random_constructor_index]
-                return cls(depth, option.from_random())
 
     def mutate(self) -> Condition:
         pass
@@ -337,11 +363,7 @@ class Expression(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, depth: int) -> Expression:
-        table_of_choices: List = [
-            (Expression, choice(['+', '-', '*', '/']), Expression),
-            VariableNameToken,
-            IntegerToken,
-        ]
+        table_of_choices: list = cls.generate_choices(depth)
 
         match choice(table_of_choices):
             case (right, operation, left):
@@ -349,6 +371,20 @@ class Expression(Rule, RestrictedRandomize):
 
             case _ as option:
                 return cls(depth, option.from_random())
+
+    @classmethod
+    def generate_choices(cls, depth: int) -> list:
+        if depth > cls.max_depth:
+            return [
+                VariableNameToken,
+                IntegerToken
+            ]
+
+        return [
+            (Expression, choice(['+', '-', '*', '/']), Expression),
+            VariableNameToken,
+            IntegerToken
+        ]
 
     def mutate(self) -> Expression:
         pass
@@ -366,7 +402,15 @@ class Expression(Rule, RestrictedRandomize):
 
 
 ExpressionType = Union[Tuple[Expression, str, Expression], VariableNameToken, IntegerToken]
-ConditionType = Union[Tuple[Condition, str, Condition], Tuple[Expression, str, Expression], Condition, VariableNameToken, BooleanToken]
+ConditionType = Union[
+    Tuple[Condition, str, Condition], Tuple[Expression, str, Expression], Condition, VariableNameToken, BooleanToken]
 StatementBodyTypes = Union[VarDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
 DeclarationTypes = Union[IntegerDeclaration, BooleanDeclaration]
 AssigmentValueType = Union[Expression, Condition]
+
+namespace = SimpleNamespace(**{
+    cls.__name__: cls for _, cls in inspect.getmembers(
+        importlib.import_module(__name__),
+        inspect.isclass
+    )
+})
