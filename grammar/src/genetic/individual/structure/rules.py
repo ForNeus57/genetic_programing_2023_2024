@@ -10,8 +10,8 @@ from enum import Enum, auto
 
 from genetic.individual.interfaces.node_types import Rule
 from genetic.individual.probability.exponential_probability import ExponentialProbability
-from genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize
-from genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
+from genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize, Metadata, VariableNameToken, \
+    IntegerToken, BooleanToken
 
 
 @dataclass(slots=True, frozen=True)
@@ -20,8 +20,9 @@ class Program(Rule, Randomize):
 
     @classmethod
     def from_random(cls) -> Program:
-        block: ExecutionBlock = ExecutionBlock.from_random(1)
-        return cls(0, block)
+        meta: Metadata = Metadata()
+        block = ExecutionBlock.from_random(meta)
+        return cls(block)
 
     def mutate(self) -> Program:
         pass
@@ -38,14 +39,19 @@ class ExecutionBlock(Rule, RestrictedRandomize):
     statements: list[Statement] = field(default_factory=list)
 
     @classmethod
-    def from_random(cls, depth: int) -> ExecutionBlock:
+    def from_random(cls, meta: Metadata) -> ExecutionBlock:
         body: list[Statement] = []
         probability: ExponentialProbability = ExponentialProbability()
+        first_statement = Statement.from_random(meta)
+        child_meta: Metadata = first_statement.meta
+        body.append(first_statement)
 
         while next(probability) > random():
-            body.append(Statement.from_random(depth))
+            statement: Statement = Statement.from_random(child_meta)
+            child_meta = statement.meta
+            body.append(statement)
 
-        return cls(depth, body)
+        return cls(meta, body)
 
     def mutate(self) -> ExecutionBlock:
         pass
@@ -54,7 +60,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         pass
 
     def __str__(self) -> str:
-        tabs: str = '\t' * self.depth
+        tabs: str = '\t' * self.meta.depth
         statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
         return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
 
@@ -64,34 +70,36 @@ class Statement(Rule, RestrictedRandomize):
     body: StatementBodyTypes
 
     @classmethod
-    def from_random(cls, depth: int) -> Statement:
-        table_of_choices: list = cls.generate_choices(depth)
+    def from_random(cls, meta: Metadata) -> Statement:
+        table_of_choices: list = cls.generate_choices(meta)
 
         match choice(table_of_choices):
             case namespace.IfStatement | namespace.LoopStatement as option:
-                body: StatementBodyTypes = option.from_random(depth + 1)
+                body: StatementBodyTypes = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
             case _ as option:
-                body: StatementBodyTypes = option.from_random(depth)
+                body: StatementBodyTypes = option.from_random(meta)
 
-        return cls(depth, body)
+        return cls(meta, body)
 
     @classmethod
-    def generate_choices(cls, depth: int) -> list:
-        if depth > cls.max_depth:
-            return [
-                VarDeclaration,
+    def generate_choices(cls, meta: Metadata) -> list:
+        output: list = [
+            VarDeclaration,
+        ]
+        if not meta.is_empty():
+            output.extend([
                 Assigment,
                 IOStatement
-            ]
+            ])
 
-        return [
-            VarDeclaration,
-            Assigment,
-            IfStatement,
-            LoopStatement,
-            IOStatement
-        ]
+        if meta.is_depth_in_limits():
+            output.extend([
+                IfStatement,
+                LoopStatement,
+            ])
+
+        return output
 
     def mutate(self) -> Statement:
         pass
@@ -109,11 +117,12 @@ class VarDeclaration(Rule, RestrictedRandomize):
     declaration: DeclarationTypes
 
     @classmethod
-    def from_random(cls, depth: int) -> VarDeclaration:
+    def from_random(cls, meta: Metadata) -> VarDeclaration:
         is_constant = choice([True, False])
-        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(depth + 1)
+        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        # meta.variables_scope.add(declaration.name)  # Not sure if needed
 
-        return cls(depth, is_constant, declaration)
+        return cls(meta, is_constant, declaration)
 
     def mutate(self) -> VarDeclaration:
         pass
@@ -131,11 +140,11 @@ class Assigment(Rule, RestrictedRandomize):
     assigment_value: AssigmentValueType
 
     @classmethod
-    def from_random(cls, depth: int) -> Assigment:
-        name: VariableNameToken = VariableNameToken.from_random()
-        value: AssigmentValueType = choice([Expression, Condition]).from_random(depth + 1)  # Don't forget Validation...
+    def from_random(cls, meta: Metadata) -> Assigment:
+        name: VariableNameToken = meta.get_random_name()
+        value: AssigmentValueType = choice([Expression, Condition]).from_random(Metadata(meta.variables_scope, meta.depth + 1))  # Don't forget Validation...
 
-        return cls(depth, name, value)
+        return cls(meta, name, value)
 
     def mutate(self) -> Assigment:
         pass
@@ -154,19 +163,19 @@ class IfStatement(Rule, RestrictedRandomize):
     else_statement: Optional[ExecutionBlock]
 
     @classmethod
-    def from_random(cls, depth: int) -> IfStatement:
-        condition: Condition = Condition.from_random(depth + 1)
-        body: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
+    def from_random(cls, meta: Metadata) -> IfStatement:
+        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        body: ExecutionBlock = ExecutionBlock.from_random(Metadata(meta.variables_scope, meta.depth + 1))
         table_of_choices: list = [ExecutionBlock, None]
 
         match choice(table_of_choices):
             case namespace.ExecutionBlock as option:
-                else_statement: Optional[ExecutionBlock] = option.from_random(depth + 1)
+                else_statement: Optional[ExecutionBlock] = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
             case _:
                 else_statement: Optional[ExecutionBlock] = None
 
-        return cls(depth, condition, body, else_statement)
+        return cls(meta, condition, body, else_statement)
 
     def mutate(self) -> IfStatement:
         pass
@@ -178,7 +187,7 @@ class IfStatement(Rule, RestrictedRandomize):
         base: str = f'if ({self.condition}) {self.body}'
 
         if self.else_statement is not None:
-            indentation: str = '\t' * (self.depth - 1)
+            indentation: str = '\t' * (self.meta.depth - 1)
             return base + f'{indentation} else {self.else_statement}'
 
         return base
@@ -190,11 +199,11 @@ class LoopStatement(Rule, RestrictedRandomize):
     body: ExecutionBlock
 
     @classmethod
-    def from_random(cls, depth: int) -> LoopStatement:
-        condition: Condition = Condition.from_random(depth + 1)
-        body: ExecutionBlock = ExecutionBlock.from_random(depth + 1)
+    def from_random(cls, meta: Metadata) -> LoopStatement:
+        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        body: ExecutionBlock = ExecutionBlock.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
-        return cls(depth, condition, body)
+        return cls(meta, condition, body)
 
     def mutate(self) -> LoopStatement:
         pass
@@ -224,10 +233,11 @@ class IOStatement(Rule, RestrictedRandomize):
     name: VariableNameToken
 
     @classmethod
-    def from_random(cls, depth: int) -> IOStatement:
+    def from_random(cls, meta: Metadata) -> IOStatement:
         io_type: IOType = IOType.from_random()
-        name: VariableNameToken = VariableNameToken.from_random()
-        return cls(depth, io_type, name)
+        name: VariableNameToken = meta.get_random_name()
+
+        return cls(meta, io_type, name)
 
     def mutate(self) -> IOStatement:
         pass
@@ -245,18 +255,19 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
     expression: Optional[Expression]
 
     @classmethod
-    def from_random(cls, depth: int) -> IntegerDeclaration:
+    def from_random(cls, meta: Metadata) -> IntegerDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
+        meta.variables_scope.add(name)
         table_of_choices: list = [Expression, None]
 
         match choice(table_of_choices):
             case namespace.Expression as option:
-                expression: Optional[Expression] = option.from_random(depth + 1)
+                expression: Optional[Expression] = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
             case _:
                 expression: Optional[Expression] = None
 
-        return cls(depth, name, expression)
+        return cls(meta, name, expression)
 
     def mutate(self) -> IntegerDeclaration:
         pass
@@ -278,18 +289,19 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
     condition: Optional[Condition]
 
     @classmethod
-    def from_random(cls, depth: int) -> BooleanDeclaration:
+    def from_random(cls, meta: Metadata) -> BooleanDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
+        meta.variables_scope.add(name)
         table_of_choices: list = [Condition, None]
 
         match choice(table_of_choices):
             case namespace.Condition as option:
-                condition: Optional[Condition] = option.from_random(depth + 1)
+                condition: Optional[Condition] = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
             case _:
                 condition: Optional[Condition] = None
 
-        return cls(depth, name, condition)
+        return cls(meta, name, condition)
 
     def mutate(self) -> BooleanDeclaration:
         pass
@@ -310,34 +322,40 @@ class Condition(Rule, RestrictedRandomize):
     body: ConditionType
 
     @classmethod
-    def from_random(cls, depth: int) -> Condition:
-        table_of_choices: list = cls.generate_choices(depth)
+    def from_random(cls, meta: Metadata) -> Condition:
+        table_of_choices: list = cls.generate_choices(meta)
 
         match choice(table_of_choices):
-            case(left, operation, right):
-                return cls(depth, (left.from_random(depth + 1), operation, right.from_random(depth + 1)))
+            case (left, operation, right):
+                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation, right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
 
             case namespace.Condition as option:
-                return cls(depth, option.from_random(depth + 1))
+                return cls(meta, option.from_random(Metadata(meta.variables_scope, meta.depth + 1)))
 
-            case namespace.VariableNameToken | namespace.BooleanToken as option:
-                return cls(depth, option.from_random())
+            case namespace.VariableNameToken:
+                return cls(meta, meta.get_random_name())
+
+            case namespace.BooleanToken as option:
+                return cls(meta, option.from_random())
 
     @classmethod
-    def generate_choices(cls, depth: int) -> list:
-        if depth > cls.max_depth:
-            return [
-                VariableNameToken,
-                BooleanToken
-            ]
-
-        return [
-            (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
-            (Condition, choice(['&&', '||', '^']), Condition),
-            Condition,
-            VariableNameToken,
+    def generate_choices(cls, meta: Metadata) -> list:
+        output: list = [
             BooleanToken
         ]
+        if not meta.is_empty():
+            output.extend([
+                VariableNameToken,
+            ])
+
+        if meta.is_depth_in_limits():
+            output.extend([
+                (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
+                (Condition, choice(['&&', '||', '^']), Condition),
+                Condition,
+            ])
+
+        return output
 
     def mutate(self) -> Condition:
         pass
@@ -362,29 +380,35 @@ class Expression(Rule, RestrictedRandomize):
     body: ExpressionType
 
     @classmethod
-    def from_random(cls, depth: int) -> Expression:
-        table_of_choices: list = cls.generate_choices(depth)
+    def from_random(cls, meta: Metadata) -> Expression:
+        table_of_choices: list = cls.generate_choices(meta)
 
         match choice(table_of_choices):
             case (right, operation, left):
-                return cls(depth, (left.from_random(depth + 1), operation, right.from_random(depth + 1)))
+                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation, right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
 
-            case _ as option:
-                return cls(depth, option.from_random())
+            case namespace.VariableNameToken:
+                return cls(meta, meta.get_random_name())
+
+            case namespace.IntegerToken as option:
+                return cls(meta, option.from_random())
 
     @classmethod
-    def generate_choices(cls, depth: int) -> list:
-        if depth > cls.max_depth:
-            return [
-                VariableNameToken,
-                IntegerToken
-            ]
-
-        return [
-            (Expression, choice(['+', '-', '*', '/']), Expression),
-            VariableNameToken,
-            IntegerToken
+    def generate_choices(cls, meta: Metadata) -> list:
+        output: list = [
+            IntegerToken,
         ]
+        if not meta.is_empty():
+            output.extend([
+                VariableNameToken,
+            ])
+
+        if meta.is_depth_in_limits():
+            output.extend([
+                (Expression, choice(['+', '-', '*', '/']), Expression),
+            ])
+
+        return output
 
     def mutate(self) -> Expression:
         pass

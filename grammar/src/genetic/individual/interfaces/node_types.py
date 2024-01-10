@@ -7,8 +7,6 @@ from typing import ClassVar
 @dataclass(slots=True, frozen=True)
 class Rule(ABC):
     mutation_node_probability: ClassVar[float] = 0.2
-    max_depth: ClassVar[int] = 5
-    depth: int
 
     @abstractmethod
     def mutate(self) -> Rule:
