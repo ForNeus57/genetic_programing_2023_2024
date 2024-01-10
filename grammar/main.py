@@ -11,21 +11,7 @@ def main():
     # print("Wygenerowane losowe drzewo:")
     # print(random_tree)
 
-
-    interpret("""
-    
-    {
-        int x;
-        x = 10;
-        if (x > 5) {
-            write(x);
-        }
-    }
-    
-    """)
-
-
-    #
+    print(interpret("./test/resources/test1.mgp"))
     # seed(6)
     #
     #

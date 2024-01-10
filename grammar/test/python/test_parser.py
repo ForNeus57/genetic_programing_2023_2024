@@ -1,6 +1,6 @@
-from antlr4 import FileStream, CommonTokenStream
-from antlr4.MiniGPLexer import MiniGPLexer
-from antlr4.MiniGPParser import MiniGPParser
+from src.antlr4 import FileStream, CommonTokenStream
+from src.antlr4.MiniGPLexer import MiniGPLexer
+from src.antlr4.MiniGPParser import MiniGPParser
 
 def parse(input_file):
     input_stream = FileStream(input_file)

@@ -1,9 +1,9 @@
+from antlr4 import FileStream
 from antlr4.CommonTokenStream import CommonTokenStream
-from antlr4.InputStream import InputStream
 
-from antlr.MiniGPLexer import MiniGPLexer
-from antlr.MiniGPParser import MiniGPParser
-from antlr.MiniGPVisitor import MiniGPVisitor
+from src.antlr.MiniGPLexer import MiniGPLexer
+from src.antlr.MiniGPParser import MiniGPParser
+from src.antlr.MiniGPVisitor import MiniGPVisitor
 
 
 class Interpreter(MiniGPVisitor):
@@ -20,10 +20,27 @@ class Interpreter(MiniGPVisitor):
         return self.visitChildren(ctx)
 
     def visitVarDeclaration(self, ctx: MiniGPParser.VarDeclarationContext):
-        self.variables[ctx.variableName().getText()] = {
-            'is_const': False,
-            'value': None,
-            'type': 'int' if ctx.integerDeclaration() else 'bool'
+
+        def is_const(ctx: MiniGPParser.VarDeclarationContext):
+            return ctx.CONST() is not None
+
+        # def get_value(ctx: MiniGPParser.VarDeclarationContext):
+        #
+        #     if ctx.expression() is not None:
+        #         return self.visit(ctx.expression())
+        #     else:
+        #         return None
+
+        def get_type(ctx: MiniGPParser.VarDeclarationContext):
+            if ctx.integerDeclaration() is not None:
+                return 'int'
+            else:
+                return 'bool'
+
+        self.variables[ctx.getText()] = {
+            'is_const': is_const(ctx),
+            'value': get_value(ctx),
+            'type': get_type(ctx)
         }
         return self.visitChildren(ctx)
 
@@ -53,7 +70,7 @@ class Interpreter(MiniGPVisitor):
 
 
 def interpret(program: str):
-    input_stream = InputStream(program)
+    input_stream = FileStream(program)
     lexer = MiniGPLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = MiniGPParser(stream)
@@ -62,6 +79,6 @@ def interpret(program: str):
         interpreter = Interpreter()
         interpreter.visit(tree)
         return interpreter.variables
-    except:
-        print('SAAAA')
+    except Exception as e:
+        print(e)
         return None

@@ -1,5 +1,5 @@
-# Generated from ./grammar/MiniGP.g4 by ANTLR 4.13.1
-from antlr import *
+# Generated from C:/Users/domin/IdeaProjects/genetic_programing_2023_2024/grammar/MiniGP.g4 by ANTLR 4.13.1
+from antlr4 import *
 if "." in __name__:
     from .MiniGPParser import MiniGPParser
 else:

@@ -5,7 +5,7 @@ program:
 	;
 
 executionBlock:
-	'{' (statement)+ '}'
+	LBRACE (statement)+ RBRACE
 	;
 
 statement: 
@@ -17,49 +17,67 @@ statement:
     ;
 
 varDeclaration:
-	('const')? (integerDeclaration | booleanDeclaration) ';'
+	(CONST)? (integerDeclaration | booleanDeclaration) SEMICOLON
 	;
 
 integerDeclaration:
-	'int' VAR ('=' expression)?
+	INT_TYPE VAR (ASSIGMENT_OPERATOR expression)?
 	;
 
 booleanDeclaration:
-	'bool' VAR ('=' condition)?
+	BOOL_TYPE VAR (ASSIGMENT_OPERATOR condition)?
 	;
 
 assignment:
-	VAR '=' (expression | condition) ';'
+	VAR ASSIGMENT_OPERATOR (expression | condition) SEMICOLON
 	;
 
 ifStatement:
-	'if' '(' condition ')' executionBlock ('else' executionBlock)?
+	IF LPAREN condition RPAREN executionBlock (ELSE executionBlock)?
 	;
 
 loopStatement:
-	'while' '(' condition ')' executionBlock
+	WHILE LPAREN condition RPAREN executionBlock
 	;
 
 ioStatement:
-	('read' | 'write') '(' VAR ')' ';'
+	(READ | WRITE) LPAREN VAR RPAREN SEMICOLON
 	;
 
 condition:
-	'(' expression ('>' | '<' | '==' | '!=' | '>=' | '<=') expression ')'
-	|   '(' condition ('&&' | '||' | '^') condition ')'
-	|   '!' '(' condition ')'
-	|   VAR
+	LPAREN expression EXPRESION_COMPARASON_OPERATOP expression RPAREN
+	|   LPAREN condition CONDITION_OPERATOR condition RPAREN
+	|   NEGATION_OPERATOR LPAREN condition RPAREN
 	|   BOOL
+	|   VAR
 	;
 
 expression:
-	'(' expression ('*' | '/' | '+' | '-') expression ')'
-    |   VAR
+	LPAREN expression ('*' | '/' | '+' | '-') expression RPAREN
     |   INT
+    |   VAR
     ;
 
 BOOL: 'True' | 'False';
 INT: (('-')?[1-9][0-9]*) | '0';
+CONST: 'const';
+INT_TYPE: 'int';
+BOOL_TYPE: 'bool';
+LPAREN: '(';
+RPAREN: ')';
+LBRACE: '{';
+RBRACE: '}';
+SEMICOLON: ';';
+ASSIGMENT_OPERATOR: '=';
+EXPRESION_OPERATOR: ('*' | '/' | '+' | '-');
+EXPRESION_COMPARASON_OPERATOP: ('>' | '<' | '==' | '!=' | '>=' | '<=');
+CONDITION_OPERATOR: ('&&' | '||' | '^');
+READ: 'read';
+WRITE: 'write';
+NEGATION_OPERATOR: '!';
+WHILE: 'while';
+IF: 'if';
+ELSE: 'else';
 VAR: [a-zA-Z][a-zA-Z0-9_]*;
 
 WHITESPACE: [ \t\r\n]+ -> skip;

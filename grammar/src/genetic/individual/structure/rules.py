@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from typing import Union, Optional, Tuple
 from random import random, choice
 from enum import Enum, auto
+from copy import deepcopy
 
 from src.genetic.individual.interfaces.node_types import Rule
 from src.genetic.individual.probability.exponential_probability import ExponentialProbability
@@ -165,12 +166,12 @@ class IfStatement(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> IfStatement:
         condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
-        body: ExecutionBlock = ExecutionBlock.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        body: ExecutionBlock = ExecutionBlock.from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
         table_of_choices: list = [ExecutionBlock, None]
 
         match choice(table_of_choices):
             case namespace.ExecutionBlock as option:
-                else_statement: Optional[ExecutionBlock] = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+                else_statement: Optional[ExecutionBlock] = option.from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
 
             case _:
                 else_statement: Optional[ExecutionBlock] = None
@@ -201,7 +202,7 @@ class LoopStatement(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> LoopStatement:
         condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
-        body: ExecutionBlock = ExecutionBlock.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        body: ExecutionBlock = ExecutionBlock.from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
 
         return cls(meta, condition, body)
 
