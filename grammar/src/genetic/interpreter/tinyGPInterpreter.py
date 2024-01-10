@@ -1,9 +1,9 @@
 from antlr4.CommonTokenStream import CommonTokenStream
 from antlr4.InputStream import InputStream
 
-from antlr4.MiniGPLexer import MiniGPLexer
-from antlr4.MiniGPParser import MiniGPParser
-from antlr4.MiniGPVisitor import MiniGPVisitor
+from antlr.MiniGPLexer import MiniGPLexer
+from antlr.MiniGPParser import MiniGPParser
+from antlr.MiniGPVisitor import MiniGPVisitor
 
 
 class Interpreter(MiniGPVisitor):

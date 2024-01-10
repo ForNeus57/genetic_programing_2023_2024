@@ -8,9 +8,9 @@ from typing import Union, Optional, Tuple
 from random import random, choice
 from enum import Enum, auto
 
-from genetic.individual.interfaces.node_types import Rule
-from genetic.individual.probability.exponential_probability import ExponentialProbability
-from genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize, Metadata, VariableNameToken, \
+from src.genetic.individual.interfaces.node_types import Rule
+from src.genetic.individual.probability.exponential_probability import ExponentialProbability
+from src.genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize, Metadata, VariableNameToken, \
     IntegerToken, BooleanToken
 
 

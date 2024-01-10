@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pickle import dump, load
 from typing import Callable, Union, Literal
 
-from genetic.individual.structure.rules import Program
+from src.genetic.individual.structure.rules import Program
 
 
 @dataclass(slots=True, frozen=True, order=False)

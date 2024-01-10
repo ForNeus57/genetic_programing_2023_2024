@@ -1,5 +1,5 @@
 # Generated from ./grammar/MiniGP.g4 by ANTLR 4.13.1
-from antlr4 import *
+from antlr import *
 if "." in __name__:
     from .MiniGPParser import MiniGPParser
 else:

@@ -6,8 +6,8 @@ from random import choice, randint, random
 from string import ascii_letters, digits
 from typing import ClassVar, Callable
 
-from genetic.individual.interfaces.node_types import Token
-from genetic.individual.probability.exponential_probability import ExponentialProbability
+from src.genetic.individual.interfaces.node_types import Token
+from src.genetic.individual.probability.exponential_probability import ExponentialProbability
 
 
 class Randomize(ABC):
