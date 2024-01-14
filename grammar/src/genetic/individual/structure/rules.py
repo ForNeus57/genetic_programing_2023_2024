@@ -120,7 +120,7 @@ class VarDeclaration(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> VarDeclaration:
         is_constant = choice([True, False])
-        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
         # meta.variables_scope.add(declaration.name)  # Not sure if needed
 
         return cls(meta, is_constant, declaration)

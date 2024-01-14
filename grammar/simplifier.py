@@ -47,7 +47,7 @@ def main() -> None:
     simplifier: Simplifier = Simplifier("(2 + (X1 + ( 3.2 + 3.4)))")
     print(simplifier.simplify())
 
-    simplifier: Simplifier = Simplifier("(X1  * ((( 3.2 + 3.4) / ( 3.3 + 3.3)) * 2))")
+    simplifier: Simplifier = Simplifier("((X1 * 5) * (sin((X1 + X1))))")
     print(simplifier.simplify())
 
     # with open(argv[2], 'w') as output_file:

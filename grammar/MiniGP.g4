@@ -45,7 +45,7 @@ ioStatement:
 	;
 
 condition:
-	LPAREN expression EXPRESION_COMPARASON_OPERATOP expression RPAREN
+	LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
 	|   LPAREN condition CONDITION_OPERATOR condition RPAREN
 	|   NEGATION_OPERATOR LPAREN condition RPAREN
 	|   BOOL
@@ -53,7 +53,7 @@ condition:
 	;
 
 expression:
-	LPAREN expression ('*' | '/' | '+' | '-') expression RPAREN
+	LPAREN expression EXPRESSION_OPERATOR expression RPAREN
     |   INT
     |   VAR
     ;
@@ -69,8 +69,8 @@ LBRACE: '{';
 RBRACE: '}';
 SEMICOLON: ';';
 ASSIGMENT_OPERATOR: '=';
-EXPRESION_OPERATOR: ('*' | '/' | '+' | '-');
-EXPRESION_COMPARASON_OPERATOP: ('>' | '<' | '==' | '!=' | '>=' | '<=');
+EXPRESSION_OPERATOR: ('*' | '/' | '+' | '-');
+EXPRESSION_COMPARISON_OPERATOR: ('>' | '<' | '==' | '!=' | '>=' | '<=');
 CONDITION_OPERATOR: ('&&' | '||' | '^');
 READ: 'read';
 WRITE: 'write';

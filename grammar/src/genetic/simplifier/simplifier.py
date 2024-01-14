@@ -8,7 +8,7 @@
 from typing import Tuple, Union, Any, Optional
 from re import compile
 
-from genetic.simplifier.tiny_gp.operator_logic import OperatorLogic
+from src.genetic.simplifier.tiny_gp.operator_logic import OperatorLogic
 
 
 class Simplifier:

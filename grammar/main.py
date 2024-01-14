@@ -11,10 +11,9 @@ def main():
     # print("Wygenerowane losowe drzewo:")
     # print(random_tree)
 
-    print(interpret("./test/resources/test1.mgp"))
+    print(interpret("./test/resources/test5.mgp"))
     # seed(6)
-    #
-    #
+
     # ind = Individual.from_random()
     # print(ind)
 
