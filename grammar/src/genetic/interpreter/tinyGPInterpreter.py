@@ -1,4 +1,7 @@
-from typing import Optional
+from __future__ import annotations
+
+from enum import Enum
+from typing import Optional, Union
 
 from antlr4 import FileStream
 from antlr4.CommonTokenStream import CommonTokenStream
@@ -9,6 +12,18 @@ from src.antlr.MiniGPVisitor import MiniGPVisitor
 
 from src.genetic.interpreter.input_output import InputOutputOperation, ConsoleInputOutputOperation
 from src.genetic.interpreter.variables import Variable
+
+
+class InterpreterErrors(Enum):
+    VARIABLE_NOT_DECLARED = 'Variable: \"{}\" attempted read operation before declaration!'
+    VARIABLE_DOUBLE_DECLARATION = 'Variable: \"{}\" was already declared in this scope!'
+    CONSTANT_VARIABLE_ASSIGMENT = 'Attempt was made to assign value: \"{}\" to constant variable \"{}\"!'
+    WRONG_TYPE_TO_VARIABLE_ASSIGMENT = 'Cannot assign: \"{}\" type variable with: \"{}\" type!'
+    READ_ASSIGMENT_TO_CONSTANT = 'Attempted to assign read input value to variable: \"{}\"!'
+
+    @staticmethod
+    def raise_error(error_type: InterpreterErrors, *msg_args):
+        raise Exception(error_type.value.format(*msg_args))
 
 
 class Interpreter(MiniGPVisitor):
@@ -66,7 +81,7 @@ class Interpreter(MiniGPVisitor):
         variable_name = ctx.VAR().getText()
 
         if self.variables.get(variable_name) is not None:
-            raise Exception('Variable already declared!')
+            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, variable_name)
 
         self.variables[variable_name] = (
             Variable(self.const_information,
@@ -83,7 +98,7 @@ class Interpreter(MiniGPVisitor):
         variable_name = ctx.VAR().getText()
 
         if self.variables.get(variable_name) is not None:
-            raise Exception('Variable already declared!')
+            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, variable_name)
 
         self.variables[variable_name] = (
             Variable(self.const_information,
@@ -102,21 +117,20 @@ class Interpreter(MiniGPVisitor):
         variable: Optional[Variable] = self.variables.get(variable_name)
 
         if variable is None:
-            raise Exception('Variable not declared!')
-
-        if variable.is_constant and variable.value is not None:
-            raise Exception('Cannot assign to constant variable!')
+            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
 
         if variable.type == 'int' and ctx.condition() is not None:
-            raise Exception('Cannot assign bool condition to int variable')
+            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'int', 'bool')
 
         if variable.type == 'bool' and ctx.expression() is not None:
-            raise Exception('Cannot assign int expression to bool variable')
+            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'bool', 'int')
 
-        if ctx.condition() is not None:
-            variable.value = self.visit(ctx.condition())
-        else:
-            variable.value = self.visit(ctx.expression())
+        value: Union[bool, int] = self.visit(ctx.getChild(2))
+
+        if variable.is_constant:
+            InterpreterErrors.raise_error(InterpreterErrors.CONSTANT_VARIABLE_ASSIGMENT, value, variable_name)
+
+        variable.value = value
 
         return self.visitChildren(ctx)
 
@@ -151,14 +165,14 @@ class Interpreter(MiniGPVisitor):
         variable: Optional[Variable] = self.variables.get(variable_name)
 
         if variable is None:
-            raise Exception('Variable not declared!')
+            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
 
         if ctx.WRITE() is not None:
             self.mode.write(variable.value)
 
         elif ctx.READ() is not None:
             if variable.is_constant:
-                raise Exception('Cannot assign to constant variable!')
+                InterpreterErrors.raise_error(InterpreterErrors.READ_ASSIGMENT_TO_CONSTANT, variable_name)
 
             variable.value = self.mode.read(variable.type)
 
@@ -177,10 +191,10 @@ class Interpreter(MiniGPVisitor):
             variable: Optional[Variable] = self.variables.get(variable_name)
 
             if variable is None:
-                raise Exception('Variable not declared!')
+                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
 
-            if variable.type != 'int':
-                raise Exception('Variable is not int!')
+            if variable.type == 'bool':
+                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'int', 'bool')
 
             return variable.value
 
@@ -201,9 +215,6 @@ class Interpreter(MiniGPVisitor):
             case '/':
                 return left / right
 
-            case _:
-                raise Exception('Unknown operator')
-
     def visitCondition(self, ctx: MiniGPParser.ConditionContext):
         # condition :
         #    LPAREN condition CONDITION_OPERATOR condition RPAREN
@@ -219,10 +230,10 @@ class Interpreter(MiniGPVisitor):
             variable: Optional[Variable] = self.variables.get(variable_name)
 
             if variable is None:
-                raise Exception('Variable not declared')
+                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
 
-            if variable.type != 'bool':
-                raise Exception('Variable is not bool')
+            if variable.type == 'int':
+                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'bool', 'int')
 
             return variable.value
 
@@ -258,45 +269,18 @@ class Interpreter(MiniGPVisitor):
             case '^':
                 return left != right
 
-            case _:
-                raise Exception('Unknown operator')
-
-    # BOOL: 'True' | 'False';
-    # INT: (('-')?[1-9][0-9]*) | '0';
-    # CONST: 'const';
-    # INT_TYPE: 'int';
-    # BOOL_TYPE: 'bool';
-    # LPAREN: '(';
-    # RPAREN: ')';
-    # LBRACE: '{';
-    # RBRACE: '}';
-    # SEMICOLON: ';';
-    # ASSIGMENT_OPERATOR: '=';
-    # EXPRESION_OPERATOR: ('*' | '/' | '+' | '-');
-    # EXPRESION_COMPARASON_OPERATOR: ('>' | '<' | '==' | '!=' | '>=' | '<=');
-    # CONDITION_OPERATOR: ('&&' | '||' | '^');
-    # READ: 'read';
-    # WRITE: 'write';
-    # NEGATION_OPERATOR: '!';
-    # WHILE: 'while';
-    # IF: 'if';
-    # ELSE: 'else';
-    # VAR: [a-zA-Z][a-zA-Z0-9_]*;
-
-    # WHITESPACE: [ \t\r\n]+ -> skip;
-
 
 def interpret(program: str):
     input_stream = FileStream(program)
     lexer = MiniGPLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = MiniGPParser(stream)
+
     try:
         tree = parser.program()
         interpreter = Interpreter(ConsoleInputOutputOperation())
         interpreter.visit(tree)
         return interpreter.variables
-
     except Exception as e:
         print(e)
         return None
