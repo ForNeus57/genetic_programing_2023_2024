@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import functools
 from enum import Enum
 from typing import Optional, Union, Final, Callable
+from functools import wraps
 
 from antlr4 import FileStream
 from antlr4.CommonTokenStream import CommonTokenStream
@@ -11,10 +11,8 @@ from src.antlr.MiniGPLexer import MiniGPLexer
 from src.antlr.MiniGPParser import MiniGPParser
 from src.antlr.MiniGPVisitor import MiniGPVisitor
 
-from src.genetic.interpreter.input_output import InputOutputOperation, ConsoleInputOutputOperation
+from src.genetic.interpreter.input_output import InputOutputOperation, ConsoleInputOutputOperation, BufferInputOutputOperation
 from src.genetic.interpreter.variables import Variable
-
-from genetic.interpreter.input_output import BufferInputOutputOperation
 
 
 class InterpreterErrors(Enum):
@@ -23,6 +21,7 @@ class InterpreterErrors(Enum):
     CONSTANT_VARIABLE_ASSIGMENT = 'Attempt was made to assign value: \"{}\" to constant variable \"{}\"!'
     WRONG_TYPE_TO_VARIABLE_ASSIGMENT = 'Cannot assign: \"{}\" type variable with: \"{}\" type!'
     READ_ASSIGMENT_TO_CONSTANT = 'Attempted to assign read input value to variable: \"{}\"!'
+    ITERATION_LIMIT_EXCEEDED = 'Interpreter exceeded executed instruction limit!'
 
     @staticmethod
     def raise_error(error_type: InterpreterErrors, *msg_args):
@@ -40,10 +39,10 @@ class Interpreter(MiniGPVisitor):
 
     @staticmethod
     def limit(function: Callable):
-        @functools.wraps(function)
+        @wraps(function)
         def wrapper(self, *args, **kwargs):
             if self.used_instructions > Interpreter.instructions_limit:
-                raise StopIteration("Interpreter exceeded instructions limit!")
+                InterpreterErrors.raise_error(InterpreterErrors.ITERATION_LIMIT_EXCEEDED)
 
             self.used_instructions += 1
             return function(self, *args, **kwargs)
@@ -112,8 +111,6 @@ class Interpreter(MiniGPVisitor):
                      self.visit(ctx.expression()) if ctx.expression() is not None else None)
         )
 
-        return self.visitChildren(ctx)
-
     @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext):
         # booleanDeclaration :
@@ -129,8 +126,6 @@ class Interpreter(MiniGPVisitor):
                      'bool',
                      self.visit(ctx.expression()) if ctx.expression() is not None else None)
         )
-
-        return self.visitChildren(ctx)
 
     @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext):
@@ -156,8 +151,6 @@ class Interpreter(MiniGPVisitor):
             InterpreterErrors.raise_error(InterpreterErrors.CONSTANT_VARIABLE_ASSIGMENT, value, variable_name)
 
         variable.value = value
-
-        return self.visitChildren(ctx)
 
     @limit
     def visitIfStatement(self, ctx: MiniGPParser.IfStatementContext):
@@ -299,18 +292,18 @@ class Interpreter(MiniGPVisitor):
             case '^':
                 return left != right
 
+    @staticmethod
+    def interpret(program_path: str):
+        input_stream = FileStream(program_path)
+        lexer = MiniGPLexer(input_stream)
+        stream = CommonTokenStream(lexer)
+        parser = MiniGPParser(stream)
 
-def interpret(program: str):
-    input_stream = FileStream(program)
-    lexer = MiniGPLexer(input_stream)
-    stream = CommonTokenStream(lexer)
-    parser = MiniGPParser(stream)
+        try:
+            tree = parser.program()
+            interpreter = Interpreter(ConsoleInputOutputOperation())
+            interpreter.visit(tree)
+            return interpreter.variables
 
-    try:
-        tree = parser.program()
-        interpreter = Interpreter(BufferInputOutputOperation([1, 2, 3, 4, 5, False]))
-        interpreter.visit(tree)
-        return interpreter.variables
-    except Exception as e:
-        print(e)
-        return None
+        except Exception as error:
+            print(error)

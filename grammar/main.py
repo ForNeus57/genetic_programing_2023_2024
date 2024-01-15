@@ -1,6 +1,6 @@
 from src.genetic.individual.individual import Individual
 from random import seed
-from src.genetic.interpreter.tinyGPInterpreter import interpret
+from src.genetic.interpreter.interpreter import Interpreter
 
 def main():
     # params = read_input_params("data/xmxp2.dat")
@@ -11,7 +11,7 @@ def main():
     # print("Wygenerowane losowe drzewo:")
     # print(random_tree)
 
-    print(interpret("./test/resources/test1.mgp"))
+    print(Interpreter.interpret("./test/resources/test1.mgp"))
     # seed(6)
 
     # ind = Individual.from_random()
