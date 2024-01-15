@@ -1,10 +1,9 @@
 {
 	int x = 10;
-	if ((x > 5)) {
-    	write(x);
+	int y = 0;
+	while ((x > 5)) {
+    	read(y);
+    	write(y);
     	x = ((x - 1) * 2);
-	} else {
-		const int d = 50;
-		write(d);
 	}
 }

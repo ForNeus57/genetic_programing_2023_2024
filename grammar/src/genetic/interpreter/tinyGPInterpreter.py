@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import functools
 from enum import Enum
-from typing import Optional, Union
+from typing import Optional, Union, Final, Callable
 
 from antlr4 import FileStream
 from antlr4.CommonTokenStream import CommonTokenStream
@@ -12,6 +13,8 @@ from src.antlr.MiniGPVisitor import MiniGPVisitor
 
 from src.genetic.interpreter.input_output import InputOutputOperation, ConsoleInputOutputOperation
 from src.genetic.interpreter.variables import Variable
+
+from genetic.interpreter.input_output import BufferInputOutputOperation
 
 
 class InterpreterErrors(Enum):
@@ -27,11 +30,27 @@ class InterpreterErrors(Enum):
 
 
 class Interpreter(MiniGPVisitor):
+    instructions_limit: Final[int] = 400
+
     def __init__(self, mode: InputOutputOperation):
         self.variables: dict[str, Variable] = {}
         self.mode: InputOutputOperation = mode
         self.const_information: bool = False
+        self.used_instructions: int = 0
 
+    @staticmethod
+    def limit(function: Callable):
+        @functools.wraps(function)
+        def wrapper(self, *args, **kwargs):
+            if self.used_instructions > Interpreter.instructions_limit:
+                raise StopIteration("Interpreter exceeded instructions limit!")
+
+            self.used_instructions += 1
+            return function(self, *args, **kwargs)
+
+        return wrapper
+
+    @limit
     def visitProgram(self, ctx: MiniGPParser.ProgramContext):
         """
         program :
@@ -41,6 +60,7 @@ class Interpreter(MiniGPVisitor):
 
         return self.visitChildren(ctx)
 
+    @limit
     def visitExecutionBlock(self, ctx: MiniGPParser.ExecutionBlockContext):
         """
         executionBlock :
@@ -49,6 +69,7 @@ class Interpreter(MiniGPVisitor):
         """
         return self.visitChildren(ctx)
 
+    @limit
     def visitStatement(self, ctx: MiniGPParser.StatementContext):
         # statement :
         #    varDeclaration
@@ -60,6 +81,7 @@ class Interpreter(MiniGPVisitor):
 
         return self.visitChildren(ctx)
 
+    @limit
     def visitVarDeclaration(self, ctx: MiniGPParser.VarDeclarationContext):
         # varDeclaration :
         #    (CONST)? (integerDeclaration | booleanDeclaration) SEMICOLON
@@ -73,6 +95,7 @@ class Interpreter(MiniGPVisitor):
         else:
             self.visit(ctx.getChild(0))
 
+    @limit
     def visitIntegerDeclaration(self, ctx: MiniGPParser.IntegerDeclarationContext):
         # integerDeclaration :
         #    INT_TYPE VAR (ASSIGMENT_OPERATOR expression)?
@@ -91,6 +114,7 @@ class Interpreter(MiniGPVisitor):
 
         return self.visitChildren(ctx)
 
+    @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext):
         # booleanDeclaration :
         #    BOOL_TYPE VAR (ASSIGMENT_OPERATOR expression)?
@@ -108,6 +132,7 @@ class Interpreter(MiniGPVisitor):
 
         return self.visitChildren(ctx)
 
+    @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext):
         # assignment :
         #    VAR ASSIGMENT_OPERATOR (expression | condition) SEMICOLON
@@ -134,6 +159,7 @@ class Interpreter(MiniGPVisitor):
 
         return self.visitChildren(ctx)
 
+    @limit
     def visitIfStatement(self, ctx: MiniGPParser.IfStatementContext):
         # ifStatement :
         #    IF LPAREN condition RPAREN executionBlock (ELSE executionBlock)?
@@ -146,6 +172,7 @@ class Interpreter(MiniGPVisitor):
         elif ctx.executionBlock(1) is not None:
             self.visit(ctx.executionBlock(1))
 
+    @limit
     def visitLoopStatement(self, ctx: MiniGPParser.LoopStatementContext):
         # loopStatement :
         #    WHILE LPAREN condition RPAREN executionBlock
@@ -156,6 +183,7 @@ class Interpreter(MiniGPVisitor):
             self.visit(ctx.executionBlock())
             condition = self.visit(ctx.condition())
 
+    @limit
     def visitIoStatement(self, ctx: MiniGPParser.IoStatementContext):
         # ioStatement :
         #    (WRITE | READ) LPAREN VAR RPAREN SEMICOLON
@@ -176,6 +204,7 @@ class Interpreter(MiniGPVisitor):
 
             variable.value = self.mode.read(variable.type)
 
+    @limit
     def visitExpression(self, ctx: MiniGPParser.ExpressionContext):
         # expression :
         #    INT
@@ -215,6 +244,7 @@ class Interpreter(MiniGPVisitor):
             case '/':
                 return left / right
 
+    @limit
     def visitCondition(self, ctx: MiniGPParser.ConditionContext):
         # condition :
         #    LPAREN condition CONDITION_OPERATOR condition RPAREN
@@ -278,7 +308,7 @@ def interpret(program: str):
 
     try:
         tree = parser.program()
-        interpreter = Interpreter(ConsoleInputOutputOperation())
+        interpreter = Interpreter(BufferInputOutputOperation([1, 2, 3, 4, 5, False]))
         interpreter.visit(tree)
         return interpreter.variables
     except Exception as e:
