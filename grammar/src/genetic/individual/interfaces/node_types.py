@@ -9,11 +9,11 @@ class Rule(ABC):
     mutation_node_probability: ClassVar[float] = 0.2
 
     @abstractmethod
-    def mutate(self) -> Rule:
+    def mutate(self) -> None:
         pass
 
     @abstractmethod
-    def crossover(self, other: Rule) -> Rule:
+    def crossover(self, other: Rule) -> None:
         pass
 
 

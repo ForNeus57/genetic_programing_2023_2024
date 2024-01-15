@@ -5,14 +5,15 @@ import inspect
 from dataclasses import dataclass, field
 from types import SimpleNamespace
 from typing import Union, Optional, Tuple
-from random import random, choice
+from random import choice
 from enum import Enum, auto
 from copy import deepcopy
 
 from src.genetic.individual.interfaces.node_types import Rule
-from src.genetic.individual.probability.exponential_probability import ExponentialProbability
 from src.genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize, Metadata, VariableNameToken, \
     IntegerToken, BooleanToken
+
+from genetic.individual.limiters.limiters import Limiter
 
 
 @dataclass(slots=True, frozen=True)
@@ -25,10 +26,10 @@ class Program(Rule, Randomize):
         block = ExecutionBlock.from_random(meta)
         return cls(block)
 
-    def mutate(self) -> Program:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Program) -> Program:
+    def crossover(self, other: Program) -> None:
         pass
 
     def __str__(self) -> str:
@@ -42,26 +43,26 @@ class ExecutionBlock(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> ExecutionBlock:
         body: list[Statement] = []
-        probability: ExponentialProbability = ExponentialProbability()
+        limiter: Limiter = meta.limiter()
         first_statement = Statement.from_random(meta)
         child_meta: Metadata = first_statement.meta
         body.append(first_statement)
 
-        while next(probability) > random():
+        while limiter.allow():
             statement: Statement = Statement.from_random(child_meta)
             child_meta = statement.meta
             body.append(statement)
 
         return cls(meta, body)
 
-    def mutate(self) -> ExecutionBlock:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: ExecutionBlock) -> ExecutionBlock:
+    def crossover(self, other: ExecutionBlock) -> None:
         pass
 
     def __str__(self) -> str:
-        tabs: str = '\t' * self.meta.depth
+        tabs: str = '\t' * (self.meta.depth + 1)
         statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
         return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
 
@@ -102,10 +103,10 @@ class Statement(Rule, RestrictedRandomize):
 
         return output
 
-    def mutate(self) -> Statement:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Statement) -> Statement:
+    def crossover(self, other: Statement) -> None:
         pass
 
     def __str__(self):
@@ -120,15 +121,15 @@ class VarDeclaration(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> VarDeclaration:
         is_constant = choice([True, False])
-        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
+        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(Metadata(meta.variables_scope, meta.depth + 1))
         # meta.variables_scope.add(declaration.name)  # Not sure if needed
 
         return cls(meta, is_constant, declaration)
 
-    def mutate(self) -> VarDeclaration:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: VarDeclaration) -> VarDeclaration:
+    def crossover(self, other: VarDeclaration) -> None:
         pass
 
     def __str__(self):
@@ -147,10 +148,10 @@ class Assigment(Rule, RestrictedRandomize):
 
         return cls(meta, name, value)
 
-    def mutate(self) -> Assigment:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Assigment) -> Assigment:
+    def crossover(self, other: Assigment) -> None:
         pass
 
     def __str__(self):
@@ -178,10 +179,10 @@ class IfStatement(Rule, RestrictedRandomize):
 
         return cls(meta, condition, body, else_statement)
 
-    def mutate(self) -> IfStatement:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: IfStatement) -> IfStatement:
+    def crossover(self, other: IfStatement) -> None:
         pass
 
     def __str__(self):
@@ -206,10 +207,10 @@ class LoopStatement(Rule, RestrictedRandomize):
 
         return cls(meta, condition, body)
 
-    def mutate(self) -> LoopStatement:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: LoopStatement) -> LoopStatement:
+    def crossover(self, other: LoopStatement) -> None:
         pass
 
     def __str__(self):
@@ -240,10 +241,10 @@ class IOStatement(Rule, RestrictedRandomize):
 
         return cls(meta, io_type, name)
 
-    def mutate(self) -> IOStatement:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: IOStatement) -> IOStatement:
+    def crossover(self, other: IOStatement) -> None:
         pass
 
     def __str__(self):
@@ -253,27 +254,21 @@ class IOStatement(Rule, RestrictedRandomize):
 @dataclass(slots=True, frozen=True)
 class IntegerDeclaration(Rule, RestrictedRandomize):
     name: VariableNameToken
-    expression: Optional[Expression]
+    expression: Expression
 
     @classmethod
     def from_random(cls, meta: Metadata) -> IntegerDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
+        expression: Expression = Expression.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+
         meta.variables_scope.add(name)
-        table_of_choices: list = [Expression, None]
-
-        match choice(table_of_choices):
-            case namespace.Expression as option:
-                expression: Optional[Expression] = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
-
-            case _:
-                expression: Optional[Expression] = None
 
         return cls(meta, name, expression)
 
-    def mutate(self) -> IntegerDeclaration:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: IntegerDeclaration) -> IntegerDeclaration:
+    def crossover(self, other: IntegerDeclaration) -> None:
         pass
 
     def __str__(self):
@@ -287,27 +282,21 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
 @dataclass(slots=True, frozen=True)
 class BooleanDeclaration(Rule, RestrictedRandomize):
     name: VariableNameToken
-    condition: Optional[Condition]
+    condition: Condition
 
     @classmethod
     def from_random(cls, meta: Metadata) -> BooleanDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
+        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+
         meta.variables_scope.add(name)
-        table_of_choices: list = [Condition, None]
-
-        match choice(table_of_choices):
-            case namespace.Condition as option:
-                condition: Optional[Condition] = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
-
-            case _:
-                condition: Optional[Condition] = None
 
         return cls(meta, name, condition)
 
-    def mutate(self) -> BooleanDeclaration:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: BooleanDeclaration) -> BooleanDeclaration:
+    def crossover(self, other: BooleanDeclaration) -> None:
         pass
 
     def __str__(self):
@@ -358,10 +347,10 @@ class Condition(Rule, RestrictedRandomize):
 
         return output
 
-    def mutate(self) -> Condition:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Condition) -> Condition:
+    def crossover(self, other: Condition) -> None:
         pass
 
     def __str__(self):
@@ -411,10 +400,10 @@ class Expression(Rule, RestrictedRandomize):
 
         return output
 
-    def mutate(self) -> Expression:
+    def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Expression) -> Expression:
+    def crossover(self, other: Expression) -> None:
         pass
 
     def __str__(self):

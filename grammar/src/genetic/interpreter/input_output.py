@@ -31,6 +31,8 @@ class BufferInputOutputOperation(InputOutputOperation):
         only_bools = [x for x in input_buffer if type(x) is bool]
         only_ints = [x for x in input_buffer if type(x) is int]
 
+        # TODO:
+        # Make so that 0 is possible to read as an int and bool
         if len(only_bools) == 0 or len(only_ints) == 0:
             raise ValueError("Input buffer must contain at least one int and one bool!")
 

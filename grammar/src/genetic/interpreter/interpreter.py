@@ -11,7 +11,7 @@ from src.antlr.MiniGPLexer import MiniGPLexer
 from src.antlr.MiniGPParser import MiniGPParser
 from src.antlr.MiniGPVisitor import MiniGPVisitor
 
-from src.genetic.interpreter.input_output import InputOutputOperation, ConsoleInputOutputOperation, BufferInputOutputOperation
+from src.genetic.interpreter.input_output import InputOutputOperation
 from src.genetic.interpreter.variables import Variable
 
 
@@ -97,7 +97,7 @@ class Interpreter(MiniGPVisitor):
     @limit
     def visitIntegerDeclaration(self, ctx: MiniGPParser.IntegerDeclarationContext):
         # integerDeclaration :
-        #    INT_TYPE VAR (ASSIGMENT_OPERATOR expression)?
+        #    INT_TYPE VAR ASSIGMENT_OPERATOR expression
         #    ;
 
         variable_name = ctx.VAR().getText()
@@ -108,13 +108,13 @@ class Interpreter(MiniGPVisitor):
         self.variables[variable_name] = (
             Variable(self.const_information,
                      'int',
-                     self.visit(ctx.expression()) if ctx.expression() is not None else None)
+                     self.visit(ctx.expression()))
         )
 
     @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext):
         # booleanDeclaration :
-        #    BOOL_TYPE VAR (ASSIGMENT_OPERATOR expression)?
+        #    BOOL_TYPE VAR ASSIGMENT_OPERATOR expression
         #    ;
         variable_name = ctx.VAR().getText()
 
@@ -124,7 +124,7 @@ class Interpreter(MiniGPVisitor):
         self.variables[variable_name] = (
             Variable(self.const_information,
                      'bool',
-                     self.visit(ctx.expression()) if ctx.expression() is not None else None)
+                     self.visit(ctx.expression()))
         )
 
     @limit
@@ -235,7 +235,7 @@ class Interpreter(MiniGPVisitor):
                 return left * right
 
             case '/':
-                return left / right
+                return int(left / right)
 
     @limit
     def visitCondition(self, ctx: MiniGPParser.ConditionContext):
@@ -293,7 +293,7 @@ class Interpreter(MiniGPVisitor):
                 return left != right
 
     @staticmethod
-    def interpret(program_path: str):
+    def interpret(program_path: str, mode: InputOutputOperation):
         input_stream = FileStream(program_path)
         lexer = MiniGPLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -301,9 +301,9 @@ class Interpreter(MiniGPVisitor):
 
         try:
             tree = parser.program()
-            interpreter = Interpreter(ConsoleInputOutputOperation())
+            interpreter = Interpreter(mode)
             interpreter.visit(tree)
-            return interpreter.variables
+            print(interpreter.variables)
 
         except Exception as error:
             print(error)

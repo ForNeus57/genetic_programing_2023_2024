@@ -1,13 +1,15 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import Enum, auto
 from random import choice, randint, random
 from string import ascii_letters, digits
 from typing import ClassVar, Callable
 
 from src.genetic.individual.interfaces.node_types import Token
-from src.genetic.individual.probability.exponential_probability import ExponentialProbability
+from src.genetic.individual.limiters.exponential_probability import ExponentialProbability
+
+from genetic.individual.limiters.limiters import HardLimiter, AdaptiveLimiter
 
 
 class Randomize(ABC):
@@ -90,10 +92,18 @@ class EventType(Enum):
     UPDATE = 'UPDATE'
 
 
+class RandomGenerationMethod(Enum):
+    GROW = 0
+    FULL = auto()
+    RAMPED_HALF_AND_HALF = auto()
+
+
 @dataclass()
 class Metadata:
     variables_scope: set[VariableNameToken] = field(default_factory=set)
     depth: int = 0
+    limiter = AdaptiveLimiter
+    method: RandomGenerationMethod = RandomGenerationMethod.GROW
 
     max_depth: ClassVar[int] = 5
 

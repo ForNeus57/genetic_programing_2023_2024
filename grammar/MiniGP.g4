@@ -21,11 +21,11 @@ varDeclaration:
 	;
 
 integerDeclaration:
-	INT_TYPE VAR (ASSIGMENT_OPERATOR expression)?
+	INT_TYPE VAR ASSIGMENT_OPERATOR expression
 	;
 
 booleanDeclaration:
-	BOOL_TYPE VAR (ASSIGMENT_OPERATOR condition)?
+	BOOL_TYPE VAR ASSIGMENT_OPERATOR condition
 	;
 
 assignment:
