@@ -9,15 +9,8 @@ from typing import ClassVar, Callable
 from src.genetic.individual.interfaces.node_types import Token
 from src.genetic.individual.limiters.exponential_probability import ExponentialProbability
 
-from genetic.individual.limiters.limiters import HardLimiter, AdaptiveLimiter
+from src.genetic.individual.limiters.limiters import HardLimiter, AdaptiveLimiter, RandomLimiter
 
-
-class Randomize(ABC):
-
-    @classmethod
-    @abstractmethod
-    def from_random(cls) -> Randomize:
-        pass
 
 
 @dataclass(slots=True, frozen=True)
@@ -31,20 +24,20 @@ class RestrictedRandomize(ABC):
 
 
 @dataclass(slots=True, frozen=True)
-class BooleanToken(Token, Randomize):
+class BooleanToken(Token):
     value: bool
 
     @classmethod
     def from_random(cls) -> BooleanToken:
         value: bool = choice([True, False])
-        return cls(str(value), value)
+        return cls(value)
 
     def __str__(self):
         return str(self.value)
 
 
 @dataclass(slots=True, frozen=True)
-class IntegerToken(Token, Randomize):
+class IntegerToken(Token):
     value: int
     min_value: ClassVar[int] = -255
     max_value: ClassVar[int] = 255
@@ -52,20 +45,20 @@ class IntegerToken(Token, Randomize):
     @classmethod
     def from_random(cls) -> IntegerToken:
         value: int = randint(cls.min_value, cls.max_value)
-        return cls(str(value), value)
+        return cls(value)
 
     def __str__(self):
         return str(self.value)
 
 
 @dataclass(slots=True, frozen=True, order=True)
-class VariableNameToken(Token, Randomize):
+class VariableNameToken(Token):
     value: str
 
     @classmethod
     def from_random(cls) -> VariableNameToken:
         name: str = cls._generate_random_name()
-        return cls(f'\"{name}\"', name)
+        return cls(name)
 
     @classmethod
     def _generate_random_name(cls) -> str:
@@ -85,13 +78,6 @@ class VariableNameToken(Token, Randomize):
 
 VariableTypes = BooleanToken | IntegerToken
 
-
-class EventType(Enum):
-    ADD = 'ADD'
-    REMOVE = 'REMOVE'
-    UPDATE = 'UPDATE'
-
-
 class RandomGenerationMethod(Enum):
     GROW = 0
     FULL = auto()
@@ -102,7 +88,7 @@ class RandomGenerationMethod(Enum):
 class Metadata:
     variables_scope: set[VariableNameToken] = field(default_factory=set)
     depth: int = 0
-    limiter = AdaptiveLimiter
+    limiter = HardLimiter
     method: RandomGenerationMethod = RandomGenerationMethod.GROW
 
     max_depth: ClassVar[int] = 5
@@ -115,12 +101,3 @@ class Metadata:
 
     def is_empty(self):
         return len(self.variables_scope) == 0
-
-    def subscribe(self, update_function: Callable[[Metadata, EventType], None]):
-        raise NotImplementedError()
-
-    def unsubscribe(self, update_function: Callable[[Metadata, EventType], None]):
-        raise NotImplementedError()
-
-    def notify(self):
-        raise NotImplementedError()

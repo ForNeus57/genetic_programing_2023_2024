@@ -10,45 +10,43 @@ else:
 
 def serializedATN():
     return [
-        4,1,22,122,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
-        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,1,0,1,0,1,0,1,1,1,
-        1,4,1,30,8,1,11,1,12,1,31,1,1,1,1,1,2,1,2,1,2,1,2,1,2,3,2,41,8,2,
-        1,3,3,3,44,8,3,1,3,1,3,3,3,48,8,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,
-        5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,3,6,66,8,6,1,6,1,6,1,7,1,7,1,7,
-        1,7,1,7,1,7,1,7,3,7,77,8,7,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,
-        9,1,9,1,9,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,
-        1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,3,10,110,8,10,1,11,1,11,
-        1,11,1,11,1,11,1,11,1,11,1,11,3,11,120,8,11,1,11,0,0,12,0,2,4,6,
-        8,10,12,14,16,18,20,22,0,1,1,0,15,16,124,0,24,1,0,0,0,2,27,1,0,0,
-        0,4,40,1,0,0,0,6,43,1,0,0,0,8,51,1,0,0,0,10,56,1,0,0,0,12,61,1,0,
-        0,0,14,69,1,0,0,0,16,78,1,0,0,0,18,84,1,0,0,0,20,109,1,0,0,0,22,
-        119,1,0,0,0,24,25,3,2,1,0,25,26,5,0,0,1,26,1,1,0,0,0,27,29,5,8,0,
-        0,28,30,3,4,2,0,29,28,1,0,0,0,30,31,1,0,0,0,31,29,1,0,0,0,31,32,
-        1,0,0,0,32,33,1,0,0,0,33,34,5,9,0,0,34,3,1,0,0,0,35,41,3,6,3,0,36,
-        41,3,12,6,0,37,41,3,14,7,0,38,41,3,16,8,0,39,41,3,18,9,0,40,35,1,
-        0,0,0,40,36,1,0,0,0,40,37,1,0,0,0,40,38,1,0,0,0,40,39,1,0,0,0,41,
-        5,1,0,0,0,42,44,5,3,0,0,43,42,1,0,0,0,43,44,1,0,0,0,44,47,1,0,0,
-        0,45,48,3,8,4,0,46,48,3,10,5,0,47,45,1,0,0,0,47,46,1,0,0,0,48,49,
-        1,0,0,0,49,50,5,10,0,0,50,7,1,0,0,0,51,52,5,4,0,0,52,53,5,21,0,0,
-        53,54,5,11,0,0,54,55,3,22,11,0,55,9,1,0,0,0,56,57,5,5,0,0,57,58,
-        5,21,0,0,58,59,5,11,0,0,59,60,3,20,10,0,60,11,1,0,0,0,61,62,5,21,
-        0,0,62,65,5,11,0,0,63,66,3,22,11,0,64,66,3,20,10,0,65,63,1,0,0,0,
-        65,64,1,0,0,0,66,67,1,0,0,0,67,68,5,10,0,0,68,13,1,0,0,0,69,70,5,
-        19,0,0,70,71,5,6,0,0,71,72,3,20,10,0,72,73,5,7,0,0,73,76,3,2,1,0,
-        74,75,5,20,0,0,75,77,3,2,1,0,76,74,1,0,0,0,76,77,1,0,0,0,77,15,1,
-        0,0,0,78,79,5,18,0,0,79,80,5,6,0,0,80,81,3,20,10,0,81,82,5,7,0,0,
-        82,83,3,2,1,0,83,17,1,0,0,0,84,85,7,0,0,0,85,86,5,6,0,0,86,87,5,
-        21,0,0,87,88,5,7,0,0,88,89,5,10,0,0,89,19,1,0,0,0,90,91,5,6,0,0,
-        91,92,3,22,11,0,92,93,5,13,0,0,93,94,3,22,11,0,94,95,5,7,0,0,95,
-        110,1,0,0,0,96,97,5,6,0,0,97,98,3,20,10,0,98,99,5,14,0,0,99,100,
-        3,20,10,0,100,101,5,7,0,0,101,110,1,0,0,0,102,103,5,17,0,0,103,104,
-        5,6,0,0,104,105,3,20,10,0,105,106,5,7,0,0,106,110,1,0,0,0,107,110,
-        5,1,0,0,108,110,5,21,0,0,109,90,1,0,0,0,109,96,1,0,0,0,109,102,1,
-        0,0,0,109,107,1,0,0,0,109,108,1,0,0,0,110,21,1,0,0,0,111,112,5,6,
-        0,0,112,113,3,22,11,0,113,114,5,12,0,0,114,115,3,22,11,0,115,116,
-        5,7,0,0,116,120,1,0,0,0,117,120,5,2,0,0,118,120,5,21,0,0,119,111,
-        1,0,0,0,119,117,1,0,0,0,119,118,1,0,0,0,120,23,1,0,0,0,8,31,40,43,
-        47,65,76,109,119
+        4,1,22,117,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,1,0,1,0,1,0,1,1,1,1,1,1,1,1,
+        1,1,1,1,4,1,32,8,1,11,1,12,1,33,1,1,1,1,1,2,3,2,39,8,2,1,2,1,2,3,
+        2,43,8,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,5,1,5,
+        1,5,1,5,3,5,61,8,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,3,6,72,8,
+        6,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,
+        9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,3,
+        9,105,8,9,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,3,10,115,8,10,
+        1,10,0,0,11,0,2,4,6,8,10,12,14,16,18,20,0,1,1,0,15,16,120,0,22,1,
+        0,0,0,2,25,1,0,0,0,4,38,1,0,0,0,6,46,1,0,0,0,8,51,1,0,0,0,10,56,
+        1,0,0,0,12,64,1,0,0,0,14,73,1,0,0,0,16,79,1,0,0,0,18,104,1,0,0,0,
+        20,114,1,0,0,0,22,23,3,2,1,0,23,24,5,0,0,1,24,1,1,0,0,0,25,31,5,
+        8,0,0,26,32,3,4,2,0,27,32,3,10,5,0,28,32,3,12,6,0,29,32,3,14,7,0,
+        30,32,3,16,8,0,31,26,1,0,0,0,31,27,1,0,0,0,31,28,1,0,0,0,31,29,1,
+        0,0,0,31,30,1,0,0,0,32,33,1,0,0,0,33,31,1,0,0,0,33,34,1,0,0,0,34,
+        35,1,0,0,0,35,36,5,9,0,0,36,3,1,0,0,0,37,39,5,3,0,0,38,37,1,0,0,
+        0,38,39,1,0,0,0,39,42,1,0,0,0,40,43,3,6,3,0,41,43,3,8,4,0,42,40,
+        1,0,0,0,42,41,1,0,0,0,43,44,1,0,0,0,44,45,5,10,0,0,45,5,1,0,0,0,
+        46,47,5,4,0,0,47,48,5,21,0,0,48,49,5,11,0,0,49,50,3,20,10,0,50,7,
+        1,0,0,0,51,52,5,5,0,0,52,53,5,21,0,0,53,54,5,11,0,0,54,55,3,18,9,
+        0,55,9,1,0,0,0,56,57,5,21,0,0,57,60,5,11,0,0,58,61,3,20,10,0,59,
+        61,3,18,9,0,60,58,1,0,0,0,60,59,1,0,0,0,61,62,1,0,0,0,62,63,5,10,
+        0,0,63,11,1,0,0,0,64,65,5,19,0,0,65,66,5,6,0,0,66,67,3,18,9,0,67,
+        68,5,7,0,0,68,71,3,2,1,0,69,70,5,20,0,0,70,72,3,2,1,0,71,69,1,0,
+        0,0,71,72,1,0,0,0,72,13,1,0,0,0,73,74,5,18,0,0,74,75,5,6,0,0,75,
+        76,3,18,9,0,76,77,5,7,0,0,77,78,3,2,1,0,78,15,1,0,0,0,79,80,7,0,
+        0,0,80,81,5,6,0,0,81,82,5,21,0,0,82,83,5,7,0,0,83,84,5,10,0,0,84,
+        17,1,0,0,0,85,86,5,6,0,0,86,87,3,20,10,0,87,88,5,13,0,0,88,89,3,
+        20,10,0,89,90,5,7,0,0,90,105,1,0,0,0,91,92,5,6,0,0,92,93,3,18,9,
+        0,93,94,5,14,0,0,94,95,3,18,9,0,95,96,5,7,0,0,96,105,1,0,0,0,97,
+        98,5,17,0,0,98,99,5,6,0,0,99,100,3,18,9,0,100,101,5,7,0,0,101,105,
+        1,0,0,0,102,105,5,1,0,0,103,105,5,21,0,0,104,85,1,0,0,0,104,91,1,
+        0,0,0,104,97,1,0,0,0,104,102,1,0,0,0,104,103,1,0,0,0,105,19,1,0,
+        0,0,106,107,5,6,0,0,107,108,3,20,10,0,108,109,5,12,0,0,109,110,3,
+        20,10,0,110,111,5,7,0,0,111,115,1,0,0,0,112,115,5,2,0,0,113,115,
+        5,21,0,0,114,106,1,0,0,0,114,112,1,0,0,0,114,113,1,0,0,0,115,21,
+        1,0,0,0,8,31,33,38,42,60,71,104,114
     ]
 
 class MiniGPParser ( Parser ):
@@ -74,21 +72,19 @@ class MiniGPParser ( Parser ):
 
     RULE_program = 0
     RULE_executionBlock = 1
-    RULE_statement = 2
-    RULE_varDeclaration = 3
-    RULE_integerDeclaration = 4
-    RULE_booleanDeclaration = 5
-    RULE_assignment = 6
-    RULE_ifStatement = 7
-    RULE_loopStatement = 8
-    RULE_ioStatement = 9
-    RULE_condition = 10
-    RULE_expression = 11
+    RULE_varDeclaration = 2
+    RULE_integerDeclaration = 3
+    RULE_booleanDeclaration = 4
+    RULE_assignment = 5
+    RULE_ifStatement = 6
+    RULE_loopStatement = 7
+    RULE_ioStatement = 8
+    RULE_condition = 9
+    RULE_expression = 10
 
-    ruleNames =  [ "program", "executionBlock", "statement", "varDeclaration", 
-                   "integerDeclaration", "booleanDeclaration", "assignment", 
-                   "ifStatement", "loopStatement", "ioStatement", "condition", 
-                   "expression" ]
+    ruleNames =  [ "program", "executionBlock", "varDeclaration", "integerDeclaration", 
+                   "booleanDeclaration", "assignment", "ifStatement", "loopStatement", 
+                   "ioStatement", "condition", "expression" ]
 
     EOF = Token.EOF
     BOOL=1
@@ -163,9 +159,9 @@ class MiniGPParser ( Parser ):
         self.enterRule(localctx, 0, self.RULE_program)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 24
+            self.state = 22
             self.executionBlock()
-            self.state = 25
+            self.state = 23
             self.match(MiniGPParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -189,11 +185,39 @@ class MiniGPParser ( Parser ):
         def RBRACE(self):
             return self.getToken(MiniGPParser.RBRACE, 0)
 
-        def statement(self, i:int=None):
+        def varDeclaration(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(MiniGPParser.StatementContext)
+                return self.getTypedRuleContexts(MiniGPParser.VarDeclarationContext)
             else:
-                return self.getTypedRuleContext(MiniGPParser.StatementContext,i)
+                return self.getTypedRuleContext(MiniGPParser.VarDeclarationContext,i)
+
+
+        def assignment(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MiniGPParser.AssignmentContext)
+            else:
+                return self.getTypedRuleContext(MiniGPParser.AssignmentContext,i)
+
+
+        def ifStatement(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MiniGPParser.IfStatementContext)
+            else:
+                return self.getTypedRuleContext(MiniGPParser.IfStatementContext,i)
+
+
+        def loopStatement(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MiniGPParser.LoopStatementContext)
+            else:
+                return self.getTypedRuleContext(MiniGPParser.LoopStatementContext,i)
+
+
+        def ioStatement(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MiniGPParser.IoStatementContext)
+            else:
+                return self.getTypedRuleContext(MiniGPParser.IoStatementContext,i)
 
 
         def getRuleIndex(self):
@@ -223,114 +247,46 @@ class MiniGPParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 27
+            self.state = 25
             self.match(MiniGPParser.LBRACE)
-            self.state = 29 
+            self.state = 31 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 28
-                self.statement()
-                self.state = 31 
+                self.state = 31
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [3, 4, 5]:
+                    self.state = 26
+                    self.varDeclaration()
+                    pass
+                elif token in [21]:
+                    self.state = 27
+                    self.assignment()
+                    pass
+                elif token in [19]:
+                    self.state = 28
+                    self.ifStatement()
+                    pass
+                elif token in [18]:
+                    self.state = 29
+                    self.loopStatement()
+                    pass
+                elif token in [15, 16]:
+                    self.state = 30
+                    self.ioStatement()
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                self.state = 33 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 2981944) != 0)):
                     break
 
-            self.state = 33
+            self.state = 35
             self.match(MiniGPParser.RBRACE)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class StatementContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def varDeclaration(self):
-            return self.getTypedRuleContext(MiniGPParser.VarDeclarationContext,0)
-
-
-        def assignment(self):
-            return self.getTypedRuleContext(MiniGPParser.AssignmentContext,0)
-
-
-        def ifStatement(self):
-            return self.getTypedRuleContext(MiniGPParser.IfStatementContext,0)
-
-
-        def loopStatement(self):
-            return self.getTypedRuleContext(MiniGPParser.LoopStatementContext,0)
-
-
-        def ioStatement(self):
-            return self.getTypedRuleContext(MiniGPParser.IoStatementContext,0)
-
-
-        def getRuleIndex(self):
-            return MiniGPParser.RULE_statement
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterStatement" ):
-                listener.enterStatement(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitStatement" ):
-                listener.exitStatement(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitStatement" ):
-                return visitor.visitStatement(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def statement(self):
-
-        localctx = MiniGPParser.StatementContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_statement)
-        try:
-            self.state = 40
-            self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [3, 4, 5]:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 35
-                self.varDeclaration()
-                pass
-            elif token in [21]:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 36
-                self.assignment()
-                pass
-            elif token in [19]:
-                self.enterOuterAlt(localctx, 3)
-                self.state = 37
-                self.ifStatement()
-                pass
-            elif token in [18]:
-                self.enterOuterAlt(localctx, 4)
-                self.state = 38
-                self.loopStatement()
-                pass
-            elif token in [15, 16]:
-                self.enterOuterAlt(localctx, 5)
-                self.state = 39
-                self.ioStatement()
-                pass
-            else:
-                raise NoViableAltException(self)
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -384,33 +340,33 @@ class MiniGPParser ( Parser ):
     def varDeclaration(self):
 
         localctx = MiniGPParser.VarDeclarationContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_varDeclaration)
+        self.enterRule(localctx, 4, self.RULE_varDeclaration)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 43
+            self.state = 38
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==3:
-                self.state = 42
+                self.state = 37
                 self.match(MiniGPParser.CONST)
 
 
-            self.state = 47
+            self.state = 42
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [4]:
-                self.state = 45
+                self.state = 40
                 self.integerDeclaration()
                 pass
             elif token in [5]:
-                self.state = 46
+                self.state = 41
                 self.booleanDeclaration()
                 pass
             else:
                 raise NoViableAltException(self)
 
-            self.state = 49
+            self.state = 44
             self.match(MiniGPParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -464,16 +420,16 @@ class MiniGPParser ( Parser ):
     def integerDeclaration(self):
 
         localctx = MiniGPParser.IntegerDeclarationContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_integerDeclaration)
+        self.enterRule(localctx, 6, self.RULE_integerDeclaration)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 51
+            self.state = 46
             self.match(MiniGPParser.INT_TYPE)
-            self.state = 52
+            self.state = 47
             self.match(MiniGPParser.VAR)
-            self.state = 53
+            self.state = 48
             self.match(MiniGPParser.ASSIGMENT_OPERATOR)
-            self.state = 54
+            self.state = 49
             self.expression()
         except RecognitionException as re:
             localctx.exception = re
@@ -527,16 +483,16 @@ class MiniGPParser ( Parser ):
     def booleanDeclaration(self):
 
         localctx = MiniGPParser.BooleanDeclarationContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_booleanDeclaration)
+        self.enterRule(localctx, 8, self.RULE_booleanDeclaration)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 56
+            self.state = 51
             self.match(MiniGPParser.BOOL_TYPE)
-            self.state = 57
+            self.state = 52
             self.match(MiniGPParser.VAR)
-            self.state = 58
+            self.state = 53
             self.match(MiniGPParser.ASSIGMENT_OPERATOR)
-            self.state = 59
+            self.state = 54
             self.condition()
         except RecognitionException as re:
             localctx.exception = re
@@ -594,28 +550,28 @@ class MiniGPParser ( Parser ):
     def assignment(self):
 
         localctx = MiniGPParser.AssignmentContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_assignment)
+        self.enterRule(localctx, 10, self.RULE_assignment)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 61
+            self.state = 56
             self.match(MiniGPParser.VAR)
-            self.state = 62
+            self.state = 57
             self.match(MiniGPParser.ASSIGMENT_OPERATOR)
-            self.state = 65
+            self.state = 60
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
-                self.state = 63
+                self.state = 58
                 self.expression()
                 pass
 
             elif la_ == 2:
-                self.state = 64
+                self.state = 59
                 self.condition()
                 pass
 
 
-            self.state = 67
+            self.state = 62
             self.match(MiniGPParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -679,27 +635,27 @@ class MiniGPParser ( Parser ):
     def ifStatement(self):
 
         localctx = MiniGPParser.IfStatementContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_ifStatement)
+        self.enterRule(localctx, 12, self.RULE_ifStatement)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 69
+            self.state = 64
             self.match(MiniGPParser.IF)
-            self.state = 70
+            self.state = 65
             self.match(MiniGPParser.LPAREN)
-            self.state = 71
+            self.state = 66
             self.condition()
-            self.state = 72
+            self.state = 67
             self.match(MiniGPParser.RPAREN)
-            self.state = 73
+            self.state = 68
             self.executionBlock()
-            self.state = 76
+            self.state = 71
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==20:
-                self.state = 74
+                self.state = 69
                 self.match(MiniGPParser.ELSE)
-                self.state = 75
+                self.state = 70
                 self.executionBlock()
 
 
@@ -759,18 +715,18 @@ class MiniGPParser ( Parser ):
     def loopStatement(self):
 
         localctx = MiniGPParser.LoopStatementContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_loopStatement)
+        self.enterRule(localctx, 14, self.RULE_loopStatement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 78
+            self.state = 73
             self.match(MiniGPParser.WHILE)
-            self.state = 79
+            self.state = 74
             self.match(MiniGPParser.LPAREN)
-            self.state = 80
+            self.state = 75
             self.condition()
-            self.state = 81
+            self.state = 76
             self.match(MiniGPParser.RPAREN)
-            self.state = 82
+            self.state = 77
             self.executionBlock()
         except RecognitionException as re:
             localctx.exception = re
@@ -829,24 +785,24 @@ class MiniGPParser ( Parser ):
     def ioStatement(self):
 
         localctx = MiniGPParser.IoStatementContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_ioStatement)
+        self.enterRule(localctx, 16, self.RULE_ioStatement)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 84
+            self.state = 79
             _la = self._input.LA(1)
             if not(_la==15 or _la==16):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 85
+            self.state = 80
             self.match(MiniGPParser.LPAREN)
-            self.state = 86
+            self.state = 81
             self.match(MiniGPParser.VAR)
-            self.state = 87
+            self.state = 82
             self.match(MiniGPParser.RPAREN)
-            self.state = 88
+            self.state = 83
             self.match(MiniGPParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -922,60 +878,60 @@ class MiniGPParser ( Parser ):
     def condition(self):
 
         localctx = MiniGPParser.ConditionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_condition)
+        self.enterRule(localctx, 18, self.RULE_condition)
         try:
-            self.state = 109
+            self.state = 104
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 90
+                self.state = 85
                 self.match(MiniGPParser.LPAREN)
-                self.state = 91
+                self.state = 86
                 self.expression()
-                self.state = 92
+                self.state = 87
                 self.match(MiniGPParser.EXPRESSION_COMPARISON_OPERATOR)
-                self.state = 93
+                self.state = 88
                 self.expression()
-                self.state = 94
+                self.state = 89
                 self.match(MiniGPParser.RPAREN)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 96
+                self.state = 91
                 self.match(MiniGPParser.LPAREN)
-                self.state = 97
+                self.state = 92
                 self.condition()
-                self.state = 98
+                self.state = 93
                 self.match(MiniGPParser.CONDITION_OPERATOR)
+                self.state = 94
+                self.condition()
+                self.state = 95
+                self.match(MiniGPParser.RPAREN)
+                pass
+
+            elif la_ == 3:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 97
+                self.match(MiniGPParser.NEGATION_OPERATOR)
+                self.state = 98
+                self.match(MiniGPParser.LPAREN)
                 self.state = 99
                 self.condition()
                 self.state = 100
                 self.match(MiniGPParser.RPAREN)
                 pass
 
-            elif la_ == 3:
-                self.enterOuterAlt(localctx, 3)
-                self.state = 102
-                self.match(MiniGPParser.NEGATION_OPERATOR)
-                self.state = 103
-                self.match(MiniGPParser.LPAREN)
-                self.state = 104
-                self.condition()
-                self.state = 105
-                self.match(MiniGPParser.RPAREN)
-                pass
-
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 107
+                self.state = 102
                 self.match(MiniGPParser.BOOL)
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 108
+                self.state = 103
                 self.match(MiniGPParser.VAR)
                 pass
 
@@ -1041,32 +997,32 @@ class MiniGPParser ( Parser ):
     def expression(self):
 
         localctx = MiniGPParser.ExpressionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_expression)
+        self.enterRule(localctx, 20, self.RULE_expression)
         try:
-            self.state = 119
+            self.state = 114
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [6]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 111
+                self.state = 106
                 self.match(MiniGPParser.LPAREN)
-                self.state = 112
+                self.state = 107
                 self.expression()
-                self.state = 113
+                self.state = 108
                 self.match(MiniGPParser.EXPRESSION_OPERATOR)
-                self.state = 114
+                self.state = 109
                 self.expression()
-                self.state = 115
+                self.state = 110
                 self.match(MiniGPParser.RPAREN)
                 pass
             elif token in [2]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 117
+                self.state = 112
                 self.match(MiniGPParser.INT)
                 pass
             elif token in [21]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 118
+                self.state = 113
                 self.match(MiniGPParser.VAR)
                 pass
             else:

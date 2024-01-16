@@ -17,6 +17,9 @@ class Rule(ABC):
         pass
 
 
-@dataclass(slots=True, frozen=True)
 class Token(ABC):
-    raw: str
+
+    @classmethod
+    @abstractmethod
+    def from_random(cls) -> Token:
+        pass

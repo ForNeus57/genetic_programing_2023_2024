@@ -69,18 +69,6 @@ class Interpreter(MiniGPVisitor):
         return self.visitChildren(ctx)
 
     @limit
-    def visitStatement(self, ctx: MiniGPParser.StatementContext):
-        # statement :
-        #    varDeclaration
-        #    | assignment
-        #    | ifStatement
-        #    | loopStatement
-        #    | ioStatement
-        #    ;
-
-        return self.visitChildren(ctx)
-
-    @limit
     def visitVarDeclaration(self, ctx: MiniGPParser.VarDeclarationContext):
         # varDeclaration :
         #    (CONST)? (integerDeclaration | booleanDeclaration) SEMICOLON
@@ -288,9 +276,6 @@ class Interpreter(MiniGPVisitor):
 
             case '||':
                 return left or right
-
-            case '^':
-                return left != right
 
     @staticmethod
     def interpret(program_path: str, mode: InputOutputOperation):

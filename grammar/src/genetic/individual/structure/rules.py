@@ -10,21 +10,20 @@ from enum import Enum, auto
 from copy import deepcopy
 
 from src.genetic.individual.interfaces.node_types import Rule
-from src.genetic.individual.interfaces.randomize import Randomize, RestrictedRandomize, Metadata, VariableNameToken, \
+from src.genetic.individual.interfaces.randomize import RestrictedRandomize, Metadata, VariableNameToken, \
     IntegerToken, BooleanToken
 
-from genetic.individual.limiters.limiters import Limiter
+from src.genetic.individual.limiters.limiters import Limiter
 
 
 @dataclass(slots=True, frozen=True)
-class Program(Rule, Randomize):
+class Program(Rule, RestrictedRandomize):
     body: ExecutionBlock
 
     @classmethod
-    def from_random(cls) -> Program:
-        meta: Metadata = Metadata()
+    def from_random(cls, meta: Metadata) -> Program:
         block = ExecutionBlock.from_random(meta)
-        return cls(block)
+        return cls(meta, block)
 
     def mutate(self) -> None:
         pass
@@ -38,51 +37,34 @@ class Program(Rule, Randomize):
 
 @dataclass(slots=True, frozen=True)
 class ExecutionBlock(Rule, RestrictedRandomize):
-    statements: list[Statement] = field(default_factory=list)
+    statements: list[StatementBodyTypes] = field(default_factory=list)
 
     @classmethod
     def from_random(cls, meta: Metadata) -> ExecutionBlock:
-        body: list[Statement] = []
+        body: list[StatementBodyTypes] = []
         limiter: Limiter = meta.limiter()
-        first_statement = Statement.from_random(meta)
-        child_meta: Metadata = first_statement.meta
-        body.append(first_statement)
+
+        statement = cls.generate_random_body_element(meta)
+        child_meta: Metadata = statement.meta
+        body.append(statement)
 
         while limiter.allow():
-            statement: Statement = Statement.from_random(child_meta)
+            statement = cls.generate_random_body_element(child_meta)
             child_meta = statement.meta
             body.append(statement)
 
         return cls(meta, body)
 
-    def mutate(self) -> None:
-        pass
-
-    def crossover(self, other: ExecutionBlock) -> None:
-        pass
-
-    def __str__(self) -> str:
-        tabs: str = '\t' * (self.meta.depth + 1)
-        statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
-        return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
-
-
-@dataclass(slots=True, frozen=True)
-class Statement(Rule, RestrictedRandomize):
-    body: StatementBodyTypes
-
     @classmethod
-    def from_random(cls, meta: Metadata) -> Statement:
+    def generate_random_body_element(cls, meta: Metadata) -> StatementBodyTypes:
         table_of_choices: list = cls.generate_choices(meta)
 
         match choice(table_of_choices):
             case namespace.IfStatement | namespace.LoopStatement as option:
-                body: StatementBodyTypes = option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+                return option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
             case _ as option:
-                body: StatementBodyTypes = option.from_random(meta)
-
-        return cls(meta, body)
+                return option.from_random(meta)
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
@@ -106,12 +88,13 @@ class Statement(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Statement) -> None:
+    def crossover(self, other: ExecutionBlock) -> None:
         pass
 
-    def __str__(self):
-        return str(self.body)
-
+    def __str__(self) -> str:
+        tabs: str = '\t' * (self.meta.depth + 1)
+        statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
+        return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
 
 @dataclass(slots=True, frozen=True)
 class VarDeclaration(Rule, RestrictedRandomize):
@@ -189,8 +172,8 @@ class IfStatement(Rule, RestrictedRandomize):
         base: str = f'if ({self.condition}) {self.body}'
 
         if self.else_statement is not None:
-            indentation: str = '\t' * (self.meta.depth - 1)
-            return base + f'{indentation} else {self.else_statement}'
+            indentation: str = '\t' * self.meta.depth
+            return base + f'{indentation}else {self.else_statement}'
 
         return base
 

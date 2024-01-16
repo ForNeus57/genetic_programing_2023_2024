@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pickle import dump, load
 from typing import Callable, Union, Literal
 
+from src.genetic.individual.interfaces.randomize import Metadata
 from src.genetic.individual.structure.rules import Program
 
 
@@ -17,7 +18,8 @@ class Individual:
 
     @classmethod
     def from_random(cls) -> Individual:
-        program: Program = Program.from_random()
+        meta: Metadata = Metadata()
+        program: Program = Program.from_random(meta)
         return cls(program)
 
     def __str__(self) -> str:

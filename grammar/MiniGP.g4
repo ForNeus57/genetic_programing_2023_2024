@@ -5,16 +5,8 @@ program:
 	;
 
 executionBlock:
-	LBRACE (statement)+ RBRACE
+	LBRACE (varDeclaration | assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
 	;
-
-statement: 
-	varDeclaration
-    |   assignment
-    |   ifStatement
-    |   loopStatement
-    |   ioStatement
-    ;
 
 varDeclaration:
 	(CONST)? (integerDeclaration | booleanDeclaration) SEMICOLON
@@ -71,7 +63,7 @@ SEMICOLON: ';';
 ASSIGMENT_OPERATOR: '=';
 EXPRESSION_OPERATOR: ('*' | '/' | '+' | '-');
 EXPRESSION_COMPARISON_OPERATOR: ('>' | '<' | '==' | '!=' | '>=' | '<=');
-CONDITION_OPERATOR: ('&&' | '||' | '^');
+CONDITION_OPERATOR: ('&&' | '||');
 READ: 'read';
 WRITE: 'write';
 NEGATION_OPERATOR: '!';

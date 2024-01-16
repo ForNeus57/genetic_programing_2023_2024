@@ -26,15 +26,6 @@ class MiniGPListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MiniGPParser#statement.
-    def enterStatement(self, ctx:MiniGPParser.StatementContext):
-        pass
-
-    # Exit a parse tree produced by MiniGPParser#statement.
-    def exitStatement(self, ctx:MiniGPParser.StatementContext):
-        pass
-
-
     # Enter a parse tree produced by MiniGPParser#varDeclaration.
     def enterVarDeclaration(self, ctx:MiniGPParser.VarDeclarationContext):
         pass

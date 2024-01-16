@@ -1,5 +1,7 @@
 from src.genetic.individual.individual import Individual
 from random import seed
+
+from src.genetic.interpreter.input_output import BufferInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
 
 
@@ -12,7 +14,7 @@ def main():
     # print("Wygenerowane losowe drzewo:")
     # print(random_tree)
 
-    # Interpreter.interpret("./test/resources/test1.mgp", BufferInputOutputOperation([]))
+    # Interpreter.interpret("./test/resources/test1.mgp", BufferInputOutputOperation([1, False]))
     # seed(6)
 
     ind = Individual.from_random()

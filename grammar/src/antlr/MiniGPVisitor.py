@@ -19,11 +19,6 @@ class MiniGPVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MiniGPParser#statement.
-    def visitStatement(self, ctx:MiniGPParser.StatementContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by MiniGPParser#varDeclaration.
     def visitVarDeclaration(self, ctx:MiniGPParser.VarDeclarationContext):
         return self.visitChildren(ctx)
