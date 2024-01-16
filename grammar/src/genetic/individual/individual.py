@@ -35,10 +35,10 @@ class Individual:
 
         return fitness_function(result_vector, model_vector)
 
-    def mutate(self) -> Individual:
-        raise NotImplementedError()
+    def mutate(self) -> None:
+        self.program.mutate()
 
-    def crossover(self, other: Individual) -> Individual:
+    def crossover(self, other: Individual) -> None:
         raise NotImplementedError()
 
     def save_to_file(self, path: str):

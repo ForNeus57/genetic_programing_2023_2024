@@ -19,6 +19,8 @@ def main():
 
     ind = Individual.from_random()
     print(ind)
+    ind.mutate()
+    print(ind)
 
 
 if __name__ == "__main__":

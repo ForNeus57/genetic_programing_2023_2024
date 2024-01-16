@@ -5,7 +5,7 @@ import inspect
 from dataclasses import dataclass, field
 from types import SimpleNamespace
 from typing import Union, Optional, Tuple
-from random import choice
+from random import choice, random
 from enum import Enum, auto
 from copy import deepcopy
 
@@ -17,7 +17,7 @@ from src.genetic.individual.limiters.limiters import Limiter
 from src.genetic.interpreter.variables import Variable
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class Program(Rule, RestrictedRandomize):
     body: ExecutionBlock
 
@@ -27,7 +27,7 @@ class Program(Rule, RestrictedRandomize):
         return cls(meta, block)
 
     def mutate(self) -> None:
-        pass
+        self.body.mutate()
 
     def crossover(self, other: Program) -> None:
         pass
@@ -36,7 +36,7 @@ class Program(Rule, RestrictedRandomize):
         return str(self.body)
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class ExecutionBlock(Rule, RestrictedRandomize):
     statements: list[StatementBodyTypes] = field(default_factory=list)
 
@@ -109,7 +109,13 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
 
     def mutate(self) -> None:
-        pass
+        for index, statement in enumerate(self.statements):
+            if random() < Rule.mutation_from_start_probability:
+                self.statements[index] = self.generate_random_body_element(statement.meta)
+            elif random() < Rule.mutation_node_probability:
+                statement.mutate()
+
+        self.statements.append(self.generate_random_body_element(self.meta))
 
     def crossover(self, other: ExecutionBlock) -> None:
         pass
@@ -120,7 +126,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class VarDeclaration(Rule, RestrictedRandomize):
     is_constant: bool
     declaration: DeclarationTypes
@@ -135,7 +141,13 @@ class VarDeclaration(Rule, RestrictedRandomize):
         return cls(meta, is_constant, declaration)
 
     def mutate(self) -> None:
-        pass
+        self.is_constant = not self.is_constant
+
+        if random() < Rule.mutation_from_start_probability:
+            self.declaration.name = VariableNameToken(self.meta.get_random_name())
+        elif random() < Rule.mutation_node_probability:
+            self.declaration.mutate()
+
 
     def crossover(self, other: VarDeclaration) -> None:
         pass
@@ -144,7 +156,7 @@ class VarDeclaration(Rule, RestrictedRandomize):
         return f'{"const " if self.is_constant else ""}{self.declaration};'
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class Assigment(Rule, RestrictedRandomize):
     name: VariableNameToken
     assigment_value: AssigmentValueType
@@ -152,7 +164,7 @@ class Assigment(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> Assigment:
         constructor = choice(cls.generate_choices(meta))
-        value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, 0))  # Don't forget Validation...
+        value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, 0))
 
         match constructor:
             case namespace.Expression:
@@ -180,7 +192,12 @@ class Assigment(Rule, RestrictedRandomize):
         return output
 
     def mutate(self) -> None:
-        pass
+        self.name = VariableNameToken(self.meta.get_random_name())
+
+        if random() < Rule.mutation_from_start_probability:
+            self.assigment_value = choice(self.generate_choices(self.meta)).from_random(Metadata(self.meta.variables_scope, 0))
+        elif random() < Rule.mutation_node_probability:
+            self.assigment_value.mutate()
 
     def crossover(self, other: Assigment) -> None:
         pass
@@ -189,7 +206,7 @@ class Assigment(Rule, RestrictedRandomize):
         return f'{self.name} = {self.assigment_value};'
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class IfStatement(Rule, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
@@ -222,7 +239,21 @@ class IfStatement(Rule, RestrictedRandomize):
 
 
     def mutate(self) -> None:
-        pass
+        if random() < Rule.mutation_from_start_probability:
+            self.condition = Condition.from_random(Metadata(self.meta.variables_scope, 0))
+        elif random() < Rule.mutation_node_probability:
+            self.condition.mutate()
+
+        if random() < Rule.mutation_from_start_probability:
+            self.body = ExecutionBlock.from_random(Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1))
+        elif random() < Rule.mutation_node_probability:
+            self.body.mutate()
+
+        if self.else_statement is None and random() < Rule.mutation_from_start_probability:
+            self.else_statement = ExecutionBlock.from_random(
+                Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1))
+        elif self.else_statement is not None and random() < Rule.mutation_node_probability:
+            self.else_statement.mutate()
 
     def crossover(self, other: IfStatement) -> None:
         pass
@@ -237,7 +268,7 @@ class IfStatement(Rule, RestrictedRandomize):
         return base
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class LoopStatement(Rule, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
@@ -250,7 +281,15 @@ class LoopStatement(Rule, RestrictedRandomize):
         return cls(meta, condition, body)
 
     def mutate(self) -> None:
-        pass
+        if random() < Rule.mutation_from_start_probability:
+            self.condition = Condition.from_random(Metadata(self.meta.variables_scope, 0))
+        elif random() < Rule.mutation_node_probability:
+            self.condition.mutate()
+
+        if random() < Rule.mutation_from_start_probability:
+            self.body = ExecutionBlock.from_random(Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1))
+        elif random() < Rule.mutation_node_probability:
+            self.body.mutate()
 
     def crossover(self, other: LoopStatement) -> None:
         pass
@@ -270,8 +309,15 @@ class IOType(Enum):
     def from_random(cls) -> IOType:
         return choice(list(cls))
 
+    @classmethod
+    def get_opposite(cls, io_type: IOType) -> IOType:
+        if io_type == cls.READ:
+            return cls.WRITE
 
-@dataclass(slots=True, frozen=True)
+        return cls.READ
+
+
+@dataclass(slots=True)
 class IOStatement(Rule, RestrictedRandomize):
     io_type: IOType
     name: VariableNameToken
@@ -284,7 +330,10 @@ class IOStatement(Rule, RestrictedRandomize):
         return cls(meta, io_type, name)
 
     def mutate(self) -> None:
-        pass
+        IOType.get_opposite(self.io_type)
+
+        if random() < Rule.mutation_node_probability:
+            self.name = VariableNameToken(self.meta.get_random_name())
 
     def crossover(self, other: IOStatement) -> None:
         pass
@@ -293,7 +342,7 @@ class IOStatement(Rule, RestrictedRandomize):
         return f'{self.io_type} ({self.name});'
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class IntegerDeclaration(Rule, RestrictedRandomize):
     name: VariableNameToken
     expression: Expression
@@ -308,7 +357,11 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
         return cls(meta, name, expression)
 
     def mutate(self) -> None:
-        pass
+        if random() < Rule.mutation_node_probability:
+            self.name = VariableNameToken(self.meta.get_random_name())
+
+        if random() < Rule.mutation_node_probability:
+            self.expression.mutate()
 
     def crossover(self, other: IntegerDeclaration) -> None:
         pass
@@ -321,7 +374,7 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
         return base
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class BooleanDeclaration(Rule, RestrictedRandomize):
     name: VariableNameToken
     condition: Condition
@@ -336,7 +389,11 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
         return cls(meta, name, condition)
 
     def mutate(self) -> None:
-        pass
+        if random() < Rule.mutation_node_probability:
+            self.name = VariableNameToken(self.meta.get_random_name())
+
+        if random() < Rule.mutation_node_probability:
+            self.condition.mutate()
 
     def crossover(self, other: BooleanDeclaration) -> None:
         pass
@@ -349,7 +406,7 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
         return base
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class Condition(Rule, RestrictedRandomize):
     body: ConditionType
 
@@ -409,7 +466,8 @@ class Condition(Rule, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        pass
+        if random() < Rule.mutation_node_probability:
+            self.body = Condition.from_random(self.meta).body
 
     def crossover(self, other: Condition) -> None:
         pass
@@ -426,7 +484,7 @@ class Condition(Rule, RestrictedRandomize):
                 return str(value)
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class Expression(Rule, RestrictedRandomize):
     body: ExpressionType
 
@@ -479,7 +537,8 @@ class Expression(Rule, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        pass
+        if random() < Rule.mutation_node_probability:
+            self.body = Expression.from_random(self.meta).body
 
     def crossover(self, other: Expression) -> None:
         pass

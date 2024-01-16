@@ -4,9 +4,10 @@ from abc import ABC, abstractmethod
 from typing import ClassVar
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class Rule(ABC):
-    mutation_node_probability: ClassVar[float] = 0.2
+    mutation_node_probability: ClassVar[float] = 0.5
+    mutation_from_start_probability: ClassVar[float] = 0.1
 
     @abstractmethod
     def mutate(self) -> None:

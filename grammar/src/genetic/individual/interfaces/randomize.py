@@ -9,11 +9,11 @@ from typing import ClassVar, Optional, Literal
 
 from src.genetic.individual.interfaces.node_types import Token
 from src.genetic.individual.limiters.exponential_probability import ExponentialProbability
-from src.genetic.individual.limiters.limiters import AdaptiveLimiter
+from src.genetic.individual.limiters.limiters import AdaptiveLimiter, HardLimiter
 from src.genetic.interpreter.variables import Variable
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class RestrictedRandomize(ABC):
     meta: Metadata
 
@@ -88,7 +88,7 @@ class RandomGenerationMethod(Enum):
 class Metadata:
     variables_scope: dict[str, Variable] = field(default_factory=dict)
     depth: int = 0
-    limiter = AdaptiveLimiter
+    limiter = HardLimiter
     method: RandomGenerationMethod = RandomGenerationMethod.FULL
 
     max_depth: ClassVar[int] = 2
