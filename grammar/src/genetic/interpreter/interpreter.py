@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Optional, Union, Final, Callable
 from functools import wraps
 
-from antlr4 import FileStream
+from antlr4 import FileStream, InputStream
 from antlr4.CommonTokenStream import CommonTokenStream
 
 from src.antlr.MiniGPLexer import MiniGPLexer
@@ -76,7 +76,7 @@ class Interpreter(MiniGPVisitor):
 
         is_constant: bool = ctx.CONST() is not None
 
-        self.const_information = is_constant
+        self.const_information = False
         if is_constant:
             self.visit(ctx.getChild(1))
         else:
@@ -90,9 +90,6 @@ class Interpreter(MiniGPVisitor):
 
         variable_name = ctx.VAR().getText()
 
-        if self.variables.get(variable_name) is not None:
-            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, variable_name)
-
         self.variables[variable_name] = (
             Variable(self.const_information,
                      'int',
@@ -102,17 +99,14 @@ class Interpreter(MiniGPVisitor):
     @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext):
         # booleanDeclaration :
-        #    BOOL_TYPE VAR ASSIGMENT_OPERATOR expression
+        #    BOOL_TYPE VAR ASSIGMENT_OPERATOR condition
         #    ;
         variable_name = ctx.VAR().getText()
-
-        if self.variables.get(variable_name) is not None:
-            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, variable_name)
 
         self.variables[variable_name] = (
             Variable(self.const_information,
                      'bool',
-                     self.visit(ctx.expression()))
+                     self.visit(ctx.condition()))
         )
 
     @limit
@@ -125,13 +119,18 @@ class Interpreter(MiniGPVisitor):
         variable: Optional[Variable] = self.variables.get(variable_name)
 
         if variable is None:
-            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
+            self.variables[variable_name] = Variable(False, 'int', self.mode.read('int'))
+            return
 
         if variable.type == 'int' and ctx.condition() is not None:
-            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'int', 'bool')
+            value: int = int(self.visit(ctx.condition()))
+            variable.value = value
+            return
 
         if variable.type == 'bool' and ctx.expression() is not None:
-            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'bool', 'int')
+            value: bool = bool(self.visit(ctx.condition()))
+            variable.value = value
+            return
 
         value: Union[bool, int] = self.visit(ctx.getChild(2))
 
@@ -174,15 +173,17 @@ class Interpreter(MiniGPVisitor):
         variable: Optional[Variable] = self.variables.get(variable_name)
 
         if variable is None:
-            InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
+            return
 
         if ctx.WRITE() is not None:
+            print(variable_name, variable)
             self.mode.write(variable.value)
 
         elif ctx.READ() is not None:
             if variable.is_constant:
                 InterpreterErrors.raise_error(InterpreterErrors.READ_ASSIGMENT_TO_CONSTANT, variable_name)
 
+            print(variable_name, variable)
             variable.value = self.mode.read(variable.type)
 
     @limit
@@ -201,16 +202,23 @@ class Interpreter(MiniGPVisitor):
             variable: Optional[Variable] = self.variables.get(variable_name)
 
             if variable is None:
-                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
+                self.variables[variable_name] = Variable(False, 'int', self.mode.read('int'))
+                return
 
             if variable.type == 'bool':
-                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'int', 'bool')
+                return int(variable.value)
 
             return variable.value
 
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
         operator = ctx.EXPRESSION_OPERATOR().getText()
+
+        if left is None:
+            left = self.mode.read('int')
+
+        if right is None:
+            right = self.mode.read('int')
 
         match operator:
             case '+':
@@ -223,13 +231,18 @@ class Interpreter(MiniGPVisitor):
                 return left * right
 
             case '/':
+                if right == 0:
+                    return left
                 return int(left / right)
+
+        raise ValueError(f'Unknown operator: {operator}')
 
     @limit
     def visitCondition(self, ctx: MiniGPParser.ConditionContext):
         # condition :
         #    LPAREN condition CONDITION_OPERATOR condition RPAREN
         #    | LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
+        #    | condition
         #    | BOOL
         #    | VAR
         #    ;
@@ -241,15 +254,26 @@ class Interpreter(MiniGPVisitor):
             variable: Optional[Variable] = self.variables.get(variable_name)
 
             if variable is None:
-                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_NOT_DECLARED, variable_name)
+                self.variables[variable_name] = Variable(False, 'bool', self.mode.read('bool'))
+                return
 
             if variable.type == 'int':
-                InterpreterErrors.raise_error(InterpreterErrors.VARIABLE_DOUBLE_DECLARATION, 'bool', 'int')
+                return bool(variable.value)
 
             return variable.value
 
+        if ctx.getChildCount() == 4:
+            return not self.visit(ctx.condition(0))
+
         left = self.visit(ctx.getChild(1))
         right = self.visit(ctx.getChild(3))
+
+        if left is None:
+            left = self.mode.read('bool')
+
+        if right is None:
+            right = self.mode.read('bool')
+
         operator = ctx.getChild(2).getText()
 
         match operator:
@@ -277,18 +301,27 @@ class Interpreter(MiniGPVisitor):
             case '||':
                 return left or right
 
+        raise ValueError(f'Unknown operator: {operator}')
+
     @staticmethod
-    def interpret(program_path: str, mode: InputOutputOperation):
-        input_stream = FileStream(program_path)
+    def interpret(program: str, mode: InputOutputOperation, is_path_like: bool = True) \
+            -> Optional[InputOutputOperation]:
+        input_stream = FileStream(program) if is_path_like else InputStream(program)
         lexer = MiniGPLexer(input_stream)
         stream = CommonTokenStream(lexer)
         parser = MiniGPParser(stream)
 
+        # try:
+        tree = parser.program()
+        interpreter = Interpreter(mode)
         try:
-            tree = parser.program()
-            interpreter = Interpreter(mode)
             interpreter.visit(tree)
-            print(interpreter.variables)
-
+        except StopIteration as error:
+            print(error)
         except Exception as error:
             print(error)
+        finally:
+            return interpreter.mode
+
+        # except Exception as error:
+        #     print(error)

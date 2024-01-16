@@ -8,6 +8,7 @@ from typing import ClassVar
 class Rule(ABC):
     mutation_node_probability: ClassVar[float] = 0.5
     mutation_from_start_probability: ClassVar[float] = 0.1
+    crossover_node_probability: ClassVar[float] = 0.5
 
     @abstractmethod
     def mutate(self) -> None:

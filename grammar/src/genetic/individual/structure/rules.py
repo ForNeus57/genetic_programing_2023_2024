@@ -5,7 +5,7 @@ import inspect
 from dataclasses import dataclass, field
 from types import SimpleNamespace
 from typing import Union, Optional, Tuple
-from random import choice, random
+from random import choice, random, randint
 from enum import Enum, auto
 from copy import deepcopy
 
@@ -30,7 +30,7 @@ class Program(Rule, RestrictedRandomize):
         self.body.mutate()
 
     def crossover(self, other: Program) -> None:
-        pass
+        self.body.crossover(other.body)
 
     def __str__(self) -> str:
         return str(self.body)
@@ -86,7 +86,6 @@ class ExecutionBlock(Rule, RestrictedRandomize):
                         IOStatement,
                     ])
 
-
                 return output
 
             case RandomGenerationMethod.GROW:
@@ -107,7 +106,6 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
                 return output
 
-
     def mutate(self) -> None:
         for index, statement in enumerate(self.statements):
             if random() < Rule.mutation_from_start_probability:
@@ -118,7 +116,8 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         self.statements.append(self.generate_random_body_element(self.meta))
 
     def crossover(self, other: ExecutionBlock) -> None:
-        pass
+        length: int = min(len(self.statements), len(other.statements))
+        random_length: int = randint(0, length)
 
     def __str__(self) -> str:
         tabs: str = '\t' * (self.meta.depth + 1)
@@ -134,7 +133,8 @@ class VarDeclaration(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> VarDeclaration:
         is_constant = choice([True, False])
-        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(
+            Metadata(meta.variables_scope, meta.depth + 1))
 
         meta.variables_scope[declaration.name.value].is_constant = is_constant
 
@@ -147,7 +147,6 @@ class VarDeclaration(Rule, RestrictedRandomize):
             self.declaration.name = VariableNameToken(self.meta.get_random_name())
         elif random() < Rule.mutation_node_probability:
             self.declaration.mutate()
-
 
     def crossover(self, other: VarDeclaration) -> None:
         pass
@@ -173,7 +172,6 @@ class Assigment(Rule, RestrictedRandomize):
             case namespace.Condition:
                 name: VariableNameToken = VariableNameToken(meta.get_random_name('bool'))
 
-
         return cls(meta, name, value)
 
     @classmethod
@@ -195,7 +193,8 @@ class Assigment(Rule, RestrictedRandomize):
         self.name = VariableNameToken(self.meta.get_random_name())
 
         if random() < Rule.mutation_from_start_probability:
-            self.assigment_value = choice(self.generate_choices(self.meta)).from_random(Metadata(self.meta.variables_scope, 0))
+            self.assigment_value = choice(self.generate_choices(self.meta)).from_random(
+                Metadata(self.meta.variables_scope, 0))
         elif random() < Rule.mutation_node_probability:
             self.assigment_value.mutate()
 
@@ -236,7 +235,6 @@ class IfStatement(Rule, RestrictedRandomize):
 
             case RandomGenerationMethod.GROW:
                 return [ExecutionBlock, None]
-
 
     def mutate(self) -> None:
         if random() < Rule.mutation_from_start_probability:
@@ -435,7 +433,7 @@ class Condition(Rule, RestrictedRandomize):
                 if meta.is_depth_in_limits():
                     return [
                         (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
-                        (Condition, choice(['&&', '||', '^']), Condition),
+                        (Condition, choice(['&&', '||']), Condition),
                         Condition,
                     ]
 

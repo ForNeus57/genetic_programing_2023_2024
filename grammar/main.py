@@ -13,15 +13,17 @@ def main():
     # random_tree = generate_random_tree(config["DEPTH"], params["minrand"], params["maxrand"])
     # print("Wygenerowane losowe drzewo:")
     # print(random_tree)
-
-    # Interpreter.interpret("./test/resources/test1.mgp", BufferInputOutputOperation([1, False]))
-    # seed(6)
+    # seed(8)
 
     ind = Individual.from_random()
-    print(ind)
     ind.mutate()
     print(ind)
 
+    out = Interpreter.interpret(str(ind), BufferInputOutputOperation([1, False]), False)
+    if out is not None:
+        print(out.output)
+    else:
+        print("None")
 
 if __name__ == "__main__":
     main()

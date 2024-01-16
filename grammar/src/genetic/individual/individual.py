@@ -5,6 +5,8 @@ from typing import Callable, Union, Literal
 
 from src.genetic.individual.interfaces.randomize import Metadata
 from src.genetic.individual.structure.rules import Program
+from src.genetic.interpreter.input_output import BufferInputOutputOperation
+from src.genetic.interpreter.interpreter import Interpreter
 
 
 @dataclass(slots=True, frozen=True, order=False)
@@ -17,8 +19,7 @@ class Individual:
             return load(file)
 
     @classmethod
-    def from_random(cls) -> Individual:
-        meta: Metadata = Metadata()
+    def from_random(cls, meta: Metadata = Metadata()) -> Individual:
         program: Program = Program.from_random(meta)
         return cls(program)
 
@@ -26,9 +27,15 @@ class Individual:
         return str(self.program)
 
     def execute(self, input_vector: tuple) -> tuple:
-        raise NotImplementedError()
+        program_structure: str = str(self.program)
+        output: BufferInputOutputOperation = Interpreter.interpret(program_structure,
+                                                                   BufferInputOutputOperation(list(input_vector)))
+        if output is None:
+            raise ValueError('Interpreter returned None')
 
-    def evaluate(self, fitness_function: Callable[[tuple, tuple],  Union[float, int, bool]],
+        return tuple(output.output)
+
+    def evaluate(self, fitness_function: Callable[[tuple, tuple], Union[float, int, bool]],
                  input_vector: tuple,
                  model_vector: tuple) -> Union[float, int, bool]:
         result_vector: tuple = self.execute(input_vector)
@@ -39,7 +46,7 @@ class Individual:
         self.program.mutate()
 
     def crossover(self, other: Individual) -> None:
-        raise NotImplementedError()
+        self.program.crossover(other.program)
 
     def save_to_file(self, path: str):
         with open(path, 'wb') as file:
@@ -47,13 +54,15 @@ class Individual:
 
     @staticmethod
     def tournament(individuals: tuple[Individual, ...],
-                   fitness_function: Callable[[tuple, tuple],  Union[float, int, bool]],
+                   fitness_function: Callable[[tuple, tuple], Union[float, int, bool]],
                    input_vector: tuple,
                    model_vector: tuple,
                    mode: Literal['min', 'max']) -> Individual:
         if mode == 'min':
-            return min(individuals, key=lambda individual: individual.evaluate(fitness_function, input_vector, model_vector))
+            return min(individuals,
+                       key=lambda individual: individual.evaluate(fitness_function, input_vector, model_vector))
         elif mode == 'max':
-            return max(individuals, key=lambda individual: individual.evaluate(fitness_function, input_vector, model_vector))
+            return max(individuals,
+                       key=lambda individual: individual.evaluate(fitness_function, input_vector, model_vector))
 
         raise ValueError(f'Unknown mode: {mode}')

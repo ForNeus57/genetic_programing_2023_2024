@@ -31,10 +31,11 @@ class BufferInputOutputOperation(InputOutputOperation):
         only_bools = [x for x in input_buffer if type(x) is bool]
         only_ints = [x for x in input_buffer if type(x) is int]
 
-        # TODO:
-        # Make so that 0 is possible to read as an int and bool
-        if len(only_bools) == 0 or len(only_ints) == 0:
-            raise ValueError("Input buffer must contain at least one int and one bool!")
+        if len(only_bools) == 0:
+            only_bools.append(True)
+
+        if len(only_ints) == 0:
+            only_ints.append(1)
 
         self.input_bools: cycle[bool] = cycle(only_bools)
         self.input_ints: cycle[int] = cycle(only_ints)
