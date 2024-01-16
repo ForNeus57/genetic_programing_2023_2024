@@ -14,6 +14,7 @@ from src.genetic.individual.interfaces.randomize import RestrictedRandomize, Met
     IntegerToken, BooleanToken
 
 from src.genetic.individual.limiters.limiters import Limiter
+from src.genetic.interpreter.variables import Variable
 
 
 @dataclass(slots=True, frozen=True)
@@ -96,6 +97,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
         return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
 
+
 @dataclass(slots=True, frozen=True)
 class VarDeclaration(Rule, RestrictedRandomize):
     is_constant: bool
@@ -105,7 +107,8 @@ class VarDeclaration(Rule, RestrictedRandomize):
     def from_random(cls, meta: Metadata) -> VarDeclaration:
         is_constant = choice([True, False])
         declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(Metadata(meta.variables_scope, meta.depth + 1))
-        # meta.variables_scope.add(declaration.name)  # Not sure if needed
+
+        meta.variables_scope[declaration.name.value].is_constant = is_constant
 
         return cls(meta, is_constant, declaration)
 
@@ -126,10 +129,33 @@ class Assigment(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, meta: Metadata) -> Assigment:
-        name: VariableNameToken = meta.get_random_name()
-        value: AssigmentValueType = choice([Expression, Condition]).from_random(Metadata(meta.variables_scope, meta.depth + 1))  # Don't forget Validation...
+        constructor = choice(cls.generate_choices(meta))
+        value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, meta.depth + 1))  # Don't forget Validation...
+
+        match constructor:
+            case namespace.Expression:
+                name: VariableNameToken = VariableNameToken(meta.get_random_name('int'))
+
+            case namespace.Condition:
+                name: VariableNameToken = VariableNameToken(meta.get_random_name('bool'))
+
 
         return cls(meta, name, value)
+
+    @classmethod
+    def generate_choices(cls, meta: Metadata) -> list:
+        output: list = []   # TODO: Add check if meta is empty.........
+        if meta.has_boolean_variables():
+            output.extend([
+                Condition,
+            ])
+
+        if meta.has_integer_variables():
+            output.extend([
+                Expression,
+            ])
+
+        return output
 
     def mutate(self) -> None:
         pass
@@ -155,7 +181,8 @@ class IfStatement(Rule, RestrictedRandomize):
 
         match choice(table_of_choices):
             case namespace.ExecutionBlock as option:
-                else_statement: Optional[ExecutionBlock] = option.from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
+                else_statement: Optional[ExecutionBlock] = option.from_random(
+                    Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
 
             case _:
                 else_statement: Optional[ExecutionBlock] = None
@@ -220,7 +247,7 @@ class IOStatement(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> IOStatement:
         io_type: IOType = IOType.from_random()
-        name: VariableNameToken = meta.get_random_name()
+        name: VariableNameToken = VariableNameToken(meta.get_random_name())
 
         return cls(meta, io_type, name)
 
@@ -244,7 +271,7 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
         name: VariableNameToken = VariableNameToken.from_random()
         expression: Expression = Expression.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
-        meta.variables_scope.add(name)
+        meta.variables_scope[name.value] = Variable(None, 'int', None)
 
         return cls(meta, name, expression)
 
@@ -272,7 +299,7 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
         name: VariableNameToken = VariableNameToken.from_random()
         condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
-        meta.variables_scope.add(name)
+        meta.variables_scope[name.value] = Variable(None, 'bool', None)
 
         return cls(meta, name, condition)
 
@@ -300,13 +327,14 @@ class Condition(Rule, RestrictedRandomize):
 
         match choice(table_of_choices):
             case (left, operation, right):
-                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation, right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
+                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation,
+                                  right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
 
             case namespace.Condition as option:
                 return cls(meta, option.from_random(Metadata(meta.variables_scope, meta.depth + 1)))
 
             case namespace.VariableNameToken:
-                return cls(meta, meta.get_random_name())
+                return cls(meta, VariableNameToken(meta.get_random_name('bool')))
 
             case namespace.BooleanToken as option:
                 return cls(meta, option.from_random())
@@ -316,7 +344,7 @@ class Condition(Rule, RestrictedRandomize):
         output: list = [
             BooleanToken
         ]
-        if not meta.is_empty():
+        if not meta.is_empty() and meta.has_boolean_variables():
             output.extend([
                 VariableNameToken,
             ])
@@ -358,10 +386,11 @@ class Expression(Rule, RestrictedRandomize):
 
         match choice(table_of_choices):
             case (right, operation, left):
-                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation, right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
+                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation,
+                                  right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
 
             case namespace.VariableNameToken:
-                return cls(meta, meta.get_random_name())
+                return cls(meta, VariableNameToken(meta.get_random_name('int')))
 
             case namespace.IntegerToken as option:
                 return cls(meta, option.from_random())
@@ -371,7 +400,7 @@ class Expression(Rule, RestrictedRandomize):
         output: list = [
             IntegerToken,
         ]
-        if not meta.is_empty():
+        if not meta.is_empty() and meta.has_integer_variables():
             output.extend([
                 VariableNameToken,
             ])

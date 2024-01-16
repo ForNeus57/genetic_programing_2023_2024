@@ -4,13 +4,13 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 from random import choice, randint, random
 from string import ascii_letters, digits
-from typing import ClassVar, Callable
+from typing import ClassVar, Callable, Optional, Literal
 
 from src.genetic.individual.interfaces.node_types import Token
 from src.genetic.individual.limiters.exponential_probability import ExponentialProbability
 
 from src.genetic.individual.limiters.limiters import HardLimiter, AdaptiveLimiter, RandomLimiter
-
+from src.genetic.interpreter.variables import Variable
 
 
 @dataclass(slots=True, frozen=True)
@@ -78,6 +78,7 @@ class VariableNameToken(Token):
 
 VariableTypes = BooleanToken | IntegerToken
 
+
 class RandomGenerationMethod(Enum):
     GROW = 0
     FULL = auto()
@@ -86,15 +87,27 @@ class RandomGenerationMethod(Enum):
 
 @dataclass()
 class Metadata:
-    variables_scope: set[VariableNameToken] = field(default_factory=set)
+    variables_scope: dict[str, Variable] = field(default_factory=dict)
     depth: int = 0
     limiter = HardLimiter
     method: RandomGenerationMethod = RandomGenerationMethod.GROW
 
     max_depth: ClassVar[int] = 5
 
-    def get_random_name(self) -> VariableNameToken:
-        return choice(tuple(self.variables_scope))
+    def get_random_name(self, type_hint: Optional[Literal['int', 'bool']] = None) -> str:
+        if type_hint is None:
+            return choice([name for name, variable in self.variables_scope.items()])
+
+        return choice([name for name, variable in self.variables_scope.items() if variable.type == type_hint])
+
+    def has_boolean_variables(self) -> bool:
+        return any(map(lambda x: x.type == 'bool', self.variables_scope.values()))
+
+    def has_integer_variables(self) -> bool:
+        return any(map(lambda x: x.type == 'int', self.variables_scope.values()))
+
+    def get_variable(self, name: str) -> Variable:
+        return self.variables_scope[name]
 
     def is_depth_in_limits(self) -> bool:
         return self.depth < Metadata.max_depth
