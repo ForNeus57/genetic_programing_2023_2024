@@ -16,14 +16,17 @@ def main():
     # seed(8)
 
     ind = Individual.from_random()
-    ind.mutate()
     print(ind)
-
-    out = Interpreter.interpret(str(ind), BufferInputOutputOperation([1, False]), False)
-    if out is not None:
-        print(out.output)
-    else:
-        print("None")
+    ind2 = Individual.from_random()
+    print(ind2)
+    ind.crossover(ind2)
+    print(ind)
+    #
+    # out = Interpreter.interpret(str(ind), BufferInputOutputOperation([1, False]), False)
+    # if out is not None:
+    #     print(out.output)
+    # else:
+    #     print("None")
 
 if __name__ == "__main__":
     main()

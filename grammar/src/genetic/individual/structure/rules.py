@@ -116,8 +116,22 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         self.statements.append(self.generate_random_body_element(self.meta))
 
     def crossover(self, other: ExecutionBlock) -> None:
-        length: int = min(len(self.statements), len(other.statements))
-        random_length: int = randint(0, length)
+        self_length, other_length = len(self.statements), len(other.statements)
+        self_random_length, other_random_length = randint(0, self_length - 1), randint(0, other_length - 1)
+        self_start_index, other_start_index = randint(0, self_length - self_random_length - 1), randint(0, other_length - other_random_length - 1)
+
+        self_statements_copy = deepcopy(self.statements)
+        other_statements_copy = deepcopy(other.statements)
+
+        for self_statement in self_statements_copy:
+            for other_statement in other_statements_copy:
+                if type(self_statement) is type(other_statement):
+                    self_statement.crossover(other_statement)
+
+        self.statements[self_start_index: self_start_index + self_random_length] = \
+            other_statements_copy[other_start_index: other_start_index + other_random_length]
+        other.statements[other_start_index: other_start_index + other_random_length] = \
+            self_statements_copy[self_start_index: self_start_index + self_random_length]
 
     def __str__(self) -> str:
         tabs: str = '\t' * (self.meta.depth + 1)
@@ -149,7 +163,9 @@ class VarDeclaration(Rule, RestrictedRandomize):
             self.declaration.mutate()
 
     def crossover(self, other: VarDeclaration) -> None:
-        pass
+        self.is_constant, other.is_constant = other.is_constant, self.is_constant
+        if type(self.declaration) is type(other.declaration):
+            self.declaration.crossover(other.declaration)
 
     def __str__(self):
         return f'{"const " if self.is_constant else ""}{self.declaration};'
@@ -199,7 +215,9 @@ class Assigment(Rule, RestrictedRandomize):
             self.assigment_value.mutate()
 
     def crossover(self, other: Assigment) -> None:
-        pass
+        self.name, other.name = other.name, self.name
+        if type(self.assigment_value) is type(other.assigment_value):
+            self.assigment_value.crossover(other.assigment_value)
 
     def __str__(self):
         return f'{self.name} = {self.assigment_value};'
@@ -254,7 +272,13 @@ class IfStatement(Rule, RestrictedRandomize):
             self.else_statement.mutate()
 
     def crossover(self, other: IfStatement) -> None:
-        pass
+        self.condition, other.condition = other.condition, self.condition
+        self.body.crossover(other.body)
+
+        if self.else_statement is None and other.else_statement is not None:
+            self.else_statement = other.else_statement
+        elif self.else_statement is not None and other.else_statement is None:
+            other.else_statement = self.else_statement
 
     def __str__(self):
         base: str = f'if ({self.condition}) {self.body}'
@@ -290,7 +314,8 @@ class LoopStatement(Rule, RestrictedRandomize):
             self.body.mutate()
 
     def crossover(self, other: LoopStatement) -> None:
-        pass
+        self.condition, other.condition = other.condition, self.condition
+        self.body.crossover(other.body)
 
     def __str__(self):
         return f'while ({self.condition}) {self.body}'
@@ -334,7 +359,7 @@ class IOStatement(Rule, RestrictedRandomize):
             self.name = VariableNameToken(self.meta.get_random_name())
 
     def crossover(self, other: IOStatement) -> None:
-        pass
+        self.io_type, other.io_type = other.io_type, self.io_type
 
     def __str__(self):
         return f'{self.io_type} ({self.name});'
@@ -362,7 +387,7 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
             self.expression.mutate()
 
     def crossover(self, other: IntegerDeclaration) -> None:
-        pass
+        self.expression, other.expression = other.expression, self.expression
 
     def __str__(self):
         base: str = f'int {self.name}'
@@ -394,7 +419,7 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
             self.condition.mutate()
 
     def crossover(self, other: BooleanDeclaration) -> None:
-        pass
+        self.condition, other.condition = other.condition, self.condition
 
     def __str__(self):
         base: str = f'bool {self.name}'
