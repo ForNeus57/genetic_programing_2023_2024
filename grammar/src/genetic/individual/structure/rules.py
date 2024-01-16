@@ -11,7 +11,7 @@ from copy import deepcopy
 
 from src.genetic.individual.interfaces.node_types import Rule
 from src.genetic.individual.interfaces.randomize import RestrictedRandomize, Metadata, VariableNameToken, \
-    IntegerToken, BooleanToken
+    IntegerToken, BooleanToken, RandomGenerationMethod
 
 from src.genetic.individual.limiters.limiters import Limiter
 from src.genetic.interpreter.variables import Variable
@@ -69,22 +69,44 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
-        output: list = [
-            VarDeclaration,
-        ]
-        if not meta.is_empty():
-            output.extend([
-                Assigment,
-                IOStatement
-            ])
+        match meta.method:
+            case RandomGenerationMethod.FULL:
+                if meta.is_depth_in_limits():
+                    return [
+                        IfStatement,
+                        LoopStatement,
+                    ]
 
-        if meta.is_depth_in_limits():
-            output.extend([
-                IfStatement,
-                LoopStatement,
-            ])
+                output: list = [
+                    VarDeclaration,
+                ]
+                if not meta.is_empty():
+                    output.extend([
+                        Assigment,
+                        IOStatement,
+                    ])
 
-        return output
+
+                return output
+
+            case RandomGenerationMethod.GROW:
+                output: list = [
+                    VarDeclaration,
+                ]
+                if not meta.is_empty():
+                    output.extend([
+                        Assigment,
+                        IOStatement
+                    ])
+
+                if meta.is_depth_in_limits():
+                    output.extend([
+                        IfStatement,
+                        LoopStatement,
+                    ])
+
+                return output
+
 
     def mutate(self) -> None:
         pass
@@ -130,7 +152,7 @@ class Assigment(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> Assigment:
         constructor = choice(cls.generate_choices(meta))
-        value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, meta.depth + 1))  # Don't forget Validation...
+        value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, 0))  # Don't forget Validation...
 
         match constructor:
             case namespace.Expression:
@@ -144,7 +166,7 @@ class Assigment(Rule, RestrictedRandomize):
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
-        output: list = []   # TODO: Add check if meta is empty.........
+        output: list = []
         if meta.has_boolean_variables():
             output.extend([
                 Condition,
@@ -175,9 +197,9 @@ class IfStatement(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, meta: Metadata) -> IfStatement:
-        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, 0))
         body: ExecutionBlock = ExecutionBlock.from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
-        table_of_choices: list = [ExecutionBlock, None]
+        table_of_choices: list = cls.generate_choices(meta)
 
         match choice(table_of_choices):
             case namespace.ExecutionBlock as option:
@@ -188,6 +210,16 @@ class IfStatement(Rule, RestrictedRandomize):
                 else_statement: Optional[ExecutionBlock] = None
 
         return cls(meta, condition, body, else_statement)
+
+    @classmethod
+    def generate_choices(cls, meta: Metadata) -> list:
+        match meta.method:
+            case RandomGenerationMethod.FULL:
+                return [ExecutionBlock]
+
+            case RandomGenerationMethod.GROW:
+                return [ExecutionBlock, None]
+
 
     def mutate(self) -> None:
         pass
@@ -212,7 +244,7 @@ class LoopStatement(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, meta: Metadata) -> LoopStatement:
-        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, 0))
         body: ExecutionBlock = ExecutionBlock.from_random(Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
 
         return cls(meta, condition, body)
@@ -269,7 +301,7 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> IntegerDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
-        expression: Expression = Expression.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        expression: Expression = Expression.from_random(Metadata(meta.variables_scope, 0))
 
         meta.variables_scope[name.value] = Variable(None, 'int', None)
 
@@ -297,7 +329,7 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
     @classmethod
     def from_random(cls, meta: Metadata) -> BooleanDeclaration:
         name: VariableNameToken = VariableNameToken.from_random()
-        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, 0))
 
         meta.variables_scope[name.value] = Variable(None, 'bool', None)
 
@@ -341,22 +373,40 @@ class Condition(Rule, RestrictedRandomize):
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
-        output: list = [
-            BooleanToken
-        ]
-        if not meta.is_empty() and meta.has_boolean_variables():
-            output.extend([
-                VariableNameToken,
-            ])
+        match meta.method:
+            case RandomGenerationMethod.FULL:
+                if meta.is_depth_in_limits():
+                    return [
+                        (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
+                        (Condition, choice(['&&', '||', '^']), Condition),
+                        Condition,
+                    ]
 
-        if meta.is_depth_in_limits():
-            output.extend([
-                (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
-                (Condition, choice(['&&', '||', '^']), Condition),
-                Condition,
-            ])
+                output: list = [BooleanToken]
+                if not meta.is_empty() and meta.has_boolean_variables():
+                    output.extend([
+                        VariableNameToken,
+                    ])
 
-        return output
+                return output
+
+            case RandomGenerationMethod.GROW:
+                output: list = [
+                    BooleanToken
+                ]
+                if not meta.is_empty() and meta.has_boolean_variables():
+                    output.extend([
+                        VariableNameToken,
+                    ])
+
+                if meta.is_depth_in_limits():
+                    output.extend([
+                        (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
+                        (Condition, choice(['&&', '||', '^']), Condition),
+                        Condition,
+                    ])
+
+                return output
 
     def mutate(self) -> None:
         pass
@@ -397,20 +447,36 @@ class Expression(Rule, RestrictedRandomize):
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
-        output: list = [
-            IntegerToken,
-        ]
-        if not meta.is_empty() and meta.has_integer_variables():
-            output.extend([
-                VariableNameToken,
-            ])
+        match meta.method:
+            case RandomGenerationMethod.FULL:
+                if meta.is_depth_in_limits():
+                    return [
+                        (Expression, choice(['+', '-', '*', '/']), Expression),
+                    ]
 
-        if meta.is_depth_in_limits():
-            output.extend([
-                (Expression, choice(['+', '-', '*', '/']), Expression),
-            ])
+                output: list = [IntegerToken]
+                if not meta.is_empty() and meta.has_integer_variables():
+                    output.extend([
+                        VariableNameToken,
+                    ])
 
-        return output
+                return output
+
+            case RandomGenerationMethod.GROW:
+                output: list = [
+                    IntegerToken,
+                ]
+                if not meta.is_empty() and meta.has_integer_variables():
+                    output.extend([
+                        VariableNameToken,
+                    ])
+
+                if meta.is_depth_in_limits():
+                    output.extend([
+                        (Expression, choice(['+', '-', '*', '/']), Expression),
+                    ])
+
+                return output
 
     def mutate(self) -> None:
         pass

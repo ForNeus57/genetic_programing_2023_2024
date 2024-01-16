@@ -1,15 +1,15 @@
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from random import choice, randint, random
 from string import ascii_letters, digits
-from typing import ClassVar, Callable, Optional, Literal
+from typing import ClassVar, Optional, Literal
 
 from src.genetic.individual.interfaces.node_types import Token
 from src.genetic.individual.limiters.exponential_probability import ExponentialProbability
-
-from src.genetic.individual.limiters.limiters import HardLimiter, AdaptiveLimiter, RandomLimiter
+from src.genetic.individual.limiters.limiters import AdaptiveLimiter
 from src.genetic.interpreter.variables import Variable
 
 
@@ -82,17 +82,16 @@ VariableTypes = BooleanToken | IntegerToken
 class RandomGenerationMethod(Enum):
     GROW = 0
     FULL = auto()
-    RAMPED_HALF_AND_HALF = auto()
 
 
 @dataclass()
 class Metadata:
     variables_scope: dict[str, Variable] = field(default_factory=dict)
     depth: int = 0
-    limiter = HardLimiter
-    method: RandomGenerationMethod = RandomGenerationMethod.GROW
+    limiter = AdaptiveLimiter
+    method: RandomGenerationMethod = RandomGenerationMethod.FULL
 
-    max_depth: ClassVar[int] = 5
+    max_depth: ClassVar[int] = 2
 
     def get_random_name(self, type_hint: Optional[Literal['int', 'bool']] = None) -> str:
         if type_hint is None:
