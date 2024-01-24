@@ -78,7 +78,8 @@ class ExecutionBlock(Rule, RestrictedRandomize):
                     ]
 
                 output: list = [
-                    VarDeclaration,
+                    IntegerDeclaration,
+                    BooleanDeclaration,
                 ]
                 if not meta.is_empty():
                     output.extend([
@@ -90,7 +91,8 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
             case RandomGenerationMethod.GROW:
                 output: list = [
-                    VarDeclaration,
+                    IntegerDeclaration,
+                    BooleanDeclaration,
                 ]
                 if not meta.is_empty():
                     output.extend([
@@ -137,38 +139,6 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         tabs: str = '\t' * (self.meta.depth + 1)
         statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
         return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
-
-
-@dataclass(slots=True)
-class VarDeclaration(Rule, RestrictedRandomize):
-    is_constant: bool
-    declaration: DeclarationTypes
-
-    @classmethod
-    def from_random(cls, meta: Metadata) -> VarDeclaration:
-        is_constant = choice([True, False])
-        declaration: DeclarationTypes = choice([IntegerDeclaration, BooleanDeclaration]).from_random(
-            Metadata(meta.variables_scope, meta.depth + 1))
-
-        meta.variables_scope[declaration.name.value].is_constant = is_constant
-
-        return cls(meta, is_constant, declaration)
-
-    def mutate(self) -> None:
-        self.is_constant = not self.is_constant
-
-        if random() < Rule.mutation_from_start_probability:
-            self.declaration.name = VariableNameToken(self.meta.get_random_name())
-        elif random() < Rule.mutation_node_probability:
-            self.declaration.mutate()
-
-    def crossover(self, other: VarDeclaration) -> None:
-        self.is_constant, other.is_constant = other.is_constant, self.is_constant
-        if type(self.declaration) is type(other.declaration):
-            self.declaration.crossover(other.declaration)
-
-    def __str__(self):
-        return f'{"const " if self.is_constant else ""}{self.declaration};'
 
 
 @dataclass(slots=True)
@@ -375,7 +345,7 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
         name: VariableNameToken = VariableNameToken.from_random()
         expression: Expression = Expression.from_random(Metadata(meta.variables_scope, 0))
 
-        meta.variables_scope[name.value] = Variable(None, 'int', None)
+        meta.variables_scope[name.value] = Variable('int', None)
 
         return cls(meta, name, expression)
 
@@ -407,7 +377,7 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
         name: VariableNameToken = VariableNameToken.from_random()
         condition: Condition = Condition.from_random(Metadata(meta.variables_scope, 0))
 
-        meta.variables_scope[name.value] = Variable(None, 'bool', None)
+        meta.variables_scope[name.value] = Variable('bool', None)
 
         return cls(meta, name, condition)
 
@@ -462,7 +432,9 @@ class Condition(Rule, RestrictedRandomize):
                         Condition,
                     ]
 
-                output: list = [BooleanToken]
+                output: list = [
+                    BooleanToken
+                ]
                 if not meta.is_empty() and meta.has_boolean_variables():
                     output.extend([
                         VariableNameToken,
@@ -578,7 +550,7 @@ class Expression(Rule, RestrictedRandomize):
 ExpressionType = Union[Tuple[Expression, str, Expression], VariableNameToken, IntegerToken]
 ConditionType = Union[
     Tuple[Condition, str, Condition], Tuple[Expression, str, Expression], Condition, VariableNameToken, BooleanToken]
-StatementBodyTypes = Union[VarDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
+StatementBodyTypes = Union[IntegerDeclaration, BooleanDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
 DeclarationTypes = Union[IntegerDeclaration, BooleanDeclaration]
 AssigmentValueType = Union[Expression, Condition]
 

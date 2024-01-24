@@ -91,7 +91,7 @@ class Metadata:
     limiter = HardLimiter
     method: RandomGenerationMethod = RandomGenerationMethod.FULL
 
-    max_depth: ClassVar[int] = 2
+    max_depth: ClassVar[int] = 1
 
     def get_random_name(self, type_hint: Optional[Literal['int', 'bool']] = None) -> str:
         if type_hint is None:

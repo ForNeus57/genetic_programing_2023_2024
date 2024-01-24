@@ -5,19 +5,15 @@ program:
 	;
 
 executionBlock:
-	LBRACE (varDeclaration | assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
-	;
-
-varDeclaration:
-	(CONST)? (integerDeclaration | booleanDeclaration) SEMICOLON
+	LBRACE (integerDeclaration | booleanDeclaration | assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
 	;
 
 integerDeclaration:
-	INT_TYPE VAR ASSIGMENT_OPERATOR expression
+	INT_TYPE VAR ASSIGMENT_OPERATOR expression SEMICOLON
 	;
 
 booleanDeclaration:
-	BOOL_TYPE VAR ASSIGMENT_OPERATOR condition
+	BOOL_TYPE VAR ASSIGMENT_OPERATOR condition SEMICOLON
 	;
 
 assignment:

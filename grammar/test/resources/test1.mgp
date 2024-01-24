@@ -1,7 +1,7 @@
 {
 	int x = 10;
 	int y = 0;
-	if ((x > 5)) {
+	while ((x > 5)) {
     	read(y);
     	write(y);
     	x = ((x - 1) * 2);

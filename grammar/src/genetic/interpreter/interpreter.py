@@ -34,7 +34,6 @@ class Interpreter(MiniGPVisitor):
     def __init__(self, mode: InputOutputOperation):
         self.variables: dict[str, Variable] = {}
         self.mode: InputOutputOperation = mode
-        self.const_information: bool = False
         self.used_instructions: int = 0
 
     @staticmethod
@@ -69,20 +68,6 @@ class Interpreter(MiniGPVisitor):
         return self.visitChildren(ctx)
 
     @limit
-    def visitVarDeclaration(self, ctx: MiniGPParser.VarDeclarationContext):
-        # varDeclaration :
-        #    (CONST)? (integerDeclaration | booleanDeclaration) SEMICOLON
-        #    ;
-
-        is_constant: bool = ctx.CONST() is not None
-
-        self.const_information = False
-        if is_constant:
-            self.visit(ctx.getChild(1))
-        else:
-            self.visit(ctx.getChild(0))
-
-    @limit
     def visitIntegerDeclaration(self, ctx: MiniGPParser.IntegerDeclarationContext):
         # integerDeclaration :
         #    INT_TYPE VAR ASSIGMENT_OPERATOR expression
@@ -91,9 +76,7 @@ class Interpreter(MiniGPVisitor):
         variable_name = ctx.VAR().getText()
 
         self.variables[variable_name] = (
-            Variable(self.const_information,
-                     'int',
-                     self.visit(ctx.expression()))
+            Variable('int', self.visit(ctx.expression()))
         )
 
     @limit
@@ -104,9 +87,7 @@ class Interpreter(MiniGPVisitor):
         variable_name = ctx.VAR().getText()
 
         self.variables[variable_name] = (
-            Variable(self.const_information,
-                     'bool',
-                     self.visit(ctx.condition()))
+            Variable('bool', self.visit(ctx.condition()))
         )
 
     @limit
@@ -119,7 +100,7 @@ class Interpreter(MiniGPVisitor):
         variable: Optional[Variable] = self.variables.get(variable_name)
 
         if variable is None:
-            self.variables[variable_name] = Variable(False, 'int', self.mode.read('int'))
+            self.variables[variable_name] = Variable('int', self.mode.read('int'))
             return
 
         if variable.type == 'int' and ctx.condition() is not None:
@@ -133,9 +114,6 @@ class Interpreter(MiniGPVisitor):
             return
 
         value: Union[bool, int] = self.visit(ctx.getChild(2))
-
-        if variable.is_constant:
-            InterpreterErrors.raise_error(InterpreterErrors.CONSTANT_VARIABLE_ASSIGMENT, value, variable_name)
 
         variable.value = value
 
@@ -180,9 +158,6 @@ class Interpreter(MiniGPVisitor):
             self.mode.write(variable.value)
 
         elif ctx.READ() is not None:
-            if variable.is_constant:
-                InterpreterErrors.raise_error(InterpreterErrors.READ_ASSIGMENT_TO_CONSTANT, variable_name)
-
             print(variable_name, variable)
             variable.value = self.mode.read(variable.type)
 
@@ -202,7 +177,7 @@ class Interpreter(MiniGPVisitor):
             variable: Optional[Variable] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable(False, 'int', self.mode.read('int'))
+                self.variables[variable_name] = Variable('int', self.mode.read('int'))
                 return
 
             if variable.type == 'bool':
@@ -254,7 +229,7 @@ class Interpreter(MiniGPVisitor):
             variable: Optional[Variable] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable(False, 'bool', self.mode.read('bool'))
+                self.variables[variable_name] = Variable('bool', self.mode.read('bool'))
                 return
 
             if variable.type == 'int':
@@ -321,7 +296,7 @@ class Interpreter(MiniGPVisitor):
         except Exception as error:
             print(error)
         finally:
-            return interpreter.mode
+            return interpreter.mode, interpreter.variables
 
         # except Exception as error:
         #     print(error)
