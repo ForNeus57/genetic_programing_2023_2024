@@ -15,23 +15,10 @@ from src.genetic.interpreter.input_output import InputOutputOperation
 from src.genetic.interpreter.variables import Variable
 
 
-class InterpreterErrors(Enum):
-    VARIABLE_NOT_DECLARED = 'Variable: \"{}\" attempted read operation before declaration!'
-    VARIABLE_DOUBLE_DECLARATION = 'Variable: \"{}\" was already declared in this scope!'
-    CONSTANT_VARIABLE_ASSIGMENT = 'Attempt was made to assign value: \"{}\" to constant variable \"{}\"!'
-    WRONG_TYPE_TO_VARIABLE_ASSIGMENT = 'Cannot assign: \"{}\" type variable with: \"{}\" type!'
-    READ_ASSIGMENT_TO_CONSTANT = 'Attempted to assign read input value to variable: \"{}\"!'
-    ITERATION_LIMIT_EXCEEDED = 'Interpreter exceeded executed instruction limit!'
-
-    @staticmethod
-    def raise_error(error_type: InterpreterErrors, *msg_args):
-        raise Exception(error_type.value.format(*msg_args))
-
-
 class Interpreter(MiniGPVisitor):
     instructions_limit: Final[int] = 400
 
-    def __init__(self, mode: InputOutputOperation):
+    def __init__(self, mode: InputOutputOperation) -> None:
         self.variables: dict[str, Variable] = {}
         self.mode: InputOutputOperation = mode
         self.used_instructions: int = 0
@@ -41,7 +28,7 @@ class Interpreter(MiniGPVisitor):
         @wraps(function)
         def wrapper(self, *args, **kwargs):
             if self.used_instructions > Interpreter.instructions_limit:
-                InterpreterErrors.raise_error(InterpreterErrors.ITERATION_LIMIT_EXCEEDED)
+                StopIteration('Interpreter exceeded executed instruction limit!')
 
             self.used_instructions += 1
             return function(self, *args, **kwargs)
@@ -49,28 +36,28 @@ class Interpreter(MiniGPVisitor):
         return wrapper
 
     @limit
-    def visitProgram(self, ctx: MiniGPParser.ProgramContext):
+    def visitProgram(self, ctx: MiniGPParser.ProgramContext) -> None:
         """
         program :
            executionBlock EOF
            ;
         """
 
-        return self.visitChildren(ctx)
+        self.visitChildren(ctx)
 
     @limit
-    def visitExecutionBlock(self, ctx: MiniGPParser.ExecutionBlockContext):
+    def visitExecutionBlock(self, ctx: MiniGPParser.ExecutionBlockContext) -> None:
         """
         executionBlock :
            LBRACE (statement)+ RBRACE
            ;
         """
-        return self.visitChildren(ctx)
+        self.visitChildren(ctx)
 
     @limit
-    def visitIntegerDeclaration(self, ctx: MiniGPParser.IntegerDeclarationContext):
+    def visitIntegerDeclaration(self, ctx: MiniGPParser.IntegerDeclarationContext) -> None:
         # integerDeclaration :
-        #    INT_TYPE VAR ASSIGMENT_OPERATOR expression
+        #    INT_TYPE VAR ASSIGMENT_OPERATOR expression SEMICOLON
         #    ;
 
         variable_name = ctx.VAR().getText()
@@ -80,9 +67,9 @@ class Interpreter(MiniGPVisitor):
         )
 
     @limit
-    def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext):
+    def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext) -> None:
         # booleanDeclaration :
-        #    BOOL_TYPE VAR ASSIGMENT_OPERATOR condition
+        #    BOOL_TYPE VAR ASSIGMENT_OPERATOR condition SEMICOLON
         #    ;
         variable_name = ctx.VAR().getText()
 
@@ -91,7 +78,7 @@ class Interpreter(MiniGPVisitor):
         )
 
     @limit
-    def visitAssignment(self, ctx: MiniGPParser.AssignmentContext):
+    def visitAssignment(self, ctx: MiniGPParser.AssignmentContext) -> None:
         # assignment :
         #    VAR ASSIGMENT_OPERATOR (expression | condition) SEMICOLON
         #    ;
@@ -118,7 +105,7 @@ class Interpreter(MiniGPVisitor):
         variable.value = value
 
     @limit
-    def visitIfStatement(self, ctx: MiniGPParser.IfStatementContext):
+    def visitIfStatement(self, ctx: MiniGPParser.IfStatementContext) -> None:
         # ifStatement :
         #    IF LPAREN condition RPAREN executionBlock (ELSE executionBlock)?
         #    ;
@@ -131,7 +118,7 @@ class Interpreter(MiniGPVisitor):
             self.visit(ctx.executionBlock(1))
 
     @limit
-    def visitLoopStatement(self, ctx: MiniGPParser.LoopStatementContext):
+    def visitLoopStatement(self, ctx: MiniGPParser.LoopStatementContext) -> None:
         # loopStatement :
         #    WHILE LPAREN condition RPAREN executionBlock
         #    ;
@@ -142,7 +129,7 @@ class Interpreter(MiniGPVisitor):
             condition = self.visit(ctx.condition())
 
     @limit
-    def visitIoStatement(self, ctx: MiniGPParser.IoStatementContext):
+    def visitIoStatement(self, ctx: MiniGPParser.IoStatementContext) -> None:
         # ioStatement :
         #    (WRITE | READ) LPAREN VAR RPAREN SEMICOLON
         #    ;
@@ -151,7 +138,8 @@ class Interpreter(MiniGPVisitor):
         variable: Optional[Variable] = self.variables.get(variable_name)
 
         if variable is None:
-            return
+            self.variables[variable_name] = Variable('int', self.mode.read('int'))
+            variable = self.variables[variable_name]
 
         if ctx.WRITE() is not None:
             print(variable_name, variable)
@@ -162,7 +150,7 @@ class Interpreter(MiniGPVisitor):
             variable.value = self.mode.read(variable.type)
 
     @limit
-    def visitExpression(self, ctx: MiniGPParser.ExpressionContext):
+    def visitExpression(self, ctx: MiniGPParser.ExpressionContext) -> Optional[int]:
         # expression :
         #    INT
         #    | VAR
@@ -178,7 +166,7 @@ class Interpreter(MiniGPVisitor):
 
             if variable is None:
                 self.variables[variable_name] = Variable('int', self.mode.read('int'))
-                return
+                variable = self.variables[variable_name]
 
             if variable.type == 'bool':
                 return int(variable.value)
@@ -213,7 +201,7 @@ class Interpreter(MiniGPVisitor):
         raise ValueError(f'Unknown operator: {operator}')
 
     @limit
-    def visitCondition(self, ctx: MiniGPParser.ConditionContext):
+    def visitCondition(self, ctx: MiniGPParser.ConditionContext) -> Optional[bool]:
         # condition :
         #    LPAREN condition CONDITION_OPERATOR condition RPAREN
         #    | LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
@@ -230,7 +218,7 @@ class Interpreter(MiniGPVisitor):
 
             if variable is None:
                 self.variables[variable_name] = Variable('bool', self.mode.read('bool'))
-                return
+                variable = self.variables[variable_name]
 
             if variable.type == 'int':
                 return bool(variable.value)

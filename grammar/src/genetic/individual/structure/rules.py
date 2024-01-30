@@ -454,7 +454,7 @@ class Condition(Rule, RestrictedRandomize):
                 if meta.is_depth_in_limits():
                     output.extend([
                         (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
-                        (Condition, choice(['&&', '||', '^']), Condition),
+                        (Condition, choice(['&&', '||']), Condition),
                         Condition,
                     ])
 

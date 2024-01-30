@@ -10,38 +10,38 @@ else:
 
 def serializedATN():
     return [
-        4,1,22,109,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,21,109,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
         1,4,1,31,8,1,11,1,12,1,32,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,
         3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,3,4,53,8,4,1,4,1,4,1,5,1,5,1,5,
         1,5,1,5,1,5,1,5,3,5,64,8,5,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,
         7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,
         8,1,8,1,8,1,8,1,8,1,8,3,8,97,8,8,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,
-        3,9,107,8,9,1,9,0,0,10,0,2,4,6,8,10,12,14,16,18,0,1,1,0,15,16,112,
+        3,9,107,8,9,1,9,0,0,10,0,2,4,6,8,10,12,14,16,18,0,1,1,0,14,15,112,
         0,20,1,0,0,0,2,23,1,0,0,0,4,36,1,0,0,0,6,42,1,0,0,0,8,48,1,0,0,0,
         10,56,1,0,0,0,12,65,1,0,0,0,14,71,1,0,0,0,16,96,1,0,0,0,18,106,1,
-        0,0,0,20,21,3,2,1,0,21,22,5,0,0,1,22,1,1,0,0,0,23,30,5,8,0,0,24,
+        0,0,0,20,21,3,2,1,0,21,22,5,0,0,1,22,1,1,0,0,0,23,30,5,7,0,0,24,
         31,3,4,2,0,25,31,3,6,3,0,26,31,3,8,4,0,27,31,3,10,5,0,28,31,3,12,
         6,0,29,31,3,14,7,0,30,24,1,0,0,0,30,25,1,0,0,0,30,26,1,0,0,0,30,
         27,1,0,0,0,30,28,1,0,0,0,30,29,1,0,0,0,31,32,1,0,0,0,32,30,1,0,0,
-        0,32,33,1,0,0,0,33,34,1,0,0,0,34,35,5,9,0,0,35,3,1,0,0,0,36,37,5,
-        4,0,0,37,38,5,21,0,0,38,39,5,11,0,0,39,40,3,18,9,0,40,41,5,10,0,
-        0,41,5,1,0,0,0,42,43,5,5,0,0,43,44,5,21,0,0,44,45,5,11,0,0,45,46,
-        3,16,8,0,46,47,5,10,0,0,47,7,1,0,0,0,48,49,5,21,0,0,49,52,5,11,0,
-        0,50,53,3,18,9,0,51,53,3,16,8,0,52,50,1,0,0,0,52,51,1,0,0,0,53,54,
-        1,0,0,0,54,55,5,10,0,0,55,9,1,0,0,0,56,57,5,19,0,0,57,58,5,6,0,0,
-        58,59,3,16,8,0,59,60,5,7,0,0,60,63,3,2,1,0,61,62,5,20,0,0,62,64,
-        3,2,1,0,63,61,1,0,0,0,63,64,1,0,0,0,64,11,1,0,0,0,65,66,5,18,0,0,
-        66,67,5,6,0,0,67,68,3,16,8,0,68,69,5,7,0,0,69,70,3,2,1,0,70,13,1,
-        0,0,0,71,72,7,0,0,0,72,73,5,6,0,0,73,74,5,21,0,0,74,75,5,7,0,0,75,
-        76,5,10,0,0,76,15,1,0,0,0,77,78,5,6,0,0,78,79,3,18,9,0,79,80,5,13,
-        0,0,80,81,3,18,9,0,81,82,5,7,0,0,82,97,1,0,0,0,83,84,5,6,0,0,84,
-        85,3,16,8,0,85,86,5,14,0,0,86,87,3,16,8,0,87,88,5,7,0,0,88,97,1,
-        0,0,0,89,90,5,17,0,0,90,91,5,6,0,0,91,92,3,16,8,0,92,93,5,7,0,0,
-        93,97,1,0,0,0,94,97,5,1,0,0,95,97,5,21,0,0,96,77,1,0,0,0,96,83,1,
+        0,32,33,1,0,0,0,33,34,1,0,0,0,34,35,5,8,0,0,35,3,1,0,0,0,36,37,5,
+        3,0,0,37,38,5,20,0,0,38,39,5,10,0,0,39,40,3,18,9,0,40,41,5,9,0,0,
+        41,5,1,0,0,0,42,43,5,4,0,0,43,44,5,20,0,0,44,45,5,10,0,0,45,46,3,
+        16,8,0,46,47,5,9,0,0,47,7,1,0,0,0,48,49,5,20,0,0,49,52,5,10,0,0,
+        50,53,3,18,9,0,51,53,3,16,8,0,52,50,1,0,0,0,52,51,1,0,0,0,53,54,
+        1,0,0,0,54,55,5,9,0,0,55,9,1,0,0,0,56,57,5,18,0,0,57,58,5,5,0,0,
+        58,59,3,16,8,0,59,60,5,6,0,0,60,63,3,2,1,0,61,62,5,19,0,0,62,64,
+        3,2,1,0,63,61,1,0,0,0,63,64,1,0,0,0,64,11,1,0,0,0,65,66,5,17,0,0,
+        66,67,5,5,0,0,67,68,3,16,8,0,68,69,5,6,0,0,69,70,3,2,1,0,70,13,1,
+        0,0,0,71,72,7,0,0,0,72,73,5,5,0,0,73,74,5,20,0,0,74,75,5,6,0,0,75,
+        76,5,9,0,0,76,15,1,0,0,0,77,78,5,5,0,0,78,79,3,18,9,0,79,80,5,12,
+        0,0,80,81,3,18,9,0,81,82,5,6,0,0,82,97,1,0,0,0,83,84,5,5,0,0,84,
+        85,3,16,8,0,85,86,5,13,0,0,86,87,3,16,8,0,87,88,5,6,0,0,88,97,1,
+        0,0,0,89,90,5,16,0,0,90,91,5,5,0,0,91,92,3,16,8,0,92,93,5,6,0,0,
+        93,97,1,0,0,0,94,97,5,1,0,0,95,97,5,20,0,0,96,77,1,0,0,0,96,83,1,
         0,0,0,96,89,1,0,0,0,96,94,1,0,0,0,96,95,1,0,0,0,97,17,1,0,0,0,98,
-        99,5,6,0,0,99,100,3,18,9,0,100,101,5,12,0,0,101,102,3,18,9,0,102,
-        103,5,7,0,0,103,107,1,0,0,0,104,107,5,2,0,0,105,107,5,21,0,0,106,
+        99,5,5,0,0,99,100,3,18,9,0,100,101,5,11,0,0,101,102,3,18,9,0,102,
+        103,5,6,0,0,103,107,1,0,0,0,104,107,5,2,0,0,105,107,5,20,0,0,106,
         98,1,0,0,0,106,104,1,0,0,0,106,105,1,0,0,0,107,19,1,0,0,0,6,30,32,
         52,63,96,106
     ]
@@ -56,12 +56,12 @@ class MiniGPParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "'const'", "'int'", 
-                     "'bool'", "'('", "')'", "'{'", "'}'", "';'", "'='", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "'read'", "'write'", 
-                     "'!'", "'while'", "'if'", "'else'" ]
+    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "'int'", "'bool'", 
+                     "'('", "')'", "'{'", "'}'", "';'", "'='", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "'read'", "'write'", "'!'", 
+                     "'while'", "'if'", "'else'" ]
 
-    symbolicNames = [ "<INVALID>", "BOOL", "INT", "CONST", "INT_TYPE", "BOOL_TYPE", 
+    symbolicNames = [ "<INVALID>", "BOOL", "INT", "INT_TYPE", "BOOL_TYPE", 
                       "LPAREN", "RPAREN", "LBRACE", "RBRACE", "SEMICOLON", 
                       "ASSIGMENT_OPERATOR", "EXPRESSION_OPERATOR", "EXPRESSION_COMPARISON_OPERATOR", 
                       "CONDITION_OPERATOR", "READ", "WRITE", "NEGATION_OPERATOR", 
@@ -85,26 +85,25 @@ class MiniGPParser ( Parser ):
     EOF = Token.EOF
     BOOL=1
     INT=2
-    CONST=3
-    INT_TYPE=4
-    BOOL_TYPE=5
-    LPAREN=6
-    RPAREN=7
-    LBRACE=8
-    RBRACE=9
-    SEMICOLON=10
-    ASSIGMENT_OPERATOR=11
-    EXPRESSION_OPERATOR=12
-    EXPRESSION_COMPARISON_OPERATOR=13
-    CONDITION_OPERATOR=14
-    READ=15
-    WRITE=16
-    NEGATION_OPERATOR=17
-    WHILE=18
-    IF=19
-    ELSE=20
-    VAR=21
-    WHITESPACE=22
+    INT_TYPE=3
+    BOOL_TYPE=4
+    LPAREN=5
+    RPAREN=6
+    LBRACE=7
+    RBRACE=8
+    SEMICOLON=9
+    ASSIGMENT_OPERATOR=10
+    EXPRESSION_OPERATOR=11
+    EXPRESSION_COMPARISON_OPERATOR=12
+    CONDITION_OPERATOR=13
+    READ=14
+    WRITE=15
+    NEGATION_OPERATOR=16
+    WHILE=17
+    IF=18
+    ELSE=19
+    VAR=20
+    WHITESPACE=21
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -259,27 +258,27 @@ class MiniGPParser ( Parser ):
                 self.state = 30
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [4]:
+                if token in [3]:
                     self.state = 24
                     self.integerDeclaration()
                     pass
-                elif token in [5]:
+                elif token in [4]:
                     self.state = 25
                     self.booleanDeclaration()
                     pass
-                elif token in [21]:
+                elif token in [20]:
                     self.state = 26
                     self.assignment()
                     pass
-                elif token in [19]:
+                elif token in [18]:
                     self.state = 27
                     self.ifStatement()
                     pass
-                elif token in [18]:
+                elif token in [17]:
                     self.state = 28
                     self.loopStatement()
                     pass
-                elif token in [15, 16]:
+                elif token in [14, 15]:
                     self.state = 29
                     self.ioStatement()
                     pass
@@ -289,7 +288,7 @@ class MiniGPParser ( Parser ):
                 self.state = 32 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 2981936) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 1490968) != 0)):
                     break
 
             self.state = 34
@@ -588,7 +587,7 @@ class MiniGPParser ( Parser ):
             self.state = 63
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==20:
+            if _la==19:
                 self.state = 61
                 self.match(MiniGPParser.ELSE)
                 self.state = 62
@@ -727,7 +726,7 @@ class MiniGPParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 71
             _la = self._input.LA(1)
-            if not(_la==15 or _la==16):
+            if not(_la==14 or _la==15):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -938,7 +937,7 @@ class MiniGPParser ( Parser ):
             self.state = 106
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [6]:
+            if token in [5]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 98
                 self.match(MiniGPParser.LPAREN)
@@ -956,7 +955,7 @@ class MiniGPParser ( Parser ):
                 self.state = 104
                 self.match(MiniGPParser.INT)
                 pass
-            elif token in [21]:
+            elif token in [20]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 105
                 self.match(MiniGPParser.VAR)

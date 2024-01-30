@@ -48,7 +48,6 @@ expression:
 
 BOOL: 'True' | 'False';
 INT: (('-')?[1-9][0-9]*) | '0';
-CONST: 'const';
 INT_TYPE: 'int';
 BOOL_TYPE: 'bool';
 LPAREN: '(';
