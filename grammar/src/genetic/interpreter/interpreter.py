@@ -5,10 +5,12 @@ from functools import wraps
 
 from antlr4 import FileStream, InputStream
 from antlr4.CommonTokenStream import CommonTokenStream
+from antlr4.error.ErrorListener import ConsoleErrorListener
 
 from src.antlr.MiniGPLexer import MiniGPLexer
 from src.antlr.MiniGPParser import MiniGPParser
 from src.antlr.MiniGPVisitor import MiniGPVisitor
+from src.antlr.ExceptionErrorListener import ExceptionErrorListener
 
 from src.genetic.interpreter.input_output import InputOutputOperation
 from src.genetic.interpreter.variables import Variable
@@ -17,19 +19,18 @@ T = TypeVar('T')
 
 
 class Interpreter(MiniGPVisitor):
-    instructions_limit: Final[int] = 400
-
-    def __init__(self, mode: InputOutputOperation) -> None:
+    def __init__(self, mode: InputOutputOperation, instructions_limit: int = 400) -> None:
         self.variables: dict[str, Variable] = {}
         self.mode: InputOutputOperation = mode
         self.used_instructions: int = 0
+        self.instructions_limit: Final[int] = instructions_limit
 
     @staticmethod
     def limit(function: Callable):
         @wraps(function)
         def wrapper(self, *args, **kwargs):
-            if self.used_instructions > Interpreter.instructions_limit:
-                StopIteration('Interpreter exceeded executed instruction limit!')
+            if self.used_instructions > self.instructions_limit:
+                raise StopIteration('Interpreter exceeded executed instruction limit!')
 
             self.used_instructions += 1
             return function(self, *args, **kwargs)
@@ -65,9 +66,7 @@ class Interpreter(MiniGPVisitor):
 
         variable_name = ctx.VAR().getText()
 
-        self.variables[variable_name] = (
-            Variable('int', self.visit(ctx.expression()))
-        )
+        self.variables[variable_name] = Variable('int', self.visit(ctx.expression()))
 
     @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext) -> None:
@@ -78,9 +77,7 @@ class Interpreter(MiniGPVisitor):
         """
         variable_name = ctx.VAR().getText()
 
-        self.variables[variable_name] = (
-            Variable('bool', self.visit(ctx.condition()))
-        )
+        self.variables[variable_name] = Variable('bool', self.visit(ctx.condition()))
 
     @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext) -> None:
@@ -103,7 +100,7 @@ class Interpreter(MiniGPVisitor):
             return
 
         if variable.type == 'bool' and ctx.expression() is not None:
-            value: bool = bool(self.visit(ctx.condition()))
+            value: bool = bool(self.visit(ctx.expression()))
             variable.value = value
             return
 
@@ -147,7 +144,7 @@ class Interpreter(MiniGPVisitor):
         """
 
         if ctx.WRITE() is not None:
-            self.mode.write(ctx.getChild(2))
+            self.mode.write(self.visit(ctx.getChild(2)))
 
         elif ctx.READ() is not None:
             variable_name: str = ctx.VAR().getText()
@@ -160,7 +157,7 @@ class Interpreter(MiniGPVisitor):
             variable.value = self.mode.read(variable.type)
 
     @limit
-    def visitExpression(self, ctx: MiniGPParser.ExpressionContext) -> Optional[int]:
+    def visitExpression(self, ctx: MiniGPParser.ExpressionContext) -> int:
         """
         expression:
             LPAREN expression EXPRESSION_OPERATOR expression RPAREN
@@ -202,12 +199,10 @@ class Interpreter(MiniGPVisitor):
             case '/':
                 if right == 0:
                     return left
-                return int(left / right)
-
-        raise ValueError(f'Unknown operator: {operator}')
+                return left // right
 
     @limit
-    def visitCondition(self, ctx: MiniGPParser.ConditionContext) -> Optional[bool]:
+    def visitCondition(self, ctx: MiniGPParser.ConditionContext) -> bool:
         """
         condition:
             LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
@@ -220,7 +215,7 @@ class Interpreter(MiniGPVisitor):
 
         if ctx.getChildCount() == 1:
             if ctx.BOOL() is not None:
-                return bool(ctx.BOOL().getText())
+                return str(ctx.BOOL().getText()) == "true"
 
             variable_name: str = ctx.VAR().getText()
             variable: Optional[Variable] = self.variables.get(variable_name)
@@ -266,24 +261,22 @@ class Interpreter(MiniGPVisitor):
             case '||':
                 return left or right
 
-        raise ValueError(f'Unknown operator: {operator}')
-
     @staticmethod
-    def interpret(program: str, mode: T, is_path_like: bool = True) -> Optional[T]:
+    def interpret(program: str, mode: T, is_path_like: bool = False) -> Optional[T]:
         input_stream = FileStream(program) if is_path_like else InputStream(program)
         lexer = MiniGPLexer(input_stream)
+        lexer.removeErrorListeners()
         stream = CommonTokenStream(lexer)
         parser = MiniGPParser(stream)
+        parser.removeErrorListener(ConsoleErrorListener.INSTANCE)
+        parser.addErrorListener(ExceptionErrorListener())
 
         # try:
         tree = parser.program()
         interpreter = Interpreter(mode)
         try:
             interpreter.visit(tree)
+        except StopIteration:
+            pass
+        finally:
             return interpreter.mode
-        except StopIteration as error:
-            print(error)
-            return interpreter.mode
-        except Exception as error:
-            print(error)
-            return None

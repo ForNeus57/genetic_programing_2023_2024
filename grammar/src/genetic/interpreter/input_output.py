@@ -51,7 +51,5 @@ class BufferInputOutputOperation(InputOutputOperation):
         elif hint == 'int':
             return next(self.input_ints)
 
-        raise ValueError(f"Unknown hint: \"{hint}\" type.")
-
     def write(self, value: Union[int, bool]) -> None:
         self.output.append(value)

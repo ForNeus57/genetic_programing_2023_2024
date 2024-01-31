@@ -1,9 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from typing import ClassVar
-
-from src.genetic.individual.structure.tokens import Metadata
+from typing import ClassVar, Any
 
 
 @dataclass(slots=True)
@@ -31,9 +29,9 @@ class Token(ABC):
 
 @dataclass(slots=True)
 class RestrictedRandomize(ABC):
-    meta: Metadata
+    meta: Any
 
     @classmethod
     @abstractmethod
-    def from_random(cls, meta: Metadata) -> RestrictedRandomize:
+    def from_random(cls, meta: Any) -> RestrictedRandomize:
         pass
