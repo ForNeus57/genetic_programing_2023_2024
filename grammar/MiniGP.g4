@@ -47,10 +47,6 @@ condition:
 	|   VAR
 	;
 
-BOOL: 'True' | 'False';
-INT: (('-')?[1-9][0-9]*) | '0';
-INT_TYPE: 'int';
-BOOL_TYPE: 'bool';
 LPAREN: '(';
 RPAREN: ')';
 LBRACE: '{';
@@ -60,12 +56,16 @@ ASSIGMENT_OPERATOR: '=';
 EXPRESSION_OPERATOR: ('*' | '/' | '+' | '-');
 EXPRESSION_COMPARISON_OPERATOR: ('>' | '<' | '==' | '!=' | '>=' | '<=');
 CONDITION_OPERATOR: ('&&' | '||');
+NEGATION_OPERATOR: '!';
+INT_TYPE: 'int';
+BOOL_TYPE: 'bool';
 READ: 'read';
 WRITE: 'write';
-NEGATION_OPERATOR: '!';
 WHILE: 'while';
 IF: 'if';
 ELSE: 'else';
+BOOL: 'true' | 'false';
+INT: (('-')?[1-9][0-9]*) | '0';
 VAR: [a-zA-Z][a-zA-Z0-9_]*;
 
 WHITESPACE: [ \t\r\n]+ -> skip;

@@ -33,7 +33,7 @@ class BooleanToken(Token):
         return cls(value)
 
     def __str__(self):
-        return str(self.value)
+        return str(self.value).lower()
 
 
 @dataclass(slots=True, frozen=True)

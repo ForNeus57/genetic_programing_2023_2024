@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Union, Final, Callable
+from typing import Optional, Union, Final, Callable, TypeVar
 from functools import wraps
 
 from antlr4 import FileStream, InputStream
@@ -12,6 +12,8 @@ from src.antlr.MiniGPVisitor import MiniGPVisitor
 
 from src.genetic.interpreter.input_output import InputOutputOperation
 from src.genetic.interpreter.variables import Variable
+
+T = TypeVar('T')
 
 
 class Interpreter(MiniGPVisitor):
@@ -267,8 +269,7 @@ class Interpreter(MiniGPVisitor):
         raise ValueError(f'Unknown operator: {operator}')
 
     @staticmethod
-    def interpret(program: str, mode: InputOutputOperation, is_path_like: bool = True) \
-            -> Optional[InputOutputOperation]:
+    def interpret(program: str, mode: T, is_path_like: bool = True) -> Optional[T]:
         input_stream = FileStream(program) if is_path_like else InputStream(program)
         lexer = MiniGPLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -279,12 +280,10 @@ class Interpreter(MiniGPVisitor):
         interpreter = Interpreter(mode)
         try:
             interpreter.visit(tree)
+            return interpreter.mode
         except StopIteration as error:
             print(error)
+            return interpreter.mode
         except Exception as error:
             print(error)
-        finally:
-            return interpreter.mode, interpreter.variables
-
-        # except Exception as error:
-        #     print(error)
+            return None

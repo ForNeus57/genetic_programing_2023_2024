@@ -30,10 +30,11 @@ class Individual:
 
     def execute(self, input_vector: tuple) -> tuple:
         program_structure: str = str(self.program)
-        output: BufferInputOutputOperation = Interpreter.interpret(program_structure,
-                                                                   BufferInputOutputOperation(list(input_vector)))
+        output: Optional[BufferInputOutputOperation] = Interpreter.interpret(program_structure,
+                                                                             BufferInputOutputOperation(
+                                                                                 list(input_vector)))
         if output is None:
-            raise ValueError('Interpreter returned None')
+            raise ValueError('Interpreter returned None!')
 
         return tuple(output.output)
 
