@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import Enum
 from typing import Optional, Union, Final, Callable
 from functools import wraps
 
@@ -88,7 +87,7 @@ class Interpreter(MiniGPVisitor):
 
         if variable is None:
             self.variables[variable_name] = Variable('int', self.mode.read('int'))
-            return
+            variable = self.variables[variable_name]
 
         if variable.type == 'int' and ctx.condition() is not None:
             value: int = int(self.visit(ctx.condition()))
@@ -123,10 +122,8 @@ class Interpreter(MiniGPVisitor):
         #    WHILE LPAREN condition RPAREN executionBlock
         #    ;
 
-        condition = self.visit(ctx.condition())
-        while condition:
+        while self.visit(ctx.condition()):
             self.visit(ctx.executionBlock())
-            condition = self.visit(ctx.condition())
 
     @limit
     def visitIoStatement(self, ctx: MiniGPParser.IoStatementContext) -> None:
@@ -142,11 +139,9 @@ class Interpreter(MiniGPVisitor):
             variable = self.variables[variable_name]
 
         if ctx.WRITE() is not None:
-            print(variable_name, variable)
             self.mode.write(variable.value)
 
         elif ctx.READ() is not None:
-            print(variable_name, variable)
             variable.value = self.mode.read(variable.type)
 
     @limit
@@ -177,12 +172,6 @@ class Interpreter(MiniGPVisitor):
         right = self.visit(ctx.expression(1))
         operator = ctx.EXPRESSION_OPERATOR().getText()
 
-        if left is None:
-            left = self.mode.read('int')
-
-        if right is None:
-            right = self.mode.read('int')
-
         match operator:
             case '+':
                 return left + right
@@ -205,7 +194,7 @@ class Interpreter(MiniGPVisitor):
         # condition :
         #    LPAREN condition CONDITION_OPERATOR condition RPAREN
         #    | LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
-        #    | condition
+        #    | NEGATION_OPERATOR LPAREN condition RPAREN
         #    | BOOL
         #    | VAR
         #    ;
@@ -230,13 +219,6 @@ class Interpreter(MiniGPVisitor):
 
         left = self.visit(ctx.getChild(1))
         right = self.visit(ctx.getChild(3))
-
-        if left is None:
-            left = self.mode.read('bool')
-
-        if right is None:
-            right = self.mode.read('bool')
-
         operator = ctx.getChild(2).getText()
 
         match operator:

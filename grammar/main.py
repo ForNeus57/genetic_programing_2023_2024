@@ -15,11 +15,11 @@ def main():
     # print(random_tree)
     # seed(8)
     #
-    ind = Individual.from_random()
-    print(ind)
-
-    ind.mutate()
-    print(ind)
+    # ind = Individual.from_random()
+    # print(ind)
+    #
+    # ind.mutate()
+    # print(ind)
     # ind2 = Individual.from_random()
     # print(ind2)
     # ind.crossover(ind2)
@@ -32,7 +32,7 @@ def main():
     # else:
     #     print("None")
 
-    print(Interpreter.interpret("./test/resources/test4.mgp", BufferInputOutputOperation([]), True))
+    print(Interpreter.interpret("./test/resources/test4.mgp", BufferInputOutputOperation([False, 1, 5, True]), True))
 
 
 if __name__ == "__main__":

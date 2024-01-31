@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from itertools import cycle
-from typing import Literal, Union
+from typing import Literal, Union, Optional
 
 
 class InputOutputOperation(ABC):
@@ -27,9 +27,12 @@ class ConsoleInputOutputOperation(InputOutputOperation):
 
 
 class BufferInputOutputOperation(InputOutputOperation):
-    def __init__(self, input_buffer: list[Union[int, bool]]):
-        only_bools = [x for x in input_buffer if type(x) is bool]
-        only_ints = [x for x in input_buffer if type(x) is int]
+    def __init__(self, input_buffer: Optional[list[Union[int, bool]]] = None):
+        if input_buffer is None:
+            input_buffer = []
+
+        only_bools: list[bool] = [*filter(lambda x: type(x) is bool, input_buffer)]
+        only_ints: list[int] = [*filter(lambda x: type(x) is int, input_buffer)]
 
         if len(only_bools) == 0:
             only_bools.append(True)
@@ -45,8 +48,10 @@ class BufferInputOutputOperation(InputOutputOperation):
     def read(self, hint: Literal['int', 'bool']) -> Union[int, bool]:
         if hint == 'bool':
             return next(self.input_bools)
-        else:
+        elif hint == 'int':
             return next(self.input_ints)
+
+        raise ValueError(f"Unknown hint: \"{hint}\" type.")
 
     def write(self, value: Union[int, bool]) -> None:
         self.output.append(value)

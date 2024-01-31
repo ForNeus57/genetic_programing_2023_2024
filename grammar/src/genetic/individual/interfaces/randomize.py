@@ -79,7 +79,7 @@ class VariableNameToken(Token):
 VariableTypes = BooleanToken | IntegerToken
 
 
-class RandomGenerationMethod(Enum):
+class GenerationMethod(Enum):
     GROW = 0
     FULL = auto()
 
@@ -89,7 +89,7 @@ class Metadata:
     variables_scope: dict[str, Variable] = field(default_factory=dict)
     depth: int = 0
     limiter = HardLimiter
-    method: RandomGenerationMethod = RandomGenerationMethod.FULL
+    method: GenerationMethod = GenerationMethod.FULL
 
     max_depth: ClassVar[int] = 1
 

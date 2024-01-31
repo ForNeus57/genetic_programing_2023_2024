@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from pickle import dump, load
-from typing import Callable, Union, Literal
+from typing import Callable, Union, Literal, Optional
 
 from src.genetic.individual.interfaces.randomize import Metadata
 from src.genetic.individual.structure.rules import Program
@@ -19,7 +19,9 @@ class Individual:
             return load(file)
 
     @classmethod
-    def from_random(cls, meta: Metadata = Metadata()) -> Individual:
+    def from_random(cls, meta: Optional[Metadata] = None) -> Individual:
+        if meta is None:
+            meta = Metadata()
         program: Program = Program.from_random(meta)
         return cls(program)
 
