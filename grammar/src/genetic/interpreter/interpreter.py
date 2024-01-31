@@ -144,17 +144,17 @@ class Interpreter(MiniGPVisitor):
             ;
         """
 
-        variable_name: str = ctx.VAR().getText()
-        variable: Optional[Variable] = self.variables.get(variable_name)
-
-        if variable is None:
-            self.variables[variable_name] = Variable('int', self.mode.read('int'))
-            variable = self.variables[variable_name]
-
         if ctx.WRITE() is not None:
-            self.mode.write(variable.value)
+            self.mode.write(ctx.getChild(2))
 
         elif ctx.READ() is not None:
+            variable_name: str = ctx.VAR().getText()
+            variable: Optional[Variable] = self.variables.get(variable_name)
+
+            if variable is None:
+                self.variables[variable_name] = Variable('int', self.mode.read('int'))
+                variable = self.variables[variable_name]
+
             variable.value = self.mode.read(variable.type)
 
     @limit
