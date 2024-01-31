@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from typing import ClassVar
 
+from src.genetic.individual.structure.tokens import Metadata
+
 
 @dataclass(slots=True)
 class Rule(ABC):
@@ -24,4 +26,14 @@ class Token(ABC):
     @classmethod
     @abstractmethod
     def from_random(cls) -> Token:
+        pass
+
+
+@dataclass(slots=True)
+class RestrictedRandomize(ABC):
+    meta: Metadata
+
+    @classmethod
+    @abstractmethod
+    def from_random(cls, meta: Metadata) -> RestrictedRandomize:
         pass

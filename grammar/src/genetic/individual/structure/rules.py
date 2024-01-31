@@ -9,8 +9,8 @@ from random import choice, random, randint
 from enum import Enum, auto
 from copy import deepcopy
 
-from src.genetic.individual.interfaces.node_types import Rule
-from src.genetic.individual.interfaces.randomize import RestrictedRandomize, Metadata, VariableNameToken, \
+from src.genetic.individual.interfaces.node_types import Rule, RestrictedRandomize
+from src.genetic.individual.structure.tokens import Metadata, VariableNameToken, \
     IntegerToken, BooleanToken, RandomGenerationMethod
 
 from src.genetic.individual.limiters.limiters import Limiter

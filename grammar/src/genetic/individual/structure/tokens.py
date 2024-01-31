@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from random import choice, randint, random
@@ -8,19 +7,8 @@ from string import ascii_letters, digits
 from typing import ClassVar, Optional, Literal
 
 from src.genetic.individual.interfaces.node_types import Token
-from src.genetic.individual.limiters.exponential_probability import ExponentialProbability
-from src.genetic.individual.limiters.limiters import AdaptiveLimiter, HardLimiter
+from src.genetic.individual.limiters.limiters import HardLimiter, RandomLimiter
 from src.genetic.interpreter.variables import Variable
-
-
-@dataclass(slots=True)
-class RestrictedRandomize(ABC):
-    meta: Metadata
-
-    @classmethod
-    @abstractmethod
-    def from_random(cls, meta: Metadata) -> RestrictedRandomize:
-        pass
 
 
 @dataclass(slots=True, frozen=True)
@@ -39,8 +27,8 @@ class BooleanToken(Token):
 @dataclass(slots=True, frozen=True)
 class IntegerToken(Token):
     value: int
-    min_value: ClassVar[int] = -255
-    max_value: ClassVar[int] = 255
+    min_value: ClassVar[int] = -64
+    max_value: ClassVar[int] = 64
 
     @classmethod
     def from_random(cls) -> IntegerToken:
@@ -64,10 +52,10 @@ class VariableNameToken(Token):
     def _generate_random_name(cls) -> str:
         output = choice(ascii_letters)
 
-        probability_generator: ExponentialProbability = ExponentialProbability()
+        generator: RandomLimiter = RandomLimiter()
         full_character_set = ascii_letters + digits + '_'
 
-        while next(probability_generator) > random():
+        while generator.allow():
             output += choice(full_character_set)
 
         return output
