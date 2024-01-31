@@ -11,7 +11,7 @@ from copy import deepcopy
 
 from src.genetic.individual.interfaces.node_types import Rule, RestrictedRandomize
 from src.genetic.individual.structure.tokens import Metadata, VariableNameToken, \
-    IntegerToken, BooleanToken, RandomGenerationMethod
+    IntegerToken, BooleanToken, GenerationMethod
 
 from src.genetic.individual.limiters.limiters import Limiter
 from src.genetic.interpreter.variables import Variable
@@ -50,7 +50,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         body.append(statement)
 
         while limiter.allow():
-            statement = cls.generate_random_body_element(child_meta)
+            statement = cls.generate_random_body_element(Metadata(child_meta.variables_scope, meta.depth + 1))
             child_meta = statement.meta
             body.append(statement)
 
@@ -61,7 +61,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         table_of_choices: list = cls.generate_choices(meta)
 
         match choice(table_of_choices):
-            case namespace.IfStatement | namespace.LoopStatement as option:
+            case self_namespace.IfStatement | self_namespace.LoopStatement as option:
                 return option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
 
             case _ as option:
@@ -70,7 +70,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
         match meta.method:
-            case RandomGenerationMethod.FULL:
+            case GenerationMethod.FULL:
                 if meta.is_depth_in_limits():
                     return [
                         IfStatement,
@@ -89,7 +89,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
                 return output
 
-            case RandomGenerationMethod.GROW:
+            case GenerationMethod.GROW:
                 output: list = [
                     IntegerDeclaration,
                     BooleanDeclaration,
@@ -125,13 +125,9 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         self_statements_copy = deepcopy(self.statements)
         other_statements_copy = deepcopy(other.statements)
 
-        for self_statement in self_statements_copy:
-            for other_statement in other_statements_copy:
-                if type(self_statement) is type(other_statement):
-                    self_statement.crossover(other_statement)
-
         self.statements[self_start_index: self_start_index + self_random_length] = \
             other_statements_copy[other_start_index: other_start_index + other_random_length]
+
         other.statements[other_start_index: other_start_index + other_random_length] = \
             self_statements_copy[self_start_index: self_start_index + self_random_length]
 
@@ -148,14 +144,14 @@ class Assigment(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, meta: Metadata) -> Assigment:
-        constructor = choice(cls.generate_choices(meta))
+        constructor = cls.generate_choices(meta)
         value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, 0))
 
-        match constructor:
-            case namespace.Expression:
+        match choice(constructor):
+            case self_namespace.Expression:
                 name: VariableNameToken = VariableNameToken(meta.get_random_name('int'))
 
-            case namespace.Condition:
+            case self_namespace.Condition:
                 name: VariableNameToken = VariableNameToken(meta.get_random_name('bool'))
 
         return cls(meta, name, value)
@@ -206,7 +202,7 @@ class IfStatement(Rule, RestrictedRandomize):
         table_of_choices: list = cls.generate_choices(meta)
 
         match choice(table_of_choices):
-            case namespace.ExecutionBlock as option:
+            case self_namespace.ExecutionBlock as option:
                 else_statement: Optional[ExecutionBlock] = option.from_random(
                     Metadata(deepcopy(meta.variables_scope), meta.depth + 1))
 
@@ -218,10 +214,10 @@ class IfStatement(Rule, RestrictedRandomize):
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
         match meta.method:
-            case RandomGenerationMethod.FULL:
+            case GenerationMethod.FULL:
                 return [ExecutionBlock]
 
-            case RandomGenerationMethod.GROW:
+            case GenerationMethod.GROW:
                 return [ExecutionBlock, None]
 
     def mutate(self) -> None:
@@ -412,19 +408,19 @@ class Condition(Rule, RestrictedRandomize):
                 return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation,
                                   right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
 
-            case namespace.Condition as option:
+            case self_namespace.Condition as option:
                 return cls(meta, option.from_random(Metadata(meta.variables_scope, meta.depth + 1)))
 
-            case namespace.VariableNameToken:
+            case self_namespace.VariableNameToken:
                 return cls(meta, VariableNameToken(meta.get_random_name('bool')))
 
-            case namespace.BooleanToken as option:
+            case self_namespace.BooleanToken as option:
                 return cls(meta, option.from_random())
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
         match meta.method:
-            case RandomGenerationMethod.FULL:
+            case GenerationMethod.FULL:
                 if meta.is_depth_in_limits():
                     return [
                         (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
@@ -442,7 +438,7 @@ class Condition(Rule, RestrictedRandomize):
 
                 return output
 
-            case RandomGenerationMethod.GROW:
+            case GenerationMethod.GROW:
                 output: list = [
                     BooleanToken
                 ]
@@ -492,16 +488,16 @@ class Expression(Rule, RestrictedRandomize):
                 return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation,
                                   right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
 
-            case namespace.VariableNameToken:
+            case self_namespace.VariableNameToken:
                 return cls(meta, VariableNameToken(meta.get_random_name('int')))
 
-            case namespace.IntegerToken as option:
+            case self_namespace.IntegerToken as option:
                 return cls(meta, option.from_random())
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
         match meta.method:
-            case RandomGenerationMethod.FULL:
+            case GenerationMethod.FULL:
                 if meta.is_depth_in_limits():
                     return [
                         (Expression, choice(['+', '-', '*', '/']), Expression),
@@ -515,7 +511,7 @@ class Expression(Rule, RestrictedRandomize):
 
                 return output
 
-            case RandomGenerationMethod.GROW:
+            case GenerationMethod.GROW:
                 output: list = [
                     IntegerToken,
                 ]
@@ -554,7 +550,7 @@ StatementBodyTypes = Union[IntegerDeclaration, BooleanDeclaration, Assigment, If
 DeclarationTypes = Union[IntegerDeclaration, BooleanDeclaration]
 AssigmentValueType = Union[Expression, Condition]
 
-namespace = SimpleNamespace(**{
+self_namespace = SimpleNamespace(**{
     cls.__name__: cls for _, cls in inspect.getmembers(
         importlib.import_module(__name__),
         inspect.isclass

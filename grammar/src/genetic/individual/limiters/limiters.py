@@ -34,8 +34,8 @@ class HardLimiter(Limiter):
 class AdaptiveLimiter(Limiter):
 
     def __init__(self, change: float = 0.8, iterations_limit: int = 5):
-        self.hard_limiter: HardLimiter = HardLimiter(iterations_limit)
         self.random_limiter: RandomLimiter = RandomLimiter(change)
+        self.hard_limiter: HardLimiter = HardLimiter(iterations_limit)
 
     def allow(self) -> bool:
         return self.hard_limiter.allow() and self.random_limiter.allow()
