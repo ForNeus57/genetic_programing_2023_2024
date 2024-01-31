@@ -1,1 +1,1 @@
-# genetic_programing_2023_2024
+# Genetic Programing 2023/2024

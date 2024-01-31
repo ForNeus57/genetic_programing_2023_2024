@@ -1,5 +1,3 @@
-import pytest
-
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
 
