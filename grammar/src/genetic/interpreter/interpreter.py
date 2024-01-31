@@ -47,17 +47,19 @@ class Interpreter(MiniGPVisitor):
     @limit
     def visitExecutionBlock(self, ctx: MiniGPParser.ExecutionBlockContext) -> None:
         """
-        executionBlock :
-           LBRACE (statement)+ RBRACE
-           ;
+        executionBlock:
+            LBRACE (integerDeclaration | booleanDeclaration | assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
+            ;
         """
         self.visitChildren(ctx)
 
     @limit
     def visitIntegerDeclaration(self, ctx: MiniGPParser.IntegerDeclarationContext) -> None:
-        # integerDeclaration :
-        #    INT_TYPE VAR ASSIGMENT_OPERATOR expression SEMICOLON
-        #    ;
+        """
+        integerDeclaration:
+            INT_TYPE VAR ASSIGMENT_OPERATOR expression SEMICOLON
+            ;
+        """
 
         variable_name = ctx.VAR().getText()
 
@@ -67,9 +69,11 @@ class Interpreter(MiniGPVisitor):
 
     @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext) -> None:
-        # booleanDeclaration :
-        #    BOOL_TYPE VAR ASSIGMENT_OPERATOR condition SEMICOLON
-        #    ;
+        """
+        booleanDeclaration:
+            BOOL_TYPE VAR ASSIGMENT_OPERATOR condition SEMICOLON
+            ;
+        """
         variable_name = ctx.VAR().getText()
 
         self.variables[variable_name] = (
@@ -78,9 +82,11 @@ class Interpreter(MiniGPVisitor):
 
     @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext) -> None:
-        # assignment :
-        #    VAR ASSIGMENT_OPERATOR (expression | condition) SEMICOLON
-        #    ;
+        """
+        assignment:
+            VAR ASSIGMENT_OPERATOR (expression | condition) SEMICOLON
+            ;
+        """
 
         variable_name = ctx.VAR().getText()
         variable: Optional[Variable] = self.variables.get(variable_name)
@@ -105,9 +111,11 @@ class Interpreter(MiniGPVisitor):
 
     @limit
     def visitIfStatement(self, ctx: MiniGPParser.IfStatementContext) -> None:
-        # ifStatement :
-        #    IF LPAREN condition RPAREN executionBlock (ELSE executionBlock)?
-        #    ;
+        """
+        ifStatement:
+            IF LPAREN condition RPAREN executionBlock (ELSE executionBlock)?
+            ;
+        """
 
         condition = self.visit(ctx.condition())
         if condition:
@@ -118,18 +126,23 @@ class Interpreter(MiniGPVisitor):
 
     @limit
     def visitLoopStatement(self, ctx: MiniGPParser.LoopStatementContext) -> None:
-        # loopStatement :
-        #    WHILE LPAREN condition RPAREN executionBlock
-        #    ;
+        """
+        loopStatement:
+            WHILE LPAREN condition RPAREN executionBlock
+            ;
+        """
 
         while self.visit(ctx.condition()):
             self.visit(ctx.executionBlock())
 
     @limit
     def visitIoStatement(self, ctx: MiniGPParser.IoStatementContext) -> None:
-        # ioStatement :
-        #    (WRITE | READ) LPAREN VAR RPAREN SEMICOLON
-        #    ;
+        """
+        ioStatement:
+            READ LPAREN VAR RPAREN SEMICOLON
+            |   WRITE LPAREN (expression | condition) RPAREN SEMICOLON
+            ;
+        """
 
         variable_name: str = ctx.VAR().getText()
         variable: Optional[Variable] = self.variables.get(variable_name)
@@ -146,11 +159,13 @@ class Interpreter(MiniGPVisitor):
 
     @limit
     def visitExpression(self, ctx: MiniGPParser.ExpressionContext) -> Optional[int]:
-        # expression :
-        #    INT
-        #    | VAR
-        #    | LPAREN expression EXPRESSION_OPERATOR expression RPAREN
-        #    ;
+        """
+        expression:
+            LPAREN expression EXPRESSION_OPERATOR expression RPAREN
+            |   INT
+            |   VAR
+            ;
+        """
 
         if ctx.getChildCount() == 1:
             if ctx.INT() is not None:
@@ -191,13 +206,16 @@ class Interpreter(MiniGPVisitor):
 
     @limit
     def visitCondition(self, ctx: MiniGPParser.ConditionContext) -> Optional[bool]:
-        # condition :
-        #    LPAREN condition CONDITION_OPERATOR condition RPAREN
-        #    | LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
-        #    | NEGATION_OPERATOR LPAREN condition RPAREN
-        #    | BOOL
-        #    | VAR
-        #    ;
+        """
+        condition:
+            LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
+            |   LPAREN condition CONDITION_OPERATOR condition RPAREN
+            |   NEGATION_OPERATOR LPAREN condition RPAREN
+            |   BOOL
+            |   VAR
+            ;
+        """
+
         if ctx.getChildCount() == 1:
             if ctx.BOOL() is not None:
                 return bool(ctx.BOOL().getText())

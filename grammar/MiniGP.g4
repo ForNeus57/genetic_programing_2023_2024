@@ -29,8 +29,15 @@ loopStatement:
 	;
 
 ioStatement:
-	(READ | WRITE) LPAREN VAR RPAREN SEMICOLON
+	READ LPAREN VAR RPAREN SEMICOLON
+	|   WRITE LPAREN (expression | condition) RPAREN SEMICOLON
 	;
+
+expression:
+	LPAREN expression EXPRESSION_OPERATOR expression RPAREN
+    |   INT
+    |   VAR
+    ;
 
 condition:
 	LPAREN expression EXPRESSION_COMPARISON_OPERATOR expression RPAREN
@@ -39,12 +46,6 @@ condition:
 	|   BOOL
 	|   VAR
 	;
-
-expression:
-	LPAREN expression EXPRESSION_OPERATOR expression RPAREN
-    |   INT
-    |   VAR
-    ;
 
 BOOL: 'True' | 'False';
 INT: (('-')?[1-9][0-9]*) | '0';

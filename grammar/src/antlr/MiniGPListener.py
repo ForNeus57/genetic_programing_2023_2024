@@ -80,21 +80,21 @@ class MiniGPListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MiniGPParser#condition.
-    def enterCondition(self, ctx:MiniGPParser.ConditionContext):
-        pass
-
-    # Exit a parse tree produced by MiniGPParser#condition.
-    def exitCondition(self, ctx:MiniGPParser.ConditionContext):
-        pass
-
-
     # Enter a parse tree produced by MiniGPParser#expression.
     def enterExpression(self, ctx:MiniGPParser.ExpressionContext):
         pass
 
     # Exit a parse tree produced by MiniGPParser#expression.
     def exitExpression(self, ctx:MiniGPParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by MiniGPParser#condition.
+    def enterCondition(self, ctx:MiniGPParser.ConditionContext):
+        pass
+
+    # Exit a parse tree produced by MiniGPParser#condition.
+    def exitCondition(self, ctx:MiniGPParser.ConditionContext):
         pass
 
 
