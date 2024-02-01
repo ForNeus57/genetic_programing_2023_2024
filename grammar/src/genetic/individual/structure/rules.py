@@ -293,7 +293,7 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
         pass
 
     def __str__(self):
-        return f'int {self.name} = {self.expression}'
+        return f'int {self.name} = {self.expression};'
 
 
 @dataclass(slots=True)
@@ -317,7 +317,7 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
         pass
 
     def __str__(self):
-        return f'bool {self.name} = {self.condition}'
+        return f'bool {self.name} = {self.condition};'
 
 
 @dataclass(slots=True)

@@ -18,7 +18,7 @@ class Metadata:
     variables_scope: dict[str, Literal['int', 'bool']] = field(default_factory=dict)
     depth: int = 0
     limiter = HardLimiter()
-    method: GenerationMethod = GenerationMethod.FULL
+    method: GenerationMethod = GenerationMethod.GROW
 
     mutation_node_probability: float = 0.5
     mutation_from_start_probability: float = 0.1
