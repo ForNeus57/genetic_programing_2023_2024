@@ -49,7 +49,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         body.append(statement)
 
         while limiter.allow():
-            statement: StatementBodyTypes = cls.generate_random_body_element(Metadata(child_meta.variables_scope, meta.depth + 1))
+            statement: StatementBodyTypes = cls.generate_random_body_element(child_meta)
             child_meta = statement.meta
             body.append(statement)
 
@@ -61,7 +61,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
         match choice(table_of_choices):
             case self_namespace.IfStatement | self_namespace.LoopStatement as option:
-                return option.from_random(Metadata(meta.variables_scope, meta.depth + 1))
+                return option.from_random(meta)
 
             case _ as option:
                 return option.from_random(meta)
@@ -116,7 +116,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
     def __str__(self) -> str:
         tabs: str = '\t' * (self.meta.depth + 1)
         statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
-        return f'{{\n{statements_print}\n{tabs[2:]}}}\n'
+        return f'{{\n{statements_print}\n{tabs[1:]}}}'
 
 
 @dataclass(slots=True)
@@ -204,8 +204,7 @@ class IfStatement(Rule, RestrictedRandomize):
         base: str = f'if ({self.condition}) {self.body}'
 
         if self.else_statement is not None:
-            indentation: str = '\t' * self.meta.depth
-            return base + f'{indentation}else {self.else_statement}'
+            return f'{base} else {self.else_statement}'
 
         return base
 

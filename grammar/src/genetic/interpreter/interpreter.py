@@ -46,7 +46,7 @@ class Interpreter(MiniGPVisitor):
            ;
         """
 
-        self.visitChildren(ctx)
+        self.visit(ctx.executionBlock())
 
     @limit
     def visitExecutionBlock(self, ctx: MiniGPParser.ExecutionBlockContext) -> None:
@@ -117,8 +117,7 @@ class Interpreter(MiniGPVisitor):
             ;
         """
 
-        condition = self.visit(ctx.condition())
-        if condition:
+        if self.visit(ctx.condition()):
             self.visit(ctx.executionBlock(0))
 
         elif ctx.executionBlock(1) is not None:
