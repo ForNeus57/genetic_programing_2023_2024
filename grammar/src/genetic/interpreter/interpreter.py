@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Union, Final, Callable, TypeVar
+from typing import Optional, Union, Final, Callable, TypeVar, final
 from functools import wraps
 
 from antlr4 import FileStream, InputStream
@@ -18,6 +18,7 @@ from src.genetic.interpreter.variables import Variable
 T = TypeVar('T')
 
 
+@final
 class Interpreter(MiniGPVisitor):
     def __init__(self, mode: InputOutputOperation, instructions_limit: int = 400) -> None:
         self.variables: dict[str, Variable] = {}
@@ -262,7 +263,7 @@ class Interpreter(MiniGPVisitor):
                 return left or right
 
     @staticmethod
-    def interpret(program: str, mode: T, is_path_like: bool = False) -> Optional[T]:
+    def interpret(program: str, mode: T, is_path_like: bool = False, **kwargs) -> Optional[T]:
         input_stream = FileStream(program) if is_path_like else InputStream(program)
         lexer = MiniGPLexer(input_stream)
         lexer.removeErrorListeners()
@@ -273,7 +274,7 @@ class Interpreter(MiniGPVisitor):
 
         # try:
         tree = parser.program()
-        interpreter = Interpreter(mode)
+        interpreter = Interpreter(mode, **kwargs)
         try:
             interpreter.visit(tree)
         except StopIteration:
