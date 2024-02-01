@@ -10,10 +10,11 @@ from enum import Enum, auto
 from copy import deepcopy
 
 from src.genetic.individual.interfaces.node_types import Rule, RestrictedRandomize
-from src.genetic.individual.structure.tokens import Metadata, VariableNameToken, \
-    IntegerToken, BooleanToken, GenerationMethod
+from src.genetic.individual.structure.tokens import VariableNameToken, \
+    IntegerToken, BooleanToken
+from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
 
-from src.genetic.individual.limiters.limiters import Limiter
+from src.genetic.individual.structure.limiters import Limiter
 from src.genetic.interpreter.variables import Variable
 
 
@@ -110,9 +111,9 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
     def mutate(self) -> None:
         for index, statement in enumerate(self.statements):
-            if random() < Rule.mutation_from_start_probability:
+            if random() < Metadata.mutation_from_start_probability:
                 self.statements[index] = self.generate_random_body_element(statement.meta)
-            elif random() < Rule.mutation_node_probability:
+            elif random() < Metadata.mutation_node_probability:
                 statement.mutate()
 
         self.statements.append(self.generate_random_body_element(self.meta))
@@ -174,10 +175,10 @@ class Assigment(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         self.name = VariableNameToken(self.meta.get_random_name())
 
-        if random() < Rule.mutation_from_start_probability:
+        if random() < Metadata.mutation_from_start_probability:
             self.assigment_value = choice(self.generate_choices(self.meta)).from_random(
                 Metadata(self.meta.variables_scope, 0))
-        elif random() < Rule.mutation_node_probability:
+        elif random() < Metadata.mutation_node_probability:
             self.assigment_value.mutate()
 
     def crossover(self, other: Assigment) -> None:
@@ -221,20 +222,20 @@ class IfStatement(Rule, RestrictedRandomize):
                 return [ExecutionBlock, None]
 
     def mutate(self) -> None:
-        if random() < Rule.mutation_from_start_probability:
+        if random() < Metadata.mutation_from_start_probability:
             self.condition = Condition.from_random(Metadata(self.meta.variables_scope, 0))
-        elif random() < Rule.mutation_node_probability:
+        elif random() < Metadata.mutation_node_probability:
             self.condition.mutate()
 
-        if random() < Rule.mutation_from_start_probability:
+        if random() < Metadata.mutation_from_start_probability:
             self.body = ExecutionBlock.from_random(Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1))
-        elif random() < Rule.mutation_node_probability:
+        elif random() < Metadata.mutation_node_probability:
             self.body.mutate()
 
-        if self.else_statement is None and random() < Rule.mutation_from_start_probability:
+        if self.else_statement is None and random() < Metadata.mutation_from_start_probability:
             self.else_statement = ExecutionBlock.from_random(
                 Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1))
-        elif self.else_statement is not None and random() < Rule.mutation_node_probability:
+        elif self.else_statement is not None and random() < Metadata.mutation_node_probability:
             self.else_statement.mutate()
 
     def crossover(self, other: IfStatement) -> None:
@@ -269,14 +270,14 @@ class LoopStatement(Rule, RestrictedRandomize):
         return cls(meta, condition, body)
 
     def mutate(self) -> None:
-        if random() < Rule.mutation_from_start_probability:
+        if random() < Metadata.mutation_from_start_probability:
             self.condition = Condition.from_random(Metadata(self.meta.variables_scope, 0))
-        elif random() < Rule.mutation_node_probability:
+        elif random() < Metadata.mutation_node_probability:
             self.condition.mutate()
 
-        if random() < Rule.mutation_from_start_probability:
+        if random() < Metadata.mutation_from_start_probability:
             self.body = ExecutionBlock.from_random(Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1))
-        elif random() < Rule.mutation_node_probability:
+        elif random() < Metadata.mutation_node_probability:
             self.body.mutate()
 
     def crossover(self, other: LoopStatement) -> None:
@@ -321,7 +322,7 @@ class IOStatement(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         IOType.get_opposite(self.io_type)
 
-        if random() < Rule.mutation_node_probability:
+        if random() < Metadata.mutation_node_probability:
             self.name = VariableNameToken(self.meta.get_random_name())
 
     def crossover(self, other: IOStatement) -> None:
@@ -346,10 +347,10 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
         return cls(meta, name, expression)
 
     def mutate(self) -> None:
-        if random() < Rule.mutation_node_probability:
+        if random() < Metadata.mutation_node_probability:
             self.name = VariableNameToken(self.meta.get_random_name())
 
-        if random() < Rule.mutation_node_probability:
+        if random() < Metadata.mutation_node_probability:
             self.expression.mutate()
 
     def crossover(self, other: IntegerDeclaration) -> None:
@@ -378,10 +379,10 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
         return cls(meta, name, condition)
 
     def mutate(self) -> None:
-        if random() < Rule.mutation_node_probability:
+        if random() < Metadata.mutation_node_probability:
             self.name = VariableNameToken(self.meta.get_random_name())
 
-        if random() < Rule.mutation_node_probability:
+        if random() < Metadata.mutation_node_probability:
             self.condition.mutate()
 
     def crossover(self, other: BooleanDeclaration) -> None:
@@ -457,7 +458,7 @@ class Condition(Rule, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        if random() < Rule.mutation_node_probability:
+        if random() < Metadata.mutation_node_probability:
             self.body = Condition.from_random(self.meta).body
 
     def crossover(self, other: Condition) -> None:
@@ -528,7 +529,7 @@ class Expression(Rule, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        if random() < Rule.mutation_node_probability:
+        if random() < Metadata.mutation_node_probability:
             self.body = Expression.from_random(self.meta).body
 
     def crossover(self, other: Expression) -> None:

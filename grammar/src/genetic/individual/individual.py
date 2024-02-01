@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pickle import dump, load
 from typing import Callable, Union, Literal, Optional
 
-from src.genetic.individual.structure.tokens import Metadata
+from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import Program
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
