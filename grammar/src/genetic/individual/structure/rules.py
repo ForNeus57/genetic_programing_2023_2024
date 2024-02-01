@@ -44,12 +44,12 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         limiter: Limiter = deepcopy(meta.limiter)
         body: list[StatementBodyTypes] = []
 
-        statement = cls.generate_random_body_element(meta)
+        statement: StatementBodyTypes = cls.generate_random_body_element(meta)
         child_meta: Metadata = statement.meta
         body.append(statement)
 
         while limiter.allow():
-            statement = cls.generate_random_body_element(Metadata(child_meta.variables_scope, meta.depth + 1))
+            statement: StatementBodyTypes = cls.generate_random_body_element(Metadata(child_meta.variables_scope, meta.depth + 1))
             child_meta = statement.meta
             body.append(statement)
 
@@ -126,14 +126,14 @@ class Assigment(Rule, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, meta: Metadata) -> Assigment:
-        constructor = cls.generate_choices(meta)
+        constructor = choice(cls.generate_choices(meta))
         value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, 0))
 
-        match choice(constructor):
+        match constructor:
             case self_namespace.Expression:
                 name: VariableNameToken = VariableNameToken(meta.get_random_name('int'))
 
-            case self_namespace.Condition:
+            case self_namespace.Condition | _:
                 name: VariableNameToken = VariableNameToken(meta.get_random_name('bool'))
 
         return cls(meta, name, value)
@@ -270,7 +270,7 @@ class IOStatement(Rule, RestrictedRandomize):
         pass
 
     def __str__(self):
-        return f'{self.io_type} ({self.name});'
+        return f'{self.io_type}({self.name});'
 
 
 @dataclass(slots=True)
@@ -294,11 +294,7 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
         pass
 
     def __str__(self):
-        base: str = f'int {self.name}'
-        if self.expression is not None:
-            return base + f' = {self.expression}'
-
-        return base
+        return f'int {self.name} = {self.expression}'
 
 
 @dataclass(slots=True)
@@ -322,11 +318,7 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
         pass
 
     def __str__(self):
-        base: str = f'bool {self.name}'
-        if self.condition is not None:
-            return base + f' = {self.condition}'
-
-        return base
+        return f'bool {self.name} = {self.condition}'
 
 
 @dataclass(slots=True)

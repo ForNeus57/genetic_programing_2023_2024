@@ -28,15 +28,15 @@ class Metadata:
 
     def get_random_name(self, type_hint: Optional[Literal['int', 'bool']] = None) -> str:
         if type_hint is None:
-            return choice([name for name, variable in self.variables_scope.items()])
+            return choice([name for name, _ in self.variables_scope.items()])
 
-        return choice([name for name, variable in self.variables_scope.items() if variable.type == type_hint])
+        return choice([name for name, type_value in self.variables_scope.items() if type_value == type_hint])
 
     def has_boolean_variables(self) -> bool:
-        return any(map(lambda x: x.type == 'bool', self.variables_scope.values()))
+        return any(map(lambda x: x == 'bool', self.variables_scope.values()))
 
     def has_integer_variables(self) -> bool:
-        return any(map(lambda x: x.type == 'int', self.variables_scope.values()))
+        return any(map(lambda x: x == 'int', self.variables_scope.values()))
 
     def get_variable(self, name: str) -> Literal['int', 'bool']:
         return self.variables_scope[name]
