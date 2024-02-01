@@ -1,12 +1,15 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
 from pickle import dump, load
-from typing import Callable, Union, Literal, Optional
+from typing import Callable, Literal, Optional, TypeVar
 
 from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import Program
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
+
+T = TypeVar('T', float, int)
 
 
 @dataclass(slots=True, frozen=True, order=False)
@@ -38,9 +41,9 @@ class Individual:
 
         return tuple(output.output)
 
-    def evaluate(self, fitness_function: Callable[[tuple, tuple], Union[float, int, bool]],
+    def evaluate(self, fitness_function: Callable[[tuple, tuple], T],
                  input_vector: tuple,
-                 model_vector: tuple) -> Union[float, int, bool]:
+                 model_vector: tuple) -> T:
         result_vector: tuple = self.execute(input_vector)
 
         return fitness_function(result_vector, model_vector)
@@ -57,7 +60,7 @@ class Individual:
 
     @staticmethod
     def tournament(individuals: tuple[Individual, ...],
-                   fitness_function: Callable[[tuple, tuple], Union[float, int, bool]],
+                   fitness_function: Callable[[tuple, tuple], T],
                    input_vector: tuple,
                    model_vector: tuple,
                    mode: Literal['min', 'max']) -> Individual:
