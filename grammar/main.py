@@ -15,15 +15,22 @@ def main():
     # print(random_tree)
     # seed(8)
 
+    print("ind1")
     ind = Individual.from_random()
     print(ind)
 
     # ind.mutate()
     # print(ind)
-    # ind2 = Individual.from_random()
-    # print(ind2)
-    # ind.crossover(ind2)
-    # print(ind)
+    print("ind2")
+    ind2 = Individual.from_random()
+    print(ind2)
+
+    print("croos ind 1")
+    ind.crossover(ind2)
+    print(ind)
+
+    print("cross ind 2")
+    print(ind2)
 
     # out = Interpreter.interpret(str(ind), BufferInputOutputOperation([1, False]), False)
     # out = out[0]

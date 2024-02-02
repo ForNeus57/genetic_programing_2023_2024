@@ -5,15 +5,15 @@ from dataclasses import dataclass
 from typing import Any
 
 
-@dataclass(slots=True)
-class Rule(ABC):
-
+class Crossover(ABC):
     @abstractmethod
-    def mutate(self) -> None:
+    def crossover(self, other: Crossover) -> None:
         pass
 
+
+class Mutable(ABC):
     @abstractmethod
-    def crossover(self, other: Rule) -> None:
+    def mutate(self) -> None:
         pass
 
 

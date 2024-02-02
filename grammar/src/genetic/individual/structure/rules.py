@@ -5,19 +5,18 @@ import inspect
 from copy import deepcopy
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from random import choice
+from random import choice, randint
 from types import SimpleNamespace
 from typing import Union, Optional, Tuple
 
-from src.genetic.individual.interfaces.node_types import Rule, RestrictedRandomize
+from src.genetic.individual.structure.node_types import Crossover, RestrictedRandomize, Mutable
 from src.genetic.individual.structure.limiters import Limiter
 from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
-from src.genetic.individual.structure.tokens import VariableNameToken, \
-    IntegerToken, BooleanToken
+from src.genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
 
 
 @dataclass(slots=True)
-class Program(Rule, RestrictedRandomize):
+class Program(Crossover, Mutable, RestrictedRandomize):
     body: ExecutionBlock
 
     @classmethod
@@ -29,14 +28,14 @@ class Program(Rule, RestrictedRandomize):
         pass
 
     def crossover(self, other: Program) -> None:
-        pass
+        self.body.crossover(other.body)
 
     def __str__(self) -> str:
         return str(self.body)
 
 
 @dataclass(slots=True)
-class ExecutionBlock(Rule, RestrictedRandomize):
+class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
     statements: list[StatementBodyTypes] = field(default_factory=list)
 
     @classmethod
@@ -50,7 +49,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
         while limiter.allow():
             statement: StatementBodyTypes = cls.generate_random_body_element(child_meta)
-            child_meta = statement.meta
+            child_meta: Metadata = statement.meta
             body.append(statement)
 
         return cls(meta, body)
@@ -111,7 +110,14 @@ class ExecutionBlock(Rule, RestrictedRandomize):
         pass
 
     def crossover(self, other: ExecutionBlock) -> None:
-        pass
+        max_index: int = min(len(self.statements), len(other.statements))
+        if max_index <= 1:
+            raise ValueError(f'At least one of the offsprings is too short for crossover!')
+
+        start_index: int = randint(1, max_index - 1)
+
+        self.statements[start_index: max_index], other.statements[start_index: max_index] = \
+            other.statements[start_index: max_index], self.statements[start_index: max_index]
 
     def __str__(self) -> str:
         tabs: str = '\t' * (self.meta.depth + 1)
@@ -120,7 +126,7 @@ class ExecutionBlock(Rule, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class Assigment(Rule, RestrictedRandomize):
+class Assigment(Mutable, RestrictedRandomize):
     name: VariableNameToken
     assigment_value: AssigmentValueType
 
@@ -156,15 +162,12 @@ class Assigment(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Assigment) -> None:
-        pass
-
     def __str__(self):
         return f'{self.name} = {self.assigment_value};'
 
 
 @dataclass(slots=True)
-class IfStatement(Rule, RestrictedRandomize):
+class IfStatement(Mutable, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
     else_statement: Optional[ExecutionBlock]
@@ -197,9 +200,6 @@ class IfStatement(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def crossover(self, other: IfStatement) -> None:
-        pass
-
     def __str__(self):
         base: str = f'if ({self.condition}) {self.body}'
 
@@ -210,7 +210,7 @@ class IfStatement(Rule, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class LoopStatement(Rule, RestrictedRandomize):
+class LoopStatement(Mutable, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
 
@@ -222,9 +222,6 @@ class LoopStatement(Rule, RestrictedRandomize):
         return cls(meta, condition, body)
 
     def mutate(self) -> None:
-        pass
-
-    def crossover(self, other: LoopStatement) -> None:
         pass
 
     def __str__(self):
@@ -251,7 +248,7 @@ class IOType(Enum):
 
 
 @dataclass(slots=True)
-class IOStatement(Rule, RestrictedRandomize):
+class IOStatement(Mutable, RestrictedRandomize):
     io_type: IOType
     name: VariableNameToken
 
@@ -265,15 +262,12 @@ class IOStatement(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def crossover(self, other: IOStatement) -> None:
-        pass
-
     def __str__(self):
         return f'{self.io_type}({self.name});'
 
 
 @dataclass(slots=True)
-class IntegerDeclaration(Rule, RestrictedRandomize):
+class IntegerDeclaration(Mutable, RestrictedRandomize):
     name: VariableNameToken
     expression: Expression
 
@@ -289,15 +283,12 @@ class IntegerDeclaration(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def crossover(self, other: IntegerDeclaration) -> None:
-        pass
-
     def __str__(self):
         return f'int {self.name} = {self.expression};'
 
 
 @dataclass(slots=True)
-class BooleanDeclaration(Rule, RestrictedRandomize):
+class BooleanDeclaration(Mutable, RestrictedRandomize):
     name: VariableNameToken
     condition: Condition
 
@@ -313,15 +304,12 @@ class BooleanDeclaration(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def crossover(self, other: BooleanDeclaration) -> None:
-        pass
-
     def __str__(self):
         return f'bool {self.name} = {self.condition};'
 
 
 @dataclass(slots=True)
-class Condition(Rule, RestrictedRandomize):
+class Condition(Mutable, RestrictedRandomize):
     body: ConditionType
 
     @classmethod
@@ -384,9 +372,6 @@ class Condition(Rule, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def crossover(self, other: Condition) -> None:
-        pass
-
     def __str__(self):
         match self.body:
             case (left, operation, right):
@@ -400,7 +385,7 @@ class Condition(Rule, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class Expression(Rule, RestrictedRandomize):
+class Expression(Mutable, RestrictedRandomize):
     body: ExpressionType
 
     @classmethod
@@ -452,9 +437,6 @@ class Expression(Rule, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        pass
-
-    def crossover(self, other: Expression) -> None:
         pass
 
     def __str__(self):

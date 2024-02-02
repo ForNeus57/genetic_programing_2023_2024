@@ -5,7 +5,7 @@ from random import choice, randint
 from string import ascii_letters, digits
 from typing import ClassVar
 
-from src.genetic.individual.interfaces.node_types import Token
+from src.genetic.individual.structure.node_types import Token
 from src.genetic.individual.structure.limiters import RandomLimiter
 
 
