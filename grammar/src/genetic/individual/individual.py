@@ -28,9 +28,6 @@ class Individual:
         program: Program = Program.from_random(meta)
         return cls(program)
 
-    def __str__(self) -> str:
-        return str(self.program)
-
     def execute(self, input_vector: tuple) -> tuple:
         program_structure: str = str(self.program)
         output: Optional[BufferInputOutputOperation] = Interpreter.interpret(program_structure,
@@ -57,6 +54,12 @@ class Individual:
     def save_to_file(self, path: str) -> None:
         with open(path, 'wb') as file:
             dump(self, file)
+
+    def __str__(self) -> str:
+        return str(self.program)
+
+    def __len__(self) -> int:
+        return len(self.program)
 
     @staticmethod
     def tournament(individuals: tuple[Individual, ...],

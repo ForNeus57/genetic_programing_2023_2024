@@ -1,6 +1,8 @@
 from src.genetic.individual.individual import Individual
 from random import seed
 
+from src.genetic.individual.structure.metadata import Metadata
+from src.genetic.individual.structure.rules import IOStatement
 from src.genetic.interpreter.input_output import BufferInputOutputOperation, ConsoleInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
 
@@ -15,22 +17,24 @@ def main():
     # print(random_tree)
     # seed(8)
 
-    print("ind1")
+    # print("ind1")
     ind = Individual.from_random()
-    print(ind)
+    print(ind, len(ind))
+
+    # print(IOStatement.from_random(Metadata()))
 
     # ind.mutate()
     # print(ind)
-    print("ind2")
-    ind2 = Individual.from_random()
-    print(ind2)
-
-    print("croos ind 1")
-    ind.crossover(ind2)
-    print(ind)
-
-    print("cross ind 2")
-    print(ind2)
+    # print("ind2")
+    # ind2 = Individual.from_random()
+    # print(ind2, len(ind2))
+    #
+    # print("croos ind 1")
+    # ind.crossover(ind2)
+    # print(ind, len(ind))
+    #
+    # print("cross ind 2")
+    # print(ind2, len(ind2))
 
     # out = Interpreter.interpret(str(ind), BufferInputOutputOperation([1, False]), False)
     # out = out[0]

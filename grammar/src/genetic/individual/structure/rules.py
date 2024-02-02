@@ -33,6 +33,9 @@ class Program(Crossover, Mutable, RestrictedRandomize):
     def __str__(self) -> str:
         return str(self.body)
 
+    def __len__(self) -> int:
+        return len(self.body) + 1
+
 
 @dataclass(slots=True)
 class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
@@ -78,11 +81,11 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
                 output: list = [
                     IntegerDeclaration,
                     BooleanDeclaration,
+                    IOStatement,
                 ]
                 if not meta.is_empty():
                     output.extend([
                         Assigment,
-                        IOStatement,
                     ])
 
                 return output
@@ -91,11 +94,11 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
                 output: list = [
                     IntegerDeclaration,
                     BooleanDeclaration,
+                    IOStatement,
                 ]
                 if not meta.is_empty():
                     output.extend([
                         Assigment,
-                        IOStatement
                     ])
 
                 if meta.is_depth_in_limits():
@@ -123,6 +126,9 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
         tabs: str = '\t' * (self.meta.depth + 1)
         statements_print = '\n'.join([f'{tabs}{statement}' for statement in self.statements])
         return f'{{\n{statements_print}\n{tabs[1:]}}}'
+
+    def __len__(self) -> int:
+        return sum([len(child) for child in self.statements]) + 1
 
 
 @dataclass(slots=True)
@@ -162,8 +168,11 @@ class Assigment(Mutable, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.name} = {self.assigment_value};'
+
+    def __len__(self) -> int:
+        return len(self.assigment_value) + 2
 
 
 @dataclass(slots=True)
@@ -200,13 +209,21 @@ class IfStatement(Mutable, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         base: str = f'if ({self.condition}) {self.body}'
 
         if self.else_statement is not None:
             return f'{base} else {self.else_statement}'
 
         return base
+
+    def __len__(self) -> int:
+        base_length: int = len(self.condition) + len(self.body) + 1
+
+        if self.else_statement is not None:
+            return base_length + len(self.else_statement)
+
+        return base_length
 
 
 @dataclass(slots=True)
@@ -227,6 +244,9 @@ class LoopStatement(Mutable, RestrictedRandomize):
     def __str__(self):
         return f'while ({self.condition}) {self.body}'
 
+    def __len__(self):
+        return len(self.condition) + len(self.body) + 1
+
 
 class IOType(Enum):
     READ = 0,
@@ -236,8 +256,17 @@ class IOType(Enum):
         return self.name.lower()
 
     @classmethod
-    def from_random(cls) -> IOType:
-        return choice(list(cls))
+    def from_random(cls, meta: Metadata) -> IOType:
+        options: list = [
+            cls.WRITE,
+        ]
+
+        if not meta.is_empty():
+            options.extend([
+                cls.READ,
+            ])
+
+        return choice(options)
 
     @classmethod
     def get_opposite(cls, io_type: IOType) -> IOType:
@@ -250,20 +279,34 @@ class IOType(Enum):
 @dataclass(slots=True)
 class IOStatement(Mutable, RestrictedRandomize):
     io_type: IOType
-    name: VariableNameToken
+    body: VariableNameToken | Condition | Expression
 
     @classmethod
     def from_random(cls, meta: Metadata) -> IOStatement:
-        io_type: IOType = IOType.from_random()
-        name: VariableNameToken = VariableNameToken(meta.get_random_name())
+        io_type: IOType = IOType.from_random(meta)
+        match io_type:
+            case IOType.READ:
+                body: VariableNameToken = VariableNameToken(meta.get_random_name())
 
-        return cls(meta, io_type, name)
+            case IOType.WRITE | _:
+                body: Condition | Expression = \
+                    choice([Condition, Expression]).from_random(Metadata(meta.variables_scope, 0))
+
+        return cls(meta, io_type, body)
 
     def mutate(self) -> None:
         pass
 
-    def __str__(self):
-        return f'{self.io_type}({self.name});'
+    def __str__(self) -> str:
+        return f'{self.io_type}({self.body});'
+
+    def __len__(self) -> int:
+        match self.io_type:
+            case IOType.READ:
+                return 3
+
+            case IOType.WRITE | _:
+                return len(self.body) + 2
 
 
 @dataclass(slots=True)
@@ -283,8 +326,11 @@ class IntegerDeclaration(Mutable, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'int {self.name} = {self.expression};'
+
+    def __len__(self) -> int:
+        return len(self.expression) + 2
 
 
 @dataclass(slots=True)
@@ -304,8 +350,11 @@ class BooleanDeclaration(Mutable, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'bool {self.name} = {self.condition};'
+
+    def __len__(self) -> int:
+        return len(self.condition) + 2
 
 
 @dataclass(slots=True)
@@ -372,7 +421,7 @@ class Condition(Mutable, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         match self.body:
             case (left, operation, right):
                 return f'({left} {operation} {right})'
@@ -382,6 +431,17 @@ class Condition(Mutable, RestrictedRandomize):
 
             case _ as value:
                 return str(value)
+
+    def __len__(self) -> int:
+        match self.body:
+            case (left, _, right):
+                return len(left) + len(right) + 2
+
+            case Condition() as value:
+                return len(value) + 2
+
+            case _:
+                return 2
 
 
 @dataclass(slots=True)
@@ -439,13 +499,21 @@ class Expression(Mutable, RestrictedRandomize):
     def mutate(self) -> None:
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         match self.body:
             case (left, operation, right):
                 return f'({left} {operation} {right})'
 
             case _ as value:
                 return str(value)
+
+    def __len__(self) -> int:
+        match self.body:
+            case (left, _, right):
+                return len(left) + len(right) + 2
+
+            case _:
+                return 2
 
 
 ExpressionType = Union[Tuple[Expression, str, Expression], VariableNameToken, IntegerToken]
