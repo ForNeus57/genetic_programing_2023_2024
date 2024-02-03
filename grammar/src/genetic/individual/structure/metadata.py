@@ -17,14 +17,13 @@ class GenerationMethod(Enum):
 class Metadata:
     variables_scope: dict[str, Literal['int', 'bool']] = field(default_factory=dict)
     depth: int = 0
-    limiter = HardLimiter()
     method: GenerationMethod = GenerationMethod.GROW
+    limiter = HardLimiter()
 
-    mutation_node_probability: float = 0.5
-    mutation_from_start_probability: float = 0.1
-    crossover_node_probability: float = 0.5
+    mutation_node_probability: float = 0.05
+    crossover_probability: float = 0.5
 
-    max_depth: int = 1
+    max_depth: int = 2
 
     def get_random_name(self, type_hint: Optional[Literal['int', 'bool']] = None) -> str:
         if type_hint is None:

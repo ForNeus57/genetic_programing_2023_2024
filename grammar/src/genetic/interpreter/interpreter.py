@@ -13,7 +13,6 @@ from src.antlr.MiniGPVisitor import MiniGPVisitor
 from src.antlr.ExceptionErrorListener import ExceptionErrorListener
 
 from src.genetic.interpreter.input_output import InputOutputOperation
-from src.genetic.interpreter.variables import Variable
 
 T = TypeVar('T')
 
@@ -21,7 +20,7 @@ T = TypeVar('T')
 @final
 class Interpreter(MiniGPVisitor):
     def __init__(self, mode: InputOutputOperation, instructions_limit: int = 400) -> None:
-        self.variables: dict[str, Variable] = {}
+        self.variables: dict[str, int | bool] = {}
         self.mode: InputOutputOperation = mode
         self.used_instructions: int = 0
         self.instructions_limit: Final[int] = instructions_limit
@@ -67,7 +66,7 @@ class Interpreter(MiniGPVisitor):
 
         variable_name = ctx.VAR().getText()
 
-        self.variables[variable_name] = Variable('int', self.visit(ctx.expression()))
+        self.variables[variable_name] = self.visit(ctx.expression())
 
     @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext) -> None:
@@ -78,7 +77,7 @@ class Interpreter(MiniGPVisitor):
         """
         variable_name = ctx.VAR().getText()
 
-        self.variables[variable_name] = Variable('bool', self.visit(ctx.condition()))
+        self.variables[variable_name] = self.visit(ctx.condition())
 
     @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext) -> None:
@@ -89,18 +88,20 @@ class Interpreter(MiniGPVisitor):
         """
 
         variable_name = ctx.VAR().getText()
-        variable: Optional[Variable] = self.variables.get(variable_name)
+        variable: Optional[int | bool] = self.variables.get(variable_name)
 
         if variable is None:
-            self.variables[variable_name] = Variable('int', self.mode.read('int'))
+            self.variables[variable_name] = self.mode.read(int)
             variable = self.variables[variable_name]
 
-        if variable.type == 'int' and ctx.condition() is not None:
+        variable_type = type(variable)
+
+        if variable_type is int and ctx.condition() is not None:
             value: int = int(self.visit(ctx.condition()))
             variable.value = value
             return
 
-        if variable.type == 'bool' and ctx.expression() is not None:
+        if variable_type is bool and ctx.expression() is not None:
             value: bool = bool(self.visit(ctx.expression()))
             variable.value = value
             return
@@ -148,13 +149,13 @@ class Interpreter(MiniGPVisitor):
 
         elif ctx.READ() is not None:
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[Variable] = self.variables.get(variable_name)
+            variable: Optional[int | bool] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable('int', self.mode.read('int'))
+                self.variables[variable_name] = self.mode.read(int)
                 variable = self.variables[variable_name]
 
-            variable.value = self.mode.read(variable.type)
+            variable.value = self.mode.read(type(variable))
 
     @limit
     def visitExpression(self, ctx: MiniGPParser.ExpressionContext) -> int:
@@ -171,16 +172,16 @@ class Interpreter(MiniGPVisitor):
                 return int(ctx.INT().getText())
 
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[Variable] = self.variables.get(variable_name)
+            variable: Optional[int | bool] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable('int', self.mode.read('int'))
+                self.variables[variable_name] = self.mode.read(int)
                 variable = self.variables[variable_name]
 
-            if variable.type == 'bool':
-                return int(variable.value)
+            if type(variable) is bool:
+                return int(variable)
 
-            return variable.value
+            return variable
 
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
@@ -218,16 +219,16 @@ class Interpreter(MiniGPVisitor):
                 return str(ctx.BOOL().getText()) == "true"
 
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[Variable] = self.variables.get(variable_name)
+            variable: Optional[int | bool] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable('bool', self.mode.read('bool'))
+                self.variables[variable_name] = self.mode.read(bool)
                 variable = self.variables[variable_name]
 
-            if variable.type == 'int':
-                return bool(variable.value)
+            if type(variable) is int:
+                return bool(variable)
 
-            return variable.value
+            return variable
 
         if ctx.getChildCount() == 4:
             return not self.visit(ctx.condition(0))

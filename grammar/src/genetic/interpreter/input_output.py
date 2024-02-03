@@ -6,7 +6,7 @@ from typing import Literal, Union, Optional
 class InputOutputOperation(ABC):
 
     @abstractmethod
-    def read(self, hint: Literal['int', 'bool']) -> Union[int, bool]:
+    def read(self, hint: type) -> Union[int, bool]:
         pass
 
     @abstractmethod
@@ -16,8 +16,8 @@ class InputOutputOperation(ABC):
 
 class ConsoleInputOutputOperation(InputOutputOperation):
 
-    def read(self, hint: Literal['int', 'bool']) -> Union[int, bool]:
-        if hint == 'bool':
+    def read(self, hint: type) -> Union[int, bool]:
+        if hint is bool:
             return bool(input())
         else:
             return int(input())
@@ -27,7 +27,7 @@ class ConsoleInputOutputOperation(InputOutputOperation):
 
 
 class BufferInputOutputOperation(InputOutputOperation):
-    def __init__(self, input_buffer: Optional[list[Union[int, bool]]] = None):
+    def __init__(self, input_buffer: Optional[tuple[Union[int, bool]]] = None):
         if input_buffer is None:
             input_buffer = []
 
@@ -45,11 +45,11 @@ class BufferInputOutputOperation(InputOutputOperation):
 
         self.output: list[Union[int, bool]] = []
 
-    def read(self, hint: Literal['int', 'bool']) -> Union[int, bool]:
-        if hint == 'bool':
+    def read(self, hint: type) -> Union[int, bool]:
+        if hint is bool:
             return next(self.input_bools)
-        elif hint == 'int':
-            return next(self.input_ints)
+
+        return next(self.input_ints)
 
     def write(self, value: Union[int, bool]) -> None:
         self.output.append(value)

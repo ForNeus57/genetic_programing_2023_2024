@@ -25,7 +25,7 @@ class Program(Crossover, Mutable, RestrictedRandomize):
         return cls(meta, block)
 
     def mutate(self) -> None:
-        pass
+        self.body.mutate()
 
     def crossover(self, other: Program) -> None:
         self.body.crossover(other.body)
@@ -34,7 +34,7 @@ class Program(Crossover, Mutable, RestrictedRandomize):
         return str(self.body)
 
     def __len__(self) -> int:
-        return len(self.body) + 1
+        return len(self.body)
 
 
 @dataclass(slots=True)
@@ -61,12 +61,7 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
     def generate_random_body_element(cls, meta: Metadata) -> StatementBodyTypes:
         table_of_choices: list = cls.generate_choices(meta)
 
-        match choice(table_of_choices):
-            case self_namespace.IfStatement | self_namespace.LoopStatement as option:
-                return option.from_random(meta)
-
-            case _ as option:
-                return option.from_random(meta)
+        return choice(table_of_choices).from_random(meta)
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:
@@ -110,7 +105,7 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        pass
+        choice(self.statements).mutate()
 
     def crossover(self, other: ExecutionBlock) -> None:
         max_index: int = min(len(self.statements), len(other.statements))
@@ -128,7 +123,7 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
         return f'{{\n{statements_print}\n{tabs[1:]}}}'
 
     def __len__(self) -> int:
-        return sum([len(child) for child in self.statements]) + 1
+        return sum([len(child) for child in self.statements])
 
 
 @dataclass(slots=True)
@@ -172,7 +167,7 @@ class Assigment(Mutable, RestrictedRandomize):
         return f'{self.name} = {self.assigment_value};'
 
     def __len__(self) -> int:
-        return len(self.assigment_value) + 2
+        return len(self.assigment_value) + 1
 
 
 @dataclass(slots=True)
@@ -218,7 +213,7 @@ class IfStatement(Mutable, RestrictedRandomize):
         return base
 
     def __len__(self) -> int:
-        base_length: int = len(self.condition) + len(self.body) + 1
+        base_length: int = len(self.condition) + len(self.body)
 
         if self.else_statement is not None:
             return base_length + len(self.else_statement)
@@ -245,7 +240,7 @@ class LoopStatement(Mutable, RestrictedRandomize):
         return f'while ({self.condition}) {self.body}'
 
     def __len__(self):
-        return len(self.condition) + len(self.body) + 1
+        return len(self.condition) + len(self.body)
 
 
 class IOType(Enum):
@@ -290,7 +285,7 @@ class IOStatement(Mutable, RestrictedRandomize):
 
             case IOType.WRITE | _:
                 body: Condition | Expression = \
-                    choice([Condition, Expression]).from_random(Metadata(meta.variables_scope, 0))
+                    choice((Condition, Expression)).from_random(Metadata(meta.variables_scope, 0))
 
         return cls(meta, io_type, body)
 
@@ -303,10 +298,10 @@ class IOStatement(Mutable, RestrictedRandomize):
     def __len__(self) -> int:
         match self.io_type:
             case IOType.READ:
-                return 3
+                return 2
 
             case IOType.WRITE | _:
-                return len(self.body) + 2
+                return len(self.body) + 1
 
 
 @dataclass(slots=True)
@@ -330,7 +325,7 @@ class IntegerDeclaration(Mutable, RestrictedRandomize):
         return f'int {self.name} = {self.expression};'
 
     def __len__(self) -> int:
-        return len(self.expression) + 2
+        return len(self.expression) + 1
 
 
 @dataclass(slots=True)
@@ -354,7 +349,7 @@ class BooleanDeclaration(Mutable, RestrictedRandomize):
         return f'bool {self.name} = {self.condition};'
 
     def __len__(self) -> int:
-        return len(self.condition) + 2
+        return len(self.condition) + 1
 
 
 @dataclass(slots=True)
@@ -367,8 +362,8 @@ class Condition(Mutable, RestrictedRandomize):
 
         match choice(table_of_choices):
             case (left, operation, right):
-                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation,
-                                  right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
+                deeper_meta: Metadata = Metadata(meta.variables_scope, meta.depth + 1)
+                return cls(meta, (left.from_random(deeper_meta), operation, right.from_random(deeper_meta)))
 
             case self_namespace.Condition as option:
                 return cls(meta, option.from_random(Metadata(meta.variables_scope, meta.depth + 1)))
@@ -385,8 +380,8 @@ class Condition(Mutable, RestrictedRandomize):
             case GenerationMethod.FULL:
                 if meta.is_depth_in_limits():
                     return [
-                        (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
-                        (Condition, choice(['&&', '||']), Condition),
+                        (Expression, choice(('==', '!=', '>', '<', '>=', '<=')), Expression),
+                        (Condition, choice(('&&', '||')), Condition),
                         Condition,
                     ]
 
@@ -411,8 +406,8 @@ class Condition(Mutable, RestrictedRandomize):
 
                 if meta.is_depth_in_limits():
                     output.extend([
-                        (Expression, choice(['==', '!=', '>', '<', '>=', '<=']), Expression),
-                        (Condition, choice(['&&', '||']), Condition),
+                        (Expression, choice(('==', '!=', '>', '<', '>=', '<=')), Expression),
+                        (Condition, choice(('&&', '||')), Condition),
                         Condition,
                     ])
 
@@ -435,13 +430,13 @@ class Condition(Mutable, RestrictedRandomize):
     def __len__(self) -> int:
         match self.body:
             case (left, _, right):
-                return len(left) + len(right) + 2
+                return len(left) + len(right) + 1
 
             case Condition() as value:
-                return len(value) + 2
+                return len(value) + 1
 
             case _:
-                return 2
+                return 1
 
 
 @dataclass(slots=True)
@@ -454,8 +449,8 @@ class Expression(Mutable, RestrictedRandomize):
 
         match choice(table_of_choices):
             case (right, operation, left):
-                return cls(meta, (left.from_random(Metadata(meta.variables_scope, meta.depth + 1)), operation,
-                                  right.from_random(Metadata(meta.variables_scope, meta.depth + 1))))
+                deeper_meta: Metadata = Metadata(meta.variables_scope, meta.depth + 1)
+                return cls(meta, (left.from_random(deeper_meta), operation, right.from_random(deeper_meta)))
 
             case self_namespace.VariableNameToken:
                 return cls(meta, VariableNameToken(meta.get_random_name('int')))
@@ -469,7 +464,7 @@ class Expression(Mutable, RestrictedRandomize):
             case GenerationMethod.FULL:
                 if meta.is_depth_in_limits():
                     return [
-                        (Expression, choice(['+', '-', '*', '/']), Expression),
+                        (Expression, choice(('+', '-', '*', '/')), Expression),
                     ]
 
                 output: list = [IntegerToken]
@@ -491,7 +486,7 @@ class Expression(Mutable, RestrictedRandomize):
 
                 if meta.is_depth_in_limits():
                     output.extend([
-                        (Expression, choice(['+', '-', '*', '/']), Expression),
+                        (Expression, choice(('+', '-', '*', '/')), Expression),
                     ])
 
                 return output
@@ -510,10 +505,10 @@ class Expression(Mutable, RestrictedRandomize):
     def __len__(self) -> int:
         match self.body:
             case (left, _, right):
-                return len(left) + len(right) + 2
+                return len(left) + len(right) + 1
 
             case _:
-                return 2
+                return 1
 
 
 ExpressionType = Union[Tuple[Expression, str, Expression], VariableNameToken, IntegerToken]

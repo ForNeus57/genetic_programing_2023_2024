@@ -1,10 +1,25 @@
+from multiprocessing import Pool
+
+from src.genetic.evolution.population import Population
 from src.genetic.individual.individual import Individual
 from random import seed
+from time import perf_counter
+from timeit import timeit
 
 from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import IOStatement
 from src.genetic.interpreter.input_output import BufferInputOutputOperation, ConsoleInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
+
+
+def execute(ind: Individual):
+    try:
+        start = perf_counter()
+        output = ind.execute((1, False))
+        total = perf_counter() - start
+        print(output, total)
+    except Exception as error:
+        print("Error!", error, str(ind))
 
 
 def main():
@@ -18,9 +33,22 @@ def main():
     # seed(8)
 
     # print("ind1")
-    ind = Individual.from_random()
-    print(ind, len(ind))
+    # ind = Individual.from_random()
+    # print(ind, len(ind))
 
+    # print("ind2")
+
+    start = perf_counter()
+    pop = Population.from_ramped_half_and_half(25_000)
+    # print(pop.individuals)
+    print(len(pop.individuals), perf_counter() - start)
+    # avg = 0.
+    computation_start = perf_counter()
+
+    with Pool(10) as pool:
+        pool.map(execute, pop.individuals)
+
+    print(perf_counter() - computation_start)
     # print(IOStatement.from_random(Metadata()))
 
     # ind.mutate()

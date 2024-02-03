@@ -32,7 +32,7 @@ class Individual:
         program_structure: str = str(self.program)
         output: Optional[BufferInputOutputOperation] = Interpreter.interpret(program_structure,
                                                                              BufferInputOutputOperation(
-                                                                                 list(input_vector)))
+                                                                                 input_vector))
         if output is None:
             raise ValueError('Interpreter returned None!')
 
