@@ -28,7 +28,7 @@ class Individual:
         program: Program = Program.from_random(meta)
         return cls(program)
 
-    def execute(self, input_vector: tuple) -> tuple:
+    def execute(self, input_vector: tuple) -> list:
         program_structure: str = str(self.program)
         output: Optional[BufferInputOutputOperation] = Interpreter.interpret(program_structure,
                                                                              BufferInputOutputOperation(
@@ -36,12 +36,12 @@ class Individual:
         if output is None:
             raise ValueError('Interpreter returned None!')
 
-        return tuple(output.output)
+        return output.output
 
-    def evaluate(self, fitness_function: Callable[[tuple, tuple], T],
+    def evaluate(self, fitness_function: Callable[[tuple, list], T],
                  input_vector: tuple,
                  model_vector: tuple) -> T:
-        result_vector: tuple = self.execute(input_vector)
+        result_vector: list = self.execute(input_vector)
 
         return fitness_function(model_vector, result_vector)
 

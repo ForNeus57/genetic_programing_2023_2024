@@ -17,7 +17,7 @@ def execute(ind: Individual):
         start = perf_counter()
         output = ind.execute((1, False))
         total = perf_counter() - start
-        print(output, total)
+        print(total, output)
     except Exception as error:
         print("Error!", error, str(ind))
 

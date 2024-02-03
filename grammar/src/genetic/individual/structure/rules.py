@@ -59,9 +59,7 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
 
     @classmethod
     def generate_random_body_element(cls, meta: Metadata) -> StatementBodyTypes:
-        table_of_choices: list = cls.generate_choices(meta)
-
-        return choice(table_of_choices).from_random(meta)
+        return choice(cls.generate_choices(meta)).from_random(meta)
 
     @classmethod
     def generate_choices(cls, meta: Metadata) -> list:

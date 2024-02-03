@@ -29,7 +29,7 @@ class ConsoleInputOutputOperation(InputOutputOperation):
 class BufferInputOutputOperation(InputOutputOperation):
     def __init__(self, input_buffer: Optional[tuple[Union[int, bool]]] = None):
         if input_buffer is None:
-            input_buffer = []
+            input_buffer = tuple()
 
         only_bools: list[bool] = [*filter(lambda x: type(x) is bool, input_buffer)]
         only_ints: list[int] = [*filter(lambda x: type(x) is int, input_buffer)]

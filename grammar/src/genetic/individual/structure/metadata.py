@@ -27,7 +27,7 @@ class Metadata:
 
     def get_random_name(self, type_hint: Optional[Literal['int', 'bool']] = None) -> str:
         if type_hint is None:
-            return choice([name for name, _ in self.variables_scope.items()])
+            return choice(tuple(self.variables_scope.keys()))
 
         return choice([name for name, type_value in self.variables_scope.items() if type_value == type_hint])
 
