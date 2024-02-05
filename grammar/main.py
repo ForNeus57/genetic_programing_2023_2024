@@ -1,5 +1,4 @@
-from multiprocessing import Pool
-
+from src.genetic.evolution.evolve import Evolution
 from src.genetic.evolution.population import Population
 from src.genetic.individual.individual import Individual
 from random import seed
@@ -10,22 +9,30 @@ from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import IOStatement
 from src.genetic.interpreter.input_output import BufferInputOutputOperation, ConsoleInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
+from src.genetic.evaluation.evaluation import fitness_functions
 
 
-def execute(ind: Individual):
-    try:
-        start = perf_counter()
-        output = ind.execute((1, False))
-        total = perf_counter() - start
-        print(total, output)
-    except Exception as error:
-        print("Error!", error, str(ind))
-
+def execute(inds: tuple[Individual]):
+    for ind in inds:
+        try:
+            start = perf_counter()
+            output = ind.execute((1, False))
+            total = perf_counter() - start
+            print(total, output)
+        except Exception as error:
+            print("Error!", error, str(ind))
 
 def main():
+    seed(8)
+    evolution: Evolution = Evolution(
+        fitness_functions['1.1.A'],
+        [tuple()],
+    )
     # params = read_input_params("data/xmxp2.dat")
     # config = read_config("data/config.json")
     # data = read_input_data("data/xmxp2.dat", params["nvar"])
+
+
 
     # random_tree = generate_random_tree(config["DEPTH"], params["minrand"], params["maxrand"])
     # print("Wygenerowane losowe drzewo:")
@@ -37,18 +44,20 @@ def main():
     # print(ind, len(ind))
 
     # print("ind2")
-
-    start = perf_counter()
-    pop = Population.from_ramped_half_and_half(25_000)
-    # print(pop.individuals)
-    print(len(pop.individuals), perf_counter() - start)
-    # avg = 0.
-    computation_start = perf_counter()
-
-    with Pool(10) as pool:
-        pool.map(execute, pop.individuals)
-
-    print(perf_counter() - computation_start)
+    # size: int = 25_000
+    # processes: int = 10
+    #
+    # start = perf_counter()
+    # pop = Population.from_ramped_half_and_half(size)
+    # # print(pop.individuals)
+    # print(len(pop.individuals), perf_counter() - start)
+    # # avg = 0.
+    # computation_start = perf_counter()
+    #
+    # with Pool(processes) as pool:
+    #     pool.imap(execute, pop.individuals, 40)
+    #
+    # print(perf_counter() - computation_start)
     # print(IOStatement.from_random(Metadata()))
 
     # ind.mutate()

@@ -88,11 +88,11 @@ class Interpreter(MiniGPVisitor):
         variable_name = ctx.VAR().getText()
         variable_type = type(self.variables.get(variable_name))
 
-        if variable_type is int and (condition := ctx.condition() is not None):
+        if variable_type is int and (condition := ctx.condition()) is not None:
             self.variables[variable_name] = int(self.visit(condition))
             return
 
-        if variable_type is bool and (expression := ctx.expression() is not None):
+        if variable_type is bool and (expression := ctx.expression()) is not None:
             self.variables[variable_name] = bool(self.visit(expression))
             return
 
@@ -109,7 +109,7 @@ class Interpreter(MiniGPVisitor):
         if self.visit(ctx.condition()):
             self.visit(ctx.executionBlock(0))
 
-        elif else_block := ctx.executionBlock(1) is not None:
+        elif (else_block := ctx.executionBlock(1)) is not None:
             self.visit(else_block)
 
     @limit
