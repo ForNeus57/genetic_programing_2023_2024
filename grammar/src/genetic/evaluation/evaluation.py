@@ -47,8 +47,8 @@ class FitnessFunctionBase(ABC):
         return tuple(int(x) if not isinstance(x, bool) else int(x) for x in gp_output)
     
     def calculate_fitness(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        if gp_output is None or len(gp_output) == 0:  # Sprawdza, czy wyjście jest puste lub None tylko raz
-            return 9999999  # Zwraca dużą wartość kary dla pustego wyjścia
+        if gp_output is None or len(gp_output) == 0: 
+            return 9999999
         converted_output = self.convert_output(gp_output)
         return self._calculate_fitness_impl(converted_output, gp_input)
     
@@ -173,7 +173,10 @@ def get_fitness_function(name: str) -> FitnessFunctionBase:
 def generate_truth_tables(k: int) -> Tuple[Tuple[bool, ...], ...]:
     return tuple(product((True, False), repeat=k))
 
-with open("grammar/src/genetic/evaluation/truth_tables.py", "w") as file:
+def generate_input_values(values_range: Tuple[int, int]) -> Tuple[Tuple[int, int]]:
+    return tuple(product(range(values_range[0], values_range[1] + 1), repeat=2))
+
+with open("grammar/src/genetic/evaluation/generated/truth_tables.py", "w") as file:
     print("from typing import Tuple", file=file)
     print("", file=file)
     for k in range(1, 11):
@@ -182,6 +185,11 @@ with open("grammar/src/genetic/evaluation/truth_tables.py", "w") as file:
     for k in range(1, 11):
         print(f"truth_table_{k} = {generate_truth_tables(k)}", file=file)
 
+def generate_input_values_with_step(values_range: Tuple[int, int], step: int, k: int) -> Tuple[Tuple[int, ...]]:
+    return tuple(product(range(values_range[0], values_range[1] + 1, step), repeat=k))
 
-def generate_input_values(values_range: Tuple[int, int]) -> Tuple[Tuple[int, int]]:
-    return tuple(product(range(values_range[0], values_range[1] + 1), repeat=2))
+print(generate_input_values_with_step((0, 9), 1, 2))
+print()
+print(generate_input_values_with_step((-9, 9), 1, 2))
+print()
+print(generate_input_values_with_step((-99, 99), 33, 10))
