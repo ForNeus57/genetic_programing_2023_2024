@@ -5,7 +5,7 @@ from enum import Enum, auto
 from random import choice
 from typing import Optional, Literal
 
-from src.genetic.individual.structure.limiters import HardLimiter
+from src.genetic.individual.structure.limiters import HardLimiter, AdaptiveLimiter
 
 
 class GenerationMethod(Enum):
@@ -17,8 +17,8 @@ class GenerationMethod(Enum):
 class Metadata:
     variables_scope: dict[str, Literal['int', 'bool']] = field(default_factory=dict)
     depth: int = 0
-    method: GenerationMethod = GenerationMethod.GROW
-    limiter = HardLimiter()
+    method: GenerationMethod = GenerationMethod.FULL
+    limiter = AdaptiveLimiter()
 
     mutation_node_probability: float = 0.05
 

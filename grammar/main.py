@@ -1,3 +1,5 @@
+from src.genetic.evaluation.evaluation import FitnessFunction1_1_A, FitnessFunction1_1_B, FitnessFunction1_1_C, \
+    FitnessFunction1_1_D, FitnessFunction1_1_E
 from src.genetic.evolution.evolve import Evolution
 from src.genetic.evolution.population import Population
 from src.genetic.individual.individual import Individual
@@ -23,10 +25,14 @@ def execute(inds: tuple[Individual]):
 
 def main():
     # seed(8)
-    # evolution: Evolution = Evolution(
-    #     fitness_functions['1.1.A'],
-    #     [tuple()],
-    # )
+    # import sys
+    # ind = Individual.from_random()
+    # print(sys.getsizeof(ind))
+    # print(sys.getsizeof(str(ind)))
+    evolution: Evolution = Evolution(
+        FitnessFunction1_1_E(),
+        [tuple()],
+    )
     # params = read_input_params("data/xmxp2.dat")
     # config = read_config("data/config.json")
     # data = read_input_data("data/xmxp2.dat", params["nvar"])
@@ -38,14 +44,14 @@ def main():
     # print(random_tree)
     # seed(8)
 
-    print("ind1")
-    ind = Individual.from_random()
-    print(ind)
-    # print(ind, len(ind))
-
-    print("mutation")
-    ind.mutate()
-    print(ind)
+    # print("ind1")
+    # ind = Individual.from_random()
+    # print(ind)
+    # # print(ind, len(ind))
+    #
+    # print("mutation")
+    # ind.mutate()
+    # print(ind)
     # size: int = 25_000
     # processes: int = 10
     #

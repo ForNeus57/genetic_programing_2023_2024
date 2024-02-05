@@ -23,7 +23,7 @@ class RandomLimiter(Limiter):
 @dataclass(slots=True)
 class HardLimiter(Limiter):
     iterations: int = field(default=0, init=False)
-    iterations_limit: int = 5
+    iterations_limit: int = 3
 
     def allow(self) -> bool:
         self.iterations += 1

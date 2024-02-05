@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from time import perf_counter
 
 from src.genetic.evolution.population import Population
+from src.genetic.interpreter.input_output import BufferInputOutputOperation
+from src.genetic.interpreter.interpreter import Interpreter
 
 
 @dataclass(slots=True)
@@ -16,7 +18,7 @@ class HistoryPoint:
 
     def __str__(self) -> str:
         return f'[{self.generation_number}]Best: {self.best}, Worst: {self.worst}, Average: {self.average}' \
-               f'\nBest program: {self.best_program}'
+               f'\nBest program: {self.best_program}\nProgram output: {Interpreter.interpret(self.best_program, BufferInputOutputOperation()).output}\n'
 
 
 @dataclass(slots=True)
@@ -43,5 +45,9 @@ class Statistics:
         )
 
         self.history.append(point)
-        print(point, f'Elapsed time: {perf_counter() - self.prev}')
+        print(point)
+        print('Elapsed time: ', perf_counter() - self.prev)
         self.prev = perf_counter()
+
+    def finished(self, epsilon: float | int) -> bool:
+        return self.history[-1].best <= epsilon

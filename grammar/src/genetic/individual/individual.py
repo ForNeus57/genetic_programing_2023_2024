@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from pickle import dump, load
 from typing import Callable, Literal, Optional, TypeVar
 
+from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import Program
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
@@ -38,10 +39,10 @@ class Individual:
 
         return output.output
 
-    def evaluate(self, fitness_function: Callable[[list], T], input_vector: tuple) -> T:
+    def evaluate(self, fitness_function: FitnessFunctionBase, input_vector: tuple) -> T:
         result_vector: list = self.execute(input_vector)
 
-        return fitness_function(result_vector)
+        return fitness_function.calculate_fitness(tuple(result_vector), input_vector)
 
     def mutate(self) -> None:
         self.program.mutate()
