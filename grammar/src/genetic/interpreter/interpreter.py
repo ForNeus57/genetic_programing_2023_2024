@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, Union, Final, Callable, TypeVar, final
 from functools import wraps
+from dataclasses import dataclass, field
 
 from antlr4 import FileStream, InputStream
 from antlr4.CommonTokenStream import CommonTokenStream
@@ -13,18 +14,18 @@ from src.antlr.MiniGPVisitor import MiniGPVisitor
 from src.antlr.ExceptionErrorListener import ExceptionErrorListener
 
 from src.genetic.interpreter.input_output import InputOutputOperation
-from src.genetic.interpreter.variables import Variable
 
 T = TypeVar('T')
 
 
 @final
+@dataclass(slots=True)
 class Interpreter(MiniGPVisitor):
-    def __init__(self, mode: InputOutputOperation, instructions_limit: int = 400) -> None:
-        self.variables: dict[str, Variable] = {}
-        self.mode: InputOutputOperation = mode
-        self.used_instructions: int = 0
-        self.instructions_limit: Final[int] = instructions_limit
+    mode: InputOutputOperation
+    instructions_limit: Final[int] = 400
+
+    variables: dict[str, int | bool] = field(default_factory=dict, init=False)
+    used_instructions: int = field(default=0, init=False)
 
     @staticmethod
     def limit(function: Callable):
@@ -65,9 +66,7 @@ class Interpreter(MiniGPVisitor):
             ;
         """
 
-        variable_name = ctx.VAR().getText()
-
-        self.variables[variable_name] = Variable('int', self.visit(ctx.expression()))
+        self.variables[ctx.VAR().getText()] = self.visit(ctx.expression())
 
     @limit
     def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext) -> None:
@@ -76,9 +75,7 @@ class Interpreter(MiniGPVisitor):
             BOOL_TYPE VAR ASSIGMENT_OPERATOR condition SEMICOLON
             ;
         """
-        variable_name = ctx.VAR().getText()
-
-        self.variables[variable_name] = Variable('bool', self.visit(ctx.condition()))
+        self.variables[ctx.VAR().getText()] = self.visit(ctx.condition())
 
     @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext) -> None:
@@ -89,25 +86,17 @@ class Interpreter(MiniGPVisitor):
         """
 
         variable_name = ctx.VAR().getText()
-        variable: Optional[Variable] = self.variables.get(variable_name)
+        variable_type = type(self.variables.get(variable_name))
 
-        if variable is None:
-            self.variables[variable_name] = Variable('int', self.mode.read('int'))
-            variable = self.variables[variable_name]
-
-        if variable.type == 'int' and ctx.condition() is not None:
-            value: int = int(self.visit(ctx.condition()))
-            variable.value = value
+        if variable_type is int and (condition := ctx.condition() is not None):
+            self.variables[variable_name] = int(self.visit(condition))
             return
 
-        if variable.type == 'bool' and ctx.expression() is not None:
-            value: bool = bool(self.visit(ctx.expression()))
-            variable.value = value
+        if variable_type is bool and (expression := ctx.expression() is not None):
+            self.variables[variable_name] = bool(self.visit(expression))
             return
 
-        value: Union[bool, int] = self.visit(ctx.getChild(2))
-
-        variable.value = value
+        self.variables[variable_name] = self.visit(ctx.getChild(2))
 
     @limit
     def visitIfStatement(self, ctx: MiniGPParser.IfStatementContext) -> None:
@@ -120,8 +109,8 @@ class Interpreter(MiniGPVisitor):
         if self.visit(ctx.condition()):
             self.visit(ctx.executionBlock(0))
 
-        elif ctx.executionBlock(1) is not None:
-            self.visit(ctx.executionBlock(1))
+        elif else_block := ctx.executionBlock(1) is not None:
+            self.visit(else_block)
 
     @limit
     def visitLoopStatement(self, ctx: MiniGPParser.LoopStatementContext) -> None:
@@ -146,15 +135,15 @@ class Interpreter(MiniGPVisitor):
         if ctx.WRITE() is not None:
             self.mode.write(self.visit(ctx.getChild(2)))
 
-        elif ctx.READ() is not None:
+        else:
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[Variable] = self.variables.get(variable_name)
+            variable: Optional[int | bool] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable('int', self.mode.read('int'))
-                variable = self.variables[variable_name]
+                self.variables[variable_name] = self.mode.read(int)
+                return
 
-            variable.value = self.mode.read(variable.type)
+            self.variables[variable_name] = self.mode.read(type(variable))
 
     @limit
     def visitExpression(self, ctx: MiniGPParser.ExpressionContext) -> int:
@@ -171,22 +160,21 @@ class Interpreter(MiniGPVisitor):
                 return int(ctx.INT().getText())
 
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[Variable] = self.variables.get(variable_name)
+            variable: Optional[int | bool] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable('int', self.mode.read('int'))
-                variable = self.variables[variable_name]
+                self.variables[variable_name] = self.mode.read(int)
+                return self.variables[variable_name]
 
-            if variable.type == 'bool':
-                return int(variable.value)
+            if type(variable) is bool:
+                return int(variable)
 
-            return variable.value
+            return variable
 
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
-        operator = ctx.EXPRESSION_OPERATOR().getText()
 
-        match operator:
+        match ctx.EXPRESSION_OPERATOR().getText():
             case '+':
                 return left + right
 
@@ -215,28 +203,27 @@ class Interpreter(MiniGPVisitor):
 
         if ctx.getChildCount() == 1:
             if ctx.BOOL() is not None:
-                return str(ctx.BOOL().getText()) == "true"
+                return str(ctx.BOOL().getText()) == 'true'
 
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[Variable] = self.variables.get(variable_name)
+            variable: Optional[int | bool] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = Variable('bool', self.mode.read('bool'))
-                variable = self.variables[variable_name]
+                self.variables[variable_name] = self.mode.read(bool)
+                return self.variables[variable_name]
 
-            if variable.type == 'int':
-                return bool(variable.value)
+            if type(variable) is int:
+                return bool(variable)
 
-            return variable.value
+            return variable
 
         if ctx.getChildCount() == 4:
             return not self.visit(ctx.condition(0))
 
         left = self.visit(ctx.getChild(1))
         right = self.visit(ctx.getChild(3))
-        operator = ctx.getChild(2).getText()
 
-        match operator:
+        match ctx.getChild(2).getText():
             case '<':
                 return left < right
 

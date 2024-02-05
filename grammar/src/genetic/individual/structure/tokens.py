@@ -5,7 +5,7 @@ from random import choice, randint
 from string import ascii_letters, digits
 from typing import ClassVar
 
-from src.genetic.individual.interfaces.node_types import Token
+from src.genetic.individual.structure.node_types import Token
 from src.genetic.individual.structure.limiters import RandomLimiter
 
 
@@ -41,6 +41,18 @@ class IntegerToken(Token):
 class VariableNameToken(Token):
     value: str
 
+    forbidden_names: ClassVar[set[str]] = frozenset({
+        'int',
+        'bool',
+        'read',
+        'write',
+        'if',
+        'else',
+        'while',
+        'true',
+        'false',
+    })
+
     @classmethod
     def from_random(cls) -> VariableNameToken:
         name: str = cls._generate_random_name()
@@ -53,7 +65,7 @@ class VariableNameToken(Token):
         generator: RandomLimiter = RandomLimiter()
         full_character_set = ascii_letters + digits + '_'
 
-        while generator.allow():
+        while generator.allow() or output in cls.forbidden_names:
             output += choice(full_character_set)
 
         return output
