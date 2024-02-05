@@ -21,7 +21,6 @@ class Metadata:
     limiter = HardLimiter()
 
     mutation_node_probability: float = 0.05
-    crossover_probability: float = 0.5
 
     max_depth: int = 2
 

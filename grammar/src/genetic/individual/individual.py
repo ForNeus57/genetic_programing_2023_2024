@@ -38,12 +38,10 @@ class Individual:
 
         return output.output
 
-    def evaluate(self, fitness_function: Callable[[tuple, list], T],
-                 input_vector: tuple,
-                 model_vector: tuple) -> T:
+    def evaluate(self, fitness_function: Callable[[list], T], input_vector: tuple) -> T:
         result_vector: list = self.execute(input_vector)
 
-        return fitness_function(model_vector, result_vector)
+        return fitness_function(result_vector)
 
     def mutate(self) -> None:
         self.program.mutate()
