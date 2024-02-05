@@ -207,7 +207,7 @@ with open("grammar/src/genetic/evaluation/generated/input_values_for_1_2_C_1_2_D
     print(f"input_values = {generate_input_values_with_step((-9999, 9999), 333, 2)}", file=file)
 
 import random
-# funkcja która dla danego k zwraca 500 losowych k-elementowych krotek z danego zakresu
+
 def generate_input_values_for_k(k: int, values_range: Tuple[int, int]) -> Tuple[Tuple[int, ...]]:
     return tuple(tuple(random.randint(values_range[0], values_range[1]) for _ in range(k)) for _ in range(500))
 
@@ -218,12 +218,9 @@ with open("grammar/src/genetic/evaluation/generated/input_values_for_1_4_A.py", 
     print("", file=file)
     print(f"input_values = {generate_input_values_for_k(10, (-99, 99))}", file=file)
 
-# 1.4.B Program powinien odczytać na początek z wejścia pierwszą liczbę (ma być to wartość nieujemna) a następnie tyle liczb (całkowitych) jaka jest wartość pierwszej odczytanej liczby i zwrócić na wyjściu (jedynie) ich średnią arytmetyczną zaokrągloną do pełnej liczby całkowitej (do średniej nie jest wliczana pierwsza odczytana liczba, która mówi z ilu liczb chcemy obliczyć średnią). Na wejściu mogą być tylko całkowite liczby w zakresie [-99,99], pierwsza liczba może być tylko w zakresie [0,99].
-# funkcja zwracająca 500 losowych k-elementowych krotek z danego zakresu
 def generate_input_values_for_1_4_B() -> Tuple[Tuple[int, ...]]:
     first_number = random.randint(0, 99)
     return tuple((first_number,) + tuple(random.randint(-99, 99) for _ in range(first_number)) for _ in range(500))
-    
 
 with open("grammar/src/genetic/evaluation/generated/input_values_for_1_4_B.py", "w") as file:
     print("from typing import Tuple", file=file)
@@ -232,3 +229,34 @@ with open("grammar/src/genetic/evaluation/generated/input_values_for_1_4_B.py", 
     print("", file=file)
     print(f"input_values = {generate_input_values_for_1_4_B()}", file=file)
 
+def generate_input_values_for_B_1() -> Tuple[Tuple[int, int, int]]:
+    return tuple((random.randint(0, 99), random.randint(0, 99), random.randint(0, 99)) for _ in range(500))
+
+with open("grammar/src/genetic/evaluation/generated/input_values_for_B_1.py", "w") as file:
+    print("from typing import Tuple", file=file)
+    print("", file=file)
+    print("input_values = Tuple[Tuple[int, int, int], ...]", file=file)
+    print("", file=file)
+    print(f"input_values = {generate_input_values_for_B_1()}", file=file)
+
+def generate_input_values_for_B_21() -> Tuple[Tuple[int, ...]]:
+    return tuple(tuple(random.randint(-99, 99) for _ in range(random.randint(1, 10))) for _ in range(500))
+
+with open("grammar/src/genetic/evaluation/generated/input_values_for_B_21.py", "w") as file:
+    print("from typing import Tuple", file=file)
+    print("", file=file)
+    print("input_values = Tuple[Tuple[int, ...], ...]", file=file)
+    print("", file=file)
+    print(f"input_values = {generate_input_values_for_B_21()}", file=file)
+
+def generate_input_values_for_B_28() -> Tuple[Tuple[int, int, int, int]]:
+    return tuple((random.randint(-99, 99), random.randint(-99, 99), random.randint(-99, 99), random.randint(-99, 99)) for _ in range(500))
+
+with open("grammar/src/genetic/evaluation/generated/input_values_for_B_28.py", "w") as file:
+    print("from typing import Tuple", file=file)
+    print("", file=file)
+    print("input_values = Tuple[Tuple[int, int, int, int], ...]", file=file)
+    print("", file=file)
+    print(f"input_values = {generate_input_values_for_B_28()}", file=file)
+
+    
