@@ -9,7 +9,6 @@ from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import IOStatement
 from src.genetic.interpreter.input_output import BufferInputOutputOperation, ConsoleInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
-from src.genetic.evaluation.evaluation import fitness_functions
 
 
 def execute(inds: tuple[Individual]):
@@ -23,11 +22,11 @@ def execute(inds: tuple[Individual]):
             print("Error!", error, str(ind))
 
 def main():
-    seed(8)
-    evolution: Evolution = Evolution(
-        fitness_functions['1.1.A'],
-        [tuple()],
-    )
+    # seed(8)
+    # evolution: Evolution = Evolution(
+    #     fitness_functions['1.1.A'],
+    #     [tuple()],
+    # )
     # params = read_input_params("data/xmxp2.dat")
     # config = read_config("data/config.json")
     # data = read_input_data("data/xmxp2.dat", params["nvar"])
@@ -39,11 +38,14 @@ def main():
     # print(random_tree)
     # seed(8)
 
-    # print("ind1")
-    # ind = Individual.from_random()
+    print("ind1")
+    ind = Individual.from_random()
+    print(ind)
     # print(ind, len(ind))
 
-    # print("ind2")
+    print("mutation")
+    ind.mutate()
+    print(ind)
     # size: int = 25_000
     # processes: int = 10
     #

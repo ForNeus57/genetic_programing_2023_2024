@@ -5,7 +5,8 @@ import inspect
 from copy import deepcopy
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from random import choice, randint
+from math import ceil
+from random import choice, randint, random
 from types import SimpleNamespace
 from typing import Union, Optional, Tuple
 
@@ -103,7 +104,11 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        choice(self.statements).mutate()
+        for _ in range(len(self.statements)):
+            choice(self.statements).mutate()
+
+        if random() < 0.6:
+            self.statements.append(self.generate_random_body_element(self.meta))
 
     def crossover(self, other: ExecutionBlock) -> None:
         max_index: int = min(len(self.statements), len(other.statements))
@@ -113,7 +118,7 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
         start_index: int = randint(1, max_index - 1)
 
         self.statements[start_index: max_index], other.statements[start_index: max_index] = \
-            other.statements[start_index: max_index], self.statements[start_index: max_index]
+            deepcopy(other.statements[start_index: max_index]), deepcopy(self.statements[start_index: max_index])
 
     def __str__(self) -> str:
         tabs: str = '\t' * (self.meta.depth + 1)
@@ -159,7 +164,10 @@ class Assigment(Mutable, RestrictedRandomize):
         return output
 
     def mutate(self) -> None:
-        pass
+        if random() < 0.5:
+            self.name = VariableNameToken(self.meta.get_random_name(self.meta.get_variable(self.name.value)))
+        else:
+            self.assigment_value.mutate()
 
     def __str__(self) -> str:
         return f'{self.name} = {self.assigment_value};'
@@ -200,7 +208,17 @@ class IfStatement(Mutable, RestrictedRandomize):
                 return [ExecutionBlock, None]
 
     def mutate(self) -> None:
-        pass
+        if random() < 0.3:
+            self.condition = Condition.from_random(Metadata(self.meta.variables_scope, 0))
+        else:
+            self.body.mutate()
+
+        if self.else_statement is not None and random() < 0.5:
+            self.else_statement.mutate()
+        elif self.else_statement is None and random() < 0.5:
+            self.else_statement = ExecutionBlock.from_random(
+                Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1)
+            )
 
     def __str__(self) -> str:
         base: str = f'if ({self.condition}) {self.body}'
@@ -232,7 +250,10 @@ class LoopStatement(Mutable, RestrictedRandomize):
         return cls(meta, condition, body)
 
     def mutate(self) -> None:
-        pass
+        if random() < 0.3:
+            self.condition = Condition.from_random(Metadata(self.meta.variables_scope, 0))
+        else:
+            self.body.mutate()
 
     def __str__(self):
         return f'while ({self.condition}) {self.body}'
@@ -288,7 +309,19 @@ class IOStatement(Mutable, RestrictedRandomize):
         return cls(meta, io_type, body)
 
     def mutate(self) -> None:
-        pass
+        if random() < 0.5:
+            #   Change IO type
+            self.io_type = IOType.get_opposite(self.io_type)
+            if self.io_type == IOType.READ:
+                self.body = VariableNameToken(self.meta.get_random_name())
+            else:
+                self.body = choice((Condition, Expression)).from_random(Metadata(self.meta.variables_scope, 0))
+        else:
+            #   Change body
+            if self.io_type == IOType.READ:
+                self.body = VariableNameToken(self.meta.get_random_name())
+            else:
+                self.body.mutate()
 
     def __str__(self) -> str:
         return f'{self.io_type}({self.body});'
@@ -317,7 +350,10 @@ class IntegerDeclaration(Mutable, RestrictedRandomize):
         return cls(meta, name, expression)
 
     def mutate(self) -> None:
-        pass
+        if random() < 0.5:
+            self.name = VariableNameToken(self.meta.get_random_name('int'))
+        else:
+            self.expression.mutate()
 
     def __str__(self) -> str:
         return f'int {self.name} = {self.expression};'
@@ -341,7 +377,10 @@ class BooleanDeclaration(Mutable, RestrictedRandomize):
         return cls(meta, name, condition)
 
     def mutate(self) -> None:
-        pass
+        if random() < 0.5:
+            self.name = VariableNameToken(self.meta.get_random_name('bool'))
+        else:
+            self.condition.mutate()
 
     def __str__(self) -> str:
         return f'bool {self.name} = {self.condition};'
@@ -412,7 +451,32 @@ class Condition(Mutable, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        pass
+        match self.body:
+            case (Expression() as left, _, Expression() as right):
+                if random() < 0.5:
+                    left.mutate()
+                else:
+                    right.mutate()
+                self.body = (left, choice(('==', '!=', '>', '<', '>=', '<=')), right)
+
+            case (Condition() as left, _, Condition() as right):
+                if random() < 0.5:
+                    left.mutate()
+                else:
+                    right.mutate()
+                self.body = (left, choice(('&&', '||')), right)
+
+            case Condition() as value:
+                if random() < 0.5:
+                    value.mutate()
+                else:
+                    self.body = self.body.body
+
+            case VariableNameToken():
+                self.body = self.meta.get_random_name('bool')
+
+            case BooleanToken() as value:
+                self.body = value.from_random()
 
     def __str__(self) -> str:
         match self.body:
@@ -490,7 +554,19 @@ class Expression(Mutable, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        pass
+        match self.body:
+            case (Expression() as left, _, Expression() as right):
+                if random() < 0.5:
+                    left.mutate()
+                else:
+                    right.mutate()
+                self.body = (left, choice(('+', '-', '*', '/')), right)
+
+            case VariableNameToken():
+                self.body = self.meta.get_random_name('int')
+
+            case IntegerToken() as value:
+                self.body = value.from_random()
 
     def __str__(self) -> str:
         match self.body:

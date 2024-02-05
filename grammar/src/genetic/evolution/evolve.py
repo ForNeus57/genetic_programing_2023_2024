@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from multiprocessing import Pool
+from time import perf_counter
 from typing import Callable, TypeVar, ClassVar
 from random import random
 
@@ -14,7 +15,7 @@ T = TypeVar('T', float, int)
 
 @dataclass(slots=True)
 class Evolution:
-    fitness_function: Callable[[tuple, list], T]
+    fitness_grader: Callable[[list], T]
     input_vector: list[tuple[int | bool]]
     generations: int = 100
     process_pool_number: int = 10
@@ -29,13 +30,16 @@ class Evolution:
     def __post_init__(self):
         self.process_pool = Pool(self.process_pool_number)
         self.statistics = Statistics()
+        start = perf_counter()
         self.population = Population.from_ramped_half_and_half(25_000)
+        print(perf_counter() - start)
 
         with self.process_pool as pool:
             self.fitness = tuple(
                 pool.map(
                     Evolution.calculate_fitness,
-                    map(lambda x: (x, self.input_vector, self.fitness_function), self.population.individuals),
+                    map(lambda x: (x, self.input_vector, self.fitness_grader), self.population.individuals),
+                    chunksize=(len(self.population.individuals) // self.process_pool_number) + 1
                 )
             )
 
@@ -54,8 +58,6 @@ class Evolution:
                     pass
                 else:
                     pass
-
-
 
         return False
 
