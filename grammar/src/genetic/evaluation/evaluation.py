@@ -38,22 +38,23 @@ B.28 Given four integers, print the smallest of them.
 
 from typing import Tuple, Union, Optional, Callable
 from abc import ABC, abstractmethod
-
-from typing import Tuple, Union, Optional, Callable
-from abc import ABC, abstractmethod
+from itertools import product
 
 class FitnessFunctionBase(ABC):
-    def convert_output(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...]]) -> Tuple[int, ...]:
+    def convert_output(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None]) -> Tuple[int, ...]:
+        if gp_output is None:
+            return tuple()
         return tuple(int(x) if not isinstance(x, bool) else int(x) for x in gp_output)
     
-    def calculate_fitness(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...]], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+    def calculate_fitness(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if gp_output is None or len(gp_output) == 0:  # Sprawdza, czy wyjście jest puste lub None tylko raz
+            return 9999999  # Zwraca dużą wartość kary dla pustego wyjścia
         converted_output = self.convert_output(gp_output)
         return self._calculate_fitness_impl(converted_output, gp_input)
     
     @abstractmethod
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         pass
-
 
 class FitnessFunction1_1_A(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
@@ -168,3 +169,19 @@ def get_fitness_function_by_name(name: str) -> Callable:
 
 def get_fitness_function(name: str) -> FitnessFunctionBase:
     return get_fitness_function_by_name(name)()
+
+def generate_truth_tables(k: int) -> Tuple[Tuple[bool, ...], ...]:
+    return tuple(product((True, False), repeat=k))
+
+with open("grammar/src/genetic/evaluation/truth_tables.py", "w") as file:
+    print("from typing import Tuple", file=file)
+    print("", file=file)
+    for k in range(1, 11):
+        print(f"truth_table_{k} = Tuple[Tuple[int, ...], ...]", file=file)
+    print("", file=file)
+    for k in range(1, 11):
+        print(f"truth_table_{k} = {generate_truth_tables(k)}", file=file)
+
+
+def generate_input_values(values_range: Tuple[int, int]) -> Tuple[Tuple[int, int]]:
+    return tuple(product(range(values_range[0], values_range[1] + 1), repeat=2))
