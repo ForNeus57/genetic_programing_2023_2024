@@ -48,7 +48,7 @@ class FitnessFunctionBase(ABC):
     
     def calculate_fitness(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         if gp_output is None or len(gp_output) == 0: 
-            return 9999999
+            return 100
         converted_output = self.convert_output(gp_output)
         return self._calculate_fitness_impl(converted_output, gp_input)
     
@@ -81,69 +81,69 @@ class FitnessFunction1_1_E(FitnessFunctionBase):
     
 class FitnessFunction1_1_F(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return 0 if len(gp_output) == 1 and gp_output[0] == 1 else 9999999
+        return 0 if len(gp_output) == 1 and gp_output[0] == 1 else 100
     
 class FitnessFunction1_2_A(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = sum(gp_input[:2])
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_2_B(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = sum(gp_input[:2])
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_2_C(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = sum(gp_input[:2])
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_2_D(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = gp_input[0] - gp_input[1]
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_2_E(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = gp_input[0] * gp_input[1]
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_3_A(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = max(gp_input[:2])
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_3_B(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = max(gp_input[:2])
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_4_A(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = int(sum(gp_input[:10]) / 10)
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunction1_4_B(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         inputs = gp_input[0]
         expected_result = int(sum(gp_input[1:inputs + 1]) / inputs)
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 class FitnessFunctionB_1(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         float_to_add = gp_input[1] + (gp_input[2] / 10 ** len(str(gp_input[2])))
         expected_result = gp_input[0] + float_to_add
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
         
 class FitnessFunctionB_21(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = tuple(x if x >= 0 else 0 for x in gp_input)
-        return sum(abs(o - e) for o, e in zip(gp_output, expected_result)) if len(gp_output) == len(expected_result) else 9999999
+        return sum(abs(o - e) for o, e in zip(gp_output, expected_result)) if len(gp_output) == len(expected_result) else 100
     
 class FitnessFunctionB_28(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = min(gp_input)
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 100
     
 def get_fitness_function_by_name(name: str) -> Callable:
     return {
