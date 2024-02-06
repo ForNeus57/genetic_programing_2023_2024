@@ -1,55 +1,39 @@
 from abc import ABC, abstractmethod
 from itertools import cycle
-from typing import Literal, Union, Optional
+from typing import Optional
 
 
 class InputOutputOperation(ABC):
 
     @abstractmethod
-    def read(self, hint: type) -> Union[int, bool]:
+    def read(self) -> int:
         pass
 
     @abstractmethod
-    def write(self, value: Union[int, bool]) -> None:
+    def write(self, value: int) -> None:
         pass
 
 
 class ConsoleInputOutputOperation(InputOutputOperation):
 
-    def read(self, hint: type) -> Union[int, bool]:
-        if hint is bool:
-            return bool(input())
-        else:
-            return int(input())
+    def read(self) -> int:
+        return int(input())
 
-    def write(self, value: Union[int, bool]) -> None:
+    def write(self, value: int) -> None:
         print(value)
 
 
 class BufferInputOutputOperation(InputOutputOperation):
-    def __init__(self, input_buffer: Optional[tuple[Union[int, bool]]] = None):
+    def __init__(self, input_buffer: Optional[tuple[int, ...]] = None):
         if input_buffer is None:
-            input_buffer = tuple()
+            input_buffer = (1, )
 
-        only_bools: list[bool] = [*filter(lambda x: type(x) is bool, input_buffer)]
-        only_ints: list[int] = [*filter(lambda x: type(x) is int, input_buffer)]
+        self.input_ints: cycle[int] = cycle(input_buffer)
 
-        if len(only_bools) == 0:
-            only_bools.append(True)
+        self.output: list[int] = []
 
-        if len(only_ints) == 0:
-            only_ints.append(1)
-
-        self.input_bools: cycle[bool] = cycle(only_bools)
-        self.input_ints: cycle[int] = cycle(only_ints)
-
-        self.output: list[Union[int, bool]] = []
-
-    def read(self, hint: type) -> Union[int, bool]:
-        if hint is bool:
-            return next(self.input_bools)
-
+    def read(self) -> int:
         return next(self.input_ints)
 
-    def write(self, value: Union[int, bool]) -> None:
+    def write(self, value: int) -> None:
         self.output.append(value)

@@ -75,28 +75,16 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
                         LoopStatement,
                     ]
 
-                output: list = [
-                    IntegerDeclaration,
-                    BooleanDeclaration,
+                return [
+                    Assigment,
                     IOStatement,
                 ]
-                if not meta.is_empty():
-                    output.extend([
-                        Assigment,
-                    ])
-
-                return output
 
             case GenerationMethod.GROW:
                 output: list = [
-                    IntegerDeclaration,
-                    BooleanDeclaration,
+                    Assigment,
                     IOStatement,
                 ]
-                if not meta.is_empty():
-                    output.extend([
-                        Assigment,
-                    ])
 
                 if meta.is_depth_in_limits():
                     output.extend([
@@ -107,11 +95,11 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        for _ in range(len(self.statements)):
+        for _ in range(len(self.statements) * 2):
             choice(self.statements).mutate()
 
-        if random() < (1. / len(self.statements)):
-            self.statements.append(self.generate_random_body_element(self.meta))
+        # if random() < ((1. / len(self.statements)) / 2.):
+        #     self.statements.append(self.generate_random_body_element(self.meta))
         # else:
         #     if len(self.statements) > 2:
         #         self.statements.pop(randint(0, len(self.statements) - 1))
@@ -138,40 +126,22 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
 @dataclass(slots=True)
 class Assigment(Mutable, RestrictedRandomize):
     name: VariableNameToken
-    assigment_value: AssigmentValueType
+    assigment_value: Expression
 
     @classmethod
     def from_random(cls, meta: Metadata) -> Assigment:
-        constructor = choice(cls.generate_choices(meta))
-        value: AssigmentValueType = constructor.from_random(Metadata(meta.variables_scope, 0))
-
-        match constructor:
-            case self_namespace.Expression:
-                name: VariableNameToken = VariableNameToken(meta.get_random_name('int'))
-
-            case self_namespace.Condition | _:
-                name: VariableNameToken = VariableNameToken(meta.get_random_name('bool'))
+        value: Expression = Expression.from_random(Metadata(meta.variables_scope, 0))
+        if random() < 0.5 and not meta.is_empty():
+            name: VariableNameToken = VariableNameToken(meta.get_random_name())
+        else:
+            name: VariableNameToken = VariableNameToken.from_random()
+            meta.variables_scope.add(name.value)
 
         return cls(meta, name, value)
 
-    @classmethod
-    def generate_choices(cls, meta: Metadata) -> list:
-        output: list = []
-        if meta.has_boolean_variables():
-            output.extend([
-                Condition,
-            ])
-
-        if meta.has_integer_variables():
-            output.extend([
-                Expression,
-            ])
-
-        return output
-
     def mutate(self) -> None:
         if random() < 0.5:
-            self.name = VariableNameToken(self.meta.get_random_name(self.meta.get_variable(self.name.value)))
+            self.name = VariableNameToken(self.meta.get_random_name())
         else:
             self.assigment_value.mutate()
 
@@ -279,12 +249,8 @@ class IOType(Enum):
     def from_random(cls, meta: Metadata) -> IOType:
         options: list = [
             cls.WRITE,
+            cls.READ,
         ]
-
-        if not meta.is_empty():
-            options.extend([
-                cls.READ,
-            ])
 
         return choice(options)
 
@@ -299,18 +265,21 @@ class IOType(Enum):
 @dataclass(slots=True)
 class IOStatement(Mutable, RestrictedRandomize):
     io_type: IOType
-    body: VariableNameToken | Condition | Expression
+    body: VariableNameToken | Expression
 
     @classmethod
     def from_random(cls, meta: Metadata) -> IOStatement:
         io_type: IOType = IOType.from_random(meta)
         match io_type:
             case IOType.READ:
-                body: VariableNameToken = VariableNameToken(meta.get_random_name())
+                if random() < 0.5 and not meta.is_empty():
+                    body: VariableNameToken = VariableNameToken(meta.get_random_name())
+                else:
+                    body: VariableNameToken = VariableNameToken.from_random()
+                    meta.variables_scope.add(body.value)
 
             case IOType.WRITE | _:
-                body: Condition | Expression = \
-                    choice((Condition, Expression)).from_random(Metadata(meta.variables_scope, 0))
+                body: Expression = Expression.from_random(Metadata(meta.variables_scope, 0))
 
         return cls(meta, io_type, body)
 
@@ -332,60 +301,6 @@ class IOStatement(Mutable, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class IntegerDeclaration(Mutable, RestrictedRandomize):
-    name: VariableNameToken
-    expression: Expression
-
-    @classmethod
-    def from_random(cls, meta: Metadata) -> IntegerDeclaration:
-        name: VariableNameToken = VariableNameToken.from_random()
-        expression: Expression = Expression.from_random(Metadata(meta.variables_scope, 0))
-
-        meta.variables_scope[name.value] = 'int'
-
-        return cls(meta, name, expression)
-
-    def mutate(self) -> None:
-        if random() < 0.5:
-            self.name = VariableNameToken(self.meta.get_random_name('int'))
-        else:
-            self.expression.mutate()
-
-    def __str__(self) -> str:
-        return f'int {self.name} = {self.expression};'
-
-    def __len__(self) -> int:
-        return len(self.expression) + 1
-
-
-@dataclass(slots=True)
-class BooleanDeclaration(Mutable, RestrictedRandomize):
-    name: VariableNameToken
-    condition: Condition
-
-    @classmethod
-    def from_random(cls, meta: Metadata) -> BooleanDeclaration:
-        name: VariableNameToken = VariableNameToken.from_random()
-        condition: Condition = Condition.from_random(Metadata(meta.variables_scope, 0))
-
-        meta.variables_scope[name.value] = 'bool'
-
-        return cls(meta, name, condition)
-
-    def mutate(self) -> None:
-        if random() < 0.5:
-            self.name = VariableNameToken(self.meta.get_random_name('bool'))
-        else:
-            self.condition.mutate()
-
-    def __str__(self) -> str:
-        return f'bool {self.name} = {self.condition};'
-
-    def __len__(self) -> int:
-        return len(self.condition) + 1
-
-
-@dataclass(slots=True)
 class Condition(Mutable, RestrictedRandomize):
     body: ConditionType
 
@@ -401,9 +316,6 @@ class Condition(Mutable, RestrictedRandomize):
             case self_namespace.Condition as option:
                 return cls(meta, option.from_random(Metadata(meta.variables_scope, meta.depth + 1)))
 
-            case self_namespace.VariableNameToken:
-                return cls(meta, VariableNameToken(meta.get_random_name('bool')))
-
             case self_namespace.BooleanToken as option:
                 return cls(meta, option.from_random())
 
@@ -418,25 +330,14 @@ class Condition(Mutable, RestrictedRandomize):
                         Condition,
                     ]
 
-                output: list = [
+                return [
                     BooleanToken
                 ]
-                if not meta.is_empty() and meta.has_boolean_variables():
-                    output.extend([
-                        VariableNameToken,
-                    ])
-
-                return output
 
             case GenerationMethod.GROW:
                 output: list = [
                     BooleanToken
                 ]
-                if not meta.is_empty() and meta.has_boolean_variables():
-                    output.extend([
-                        VariableNameToken,
-                    ])
-
                 if meta.is_depth_in_limits():
                     output.extend([
                         (Expression, choice(('==', '!=', '>', '<', '>=', '<=')), Expression),
@@ -467,10 +368,6 @@ class Condition(Mutable, RestrictedRandomize):
                     value.mutate()
                 else:
                     self.body = self.body.body
-
-            case VariableNameToken():
-                if self.meta.has_boolean_variables():
-                    self.body = self.meta.get_random_name('bool')
 
             case BooleanToken() as value:
                 self.body = value.from_random()
@@ -512,7 +409,7 @@ class Expression(Mutable, RestrictedRandomize):
                 return cls(meta, (left.from_random(deeper_meta), operation, right.from_random(deeper_meta)))
 
             case self_namespace.VariableNameToken:
-                return cls(meta, VariableNameToken(meta.get_random_name('int')))
+                return cls(meta, VariableNameToken(meta.get_random_name()))
 
             case self_namespace.IntegerToken as option:
                 return cls(meta, option.from_random())
@@ -527,7 +424,7 @@ class Expression(Mutable, RestrictedRandomize):
                     ]
 
                 output: list = [IntegerToken]
-                if not meta.is_empty() and meta.has_integer_variables():
+                if not meta.is_empty():
                     output.extend([
                         VariableNameToken,
                     ])
@@ -538,7 +435,7 @@ class Expression(Mutable, RestrictedRandomize):
                 output: list = [
                     IntegerToken,
                 ]
-                if not meta.is_empty() and meta.has_integer_variables():
+                if not meta.is_empty():
                     output.extend([
                         VariableNameToken,
                     ])
@@ -560,8 +457,7 @@ class Expression(Mutable, RestrictedRandomize):
                 self.body = (left, choice(('+', '-', '*', '/')), right)
 
             case VariableNameToken():
-                if self.meta.has_integer_variables():
-                    self.body = self.meta.get_random_name('int')
+                self.body = self.meta.get_random_name()
 
             case IntegerToken() as value:
                 self.body = value.from_random()
@@ -586,9 +482,7 @@ class Expression(Mutable, RestrictedRandomize):
 ExpressionType = Union[Tuple[Expression, str, Expression], VariableNameToken, IntegerToken]
 ConditionType = Union[
     Tuple[Condition, str, Condition], Tuple[Expression, str, Expression], Condition, VariableNameToken, BooleanToken]
-StatementBodyTypes = Union[IntegerDeclaration, BooleanDeclaration, Assigment, IfStatement, LoopStatement, IOStatement]
-DeclarationTypes = Union[IntegerDeclaration, BooleanDeclaration]
-AssigmentValueType = Union[Expression, Condition]
+StatementBodyTypes = Union[Assigment, IfStatement, LoopStatement, IOStatement]
 
 self_namespace = SimpleNamespace(**{
     cls.__name__: cls for _, cls in inspect.getmembers(

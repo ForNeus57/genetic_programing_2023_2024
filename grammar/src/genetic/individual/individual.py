@@ -65,8 +65,8 @@ class Individual:
     def tournament(individuals_join_fitness: list, mode: Literal['min', 'max']) \
             -> tuple[int, tuple[int | float, Individual]]:
         if mode == 'min':
-            return min(individuals_join_fitness, key=operator.itemgetter(0))
+            return min(individuals_join_fitness, key=lambda x: x[1][0])
         elif mode == 'max':
-            return max(individuals_join_fitness, key=operator.itemgetter(0))
+            return max(individuals_join_fitness, key=lambda x: x[1][0])
 
         raise ValueError(f'Unknown mode: {mode}')

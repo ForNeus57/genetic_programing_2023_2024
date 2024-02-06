@@ -5,19 +5,11 @@ program:
 	;
 
 executionBlock:
-	LBRACE (integerDeclaration | booleanDeclaration | assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
-	;
-
-integerDeclaration:
-	INT_TYPE VAR ASSIGMENT_OPERATOR expression SEMICOLON
-	;
-
-booleanDeclaration:
-	BOOL_TYPE VAR ASSIGMENT_OPERATOR condition SEMICOLON
+	LBRACE (assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
 	;
 
 assignment:
-	VAR ASSIGMENT_OPERATOR (expression | condition) SEMICOLON
+	VAR ASSIGMENT_OPERATOR expression SEMICOLON
 	;
 
 ifStatement:
@@ -30,7 +22,7 @@ loopStatement:
 
 ioStatement:
 	READ LPAREN VAR RPAREN SEMICOLON
-	|   WRITE LPAREN (expression | condition) RPAREN SEMICOLON
+	|   WRITE LPAREN expression RPAREN SEMICOLON
 	;
 
 expression:
@@ -44,7 +36,6 @@ condition:
 	|   LPAREN condition CONDITION_OPERATOR condition RPAREN
 	|   NEGATION_OPERATOR LPAREN condition RPAREN
 	|   BOOL
-	|   VAR
 	;
 
 LPAREN: '(';
@@ -57,8 +48,6 @@ EXPRESSION_OPERATOR: ('*' | '/' | '+' | '-');
 EXPRESSION_COMPARISON_OPERATOR: ('>' | '<' | '==' | '!=' | '>=' | '<=');
 CONDITION_OPERATOR: ('&&' | '||');
 NEGATION_OPERATOR: '!';
-INT_TYPE: 'int';
-BOOL_TYPE: 'bool';
 READ: 'read';
 WRITE: 'write';
 WHILE: 'while';

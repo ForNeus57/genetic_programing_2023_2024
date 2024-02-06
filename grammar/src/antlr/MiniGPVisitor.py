@@ -19,16 +19,6 @@ class MiniGPVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MiniGPParser#integerDeclaration.
-    def visitIntegerDeclaration(self, ctx:MiniGPParser.IntegerDeclarationContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MiniGPParser#booleanDeclaration.
-    def visitBooleanDeclaration(self, ctx:MiniGPParser.BooleanDeclarationContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by MiniGPParser#assignment.
     def visitAssignment(self, ctx:MiniGPParser.AssignmentContext):
         return self.visitChildren(ctx)

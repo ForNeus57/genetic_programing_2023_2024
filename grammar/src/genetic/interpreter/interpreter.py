@@ -22,9 +22,9 @@ T = TypeVar('T')
 @dataclass(slots=True)
 class Interpreter(MiniGPVisitor):
     mode: InputOutputOperation
-    instructions_limit: Final[int] = 1000
+    instructions_limit: Final[int] = 500
 
-    variables: dict[str, int | bool] = field(default_factory=dict, init=False)
+    variables: dict[str, int] = field(default_factory=dict, init=False)
     used_instructions: int = field(default=0, init=False)
 
     @staticmethod
@@ -46,57 +46,25 @@ class Interpreter(MiniGPVisitor):
            executionBlock EOF
            ;
         """
-
         self.visit(ctx.executionBlock())
 
     @limit
     def visitExecutionBlock(self, ctx: MiniGPParser.ExecutionBlockContext) -> None:
         """
         executionBlock:
-            LBRACE (integerDeclaration | booleanDeclaration | assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
+            LBRACE (assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
             ;
         """
         self.visitChildren(ctx)
 
     @limit
-    def visitIntegerDeclaration(self, ctx: MiniGPParser.IntegerDeclarationContext) -> None:
-        """
-        integerDeclaration:
-            INT_TYPE VAR ASSIGMENT_OPERATOR expression SEMICOLON
-            ;
-        """
-
-        self.variables[ctx.VAR().getText()] = self.visit(ctx.expression())
-
-    @limit
-    def visitBooleanDeclaration(self, ctx: MiniGPParser.BooleanDeclarationContext) -> None:
-        """
-        booleanDeclaration:
-            BOOL_TYPE VAR ASSIGMENT_OPERATOR condition SEMICOLON
-            ;
-        """
-        self.variables[ctx.VAR().getText()] = self.visit(ctx.condition())
-
-    @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext) -> None:
         """
         assignment:
-            VAR ASSIGMENT_OPERATOR (expression | condition) SEMICOLON
+            VAR ASSIGMENT_OPERATOR expression SEMICOLON
             ;
         """
-
-        variable_name = ctx.VAR().getText()
-        variable_type = type(self.variables.get(variable_name))
-
-        if variable_type is int and (condition := ctx.condition()) is not None:
-            self.variables[variable_name] = int(self.visit(condition))
-            return
-
-        if variable_type is bool and (expression := ctx.expression()) is not None:
-            self.variables[variable_name] = bool(self.visit(expression))
-            return
-
-        self.variables[variable_name] = self.visit(ctx.getChild(2))
+        self.variables[ctx.VAR().getText()] = self.visit(ctx.getChild(2))
 
     @limit
     def visitIfStatement(self, ctx: MiniGPParser.IfStatementContext) -> None:
@@ -128,7 +96,7 @@ class Interpreter(MiniGPVisitor):
         """
         ioStatement:
             READ LPAREN VAR RPAREN SEMICOLON
-            |   WRITE LPAREN (expression | condition) RPAREN SEMICOLON
+            |   WRITE LPAREN expression RPAREN SEMICOLON
             ;
         """
 
@@ -137,13 +105,7 @@ class Interpreter(MiniGPVisitor):
 
         else:
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[int | bool] = self.variables.get(variable_name)
-
-            if variable is None:
-                self.variables[variable_name] = self.mode.read(int)
-                return
-
-            self.variables[variable_name] = self.mode.read(type(variable))
+            self.variables[variable_name] = self.mode.read()
 
     @limit
     def visitExpression(self, ctx: MiniGPParser.ExpressionContext) -> int:
@@ -160,14 +122,11 @@ class Interpreter(MiniGPVisitor):
                 return int(ctx.INT().getText())
 
             variable_name: str = ctx.VAR().getText()
-            variable: Optional[int | bool] = self.variables.get(variable_name)
+            variable: Optional[int] = self.variables.get(variable_name)
 
             if variable is None:
-                self.variables[variable_name] = self.mode.read(int)
+                self.variables[variable_name] = self.mode.read()
                 return self.variables[variable_name]
-
-            if type(variable) is bool:
-                return int(variable)
 
             return variable
 
@@ -197,25 +156,11 @@ class Interpreter(MiniGPVisitor):
             |   LPAREN condition CONDITION_OPERATOR condition RPAREN
             |   NEGATION_OPERATOR LPAREN condition RPAREN
             |   BOOL
-            |   VAR
             ;
         """
 
-        if ctx.getChildCount() == 1:
-            if ctx.BOOL() is not None:
-                return str(ctx.BOOL().getText()) == 'true'
-
-            variable_name: str = ctx.VAR().getText()
-            variable: Optional[int | bool] = self.variables.get(variable_name)
-
-            if variable is None:
-                self.variables[variable_name] = self.mode.read(bool)
-                return self.variables[variable_name]
-
-            if type(variable) is int:
-                return bool(variable)
-
-            return variable
+        if ctx.BOOL() is not None:
+            return str(ctx.BOOL().getText()) == 'true'
 
         if ctx.getChildCount() == 4:
             return not self.visit(ctx.condition(0))
@@ -249,8 +194,8 @@ class Interpreter(MiniGPVisitor):
                 return left or right
 
     @staticmethod
-    def interpret(program: str, mode: T, is_path_like: bool = False, **kwargs) -> Optional[T]:
-        input_stream = FileStream(program) if is_path_like else InputStream(program)
+    def interpret(program: str, mode: T, **kwargs) -> Optional[T]:
+        input_stream = InputStream(program)
         lexer = MiniGPLexer(input_stream)
         lexer.removeErrorListeners()
         stream = CommonTokenStream(lexer)

@@ -22,14 +22,14 @@ T = TypeVar('T', float, int)
 @dataclass(slots=True)
 class Evolution:
     fitness_grader: FitnessFunctionBase
-    input_vector: list[tuple[int | bool]]
+    input_vector: list[tuple[int, ...]]
 
     fitness: list = field(init=False)
     statistics: Statistics = field(init=False)
     population: Population = field(init=False)
 
     generations: ClassVar[int] = 100
-    crossover_probability: ClassVar[float] = 0.5
+    crossover_probability: ClassVar[float] = 0.15
 
     def __post_init__(self):
         name: str = self.fitness_grader.__class__.__name__
@@ -61,12 +61,12 @@ class Evolution:
             for _ in range(len(self.population)):
                 fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, self.population.individuals)))
                 _, (_, first) = deepcopy(Individual.tournament(
-                    sample(fitness_join_individuals, max(1, ceil(0.2 * len(self.population)))),
+                    sample(fitness_join_individuals, max(1, ceil(0.1 * len(self.population)))),
                     'min'
                 ))
                 if random() < Evolution.crossover_probability:
                     _, (_, second) = deepcopy(Individual.tournament(
-                        sample(fitness_join_individuals, max(1, ceil(0.2 * len(self.population)))),
+                        sample(fitness_join_individuals, max(1, ceil(0.1 * len(self.population)))),
                         'min'
                     ))
                     first.crossover(second)
@@ -74,7 +74,7 @@ class Evolution:
                     first.mutate()
 
                 index_to_change = deepcopy(Individual.tournament(
-                    sample(fitness_join_individuals, max(1, ceil(0.2 * len(self.population)))),
+                    sample(fitness_join_individuals, max(1, ceil(0.1 * len(self.population)))),
                     'max'
                 ))[0]
 
@@ -136,7 +136,7 @@ class Statistics:
         best = (float('inf'), None)
         worst = float('-inf')
 
-        print(fitness_vector)
+        # print(fitness_vector)
         for individual, fitness in zip(population.individuals, fitness_vector):
             if fitness < best[0]:
                 best = fitness, individual
@@ -154,12 +154,12 @@ class Statistics:
 
         self.history.append(point)
         print(point)
-        print(Interpreter.interpret(
-            str(best[1]),
-            BufferInputOutputOperation(
-
-            )
-        ).output)
+        # print(Interpreter.interpret(
+        #     str(best[1]),
+        #     BufferInputOutputOperation(
+        #
+        #     )
+        # ).output)
         self.prev = perf_counter()
         self.save_to_directory(best[1])
 

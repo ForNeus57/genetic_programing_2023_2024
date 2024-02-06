@@ -26,24 +26,6 @@ class MiniGPListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MiniGPParser#integerDeclaration.
-    def enterIntegerDeclaration(self, ctx:MiniGPParser.IntegerDeclarationContext):
-        pass
-
-    # Exit a parse tree produced by MiniGPParser#integerDeclaration.
-    def exitIntegerDeclaration(self, ctx:MiniGPParser.IntegerDeclarationContext):
-        pass
-
-
-    # Enter a parse tree produced by MiniGPParser#booleanDeclaration.
-    def enterBooleanDeclaration(self, ctx:MiniGPParser.BooleanDeclarationContext):
-        pass
-
-    # Exit a parse tree produced by MiniGPParser#booleanDeclaration.
-    def exitBooleanDeclaration(self, ctx:MiniGPParser.BooleanDeclarationContext):
-        pass
-
-
     # Enter a parse tree produced by MiniGPParser#assignment.
     def enterAssignment(self, ctx:MiniGPParser.AssignmentContext):
         pass

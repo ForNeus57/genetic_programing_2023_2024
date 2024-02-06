@@ -1,11 +1,9 @@
-from random import seed
 from time import perf_counter
 
-from src.genetic.evaluation.evaluation import FitnessFunction1_1_A, FitnessFunction1_1_B
+from src.genetic.evaluation.evaluation import FitnessFunction1_1_C, FitnessFunction1_1_D, FitnessFunction1_1_E, \
+    FitnessFunction1_1_F, FitnessFunction1_1_A, FitnessFunction1_1_B
 from src.genetic.evolution.evolve import Evolution
 from src.genetic.individual.individual import Individual
-from src.genetic.interpreter.input_output import BufferInputOutputOperation
-from src.genetic.interpreter.interpreter import Interpreter
 
 
 def execute(inds: tuple[Individual]):
@@ -26,10 +24,11 @@ def main() -> None:
     # print(sys.getsizeof(ind))
     # print(sys.getsizeof(str(ind)))
     evolution: Evolution = Evolution(
-        FitnessFunction1_1_B(),
+        FitnessFunction1_1_D(),
         [tuple()],
     )
     print(evolution.evolve())
+    # print(Individual.from_random())
 #     grade = FitnessFunction1_1_B()
 #     print(grade.calculate_fitness(Interpreter.interpret(
 #         """
