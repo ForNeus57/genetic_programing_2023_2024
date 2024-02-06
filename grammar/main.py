@@ -1,16 +1,8 @@
-from src.genetic.evaluation.evaluation import FitnessFunction1_1_A, FitnessFunction1_1_B, FitnessFunction1_1_C, \
-    FitnessFunction1_1_D, FitnessFunction1_1_E
-from src.genetic.evolution.evolve import Evolution
-from src.genetic.evolution.population import Population
-from src.genetic.individual.individual import Individual
-from random import seed
 from time import perf_counter
-from timeit import timeit
 
-from src.genetic.individual.structure.metadata import Metadata
-from src.genetic.individual.structure.rules import IOStatement
-from src.genetic.interpreter.input_output import BufferInputOutputOperation, ConsoleInputOutputOperation
-from src.genetic.interpreter.interpreter import Interpreter
+from src.genetic.evaluation.evaluation import FitnessFunction1_1_A, FitnessFunction1_1_B
+from src.genetic.evolution.evolve import Evolution
+from src.genetic.individual.individual import Individual
 
 
 def execute(inds: tuple[Individual]):
@@ -23,6 +15,7 @@ def execute(inds: tuple[Individual]):
         except Exception as error:
             print("Error!", error, str(ind))
 
+
 def main():
     # seed(8)
     # import sys
@@ -30,14 +23,13 @@ def main():
     # print(sys.getsizeof(ind))
     # print(sys.getsizeof(str(ind)))
     evolution: Evolution = Evolution(
-        FitnessFunction1_1_E(),
+        FitnessFunction1_1_B(),
         [tuple()],
     )
+    print(evolution.evolve())
     # params = read_input_params("data/xmxp2.dat")
     # config = read_config("data/config.json")
     # data = read_input_data("data/xmxp2.dat", params["nvar"])
-
-
 
     # random_tree = generate_random_tree(config["DEPTH"], params["minrand"], params["maxrand"])
     # print("Wygenerowane losowe drzewo:")

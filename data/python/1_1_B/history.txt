@@ -1,0 +1,35 @@
+[0]Best: 3, Worst: 444888999208, Average: 183919382.38752514, Time: 8.639278699993156
+Best program: {
+	write(!((true || true)));
+	write(((44 * -36) / (-23 / 17)));
+	while ((!(false) && (true || false))) {
+		while (!((40 <= 47))) {
+			write(((23 - 58) / (-26 + -25)));
+		}
+		while (!((-27 != 43))) {
+			bool di = ((48 != 17) || (false || true));
+			bool nwgBr = !((44 <= 17));
+		}
+		while (((-24 * -56) <= (28 + -33))) {
+			int BzOfG = ((5 - 41) - (-55 / -36));
+			BzOfG = ((BzOfG * BzOfG) - (1 - -47));
+			int EE = ((42 - 23) / (37 * 3));
+		}
+		if (((true && false) && (true && true))) {
+			bool Qzn = !((64 == 10));
+			read(Qzn);
+		} else {
+			int Xci = ((-55 * 37) - (-41 / 29));
+		}
+		if (!((18 >= 48))) {
+			bool BIPX = ((true && true) && !(false));
+			BIPX = ((42 * -53) != (-19 + 33));
+			int BQ = ((33 - -34) * (9 / 18));
+			BIPX = ((BQ - -11) == (48 + 61));
+		} else {
+			bool ks = !((-17 < -43));
+			int k = ((-4 - 33) / (5 / 14));
+			int MZH7 = ((k - 2) * (k * k));
+		}
+	}
+}

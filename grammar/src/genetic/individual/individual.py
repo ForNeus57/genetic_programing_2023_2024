@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import operator
 from dataclasses import dataclass
 from pickle import dump, load
-from typing import Callable, Literal, Optional, TypeVar
+from typing import Literal, Optional, TypeVar
 
 from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.individual.structure.metadata import Metadata
@@ -61,16 +62,10 @@ class Individual:
         return len(self.program)
 
     @staticmethod
-    def tournament(individuals: tuple[Individual, ...],
-                   fitness_function: Callable[[tuple, tuple], T],
-                   input_vector: tuple,
-                   model_vector: tuple,
-                   mode: Literal['min', 'max']) -> Individual:
+    def tournament(individuals_join_fitness: list, mode: Literal['min', 'max']) -> tuple[int, int | float, Individual]:
         if mode == 'min':
-            return min(individuals,
-                       key=lambda individual: individual.evaluate(fitness_function, input_vector, model_vector))
+            return min(individuals_join_fitness, key=operator.itemgetter(0))
         elif mode == 'max':
-            return max(individuals,
-                       key=lambda individual: individual.evaluate(fitness_function, input_vector, model_vector))
+            return max(individuals_join_fitness, key=operator.itemgetter(0))
 
         raise ValueError(f'Unknown mode: {mode}')

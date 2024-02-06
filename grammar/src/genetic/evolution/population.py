@@ -11,12 +11,13 @@ from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
 
 @dataclass(slots=True)
 class Population:
-    individuals: tuple[Individual, ...]
+    individuals: list[Individual]
+    # pool_size: ClassVar[int] = 10
 
-    pool_size: ClassVar[int] = 10
+    default_population_size: ClassVar[int] = 2500
 
     @classmethod
-    def from_ramped_half_and_half(cls, size: int) -> Population:
+    def from_ramped_half_and_half(cls, size: int = default_population_size) -> Population:
         def get_method_by_index(index: int) -> Iterable[GenerationMethod]:
             method: GenerationMethod = GenerationMethod.GROW if index % 2 == 0 else GenerationMethod.FULL
             return (method for _ in range(index))
@@ -28,4 +29,7 @@ class Population:
         #                                              chunksize=(size // Population.pool_size) + 1)
         individuals: Iterable[Individual] = map(lambda x: Individual.from_random(Metadata(method=x)), chain.from_iterable(population))
 
-        return cls(tuple(individuals))
+        return cls(list(individuals))
+
+    def __len__(self):
+        return len(self.individuals)
