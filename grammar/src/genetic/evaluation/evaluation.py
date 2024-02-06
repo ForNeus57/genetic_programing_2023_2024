@@ -48,7 +48,7 @@ class FitnessFunctionBase(ABC):
     
     def calculate_fitness(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         if gp_output is None or len(gp_output) == 0: 
-            return 100
+            return 1000
         converted_output = self.convert_output(gp_output)
         return self._calculate_fitness_impl(converted_output, gp_input)
     
