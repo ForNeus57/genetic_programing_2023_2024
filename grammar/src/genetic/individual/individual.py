@@ -62,7 +62,8 @@ class Individual:
         return len(self.program)
 
     @staticmethod
-    def tournament(individuals_join_fitness: list, mode: Literal['min', 'max']) -> tuple[int, int | float, Individual]:
+    def tournament(individuals_join_fitness: list, mode: Literal['min', 'max']) \
+            -> tuple[int, tuple[int | float, Individual]]:
         if mode == 'min':
             return min(individuals_join_fitness, key=operator.itemgetter(0))
         elif mode == 'max':

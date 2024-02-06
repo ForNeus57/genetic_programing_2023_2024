@@ -14,7 +14,7 @@ class Population:
     individuals: list[Individual]
     # pool_size: ClassVar[int] = 10
 
-    default_population_size: ClassVar[int] = 2500
+    default_population_size: ClassVar[int] = 100
 
     @classmethod
     def from_ramped_half_and_half(cls, size: int = default_population_size) -> Population:

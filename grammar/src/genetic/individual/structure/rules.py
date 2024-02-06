@@ -5,14 +5,13 @@ import inspect
 from copy import deepcopy
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from math import ceil
 from random import choice, randint, random
 from types import SimpleNamespace
 from typing import Union, Optional, Tuple
 
-from src.genetic.individual.structure.node_types import Crossover, RestrictedRandomize, Mutable
 from src.genetic.individual.structure.limiters import Limiter
 from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
+from src.genetic.individual.structure.node_types import Crossover, RestrictedRandomize, Mutable
 from src.genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
 
 
@@ -48,6 +47,10 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
         body: list[StatementBodyTypes] = []
 
         statement: StatementBodyTypes = cls.generate_random_body_element(meta)
+        child_meta: Metadata = statement.meta
+        body.append(statement)
+
+        statement: StatementBodyTypes = cls.generate_random_body_element(child_meta)
         child_meta: Metadata = statement.meta
         body.append(statement)
 
@@ -107,8 +110,11 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
         for _ in range(len(self.statements)):
             choice(self.statements).mutate()
 
-        if random() < 0.6:
+        if random() < (1. / len(self.statements)):
             self.statements.append(self.generate_random_body_element(self.meta))
+        # else:
+        #     if len(self.statements) > 2:
+        #         self.statements.pop(randint(0, len(self.statements) - 1))
 
     def crossover(self, other: ExecutionBlock) -> None:
         max_index: int = min(len(self.statements), len(other.statements))
@@ -309,19 +315,9 @@ class IOStatement(Mutable, RestrictedRandomize):
         return cls(meta, io_type, body)
 
     def mutate(self) -> None:
-        if random() < 0.5:
-            #   Change IO type
-            self.io_type = IOType.get_opposite(self.io_type)
-            if self.io_type == IOType.READ:
-                self.body = VariableNameToken(self.meta.get_random_name())
-            else:
-                self.body = choice((Condition, Expression)).from_random(Metadata(self.meta.variables_scope, 0))
-        else:
-            #   Change body
-            if self.io_type == IOType.READ:
-                self.body = VariableNameToken(self.meta.get_random_name())
-            else:
-                self.body.mutate()
+        template: IOStatement = IOStatement.from_random(self.meta)
+        self.io_type = template.io_type
+        self.body = template.body
 
     def __str__(self) -> str:
         return f'{self.io_type}({self.body});'
@@ -473,7 +469,8 @@ class Condition(Mutable, RestrictedRandomize):
                     self.body = self.body.body
 
             case VariableNameToken():
-                self.body = self.meta.get_random_name('bool')
+                if self.meta.has_boolean_variables():
+                    self.body = self.meta.get_random_name('bool')
 
             case BooleanToken() as value:
                 self.body = value.from_random()
@@ -563,7 +560,8 @@ class Expression(Mutable, RestrictedRandomize):
                 self.body = (left, choice(('+', '-', '*', '/')), right)
 
             case VariableNameToken():
-                self.body = self.meta.get_random_name('int')
+                if self.meta.has_integer_variables():
+                    self.body = self.meta.get_random_name('int')
 
             case IntegerToken() as value:
                 self.body = value.from_random()

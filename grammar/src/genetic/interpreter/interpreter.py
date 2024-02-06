@@ -22,7 +22,7 @@ T = TypeVar('T')
 @dataclass(slots=True)
 class Interpreter(MiniGPVisitor):
     mode: InputOutputOperation
-    instructions_limit: Final[int] = 400
+    instructions_limit: Final[int] = 1000
 
     variables: dict[str, int | bool] = field(default_factory=dict, init=False)
     used_instructions: int = field(default=0, init=False)

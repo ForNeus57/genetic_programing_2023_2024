@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import os
+import shutil
 from copy import deepcopy
 from dataclasses import dataclass, field
 from math import ceil
-from multiprocessing import Pool
 from pathlib import Path
 from random import random, sample, getstate
 from time import perf_counter
@@ -27,9 +28,8 @@ class Evolution:
     statistics: Statistics = field(init=False)
     population: Population = field(init=False)
 
-    process_pool_number: ClassVar[int] = 10
     generations: ClassVar[int] = 100
-    crossover_probability: ClassVar[float] = 0.9
+    crossover_probability: ClassVar[float] = 0.5
 
     def __post_init__(self):
         name: str = self.fitness_grader.__class__.__name__
@@ -43,13 +43,13 @@ class Evolution:
         )
         self.population = Population.from_ramped_half_and_half()
 
-        with Pool(Evolution.process_pool_number) as pool:
-            self.fitness = list(
-                pool.map(
-                    Evolution.calculate_fitness,
-                    map(lambda x: (x, self.input_vector, self.fitness_grader), self.population.individuals),
-                )
+        # with Pool(Evolution.process_pool_number) as pool:
+        self.fitness = list(
+            map(
+                Evolution.calculate_fitness,
+                map(lambda x: (x, self.input_vector, self.fitness_grader), self.population.individuals),
             )
+        )
 
         self.statistics.add_new_snapshot(self.population, self.fitness)
 
@@ -58,14 +58,14 @@ class Evolution:
             if self.statistics.finished(epsilon):
                 return True
 
-            for index in range(len(self.population.individuals)):
-                fitness_join_individuals: tuple = tuple(zip(*enumerate(self.fitness), self.population.individuals))
-                _, _, first = deepcopy(Individual.tournament(
+            for _ in range(len(self.population)):
+                fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, self.population.individuals)))
+                _, (_, first) = deepcopy(Individual.tournament(
                     sample(fitness_join_individuals, max(1, ceil(0.2 * len(self.population)))),
                     'min'
                 ))
                 if random() < Evolution.crossover_probability:
-                    _, _, second = deepcopy(Individual.tournament(
+                    _, (_, second) = deepcopy(Individual.tournament(
                         sample(fitness_join_individuals, max(1, ceil(0.2 * len(self.population)))),
                         'min'
                     ))
@@ -123,6 +123,8 @@ class Statistics:
                                f'Crossover probability: {Evolution.crossover_probability}\n'
                                f'Mutation probability: {1 - Evolution.crossover_probability}\n')
 
+        if os.path.exists(self.save_directory):
+            shutil.rmtree(self.save_directory)
         Path(self.save_directory).mkdir(parents=True, exist_ok=True)
         with open(self.save_directory + 'status.txt', 'w') as file:
             file.write(
@@ -134,6 +136,7 @@ class Statistics:
         best = (float('inf'), None)
         worst = float('-inf')
 
+        print(fitness_vector)
         for individual, fitness in zip(population.individuals, fitness_vector):
             if fitness < best[0]:
                 best = fitness, individual
@@ -167,7 +170,7 @@ class Statistics:
         return condition
 
     def save_to_directory(self, best_program: Individual) -> None:
-        with open(self.save_directory + 'history.txt', 'w') as file:
+        with open(self.save_directory + 'history.txt', 'a') as file:
             file.write('\n'.join(map(str, self.history)))
 
         best_program.save_to_file(self.save_directory + f'best_program{len(self.history)}.pkl')

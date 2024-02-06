@@ -20,9 +20,7 @@ class Metadata:
     method: GenerationMethod = GenerationMethod.FULL
     limiter = AdaptiveLimiter()
 
-    mutation_node_probability: float = 0.05
-
-    max_depth: int = 2
+    max_depth: int = 1
 
     def get_random_name(self, type_hint: Optional[Literal['int', 'bool']] = None) -> str:
         if type_hint is None:

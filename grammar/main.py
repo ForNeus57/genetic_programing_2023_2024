@@ -1,8 +1,11 @@
+from random import seed
 from time import perf_counter
 
 from src.genetic.evaluation.evaluation import FitnessFunction1_1_A, FitnessFunction1_1_B
 from src.genetic.evolution.evolve import Evolution
 from src.genetic.individual.individual import Individual
+from src.genetic.interpreter.input_output import BufferInputOutputOperation
+from src.genetic.interpreter.interpreter import Interpreter
 
 
 def execute(inds: tuple[Individual]):
@@ -16,7 +19,7 @@ def execute(inds: tuple[Individual]):
             print("Error!", error, str(ind))
 
 
-def main():
+def main() -> None:
     # seed(8)
     # import sys
     # ind = Individual.from_random()
@@ -27,6 +30,60 @@ def main():
         [tuple()],
     )
     print(evolution.evolve())
+#     grade = FitnessFunction1_1_B()
+#     print(grade.calculate_fitness(Interpreter.interpret(
+#         """
+#          {
+# 	while ((-28 != 50)) {
+# 		bool YXZb = (true || false);
+# 		YXZb = (YXZb && true);
+# 		read(YXZb);
+# 		write((41 == 54));
+# 	}
+# 	if (!(true)) {
+# 		int FM = (3 + 39);
+# 		int dr = (FM - -7);
+# 		read(FM);
+# 	} else {
+# 		write((44 + -53));
+# 		write((-15 <= -15));
+# 		write((-21 + 52));
+# 		bool z = (false && true);
+# 		bool Vd2 = !(z);
+# 	}
+# 	if ((-57 != -33)) {
+# 		int jZ2 = (2 + 60);
+# 		bool Cx_s = (false || false);
+# 		int refd = (47 * 44);
+# 		read(Cx_s);
+# 		Cx_s = !(Cx_s);
+# 	} else {
+# 		int O = (-13 / -48);
+# 		int QRLP = (O + -9);
+# 	}
+# 	if (!(false)) {
+# 		bool sdDx7 = (false || true);
+# 		sdDx7 = (-63 >= -41);
+# 		sdDx7 = !(sdDx7);
+# 		int NB = (22 / 5);
+# 		write((sdDx7 || true));
+# 	} else {
+# 		bool zDC = !(true);
+# 		zDC = (27 >= 46);
+# 		zDC = (17 == -5);
+# 		int lTG = (-53 + -45);
+# 		int qHs8 = (14 - -11);
+# 	}
+# }
+#         """,
+#         BufferInputOutputOperation(),
+#     ).output, tuple()))
+
+    # ind = Individual.from_random()
+    # print(ind)
+    # ind.mutate()
+    # print(ind)
+
     # params = read_input_params("data/xmxp2.dat")
     # config = read_config("data/config.json")
     # data = read_input_data("data/xmxp2.dat", params["nvar"])

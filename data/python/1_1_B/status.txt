@@ -1,7 +1,0 @@
-Configuration:
-Save directory: C:\Users\domin\IdeaProjects\genetic_programing_2023_2024\data\python\1_1_B
-Seed: 2147483648
-Generations: 100
-Population size: 2500
-Crossover probability: 0.9
-Mutation probability: 0.09999999999999998
