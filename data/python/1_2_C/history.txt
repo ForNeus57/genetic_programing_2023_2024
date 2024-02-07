@@ -1,0 +1,48 @@
+[0]Best: 18891151, Worst: 383735844585, Average: 20717872472.192352, Time: 1665.366415664
+Best program: {
+	z = ((-51 * 1) - (-43 * -36));
+	read(z);
+	write((-8 + z));
+	if (!(true)) {
+		HE = -29;
+		read(HE);
+		while (((-21 < -57) || !(false))) {
+			EW = -33;
+			i7 = (1 - z);
+		}
+		write(34);
+	}
+}
+[0]Best: 18891151, Worst: 383735844585, Average: 20717872472.192352, Time: 1665.366415664
+Best program: {
+	z = ((-51 * 1) - (-43 * -36));
+	read(z);
+	write((-8 + z));
+	if (!(true)) {
+		HE = -29;
+		read(HE);
+		while (((-21 < -57) || !(false))) {
+			EW = -33;
+			i7 = (1 - z);
+		}
+		write(34);
+	}
+}
+
+[1]Best: 0, Worst: 372100000, Average: 140067704.84426558, Time: 1174.2999719189997
+Best program: {
+	read(fK);
+	read(F);
+	write((z + Kw));
+	while ((IEC == (-2 / niRjh))) {
+		while (!(!(false))) {
+			write((16 / (47 * -22)));
+			write((w2 * dX));
+			write(fDy4N_);
+			dX = ((fDy4N_ / ja) * d8);
+		}
+		k = 4;
+		ja = ja;
+		niRjh = fDy4N_;
+	}
+}

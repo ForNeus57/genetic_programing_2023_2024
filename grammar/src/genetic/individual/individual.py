@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-import operator
 from dataclasses import dataclass
 from pickle import dump, load
-from typing import Literal, Optional, TypeVar
+from typing import Literal, Optional, Any
 
 from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import Program
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
-
-T = TypeVar('T', float, int)
+from src.utilities.timeout import timeout
 
 
 @dataclass(slots=True, frozen=True, order=False)
@@ -35,12 +33,10 @@ class Individual:
         output: Optional[BufferInputOutputOperation] = Interpreter.interpret(program_structure,
                                                                              BufferInputOutputOperation(
                                                                                  input_vector))
-        if output is None:
-            raise ValueError('Interpreter returned None!')
-
         return output.output
 
-    def evaluate(self, fitness_function: FitnessFunctionBase, input_vector: tuple) -> T:
+    def evaluate(self, params: tuple[FitnessFunctionBase, tuple]) -> int | float:
+        fitness_function, input_vector = params
         result_vector: list = self.execute(input_vector)
 
         return fitness_function.calculate_fitness(tuple(result_vector), input_vector)
@@ -70,3 +66,18 @@ class Individual:
             return max(individuals_join_fitness, key=lambda x: x[1][0])
 
         raise ValueError(f'Unknown mode: {mode}')
+
+    @staticmethod
+    @timeout(3)
+    def fast_evaluation(input_value: tuple[Any, FitnessFunctionBase, tuple]) -> int | float:
+        program, grader, input_vector = input_value
+
+        try:
+            output: BufferInputOutputOperation = Interpreter.fast_interpret(program, BufferInputOutputOperation(
+                input_vector
+            ))
+            return grader.calculate_fitness(tuple(output.output), input_vector)
+        except TimeoutError as error:
+            print(error)
+            return 100000
+        

@@ -1,28 +1,26 @@
 from __future__ import annotations
 
-from typing import Optional, Union, Final, Callable, TypeVar, final
-from functools import wraps
 from dataclasses import dataclass, field
+from functools import wraps
+from typing import Optional, Final, Callable, final, Any
 
-from antlr4 import FileStream, InputStream
+from antlr4 import InputStream
 from antlr4.CommonTokenStream import CommonTokenStream
 from antlr4.error.ErrorListener import ConsoleErrorListener
 
+from src.antlr.ExceptionErrorListener import ExceptionErrorListener
 from src.antlr.MiniGPLexer import MiniGPLexer
 from src.antlr.MiniGPParser import MiniGPParser
 from src.antlr.MiniGPVisitor import MiniGPVisitor
-from src.antlr.ExceptionErrorListener import ExceptionErrorListener
-
 from src.genetic.interpreter.input_output import InputOutputOperation
-
-T = TypeVar('T')
+from src.utilities.timeout import timeout
 
 
 @final
 @dataclass(slots=True)
 class Interpreter(MiniGPVisitor):
     mode: InputOutputOperation
-    instructions_limit: Final[int] = 500
+    instructions_limit: Final[int] = 150
 
     variables: dict[str, int] = field(default_factory=dict, init=False)
     used_instructions: int = field(default=0, init=False)
@@ -55,7 +53,8 @@ class Interpreter(MiniGPVisitor):
             LBRACE (assignment | ifStatement | loopStatement | ioStatement)+ RBRACE
             ;
         """
-        self.visitChildren(ctx)
+        for child in ctx.children:
+            self.visit(child)
 
     @limit
     def visitAssignment(self, ctx: MiniGPParser.AssignmentContext) -> None:
@@ -194,7 +193,7 @@ class Interpreter(MiniGPVisitor):
                 return left or right
 
     @staticmethod
-    def interpret(program: str, mode: T, **kwargs) -> Optional[T]:
+    def interpret[T](program: Any, mode: T, **kwargs) -> T:
         input_stream = InputStream(program)
         lexer = MiniGPLexer(input_stream)
         lexer.removeErrorListeners()
@@ -203,11 +202,21 @@ class Interpreter(MiniGPVisitor):
         parser.removeErrorListener(ConsoleErrorListener.INSTANCE)
         parser.addErrorListener(ExceptionErrorListener())
 
-        # try:
         tree = parser.program()
         interpreter = Interpreter(mode, **kwargs)
         try:
             interpreter.visit(tree)
+        except StopIteration:
+            pass
+        finally:
+            return interpreter.mode
+
+    @staticmethod
+    @timeout(3)
+    def fast_interpret[T](program: Any, mode: T, **kwargs) -> T:
+        interpreter = Interpreter(mode, **kwargs)
+        try:
+            interpreter.visit(program)
         except StopIteration:
             pass
         finally:

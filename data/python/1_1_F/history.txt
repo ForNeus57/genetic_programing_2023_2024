@@ -1,0 +1,35 @@
+[0]Best: 0, Worst: 9999999, Average: 4490282.37979798, Time: 10.971930400002748
+Best program: {
+	write((-58 / -31));
+	while (true) {
+		FE7 = -12;
+		read(s9pJ);
+		while (((-20 / -50) <= s9pJ)) {
+			read(QMf);
+			read(I_r);
+		}
+		while (!(!(false))) {
+			read(s9pJ);
+			write((-59 - (s9pJ + FE7)));
+			read(GmZB);
+			FE7 = 16;
+		}
+	}
+	while (false) {
+		while (!((false || false))) {
+			read(p_);
+			write((-34 + (p_ - p_)));
+			write(7);
+			p_ = p_;
+		}
+		if ((2 < (-32 / -49))) {
+			write(-46);
+			read(Z);
+			Z = 30;
+			UxfJ7h = (-44 - Z);
+		} else {
+			L = (44 * 2);
+			read(zD1M);
+		}
+	}
+}

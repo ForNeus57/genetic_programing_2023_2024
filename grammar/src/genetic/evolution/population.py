@@ -13,7 +13,7 @@ from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
 class Population:
     individuals: list[Individual]
 
-    default_population_size: ClassVar[int] = 1_000
+    default_population_size: ClassVar[int] = 15
 
     @classmethod
     def from_ramped_half_and_half(cls, size: int = default_population_size) -> Population:

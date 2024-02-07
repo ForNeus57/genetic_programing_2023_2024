@@ -1,0 +1,23 @@
+[0]Best: 18891639, Worst: 17700279408900, Average: 27792972257.94487, Time: 1673.7091051549999
+Best program: {
+	read(bn);
+	if (true) {
+		Gtk = bn;
+		write(bn);
+		while (true) {
+			read(Gtk);
+			read(s6C5yg);
+		}
+		read(r79GY);
+	}
+	while (((bn + bn) < 31)) {
+		while (!((44 <= bn))) {
+			read(X);
+			read(bn);
+			write(X);
+		}
+		read(cLob);
+		write(cLob);
+		bn = ((cLob + 28) + cLob);
+	}
+}

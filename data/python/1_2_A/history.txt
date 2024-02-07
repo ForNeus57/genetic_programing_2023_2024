@@ -1,0 +1,7 @@
+[0]Best: 0, Worst: 1994963100, Average: 552597985.2436364, Time: 459.99956074199997
+Best program: {
+	read(H);
+	read(zdgL);
+	write((H + zdgL));
+	read(J7i);
+}

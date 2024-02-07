@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 from random import choice, randint, random
 from types import SimpleNamespace
-from typing import Union, Optional, Tuple
+from typing import Optional, Tuple
 
 from src.genetic.individual.structure.limiters import Limiter
 from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
@@ -96,7 +96,11 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
 
     def mutate(self) -> None:
         for _ in range(len(self.statements) * 2):
-            choice(self.statements).mutate()
+            if random() < 0.95:
+                choice(self.statements).mutate()
+            else:
+                self.statements[randint(0, len(self.statements) - 1)] = \
+                    ExecutionBlock.generate_random_body_element(self.meta)
 
         # if random() < ((1. / len(self.statements)) / 2.):
         #     self.statements.append(self.generate_random_body_element(self.meta))
@@ -246,7 +250,7 @@ class IOType(Enum):
         return self.name.lower()
 
     @classmethod
-    def from_random(cls, meta: Metadata) -> IOType:
+    def from_random(cls) -> IOType:
         options: list = [
             cls.WRITE,
             cls.READ,
@@ -269,7 +273,7 @@ class IOStatement(Mutable, RestrictedRandomize):
 
     @classmethod
     def from_random(cls, meta: Metadata) -> IOStatement:
-        io_type: IOType = IOType.from_random(meta)
+        io_type: IOType = IOType.from_random()
         match io_type:
             case IOType.READ:
                 if random() < 0.5 and not meta.is_empty():
@@ -479,10 +483,10 @@ class Expression(Mutable, RestrictedRandomize):
                 return 1
 
 
-ExpressionType = Union[Tuple[Expression, str, Expression], VariableNameToken, IntegerToken]
-ConditionType = Union[
-    Tuple[Condition, str, Condition], Tuple[Expression, str, Expression], Condition, VariableNameToken, BooleanToken]
-StatementBodyTypes = Union[Assigment, IfStatement, LoopStatement, IOStatement]
+type ExpressionType = Tuple[Expression, str, Expression] | VariableNameToken | IntegerToken
+type ConditionType = Tuple[Condition, str, Condition] | Tuple[Expression, str, Expression] | Condition \
+                     | VariableNameToken | BooleanToken
+type StatementBodyTypes = Assigment | IfStatement | LoopStatement | IOStatement
 
 self_namespace = SimpleNamespace(**{
     cls.__name__: cls for _, cls in inspect.getmembers(
