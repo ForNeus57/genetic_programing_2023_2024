@@ -11,12 +11,13 @@ from typing import Optional, Tuple
 
 from src.genetic.individual.structure.limiters import Limiter
 from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
-from src.genetic.individual.structure.node_types import Crossover, RestrictedRandomize, Mutable
+from src.genetic.individual.structure.node_types import Crossover, RestrictedRandomize, Rule
 from src.genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
+from src.genetic.interpreter.context import InterpreterContext
 
 
 @dataclass(slots=True)
-class Program(Crossover, Mutable, RestrictedRandomize):
+class Program(Crossover, Rule, RestrictedRandomize):
     body: ExecutionBlock
 
     @classmethod
@@ -30,6 +31,9 @@ class Program(Crossover, Mutable, RestrictedRandomize):
     def crossover(self, other: Program) -> None:
         self.body.crossover(other.body)
 
+    def visit_commands(self, context: InterpreterContext) -> None:
+        self.body.visit(context)
+
     def __str__(self) -> str:
         return str(self.body)
 
@@ -38,7 +42,7 @@ class Program(Crossover, Mutable, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
+class ExecutionBlock(Crossover, Rule, RestrictedRandomize):
     statements: list[StatementBodyTypes] = field(default_factory=list)
 
     @classmethod
@@ -102,12 +106,6 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
                 self.statements[randint(0, len(self.statements) - 1)] = \
                     ExecutionBlock.generate_random_body_element(self.meta)
 
-        # if random() < ((1. / len(self.statements)) / 2.):
-        #     self.statements.append(self.generate_random_body_element(self.meta))
-        # else:
-        #     if len(self.statements) > 2:
-        #         self.statements.pop(randint(0, len(self.statements) - 1))
-
     def crossover(self, other: ExecutionBlock) -> None:
         max_index: int = min(len(self.statements), len(other.statements))
         if max_index <= 1:
@@ -117,6 +115,10 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
 
         self.statements[start_index: max_index], other.statements[start_index: max_index] = \
             deepcopy(other.statements[start_index: max_index]), deepcopy(self.statements[start_index: max_index])
+
+    def visit_commands(self, context: InterpreterContext) -> None:
+        for statement in self.statements:
+            statement.visit(context)
 
     def __str__(self) -> str:
         tabs: str = '\t' * (self.meta.depth + 1)
@@ -128,7 +130,7 @@ class ExecutionBlock(Crossover, Mutable, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class Assigment(Mutable, RestrictedRandomize):
+class Assigment(Rule, RestrictedRandomize):
     name: VariableNameToken
     assigment_value: Expression
 
@@ -149,6 +151,9 @@ class Assigment(Mutable, RestrictedRandomize):
         else:
             self.assigment_value.mutate()
 
+    def visit_commands(self, context: InterpreterContext) -> None:
+        context[str(self.name)] = self.assigment_value.visit(context)
+
     def __str__(self) -> str:
         return f'{self.name} = {self.assigment_value};'
 
@@ -157,7 +162,7 @@ class Assigment(Mutable, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class IfStatement(Mutable, RestrictedRandomize):
+class IfStatement(Rule, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
     else_statement: Optional[ExecutionBlock]
@@ -200,6 +205,12 @@ class IfStatement(Mutable, RestrictedRandomize):
                 Metadata(deepcopy(self.meta.variables_scope), self.meta.depth + 1)
             )
 
+    def visit_commands(self, context: InterpreterContext) -> None:
+        if self.condition.visit(context):
+            self.body.visit(context)
+        elif self.else_statement is not None:
+            self.else_statement.visit(context)
+
     def __str__(self) -> str:
         base: str = f'if ({self.condition}) {self.body}'
 
@@ -218,7 +229,7 @@ class IfStatement(Mutable, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class LoopStatement(Mutable, RestrictedRandomize):
+class LoopStatement(Rule, RestrictedRandomize):
     condition: Condition
     body: ExecutionBlock
 
@@ -234,6 +245,10 @@ class LoopStatement(Mutable, RestrictedRandomize):
             self.condition = Condition.from_random(Metadata(self.meta.variables_scope, 0))
         else:
             self.body.mutate()
+
+    def visit_commands(self, context: InterpreterContext) -> None:
+        while self.condition.visit(context):
+            self.body.visit(context)
 
     def __str__(self):
         return f'while ({self.condition}) {self.body}'
@@ -267,7 +282,7 @@ class IOType(Enum):
 
 
 @dataclass(slots=True)
-class IOStatement(Mutable, RestrictedRandomize):
+class IOStatement(Rule, RestrictedRandomize):
     io_type: IOType
     body: VariableNameToken | Expression
 
@@ -292,6 +307,14 @@ class IOStatement(Mutable, RestrictedRandomize):
         self.io_type = template.io_type
         self.body = template.body
 
+    def visit_commands(self, context: InterpreterContext) -> None:
+        match self.io_type:
+            case IOType.READ:
+                context[str(self.body)] = context.mode.read()
+
+            case IOType.WRITE:
+                context.mode.write(self.body.visit(context))
+
     def __str__(self) -> str:
         return f'{self.io_type}({self.body});'
 
@@ -305,7 +328,7 @@ class IOStatement(Mutable, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class Condition(Mutable, RestrictedRandomize):
+class Condition(Rule, RestrictedRandomize):
     body: ConditionType
 
     @classmethod
@@ -376,6 +399,43 @@ class Condition(Mutable, RestrictedRandomize):
             case BooleanToken() as value:
                 self.body = value.from_random()
 
+    def visit_commands(self, context: InterpreterContext) -> bool:
+        match self.body:
+            case (left, operation, right):
+                left_value: bool | int = left.visit(context)
+                right_value: bool | int = right.visit(context)
+
+                match operation:
+                    case '==':
+                        return left_value == right_value
+
+                    case '!=':
+                        return left_value != right_value
+
+                    case '>':
+                        return left_value > right_value
+
+                    case '<':
+                        return left_value < right_value
+
+                    case '>=':
+                        return left_value >= right_value
+
+                    case '<=':
+                        return left_value <= right_value
+
+                    case '&&':
+                        return left_value and right_value
+
+                    case '||':
+                        return left_value or right_value
+
+            case Condition() as option:
+                return not option.visit(context)
+
+            case _:
+                return self.body.value
+
     def __str__(self) -> str:
         match self.body:
             case (left, operation, right):
@@ -400,7 +460,7 @@ class Condition(Mutable, RestrictedRandomize):
 
 
 @dataclass(slots=True)
-class Expression(Mutable, RestrictedRandomize):
+class Expression(Rule, RestrictedRandomize):
     body: ExpressionType
 
     @classmethod
@@ -465,6 +525,40 @@ class Expression(Mutable, RestrictedRandomize):
 
             case IntegerToken() as value:
                 self.body = value.from_random()
+
+    def visit_commands(self, context: InterpreterContext) -> int:
+        match self.body:
+            case (left, operation, right):
+                left_value: int = left.visit(context)
+                right_value: int = right.visit(context)
+
+                match operation:
+                    case '+':
+                        return left_value + right_value
+
+                    case '-':
+                        return left_value - right_value
+
+                    case '*':
+                        return left_value * right_value
+
+                    case '/':
+                        if right_value == 0:
+                            return left_value
+                        return left_value // right_value
+
+            case IntegerToken(value):
+                return value
+
+            case _ as option:
+                variable_name: str = str(option)
+                value: int = context[variable_name]
+
+                if value is None:
+                    context[variable_name] = context.mode.read()
+                    return context[variable_name]
+
+                return value
 
     def __str__(self) -> str:
         match self.body:

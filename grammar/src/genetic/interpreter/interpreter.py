@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, KW_ONLY
 from functools import wraps
 from typing import Optional, Final, Callable, final, Any
 
@@ -20,17 +20,18 @@ from src.utilities.timeout import timeout
 @dataclass(slots=True)
 class Interpreter(MiniGPVisitor):
     mode: InputOutputOperation
+    _: KW_ONLY
     instructions_limit: Final[int] = 150
 
     variables: dict[str, int] = field(default_factory=dict, init=False)
     used_instructions: int = field(default=0, init=False)
 
     @staticmethod
-    def limit(function: Callable):
+    def limit[R, **P](function: Callable[P, R]) -> Callable[P, R]:
         @wraps(function)
-        def wrapper(self, *args, **kwargs):
+        def wrapper(self, *args: P.args, **kwargs: P.kwargs) -> R:
             if self.used_instructions > self.instructions_limit:
-                raise StopIteration('Interpreter exceeded executed instruction limit!')
+                raise StopIteration(f'Interpreter exceeded instruction limit({self.instructions_limit})!')
 
             self.used_instructions += 1
             return function(self, *args, **kwargs)
@@ -213,7 +214,7 @@ class Interpreter(MiniGPVisitor):
 
     @staticmethod
     @timeout(3)
-    def fast_interpret[T](program: Any, mode: T, **kwargs) -> T:
+    def fast_interpret[T, **P](program: Any, mode: T, **kwargs: P.kwargs) -> T:
         interpreter = Interpreter(mode, **kwargs)
         try:
             interpreter.visit(program)

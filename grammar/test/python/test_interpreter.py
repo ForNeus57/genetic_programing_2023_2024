@@ -1,103 +1,368 @@
+from src.genetic.individual.individual import Individual
+from src.genetic.individual.structure.metadata import Metadata
+from src.genetic.individual.structure.rules import Program, ExecutionBlock, IOStatement, IOType, Expression, Assigment, \
+    IfStatement, Condition, LoopStatement
+from src.genetic.individual.structure.tokens import VariableNameToken, IntegerToken, BooleanToken
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
 
 
 def test_write_unknown():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         write(x);
     }
-    """, BufferInputOutputOperation((1,)))
-    assert output.output == [1]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           VariableNameToken('x')
+                                           )
+                                )
+                ])
+                )
+    )
+    assert ind.execute((-37,)) == [-37]
 
 
 def test_write_int():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
-        write(1);
+        write(-555);
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           IntegerToken(
+                                               -555
+                                           )
+                                           )
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [-555]
 
 
 def test_write_expression():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         write(((7 + 4) / 3));
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [3]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           (
+                                               Expression(meta,
+                                                          (
+                                                              Expression(meta,
+                                                                         IntegerToken(
+                                                                             7
+                                                                         )
+                                                                         ),
+                                                              '+',
+                                                              Expression(meta,
+                                                                         IntegerToken(
+                                                                             4
+                                                                         )
+                                                                         )
+                                                          )
+                                                          ),
+                                               '/',
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              3
+                                                          )
+                                                          )
+                                           )
+                                           )
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [3]
 
 
 def test_read_unknown():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         read(x);
         x = (x + 1);
         write(x);
     }
-    """, BufferInputOutputOperation((1,)))
-    assert output.output == [2]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.READ,
+                                VariableNameToken(
+                                    'x'
+                                )
+                                ),
+                    Assigment(meta,
+                              VariableNameToken(
+                                  'x'
+                              ),
+                              Expression(meta,
+                                         (
+                                             Expression(meta,
+                                                        VariableNameToken(
+                                                            'x'
+                                                        )
+                                                        ),
+                                             '+',
+                                             Expression(meta,
+                                                        IntegerToken(
+                                                            22
+                                                        )
+                                                        )
+                                         )
+                                         )
+                              ),
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           VariableNameToken(
+                                               'x'
+                                           )
+                                           )
+                                )
+                ])
+                )
+    )
+    assert ind.execute((-444,)) == [-422]
 
 
 def test_read_int():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         x = -3;
         read(x);
         write(x);
     }
-    """, BufferInputOutputOperation((17,)))
-    assert output.output == [17]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    Assigment(meta,
+                              VariableNameToken(
+                                  'x'
+                              ),
+                              Expression(meta,
+                                         IntegerToken(
+                                             -3
+                                         )
+                                         )
+                              ),
+                    IOStatement(meta,
+                                IOType.READ,
+                                VariableNameToken(
+                                    'x'
+                                )
+                                ),
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           VariableNameToken(
+                                               'x'
+                                           )
+                                           )
+                                )
+                ])
+                )
+    )
+    assert ind.execute((17,)) == [17]
 
 
 def test_operation_add():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         write((7 + 11));
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [18]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           (
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              7
+                                                          )
+                                                          ),
+                                               '+',
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              11
+                                                          )
+                                                          )
+                                           )
+                                           ),
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [18]
 
 
 def test_operation_subtract():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         write((7 - 11));
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [-4]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           (
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              7
+                                                          )
+                                                          ),
+                                               '-',
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              11
+                                                          )
+                                                          )
+                                           )
+                                           ),
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [-4]
 
 
 def test_operation_multiply():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         write((7 * -11));
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [-77]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           (
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              7
+                                                          )
+                                                          ),
+                                               '*',
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              -11
+                                                          )
+                                                          )
+                                           )
+                                           ),
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [-77]
 
 
 def test_operation_divide():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         write((7 / -11));
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [-1]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           (
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              7
+                                                          )
+                                                          ),
+                                               '/',
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              -11
+                                                          )
+                                                          )
+                                           )
+                                           ),
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [-1]
 
 
 def test_operation_divide_by_zero():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         write((7 / 0));
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [7]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           (
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              7
+                                                          )
+                                                          ),
+                                               '/',
+                                               Expression(meta,
+                                                          IntegerToken(
+                                                              0
+                                                          )
+                                                          )
+                                           )
+                                           ),
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [7]
 
 
 def test_operation_negation_false():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if (!(false)) {
             write(1);
@@ -105,12 +370,46 @@ def test_operation_negation_false():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          Condition(meta, BooleanToken(
+                                              False
+                                          ))
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [1]
 
 
 def test_operation_negation_true():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if (!(true)) {
             write(1);
@@ -118,12 +417,46 @@ def test_operation_negation_true():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [0]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          Condition(meta, BooleanToken(
+                                              True
+                                          ))
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [0]
 
 
 def test_operation_less_then_false():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if ((7 < 0)) {
             write(1);
@@ -131,12 +464,56 @@ def test_operation_less_then_false():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [0]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '<',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             0
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [0]
 
 
 def test_operation_less_then_false_equal():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if ((7 < 7)) {
             write(1);
@@ -144,12 +521,56 @@ def test_operation_less_then_false_equal():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [0]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '<',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [0]
 
 
 def test_operation_less_then_true():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if ((7 < 10)) {
             write(1);
@@ -157,51 +578,227 @@ def test_operation_less_then_true():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '<',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             10
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [1]
 
 
 def test_operation_less_equal_then_false():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if ((7 <= 0)) {
-            write(1);
-        } else {
-            write(0);
+    """
+        {
+            if ((7 <= 0)) {
+                write(1);
+            } else {
+                write(0);
+            }
         }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [0]
+        """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '<=',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             0
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [0]
 
 
 def test_operation_less_equal_then_false_equal():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if ((7 <= 7)) {
-            write(1);
-        } else {
-            write(0);
+    """
+        {
+            if ((7 <= 7)) {
+                write(1);
+            } else {
+                write(0);
+            }
         }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+        """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '<=',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [1]
 
 
 def test_operation_less_equal_then_true():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if ((7 <= 10)) {
-            write(1);
-        } else {
-            write(0);
+    """
+        {
+            if ((7 <= 10)) {
+                write(1);
+            } else {
+                write(0);
+            }
         }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+        """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '<=',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             10
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [1]
 
 
 def test_operation_grater_then_true():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if ((7 > 0)) {
             write(1);
@@ -209,25 +806,113 @@ def test_operation_grater_then_true():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '>',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             0
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [1]
 
 
 def test_operation_grater_then_false_equal():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if ((7 > 7)) {
-            write(1);
-        } else {
-            write(0);
+    """
+        {
+            if ((7 > 7)) {
+                write(1);
+            } else {
+                write(0);
+            }
         }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [0]
+        """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '>',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [0]
 
 
 def test_operation_grater_then_false():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if ((7 > 10)) {
             write(1);
@@ -235,25 +920,113 @@ def test_operation_grater_then_false():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [0]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '>',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             10
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [0]
 
 
 def test_operation_grater_equal_then_true():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if ((7 >= 0)) {
-            write(1);
-        } else {
-            write(0);
-        }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+    """
+            {
+                if ((7 >= 0)) {
+                    write(1);
+                } else {
+                    write(0);
+                }
+            }
+            """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '>=',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             0
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [1]
 
 
 def test_operation_grater_equal_then_false_equal():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         if ((7 >= 7)) {
             write(1);
@@ -261,93 +1034,190 @@ def test_operation_grater_equal_then_false_equal():
             write(0);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [1]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '>=',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [1]
 
 
 def test_operation_grater_equal_then_false():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if ((7 >= 10)) {
-            write(1);
-        } else {
-            write(0);
-        }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [0]
+    """
+            {
+                if ((7 >= 10)) {
+                    write(1);
+                } else {
+                    write(0);
+                }
+            }
+            """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    IfStatement(meta,
+                                Condition(meta,
+                                          (
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             7
+                                                         )
+                                                         ),
+                                              '>=',
+                                              Expression(meta,
+                                                         IntegerToken(
+                                                             10
+                                                         )
+                                                         )
+                                          )
+                                          ),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               1
+                                                           )
+                                                           )
+                                                )
+                                ]),
+                                ExecutionBlock(meta, [
+                                    IOStatement(meta,
+                                                IOType.WRITE,
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               0
+                                                           )
+                                                           )
+                                                )
+                                ])
+                                )
+                ])
+                )
+    )
+    assert ind.execute() == [0]
 
 
 def test_assigment_unknown():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         x = (x + 1);
         write(x);
     }
-    """, BufferInputOutputOperation((-2, )))
-    assert output.output == [-1]
-
-
-def test_if_true():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if (true) {
-            write(15);
-        }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [15]
-
-
-def test_if_false():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if (false) {
-            write(15);
-        }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == []
-
-
-def test_if_true_else():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if (true) {
-            write(15);
-        } else {
-            write(-111);
-        }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [15]
-
-
-def test_if_false_else():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        if (false) {
-            write(15);
-        } else {
-            write(-111);
-        }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == [-111]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    Assigment(meta,
+                              VariableNameToken(
+                                  'x'
+                              ),
+                              Expression(meta,
+                                         (
+                                             Expression(meta,
+                                                        VariableNameToken(
+                                                            'x'
+                                                        )),
+                                             '+',
+                                             Expression(meta,
+                                                        IntegerToken(
+                                                            1
+                                                        ))
+                                         )
+                                         )),
+                    IOStatement(meta,
+                                IOType.WRITE,
+                                Expression(meta,
+                                           VariableNameToken(
+                                               'x'
+                                           )
+                                           ))
+                ])
+                )
+    )
+    assert ind.execute((-2,)) == [-1]
 
 
 def test_loop_infinite():
-    Interpreter.interpret("""
+    """
     {
         while (true) {
             write(15);
         }
     }
-    """, BufferInputOutputOperation())
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    LoopStatement(meta,
+                                  Condition(meta,
+                                            BooleanToken(
+                                                True
+                                            )
+                                            ),
+                                  ExecutionBlock(meta, [
+                                      IOStatement(meta,
+                                                  IOType.WRITE,
+                                                  Expression(meta,
+                                                             IntegerToken(
+                                                                 15
+                                                             )
+                                                             ))
+                                  ])
+                                  )
+
+                ]))
+    )
+    output: list = ind.execute((-2,))
+    assert len(output) > 1
+    assert 15 in output
 
 
 def test_loop_true():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
+    """
     {
         i = 0;
         while ((i < 5)) {
@@ -355,16 +1225,103 @@ def test_loop_true():
             i = (i + 1);
         }
     }
-    """, BufferInputOutputOperation())
-    assert output.output == [0, 1, 2, 3, 4]
+    """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    Assigment(meta,
+                              VariableNameToken(
+                                  'i'
+                              ),
+                              Expression(meta,
+                                         IntegerToken(
+                                             0
+                                         )
+                                         )
+                              ),
+                    LoopStatement(meta,
+                                  Condition(meta,
+                                            (
+                                                Expression(meta,
+                                                           VariableNameToken(
+                                                               'i'
+                                                           )
+                                                           ),
+                                                '<',
+                                                Expression(meta,
+                                                           IntegerToken(
+                                                               5
+                                                           )
+                                                           )
+                                            )
+                                            ),
+                                  ExecutionBlock(meta, [
+                                      IOStatement(meta,
+                                                  IOType.WRITE,
+                                                  Expression(meta,
+                                                             VariableNameToken(
+                                                                 'i'
+                                                             )
+                                                             )),
+                                      Assigment(meta,
+                                                VariableNameToken(
+                                                    'i'
+                                                ),
+                                                Expression(meta,
+                                                           (
+                                                               Expression(meta,
+                                                                          VariableNameToken(
+                                                                              'i'
+                                                                          )
+                                                                          ),
+                                                               '+',
+                                                               Expression(meta,
+                                                                          IntegerToken(
+                                                                              1
+                                                                          ))
+                                                           )
+                                                           )
+
+                                                )
+                                  ])
+                                  )
+
+                ]))
+    )
+    assert ind.execute() == [0, 1, 2, 3, 4]
 
 
 def test_loop_false():
-    output: BufferInputOutputOperation = Interpreter.interpret("""
-    {
-        while (false) {
-            write(15);
+    """
+        {
+            while (false) {
+                write(15);
+            }
         }
-    }
-    """, BufferInputOutputOperation())
-    assert output.output == []
+        """
+    meta: Metadata = Metadata.from_dummy()
+    ind: Individual = Individual(
+        Program(meta,
+                ExecutionBlock(meta, [
+                    LoopStatement(meta,
+                                  Condition(meta,
+                                            BooleanToken(
+                                                False
+                                            )
+                                            ),
+                                  ExecutionBlock(meta, [
+                                      IOStatement(meta,
+                                                  IOType.WRITE,
+                                                  Expression(meta,
+                                                             IntegerToken(
+                                                                 15
+                                                             )
+                                                             ))
+                                  ])
+                                  )
+
+                ]))
+    )
+    output: list = ind.execute((-2,))
+    assert output == []

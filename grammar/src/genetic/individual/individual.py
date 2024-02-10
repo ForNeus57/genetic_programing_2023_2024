@@ -7,6 +7,7 @@ from typing import Literal, Optional, Any
 from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import Program
+from src.genetic.interpreter.context import InterpreterContext
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
 from src.genetic.interpreter.interpreter import Interpreter
 from src.utilities.timeout import timeout
@@ -28,11 +29,16 @@ class Individual:
         program: Program = Program.from_random(meta)
         return cls(program)
 
-    def execute(self, input_vector: tuple) -> list:
-        program_structure: str = str(self.program)
-        output: Optional[BufferInputOutputOperation] = Interpreter.interpret(program_structure,
-                                                                             BufferInputOutputOperation(
-                                                                                 input_vector))
+    def execute(self, input_vector: Optional[tuple] = None) -> list:
+        output: BufferInputOutputOperation = BufferInputOutputOperation(input_vector)
+
+        try:
+            self.program.visit(InterpreterContext(
+                output
+            ))
+        except StopIteration:
+            pass
+
         return output.output
 
     def evaluate(self, params: tuple[FitnessFunctionBase, tuple]) -> int | float:
@@ -66,18 +72,3 @@ class Individual:
             return max(individuals_join_fitness, key=lambda x: x[1][0])
 
         raise ValueError(f'Unknown mode: {mode}')
-
-    @staticmethod
-    @timeout(3)
-    def fast_evaluation(input_value: tuple[Any, FitnessFunctionBase, tuple]) -> int | float:
-        program, grader, input_vector = input_value
-
-        try:
-            output: BufferInputOutputOperation = Interpreter.fast_interpret(program, BufferInputOutputOperation(
-                input_vector
-            ))
-            return grader.calculate_fitness(tuple(output.output), input_vector)
-        except TimeoutError as error:
-            print(error)
-            return 100000
-        

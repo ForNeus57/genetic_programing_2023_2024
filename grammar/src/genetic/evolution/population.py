@@ -13,7 +13,7 @@ from src.genetic.individual.structure.metadata import Metadata, GenerationMethod
 class Population:
     individuals: list[Individual]
 
-    default_population_size: ClassVar[int] = 15
+    default_population_size: ClassVar[int] = 10_000
 
     @classmethod
     def from_ramped_half_and_half(cls, size: int = default_population_size) -> Population:
@@ -23,10 +23,8 @@ class Population:
 
         population: map = map(get_method_by_index, range(1, ceil(sqrt(size * 2))))
 
-        # with Pool(Population.pool_size) as pool:
-        #     individuals: list[Individual] = pool.map(Population.construct_individuals, chain.from_iterable(population),
-        #                                              chunksize=(size // Population.pool_size) + 1)
-        individuals: Iterable[Individual] = map(lambda x: Individual.from_random(Metadata(method=x)), chain.from_iterable(population))
+        individuals: Iterable[Individual] = map(lambda x: Individual.from_random(Metadata(method=x)),
+                                                chain.from_iterable(population))
 
         return cls(list(individuals))
 

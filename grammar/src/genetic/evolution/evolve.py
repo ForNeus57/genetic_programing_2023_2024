@@ -6,18 +6,11 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from math import ceil
 from multiprocessing import Pool
-from multiprocessing.dummy import Pool as ThreadPool
 from pathlib import Path
 from random import random, sample, getstate
 from time import perf_counter
 from typing import ClassVar
 
-from antlr4 import InputStream, CommonTokenStream
-from antlr4.error.ErrorListener import ConsoleErrorListener
-
-from src.antlr.ExceptionErrorListener import ExceptionErrorListener
-from src.antlr.MiniGPLexer import MiniGPLexer
-from src.antlr.MiniGPParser import MiniGPParser
 from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.evolution.population import Population
 from src.genetic.individual.individual import Individual
@@ -49,11 +42,10 @@ class Evolution:
         )
         self.population = Population.from_ramped_half_and_half()
 
-        # with Pool(Evolution.process_pool_number) as pool:
-        # with Pool(min(Evolution.pool_size, len(self.input_vector))) as pool:
+        # with Pool(processes=Evolution.pool_size) a:
         self.fitness = list(
             map(
-                lambda x: self.fast_calculate_fitness(x),
+                lambda x: self.calculate_fitness(x),
                 self.population.individuals,
             )
         )
@@ -61,7 +53,7 @@ class Evolution:
         self.statistics.add_new_snapshot(self.population, self.fitness)
 
     def evolve(self, epsilon: float | int = 0) -> bool:
-        # with Pool(min(Evolution.pool_size, len(self.input_vector))) as pool:
+        # with Pool(processes=Evolution.pool_size) as pool:
         for _ in range(1, Evolution.generations):
             if self.statistics.finished(epsilon):
                 return True
@@ -86,7 +78,7 @@ class Evolution:
                     'max'
                 ))[0]
 
-                self.fitness[index_to_change] = self.fast_calculate_fitness(first)
+                self.fitness[index_to_change] = self.calculate_fitness(first)
 
                 self.population.individuals[index_to_change] = first
 
@@ -101,7 +93,7 @@ class Evolution:
                         GenerationMethod.GROW if index % 2 == 0 else GenerationMethod.FULL
                     )
                 ))
-                new_fitness: int = self.fast_calculate_fitness(new_offspring)
+                new_fitness: int = self.calculate_fitness(new_offspring)
                 self.fitness[index_to_change] = new_fitness
                 self.population.individuals[index_to_change] = new_offspring
 
@@ -109,30 +101,9 @@ class Evolution:
 
         return False
 
-    def calculate_fitness(self, ind: Individual, pool: Pool) -> int | float:
+    def calculate_fitness(self, ind: Individual) -> int | float:
         print('.', end='')
-        return sum(pool.imap_unordered(ind.evaluate, map(lambda y: (self.fitness_grader, y), self.input_vector)))
-
-    def fast_calculate_fitness(self, ind: Individual) -> int | float:
-        print('.', end='')
-        program: str = str(ind)
-        input_stream = InputStream(program)
-        lexer = MiniGPLexer(input_stream)
-        lexer.removeErrorListeners()
-        stream = CommonTokenStream(lexer)
-        parser = MiniGPParser(stream)
-        parser.removeErrorListener(ConsoleErrorListener.INSTANCE)
-        parser.addErrorListener(ExceptionErrorListener())
-
-        tree = parser.program()
-        return sum(
-            map(
-                Individual.fast_evaluation,
-                map(
-                    lambda x: (tree, self.fitness_grader, x), self.input_vector
-                )
-            )
-        )
+        return sum(map(ind.evaluate, map(lambda y: (self.fitness_grader, y), self.input_vector)))
 
 
 @dataclass(slots=True)
@@ -213,6 +184,6 @@ class Statistics:
 
     def save_to_directory(self, best_program: Individual) -> None:
         with open(self.save_directory + 'history.txt', 'a') as file:
-            file.write('\n'.join(map(str, self.history)))
+            file.write(str(self.history[len(self.history) - 1]))
 
         best_program.save_to_file(self.save_directory + f'best_program{len(self.history)}.pkl')
