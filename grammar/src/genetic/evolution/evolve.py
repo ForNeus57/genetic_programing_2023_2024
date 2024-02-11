@@ -9,7 +9,7 @@ from multiprocessing import Pool
 from pathlib import Path
 from random import random, sample, getstate
 from time import perf_counter
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.evolution.population import Population
@@ -20,7 +20,7 @@ from src.genetic.individual.structure.metadata import GenerationMethod, Metadata
 @dataclass(slots=True)
 class Evolution:
     fitness_grader: FitnessFunctionBase
-    input_vector: list[tuple[int, ...]]
+    input_vector: list[Optional[tuple]]
 
     fitness: list = field(init=False)
     statistics: Statistics = field(init=False)
@@ -93,6 +93,7 @@ class Evolution:
                         GenerationMethod.GROW if index % 2 == 0 else GenerationMethod.FULL
                     )
                 ))
+
                 new_fitness: int = self.calculate_fitness(new_offspring)
                 self.fitness[index_to_change] = new_fitness
                 self.population.individuals[index_to_change] = new_offspring
@@ -186,4 +187,4 @@ class Statistics:
         with open(self.save_directory + 'history.txt', 'a') as file:
             file.write(str(self.history[len(self.history) - 1]))
 
-        best_program.save_to_file(self.save_directory + f'best_program{len(self.history)}.pkl')
+        best_program.save_to_file(Path(self.save_directory + f'best_program{len(self.history)}.pkl'))

@@ -1,23 +1,37 @@
-[0]Best: 18891639, Worst: 17700279408900, Average: 27792972257.94487, Time: 1673.7091051549999
+[0]Best: 18891334, Worst: 3069885125484, Average: 20899307931.995304, Time: 2200.2765553069994
 Best program: {
-	read(bn);
-	if (true) {
-		Gtk = bn;
-		write(bn);
-		while (true) {
-			read(Gtk);
-			read(s6C5yg);
+	read(Qqpt);
+	write((13 + Qqpt));
+}
+[1]Best: 0, Worst: 372100000, Average: 135923185.98182, Time: 4638.79218706
+Best program: {
+	while (!(!(false))) {
+		read(L6UQ);
+		L6UQ = 9;
+		while (((-1 >= kTI) || true)) {
+			read(qO);
+			kzo = -37;
+			write((35 * kzo));
+			ExW8Z1 = 31;
 		}
-		read(r79GY);
+		while ((false || false)) {
+			write(64);
+			write(28);
+			read(O);
+		}
 	}
-	while (((bn + bn) < 31)) {
-		while (!((44 <= bn))) {
-			read(X);
-			read(bn);
-			write(X);
+	write(((Qqpt - hC0) / (Qqpt / Qqpt)));
+	while ((true && false)) {
+		while (((-27 > u) && (false || true))) {
+			u = u;
+			QBQ8 = -12;
+			read(Sc);
+			Sc = QBQ8;
 		}
-		read(cLob);
-		write(cLob);
-		bn = ((cLob + 28) + cLob);
+		read(L2uB);
+	}
+	while ((!(true) || (-11 < -48))) {
+		rL90CYF = -43;
+		write(-8);
 	}
 }

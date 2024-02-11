@@ -1,7 +1,30 @@
-[0]Best: 0, Worst: 1994963100, Average: 552597985.2436364, Time: 459.99956074199997
+[0]Best: 270, Worst: 999999900, Average: 545175990.4850664, Time: 7512.361726002
 Best program: {
-	read(H);
-	read(zdgL);
-	write((H + zdgL));
-	read(J7i);
+	RQ = (-6 * -22);
+	read(kcOl);
+	write(((kcOl - -11) + -8));
+	cbe = ((RQ + kcOl) / (kcOl + RQ));
+}
+[1]Best: 0, Worst: 10000000, Average: 2848711.1979822195, Time: 376.5042307450003
+Best program: {
+	RQ = (11 / -22);
+	if (true) {
+		read(O);
+		RQ = (13 + 53);
+		Otg = (RQ - 19);
+		read(ngM);
+	} else {
+		while ((cbe >= -60)) {
+			cbe = (RQ + cbe);
+			write(Sm);
+		}
+		while (((cbe < 59) || (false && false))) {
+			tBr9 = cbe;
+			Rf5 = tBr9;
+			RQ = 43;
+			t = 5;
+		}
+	}
+	write((W + kcOl));
+	RQ = ((kcOl * kcOl) * (kcOl + RQ));
 }

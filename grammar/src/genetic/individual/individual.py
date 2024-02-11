@@ -1,24 +1,25 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, InitVar, field
+from pathlib import Path
 from pickle import dump, load
-from typing import Literal, Optional, Any
+from typing import Literal, Optional
 
 from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.individual.structure.metadata import Metadata
 from src.genetic.individual.structure.rules import Program
 from src.genetic.interpreter.context import InterpreterContext
 from src.genetic.interpreter.input_output import BufferInputOutputOperation
-from src.genetic.interpreter.interpreter import Interpreter
-from src.utilities.timeout import timeout
 
 
 @dataclass(slots=True, frozen=True, order=False)
 class Individual:
     program: Program
 
+    # fitness: int | float = field(init=False)
+
     @classmethod
-    def from_file(cls, path: str) -> Individual:
+    def from_file(cls, path: Path) -> Individual:
         with open(path, 'rb') as file:
             return load(file)
 
@@ -29,7 +30,10 @@ class Individual:
         program: Program = Program.from_random(meta)
         return cls(program)
 
-    def execute(self, input_vector: Optional[tuple] = None) -> list:
+    # def __post_init__(self) -> None:
+    #     self.fitness
+
+    def execute(self, input_vector: Optional[tuple]) -> list:
         output: BufferInputOutputOperation = BufferInputOutputOperation(input_vector)
 
         try:
@@ -41,7 +45,7 @@ class Individual:
 
         return output.output
 
-    def evaluate(self, params: tuple[FitnessFunctionBase, tuple]) -> int | float:
+    def evaluate(self, params: tuple[FitnessFunctionBase, Optional[tuple]]) -> int | float:
         fitness_function, input_vector = params
         result_vector: list = self.execute(input_vector)
 
@@ -53,7 +57,7 @@ class Individual:
     def crossover(self, other: Individual) -> None:
         self.program.crossover(other.program)
 
-    def save_to_file(self, path: str) -> None:
+    def save_to_file(self, path: Path) -> None:
         with open(path, 'wb') as file:
             dump(self, file)
 

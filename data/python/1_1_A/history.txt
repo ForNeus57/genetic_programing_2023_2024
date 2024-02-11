@@ -1,81 +1,38 @@
-[0]Best: 0, Worst: 868600, Average: 6848.080808080808, Time: 9.579507199996442
+[0]Best: 0, Worst: 113674401, Average: 51929.46708620517, Time: 8.476709632000166
 Best program: {
 	while (false) {
-		Wt = -16;
-		while (((Wt > -4) && !(true))) {
-			write(-61);
-			read(Wt);
+		if (true) {
+			write(0);
+			read(c2);
+			c2 = (c2 * c2);
+			RYbi = 51;
+		} else {
+			read(Xqg);
+			read(Xqg);
+			Qig2X = 24;
+			read(Xqg);
 		}
-		while ((false && !(false))) {
-			sYR = (24 * 15);
-			write(((15 + -8) / Wt));
-			sYR = (sYR + -63);
-			read(SVe);
-		}
-		while (false) {
-			Wt = Wt;
-			kcSc = 64;
-			write(52);
-			f = ((Wt - kcSc) / 55);
+		HnH = ((1 - -7) + (61 / 44));
+		HnH = -39;
+		while (true) {
+			read(HnH);
+			z5A = (HnH + -46);
 		}
 	}
-	if (true) {
-		rcf = ((25 / 15) + (47 / -24));
-		if (false) {
-			read(rcf);
-			rcf = rcf;
-			u = -25;
-			Z = 0;
+	while (!((5 == 27))) {
+		if (((29 / 32) <= (20 / -8))) {
+			read(QF);
+			eSl = 63;
+			eSl = (QF - -38);
+			hp = (eSl - -36);
 		} else {
-			write((rcf / rcf));
-			rcf = rcf;
-			read(rcf);
-			read(A);
+			I3Z = 19;
+			I3Z = I3Z;
+			I3Z = -9;
+			nhms = (22 - I3Z);
 		}
-		while ((rcf <= (-41 * rcf))) {
-			read(GjNe);
-			read(CUtk);
-			GjNe = -1;
-		}
-		while (((true && false) && (true && false))) {
-			read(bTE);
-			write(-32);
-			write(rcf);
-			rcf = (rcf - bTE);
-		}
-	} else {
-		if (!(!(true))) {
-			write(((-8 + 39) + -11));
-			read(R);
-			R = 19;
-			read(EvFut);
-		} else {
-			read(f);
-			f = 64;
-			f = 63;
-		}
-		x = -32;
-		read(x);
-	}
-	if (((false || false) && true)) {
-		NFES = -37;
-		read(NFES);
-		while (!((false || false))) {
-			muoJh = (-14 / 2);
-			muoJh = (-54 * (31 - NFES));
-		}
-		write(44);
-	} else {
-		read(fc);
-		if ((52 <= (33 * fc))) {
-			read(Wd);
-			write((Wd + 47));
-		} else {
-			read(fc);
-			read(fc);
-			fc = -58;
-		}
-		byg = -35;
-		write(-49);
+		uDVk = ((40 * 57) / -64);
+		read(uDVk);
+		write((uDVk * uDVk));
 	}
 }
