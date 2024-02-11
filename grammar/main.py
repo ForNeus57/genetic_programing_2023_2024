@@ -3,12 +3,12 @@ from src.genetic.evaluation.evaluation import FitnessFunction1_1_A, FitnessFunct
     FitnessFunction1_2_C, FitnessFunction1_2_D, FitnessFunction1_2_E, FitnessFunction1_3_A, FitnessFunction1_3_B, \
     FitnessFunction1_4_A, FitnessFunction1_4_B
 from src.genetic.evolution.evolve import Evolution
-from src.genetic.evaluation.generated.input_values_for_1_2_C_1_2_D_1_2_E_1_3_B import input_values
+from src.genetic.evaluation.generated.input_values_for_1_4_B import input_values
 
 
 def main() -> None:
     evolution: Evolution = Evolution(
-        FitnessFunction1_2_E(),
+        FitnessFunction1_4_B(),
         input_values,
     )
     print(evolution.evolve())

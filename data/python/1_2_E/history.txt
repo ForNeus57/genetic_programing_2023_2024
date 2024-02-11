@@ -1,0 +1,23 @@
+[0]Best: 372100000, Worst: 974093310082350, Average: 126683413516.74298, Time: 2492.698496127
+Best program: {
+	while ((!(true) && (1 > 40))) {
+		while ((false && (-8 >= -2))) {
+			cipzw = -31;
+			write(-28);
+		}
+		if (!((-25 < -28))) {
+			Sf = -64;
+			Sf = Sf;
+		}
+	}
+	if (((5 - -52) != -16)) {
+		while (((32 < 17) && !(false))) {
+			write(18);
+			RkR = -54;
+		}
+		read(j5);
+	} else {
+		CuF = 53;
+		CuF = ((7 / 53) - CuF);
+	}
+}

@@ -1,0 +1,5 @@
+[0]Best: 2433, Worst: 6160050067, Average: 1280248484.8449705, Time: 115.719145131
+Best program: {
+	Uat = -29;
+	write(((-11 / -45) / Uat));
+}
