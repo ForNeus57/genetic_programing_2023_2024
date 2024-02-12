@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from itertools import chain
 from math import ceil, sqrt
+from pathlib import Path
 from typing import Iterable, ClassVar
 
 from src.genetic.individual.individual import Individual
@@ -28,5 +29,26 @@ class Population:
 
         return cls(list(individuals))
 
-    def __len__(self):
+    @classmethod
+    def from_pickle(cls, directory: Path) -> Population:
+        individuals: Iterable[Individual] = map(Individual.from_file, directory.iterdir())
+        return cls(list(individuals))
+
+    def __len__(self) -> int:
         return len(self.individuals)
+
+    def __iter__(self) -> Iterable[Individual]:
+        return iter(self.individuals)
+
+    def __getitem__(self, item: int) -> Individual:
+        return self.individuals[item]
+
+    def __setitem__(self, key: int, value: Individual) -> None:
+        self.individuals[key] = value
+
+    def save_to_pickle(self, directory: Path) -> None:
+        for index, individual in enumerate(self.individuals):
+            individual.save_to_file(directory.joinpath(f'{index}.pkl'))
+
+    def tournament(self) -> int:
+        pass

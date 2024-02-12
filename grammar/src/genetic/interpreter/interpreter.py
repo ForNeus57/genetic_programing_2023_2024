@@ -213,7 +213,7 @@ class Interpreter(MiniGPVisitor):
             return interpreter.mode
 
     @staticmethod
-    @timeout(3)
+    @timeout(5)
     def fast_interpret[T, **P](program: Any, mode: T, **kwargs: P.kwargs) -> T:
         interpreter = Interpreter(mode, **kwargs)
         try:

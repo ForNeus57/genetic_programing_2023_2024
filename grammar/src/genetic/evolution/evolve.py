@@ -46,7 +46,7 @@ class Evolution:
         self.fitness = list(
             map(
                 lambda x: self.calculate_fitness(x),
-                self.population.individuals,
+                iter(self.population),
             )
         )
 
@@ -59,7 +59,7 @@ class Evolution:
                 return True
 
             for _ in range(len(self.population)):
-                fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, self.population.individuals)))
+                fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, iter(self.population))))
                 _, (_, first) = deepcopy(Individual.tournament(
                     sample(fitness_join_individuals, max(1, ceil(0.1 * len(self.population)))),
                     'min'
@@ -80,23 +80,23 @@ class Evolution:
 
                 self.fitness[index_to_change] = self.calculate_fitness(first)
 
-                self.population.individuals[index_to_change] = first
+                self.population[index_to_change] = first
 
-            for index in range(ceil(len(self.population) * 0.2)):
-                fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, self.population.individuals)))
+            for _ in range(ceil(len(self.population) * 0.2)):
+                fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, iter(self.population))))
                 index_to_change = deepcopy(Individual.tournament(
                     list(fitness_join_individuals),
                     'max'
                 ))[0]
                 new_offspring: Individual = Individual.from_random(Metadata(
                     method=(
-                        GenerationMethod.GROW if index % 2 == 0 else GenerationMethod.FULL
+                        GenerationMethod.GROW if random() < 0.5 else GenerationMethod.FULL
                     )
                 ))
 
                 new_fitness: int = self.calculate_fitness(new_offspring)
                 self.fitness[index_to_change] = new_fitness
-                self.population.individuals[index_to_change] = new_offspring
+                self.population[index_to_change] = new_offspring
 
             self.statistics.add_new_snapshot(self.population, self.fitness)
 
@@ -134,7 +134,7 @@ class Statistics:
                                f'Generations: {Evolution.generations}\n'
                                f'Population size: {Population.default_population_size}\n'
                                f'Crossover probability: {Evolution.crossover_probability}\n'
-                               f'Mutation probability: {1 - Evolution.crossover_probability}')
+                               f'Mutation probability: {1. - Evolution.crossover_probability}')
 
         if os.path.exists(self.save_directory):
             shutil.rmtree(self.save_directory)
@@ -150,7 +150,7 @@ class Statistics:
         worst = float('-inf')
 
         # print(fitness_vector)
-        for individual, fitness in zip(population.individuals, fitness_vector):
+        for individual, fitness in zip(iter(population), fitness_vector):
             if fitness < best[0]:
                 best = fitness, individual
             if fitness > worst:
@@ -187,4 +187,4 @@ class Statistics:
         with open(self.save_directory + 'history.txt', 'a') as file:
             file.write(str(self.history[len(self.history) - 1]))
 
-        best_program.save_to_file(Path(self.save_directory + f'best_program{len(self.history)}.pkl'))
+        best_program.save_to_file(Path(self.save_directory + f'best_program{len(self.history) - 1}.pkl'))
