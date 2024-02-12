@@ -234,6 +234,11 @@ class FitnessFunctionB_28(FitnessFunctionBase):
         expected_result = min(gp_input)
         return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
     
+class FitnessFunctionBool(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        # TODO: implement
+        pass
+    
 def get_fitness_function_by_name(name: str) -> Callable:
     return {
         '1.1.A': FitnessFunction1_1_A,
@@ -256,7 +261,8 @@ def get_fitness_function_by_name(name: str) -> Callable:
         'B.28': FitnessFunctionB_28,
         '1.4.A.bystep': FitnessFunction1_4_A_full,
         '1.4.B.bystep': FitnessFunction1_4_B_full,
-        'B.21.bystep': FitnessFunctionB_21_full
+        'B.21.bystep': FitnessFunctionB_21_full,
+        'BOOL': FitnessFunctionBool
     }[name]
 
 def get_fitness_function(name: str) -> FitnessFunctionBase:
