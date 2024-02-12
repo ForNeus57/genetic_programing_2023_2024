@@ -475,6 +475,7 @@ class FitnessFunction1_1_E(FitnessFunctionBase):
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_1_E](./raport_img/1_1_E.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -624,6 +625,7 @@ class FitnessFunction1_2_A(FitnessFunctionBase):
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_2_A](./raport_img/1_2_A.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -669,6 +671,7 @@ Best program: {
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_2_B](./raport_img/1_2_B.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -703,6 +706,7 @@ class FitnessFunction1_2_C(FitnessFunctionBase):
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_2_C](./raport_img/1_2_C.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -764,6 +768,7 @@ class FitnessFunction1_2_D(FitnessFunctionBase):
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_2_D](./raport_img/1_2_D.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -876,6 +881,7 @@ class FitnessFunction1_3_A(FitnessFunctionBase):
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_3_A](./raport_img/1_3_A.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -951,6 +957,7 @@ class FitnessFunction1_3_B(FitnessFunctionBase):
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_3_B](./raport_img/1_3_B.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
