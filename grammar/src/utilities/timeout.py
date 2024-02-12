@@ -1,26 +1,32 @@
 from functools import wraps
 from signal import signal, alarm, SIGALRM
+from types import FrameType
+from typing import NoReturn, Any, Callable
 
 
-def timeout(timeout_seconds: int):
+def timeout(timeout_seconds: int, default: Any = None) -> Callable:
     """
     Return a decorator that raises a TimedOutExc exception
     after timeout seconds, if the decorated function did not return.
     """
 
-    def decorate(f):
-        def handler(signum, frame):
-            raise TimeoutError(f'Function timeout after {timeout_seconds} seconds!')
+    def decorate(function: Callable) -> Callable:
+        def handler(signum: int, frame: FrameType | None) -> NoReturn:
+            raise TimeoutError(f'Function ({function.__name__}) timeout after {timeout_seconds} seconds!')
 
-        @wraps(f)  # Preserves the documentation, name, etc.
+        @wraps(function)
         def new_f(*args, **kwargs):
             old_handler = signal(SIGALRM, handler)
             alarm(timeout_seconds)
 
-            result = f(*args, **kwargs)  # f() always returns, in this scheme
-
-            signal(SIGALRM, old_handler)  # Old signal handler is restored
-            alarm(0)  # Alarm removed
+            try:
+                result = function(*args, **kwargs)  # f() always returns, in this scheme
+            except TimeoutError as error:
+                print(error)
+                result = default
+            finally:
+                alarm(0)  # Alarm removed
+                signal(SIGALRM, old_handler)  # Old signal handler is restored
 
             return result
 

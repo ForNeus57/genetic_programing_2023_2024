@@ -34,7 +34,6 @@ class Individual:
     # def __post_init__(self) -> None:
     #     self.fitness
 
-    @timeout(4)
     def execute(self, input_vector: Optional[tuple]) -> list:
         output: BufferInputOutputOperation = BufferInputOutputOperation(input_vector)
 
@@ -47,13 +46,10 @@ class Individual:
 
         return output.output
 
+    @timeout(4, 9_999_999)
     def evaluate(self, params: tuple[FitnessFunctionBase, Optional[tuple]]) -> int | float:
         fitness_function, input_vector = params
-        try:
-            result_vector: list = self.execute(input_vector)
-        except TimeoutError as error:
-            print(error)
-            return 9_999_999
+        result_vector: list = self.execute(input_vector)
 
         return fitness_function.calculate_fitness(tuple(result_vector), input_vector)
 

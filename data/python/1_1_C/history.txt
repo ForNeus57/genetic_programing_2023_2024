@@ -923,3 +923,186 @@ Best program: {
 		}
 	}
 }
+[32]Best: 43, Worst: 100000, Average: 76.2882828888223, Time: 289.3744789229968
+Best program: {
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((44 * (31 * 23)));
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
+[33]Best: 43, Worst: 100000, Average: 74.53491159724304, Time: 286.3134307479995
+Best program: {
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((44 * (31 * 23)));
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
+[34]Best: 43, Worst: 100000, Average: 87.30136849465588, Time: 315.87421544200333
+Best program: {
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((44 * (31 * 23)));
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
+[35]Best: 43, Worst: 31370, Average: 59.679552492258516, Time: 331.3984675690008
+Best program: {
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((44 * (31 * 23)));
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
+[36]Best: 43, Worst: 31420, Average: 69.4637898311857, Time: 323.3009124339951
+Best program: {
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((44 * (31 * 23)));
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
+[37]Best: 43, Worst: 100000, Average: 78.31115772650085, Time: 313.51080174300296
+Best program: {
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((44 * (31 * 23)));
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
+[38]Best: 0, Worst: 100000, Average: 66.5420037958246, Time: 288.7342261789963
+Best program: {
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((5 * (61 * (63 + 50))));
+        write(VbI);
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
