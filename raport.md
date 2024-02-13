@@ -44,11 +44,12 @@ Generations: 200
 Population size: 10000
 Crossover probability: 0.2
 Mutation probability: 0.8
-//////////////
+////////////// Dodatkowe informacje nie wypisywane
 Ułamek populacji, który przeżywa do następnej generacji: 0.8
 Minimalna wartość tokenu całkowitej: -64
 Maksymalna wartość tokenu całkowitej: 64
-Maksymalna głębokość osobnika dla populacji 0: 
+Maksymalna głębokość osobnika dla populacji 0: 2
+
 ```
 
 - `Seed` - Stan generatora losowego - wartość początkowa - losowa
