@@ -163,8 +163,8 @@ class Statistics:
         point = HistoryPoint(
             len(self.history),
             best[0],
-            'Unable to compute',
-            'Unable to compute',
+            worst,
+            sum(fitness_vector) / len(fitness_vector),
             str(best[1]),
             perf_counter() - self.prev
         )

@@ -42,7 +42,7 @@ Przykładowe funkcje boolowskie dla k=2: D0 AND D1, D0 OR D1, D0 XOR D1
 itd.
 """
 
-from typing import Tuple, Union, Optional, Callable, ClassVar
+from typing import Tuple, Union, Optional, Callable, ClassVar, List, Any
 from abc import ABC, abstractmethod
 from itertools import product
 
@@ -275,7 +275,7 @@ class FitnessFunctionB_28(FitnessFunctionBase):
 
 
 class FitnessFunctionBool(FitnessFunctionBase):
-    function_output: ClassVar[Tuple] = (
+    function_output: ClassVar[Tuple] = tuple(map(lambda x: int(x), (
         True, False, False, False, True, False, False, False, False, False, False, True, True, False, True, True, False,
         False, False, True, False, False, True, False, False, True, True, False, True, True, False, True, False, True,
         True,
@@ -375,12 +375,14 @@ class FitnessFunctionBool(FitnessFunctionBase):
         False,
         True, True, True, False, False, False, False, True, False, False, True, True, True, True, False, False, False,
         True,
-        True, True, True, True, True)
-    k: ClassVar[int] = 8
+        True, True, True, True, True)))
+    k: ClassVar[int] = 1
 
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return sum(map(lambda x: abs(x[0] - int(x[1])),
-                       zip(gp_output, FitnessFunctionBool.function_output[:(2 ** FitnessFunctionBool.k)])))
+        if len(gp_output) != 1:
+            return 9999999
+        binary_string = ''.join('1' if value else '0' for value in gp_input)
+        return abs(gp_output[0] - FitnessFunctionBool.function_output[int(binary_string, 2)])
 
 
 def get_fitness_function_by_name(name: str) -> Callable:
@@ -414,7 +416,7 @@ def get_fitness_function(name: str) -> FitnessFunctionBase:
     return get_fitness_function_by_name(name)()
 
 
-def generate_truth_tables(k: int) -> list[Tuple[bool, ...], ...]:
+def generate_truth_tables(k: int) -> list[Any]:
     return list(product((True, False), repeat=k))
 
 # with open("grammar/src/genetic/evaluation/generated/truth_tables.py", "w") as file:
@@ -502,4 +504,3 @@ def generate_truth_tables(k: int) -> list[Tuple[bool, ...], ...]:
 #     print("input_values = Tuple[Tuple[int, int, int, int], ...]", file=file)
 #     print("", file=file)
 #     print(f"input_values = {generate_input_values_for_B_28()}", file=file)
-
