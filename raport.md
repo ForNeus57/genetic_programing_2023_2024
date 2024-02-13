@@ -263,7 +263,7 @@ Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wy
 
 ### 1.1.C Program powinien wygenerować na wyjściu (na dowolnej pozycji w danych wyjściowych) liczbę 31415. Poza liczbą 31415 może też zwrócić inne liczby.
 
-- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+- status: <span style="color:green">**rozwiązanie znalezione**</span>.
 
 
 - funkcja dopasowania:
@@ -274,21 +274,47 @@ class FitnessFunction1_1_C(FitnessFunctionBase):
         return abs(closest_value - 31415) if 31415 not in gp_output else 0
 ```
 
-- najlepsze dopasowanie: 
+- najlepsze dopasowanie: 0 (znalezione w 39 generacji)
 
 - najlepsze rozwiązanie:
 ```
-
+{
+	while (true) {
+		if (((false || false) && (-58 == rN))) {
+			b = ((24 / 21) * (-59 * 55));
+			read(yd);
+		} else {
+			V = Q;
+			write(VbI);
+		}
+		write((5 * (61 * (63 + 50))));
+        write(VbI);
+	}
+	if (((34 < 47) || (-28 == -49))) {
+		vehT_ = -22;
+		if ((vehT_ <= (vehT_ * -17))) {
+			vehT_ = (vehT_ / (UR * vehT_));
+			read(C);
+		}
+	} else {
+		read(G);
+		while ((!(true) && !(false))) {
+			read(QR);
+			write(-31);
+		}
+	}
+}
 ```
 
-- najgorsze dopasowanie: 
+- najgorsze dopasowanie: 100000
 
-- średnie dopasowanie: 
+- średnie dopasowanie: 66.5420037958246
 
-- czas wykonania:
+- czas wykonania: 288.7342261789963
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_1_C](./raport_img/1_1_C.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -784,7 +810,7 @@ Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wy
 
 ### 1.2.E Program powinien odczytać dwie pierwsze liczy z wejścia i zwrócić na wyjściu (jedynie) ich iloczyn. Na wejściu mogą być tylko całkowite liczby dodatnie w zakresie [-9999,9999]
 
-- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+- status: <span style="color:green">**rozwiązanie znalezione**</span>.
 
 
 - funkcja dopasowania:
@@ -795,18 +821,39 @@ class FitnessFunction1_2_E(FitnessFunctionBase):
         return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
 ```
 
-- najlepsze dopasowanie: 
+- najlepsze dopasowanie: 0 (znalezione w 2 generacji)
 
 - najlepsze rozwiązanie:
 ```
-
+{
+	while ((!(true) || !(true))) {
+		read(q);
+		write(-7);
+	}
+	if (!(!(true))) {
+		if (!(!(false))) {
+			yVoz = -13;
+			VTf = (VTf - (17 + 36));
+		} else {
+			write((tu * le));
+			read(MBA);
+		}
+		SABph = vns7;
+	} else {
+		while ((tv_ != le)) {
+			read(rz);
+			read(rz);
+		}
+		tv_ = 52;
+	}
+}
 ```
 
-- najgorsze dopasowanie: 
+- najgorsze dopasowanie: 37209996279
 
-- średnie dopasowanie: 
+- średnie dopasowanie: 272335556.65987414
 
-- czas wykonania:
+- czas wykonania: 1224.0368334489976
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_2_E](./raport_img/1_2_E.png)
