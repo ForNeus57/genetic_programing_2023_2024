@@ -35,9 +35,7 @@ class Evolution:
 
         self.statistics = Statistics(
             save_directory=f'./data/python/{
-                name[
-                    next((index for index, char in enumerate(name) if char.isdigit()), -1):
-                ]
+                name.replace('FitnessFunction', '')
             }/'
         )
         self.population = Population.from_ramped_half_and_half()
@@ -165,8 +163,8 @@ class Statistics:
         point = HistoryPoint(
             len(self.history),
             best[0],
-            worst,
-            sum(fitness_vector) / len(fitness_vector),
+            'Unable to compute',
+            'Unable to compute',
             str(best[1]),
             perf_counter() - self.prev
         )

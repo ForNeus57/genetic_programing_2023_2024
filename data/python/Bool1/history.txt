@@ -1,0 +1,23 @@
+[0]Best: 0, Worst: 56709188767998, Average: 5665077418.639896, Time: 3.7174187780001375
+Best program: {
+	if ((-59 < (12 * -38))) {
+		ETQil8 = (45 * (43 * 15));
+		if (((17 == 4) && !(true))) {
+			write((-55 - -14));
+			ETQil8 = ETQil8;
+		}
+	} else {
+		write((45 / 40));
+		k5 = 16;
+	}
+	if (!(!(false))) {
+		read(REuX);
+		if (true) {
+			Q8cqM = 5;
+			Q8cqM = (44 - (Q8cqM - -6));
+		} else {
+			write((-29 / REuX));
+			DY = 46;
+		}
+	}
+}

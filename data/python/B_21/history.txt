@@ -1,0 +1,17 @@
+[0]Best: 49800196, Worst: 83472567641, Average: 2146546501.4709818, Time: 151.52874365800017
+Best program: {
+	read(u_EX);
+	if ((23 == u_EX)) {
+		if ((true || (u_EX <= u_EX))) {
+			u_EX = (u_EX - u_EX);
+			write(-35);
+		}
+		if (((false || true) && true)) {
+			write(30);
+			read(u_EX);
+		}
+	} else {
+		u_EX = u_EX;
+		QZ = 17;
+	}
+}

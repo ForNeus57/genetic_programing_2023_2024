@@ -1,0 +1,23 @@
+[0]Best: 0, Worst: 4999999500, Average: 2306674549.796524, Time: 5941.097537187001
+Best program: {
+	if ((true || (59 != 42))) {
+		while (((false && false) || false)) {
+			VU = 39;
+			read(wgK);
+		}
+		while (!(true)) {
+			read(j);
+			nP = j;
+		}
+	} else {
+		n = (55 - (-43 * 15));
+		write(n);
+	}
+	while (((21 * -7) <= (-11 - 0))) {
+		M8b = 51;
+		if ((46 != -34)) {
+			read(M8b);
+			write(M8b);
+		}
+	}
+}

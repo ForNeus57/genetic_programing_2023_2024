@@ -1,0 +1,23 @@
+[0]Best: 0, Worst: 4931410160, Average: 1036172.362001798, Time: 5.535313260999828
+Best program: {
+	if (false) {
+		aA = (20 - (-5 - -8));
+		read(aA);
+	} else {
+		if ((11 == (52 / 62))) {
+			write(((40 - -33) / (15 * 61)));
+			hze = 26;
+		} else {
+			write(1);
+			p = ((-56 * -39) - -64);
+		}
+		read(nPGz4);
+	}
+	while (true) {
+		BB = (-49 * (43 / 42));
+		while ((true && true)) {
+			Zoxv = BB;
+			O = (-42 - -30);
+		}
+	}
+}

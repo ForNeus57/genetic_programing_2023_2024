@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, InitVar, field
+from dataclasses import dataclass
 from pathlib import Path
 from pickle import dump, load
 from typing import Literal, Optional
@@ -46,14 +46,10 @@ class Individual:
 
         return output.output
 
-    @timeout(5)
+    @timeout(5, 999_999_999_999)
     def evaluate(self, params: tuple[FitnessFunctionBase, Optional[tuple]]) -> int | float:
         fitness_function, input_vector = params
-        try:
-            result_vector: list = self.execute(input_vector)
-        except TimeoutError as error:
-            print(f'Error: {error}')
-            return 999_999_999
+        result_vector: list = self.execute(input_vector)
 
         return fitness_function.calculate_fitness(tuple(result_vector), input_vector)
 

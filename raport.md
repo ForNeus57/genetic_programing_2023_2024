@@ -35,16 +35,26 @@ class FitnessFunctionBase(ABC):
 ```
 
 
-## Metryki
-#TODO - opis metryk
+## Metryki i ogólna konfiguracja
 
-```
+Konfiguracja parametrów uczenia:
+```txt
 Seed: 2147483648
 Generations: 200
 Population size: 10000
 Crossover probability: 0.2
 Mutation probability: 0.8
+//////////////
+Ułamek populacji, który przeżywa do następnej generacji: 0.8
+Minimalna wartość tokenu całkowitej: -64
+Maksymalna wartość tokenu całkowitej: 64
 ```
+
+- `Seed` - Stan generatora losowego - wartość początkowa - losowa
+- `Generations` - Maksymalna liczba generacji - 200
+- `Population size` - Rozmiar populacji - 10000 - użyta metoda ramped half and half.
+- `Crossover probability` - Prawdopodobieństwo krzyżowania - 0.2
+- `Mutation probability` - Prawdopodobieństwo mutacji - 0.8 (1 - crossover probability)
 
 ## Przykładowe zadania testowe
 ### 1.1.A Program powinien wygenerować na wyjściu (na dowolnej pozycji w danych wyjściowych) liczbę 1. Poza liczbą 1 może też zwrócić inne liczby.
