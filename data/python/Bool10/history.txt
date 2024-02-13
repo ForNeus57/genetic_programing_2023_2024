@@ -1,0 +1,68 @@
+[0]Best: 483, Worst: 33319272931, Average: 2624568656.9824195, Time: 377.6768742000004
+Best program: {
+	if (((25 - -59) != (-58 * -40))) {
+		if ((false && !(false))) {
+			dQP = 11;
+			write(dQP);
+		}
+		if (!((42 < -10))) {
+			I65 = (-58 * (20 - 38));
+			write(((-42 + I65) / I65));
+		}
+	}
+	while (((true && false) && (0 <= 61))) {
+		if (true) {
+			write(-56);
+			write((14 / 7));
+		} else {
+			read(XSEb);
+			read(VNh);
+		}
+		if (((13 / -3) > (-14 - 54))) {
+			DnG = (-62 - (-62 - 4));
+			DnG = DnG;
+		}
+	}
+}
+[1]Best: 483, Worst: 102400000, Average: 31620138.939666368, Time: 817.5208319659996
+Best program: {
+	Qj = (19 - (64 * -47));
+	if (false) {
+		while ((!(true) && false)) {
+			write(-36);
+			read(G);
+		}
+		write(PlY);
+	} else {
+		write(((21 * 34) / (18 * 41)));
+		read(X2CZ2M);
+	}
+}
+[2]Best: 483, Worst: 10239998976, Average: 1031454.7929277795, Time: 921.6475692949998
+Best program: {
+	Qj = (19 - (64 * -47));
+	if (false) {
+		while ((!(true) && false)) {
+			write(-36);
+			read(G);
+		}
+		write(PlY);
+	} else {
+		write(((21 * 34) / (18 * 41)));
+		read(X2CZ2M);
+	}
+}
+[3]Best: 483, Worst: 102400000, Average: 10758.891219658375, Time: 786.3331033029999
+Best program: {
+	Qj = (19 - (64 * -47));
+	if (false) {
+		while ((!(true) && false)) {
+			write(-36);
+			read(G);
+		}
+		write(PlY);
+	} else {
+		write(((21 * 34) / (18 * 41)));
+		read(X2CZ2M);
+	}
+}

@@ -1,0 +1,136 @@
+[0]Best: 240, Worst: 5119999488, Average: 1275989981.0978923, Time: 193.5533839740001
+Best program: {
+	an0i = ((-48 / 26) * (-38 + 52));
+	write((0 / (an0i + an0i)));
+}
+[1]Best: 232, Worst: 51200000, Average: 12657024.593347318, Time: 561.0339178230006
+Best program: {
+	if (((-59 - -17) < 21)) {
+		if (true) {
+			write((LER - (a * LER)));
+			pd = -12;
+		} else {
+			write(-31);
+			Ydno = (57 / -34);
+		}
+		if (((42 == -52) || true)) {
+			qTc = -40;
+			read(qTc);
+		} else {
+			write((S - FgNm));
+			write(-14);
+		}
+	} else {
+		read(AgSS);
+		read(yOcJ);
+	}
+	while (false) {
+		while (true) {
+			nC = -24;
+			write(((-42 / 18) - Y));
+		}
+		if (!((-13 < -55))) {
+			write((-12 * F));
+			lna = 11;
+		} else {
+			read(Ga);
+			y2k = 33;
+		}
+	}
+}
+[2]Best: 232, Worst: 51200000, Average: 7127.573269403656, Time: 644.2489220710004
+Best program: {
+	if (((-59 - -17) < 21)) {
+		if (true) {
+			write((LER - (a * LER)));
+			pd = -12;
+		} else {
+			write(-31);
+			Ydno = (57 / -34);
+		}
+		if (((42 == -52) || true)) {
+			qTc = -40;
+			read(qTc);
+		} else {
+			write((S - FgNm));
+			write(-14);
+		}
+	} else {
+		read(AgSS);
+		read(yOcJ);
+	}
+	while (false) {
+		while (true) {
+			nC = -24;
+			write(((-42 / 18) - Y));
+		}
+		if (!((-13 < -55))) {
+			write((-12 * F));
+			lna = 11;
+		} else {
+			read(Ga);
+			y2k = 33;
+		}
+	}
+}
+[3]Best: 232, Worst: 5119999488, Average: 511671.57306962344, Time: 923.7257351710005
+Best program: {
+	if (((-59 - -17) < 21)) {
+		if (true) {
+			write((LER - (a * LER)));
+			pd = -12;
+		} else {
+			write(-31);
+			Ydno = (57 / -34);
+		}
+		if (((42 == -52) || true)) {
+			qTc = -40;
+			read(qTc);
+		} else {
+			write((S - FgNm));
+			write(-14);
+		}
+	} else {
+		read(AgSS);
+		read(yOcJ);
+	}
+	while (false) {
+		while (true) {
+			nC = -24;
+			write(((-42 / 18) - Y));
+		}
+		if (!((-13 < -55))) {
+			write((-12 * F));
+			lna = 11;
+		} else {
+			read(Ga);
+			y2k = 33;
+		}
+	}
+}
+[4]Best: 232, Worst: 51200000, Average: 5346.359005094396, Time: 636.7819488299992
+Best program: {
+	if (!((17 == 42))) {
+		if (true) {
+			write((LER - (a * LER)));
+			pd = -12;
+		} else {
+			write(-31);
+			Ydno = (57 / -34);
+		}
+		if ((true || (-51 == 27))) {
+			qTc = -31;
+			read(qg);
+		} else {
+			write(33);
+			write(v);
+		}
+	} else {
+		OvyI = OvyI;
+		write(-10);
+	}
+	while (!((-47 >= -53))) {
+		Cix9 = X4;
+		read(X4);
+	}
+}

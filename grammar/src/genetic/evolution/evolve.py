@@ -11,7 +11,7 @@ from random import random, sample, getstate
 from time import perf_counter
 from typing import ClassVar, Optional
 
-from src.genetic.evaluation.evaluation import FitnessFunctionBase
+from src.genetic.evaluation.evaluation import FitnessFunctionBase, FitnessFunctionBool
 from src.genetic.evolution.population import Population
 from src.genetic.individual.individual import Individual
 from src.genetic.individual.structure.metadata import GenerationMethod, Metadata
@@ -31,11 +31,14 @@ class Evolution:
     pool_size: ClassVar[int] = os.cpu_count()
 
     def __post_init__(self):
-        name: str = self.fitness_grader.__class__.__name__
+        name: str = self.fitness_grader.__class__.__name__.replace('FitnessFunction', '')
+
+        if name == 'Bool':
+            name += str(FitnessFunctionBool.k)
 
         self.statistics = Statistics(
             save_directory=f'./data/python/{
-                name.replace('FitnessFunction', '')
+                name
             }/'
         )
         self.population = Population.from_ramped_half_and_half()

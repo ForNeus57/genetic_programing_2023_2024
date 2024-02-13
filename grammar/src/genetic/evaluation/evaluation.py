@@ -376,7 +376,7 @@ class FitnessFunctionBool(FitnessFunctionBase):
         True, True, True, False, False, False, False, True, False, False, True, True, True, True, False, False, False,
         True,
         True, True, True, True, True)))
-    k: ClassVar[int] = 2
+    k: ClassVar[int] = 10
 
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         if len(gp_output) != 1:

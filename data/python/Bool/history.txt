@@ -24,3 +24,183 @@ Best program: {
 		write(0);
 	}
 }
+[1]Best: 1, Worst: 400000, Average: 131141.94855658774, Time: 168.6520686999993
+Best program: {
+	if ((hjdv > hjdv)) {
+		ZX6 = 31;
+		read(OuwG);
+	} else {
+		if (((-48 < -9) || !(true))) {
+			write((-17 / (-37 + w)));
+			read(KdKuP);
+		} else {
+			read(urzmY);
+			write(urzmY);
+		}
+		vBM = ((44 - 35) * (53 - 3));
+	}
+	if (true) {
+		FWD = -11;
+		while (((false && true) && (false || true))) {
+			read(FWD);
+			FWD = FWD;
+		}
+	} else {
+		if (((16 != 2) || (true || false))) {
+			read(gJ);
+			read(Q_5G);
+		} else {
+			e = ((13 - -57) * -35);
+			read(rA);
+		}
+		TJQ = ((-60 / 41) / (5 - 21));
+	}
+}
+[2]Best: 1, Worst: 400000, Average: 76.21186694635901, Time: 176.5715285640008
+Best program: {
+	if ((hjdv > hjdv)) {
+		ZX6 = 31;
+		read(OuwG);
+	} else {
+		if (((-48 < -9) || !(true))) {
+			write((-17 / (-37 + w)));
+			read(KdKuP);
+		} else {
+			read(urzmY);
+			write(urzmY);
+		}
+		vBM = ((44 - 35) * (53 - 3));
+	}
+	if (true) {
+		FWD = -11;
+		while (((false && true) && (false || true))) {
+			read(FWD);
+			FWD = FWD;
+		}
+	} else {
+		if (((16 != 2) || (true || false))) {
+			read(gJ);
+			read(Q_5G);
+		} else {
+			e = ((13 - -57) * -35);
+			read(rA);
+		}
+		TJQ = ((-60 / 41) / (5 - 21));
+	}
+}
+[3]Best: 1, Worst: 400000, Average: 41.56577764459095, Time: 198.20056977600052
+Best program: {
+	if ((hjdv > hjdv)) {
+		ZX6 = 31;
+		read(OuwG);
+	} else {
+		if (((-48 < -9) || !(true))) {
+			write((-17 / (-37 + w)));
+			read(KdKuP);
+		} else {
+			read(urzmY);
+			write(urzmY);
+		}
+		vBM = ((44 - 35) * (53 - 3));
+	}
+	if (true) {
+		FWD = -11;
+		while (((false && true) && (false || true))) {
+			read(FWD);
+			FWD = FWD;
+		}
+	} else {
+		if (((16 != 2) || (true || false))) {
+			read(gJ);
+			read(Q_5G);
+		} else {
+			e = ((13 - -57) * -35);
+			read(rA);
+		}
+		TJQ = ((-60 / 41) / (5 - 21));
+	}
+}
+[4]Best: 1, Worst: 381, Average: 1.0379582459294776, Time: 313.63342168300005
+Best program: {
+	if (((-42 * 10) > (-35 / 21))) {
+		if (false) {
+			read(gx);
+			write(-13);
+		} else {
+			write(((4 + jZ0g1f) - jZ0g1f));
+			jZ0g1f = -64;
+		}
+		write((61 + -20));
+	} else {
+		if (((-41 / -25) < 43)) {
+			zJS = 55;
+			Pgdt = -44;
+		}
+		write(((-40 / -45) / (-61 * -62)));
+	}
+	if (((23 - -54) < (-17 - 51))) {
+		write(5);
+		aGLa = -39;
+	} else {
+		s3eK = ((-39 + 61) / (7 - 55));
+		while (!((s3eK < 11))) {
+			Sem = -60;
+			dtCO = 46;
+		}
+	}
+}
+[5]Best: 1, Worst: 39999996, Average: 3996.6045350114873, Time: 488.2535080099997
+Best program: {
+	if (!((false || true))) {
+		aN = 1;
+		read(fw);
+	} else {
+		read(Z9);
+		write((0 * (Z9 / -48)));
+	}
+	hjdv = ((0 + 48) * -14);
+}
+[6]Best: 1, Worst: 400000, Average: 40.955948456697634, Time: 516.6026227149996
+Best program: {
+	write((-7 / (-19 * 11)));
+	if (((55 * -63) > 52)) {
+		X = ((-52 + 37) / (-15 - 33));
+		X = Q3pX0;
+	} else {
+		S95K = ((55 + -63) * -2);
+		S95K = 60;
+	}
+}
+[7]Best: 1, Worst: 400000, Average: 40.955948456697634, Time: 567.5670443609997
+Best program: {
+	write((-7 / (-19 * 11)));
+	if (((55 * -63) > 52)) {
+		X = ((-52 + 37) / (-15 - 33));
+		X = Q3pX0;
+	} else {
+		S95K = ((55 + -63) * -2);
+		S95K = 60;
+	}
+}
+[8]Best: 1, Worst: 237, Average: 1.0235740685246228, Time: 555.7470096779998
+Best program: {
+	write((-7 / (-19 * 11)));
+	if (((55 * -63) > 52)) {
+		X = ((-52 + 37) / (-15 - 33));
+		X = Q3pX0;
+	} else {
+		S95K = ((55 + -63) * -2);
+		S95K = 60;
+	}
+}
+[9]Best: 1, Worst: 400000, Average: 40.955948456697634, Time: 501.9963325409999
+Best program: {
+	write((-7 / (-19 * 11)));
+	if (((55 * -63) > 52)) {
+		X = ((-52 + 37) / (-15 - 33));
+		X = Q3pX0;
+	} else {
+		S95K = ((55 + -63) * -2);
+		S95K = 60;
+	}
+}

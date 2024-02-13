@@ -46,7 +46,7 @@ class Individual:
 
         return output.output
 
-    @timeout(5, 999_999_999_999)
+    @timeout(5, 9_999_999)
     def evaluate(self, params: tuple[FitnessFunctionBase, Optional[tuple]]) -> int | float:
         fitness_function, input_vector = params
         result_vector: list = self.execute(input_vector)
