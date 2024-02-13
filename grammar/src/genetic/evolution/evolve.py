@@ -56,6 +56,9 @@ class Evolution:
         # with Pool(processes=Evolution.pool_size) as pool:
         for _ in range(1, Evolution.generations):
             if self.statistics.finished(epsilon):
+                self.population.save_to_pickle(
+                    Path(self.statistics.save_directory + 'final_population')
+                )
                 return True
 
             for _ in range(len(self.population)):
@@ -100,6 +103,9 @@ class Evolution:
 
             self.statistics.add_new_snapshot(self.population, self.fitness)
 
+        self.population.save_to_pickle(
+            Path(self.statistics.save_directory + 'final_population')
+        )
         return False
 
     def calculate_fitness(self, ind: Individual) -> int | float:
