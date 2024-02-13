@@ -1,0 +1,5 @@
+[0]Best: 0, Worst: Unable to compute, Average: Unable to compute, Time: 678.1136999339997
+Best program: {
+	Nx = (23 / (-46 - 10));
+	write(1);
+}

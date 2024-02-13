@@ -1,0 +1,32 @@
+[0]Best: 0, Worst: Unable to compute, Average: Unable to compute, Time: 23.14095297300082
+Best program: {
+	if (false) {
+		write(31);
+		Kas = -9;
+	} else {
+		L = -30;
+		if (((L != L) || !(false))) {
+			read(L);
+			L = 0;
+		} else {
+			read(L);
+			O = L;
+		}
+	}
+	if (!((32 != 28))) {
+		if (((52 + -11) > 6)) {
+			mI4cM = -3;
+			write(mI4cM);
+		} else {
+			x = -56;
+			write(-30);
+		}
+		if (!(true)) {
+			write((46 / (7 + -41)));
+			write(((28 * 64) - (-22 - -55)));
+		}
+	} else {
+		write(1);
+		CHDpPA = ((-39 / -23) * (-3 / -25));
+	}
+}

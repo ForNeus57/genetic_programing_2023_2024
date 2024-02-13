@@ -379,7 +379,7 @@ class FitnessFunctionBool(FitnessFunctionBase):
     k: ClassVar[int] = 8
 
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return sum(map(lambda x: abs(int(x[0]) - int(x[1])),
+        return sum(map(lambda x: abs(x[0] - int(x[1])),
                        zip(gp_output, FitnessFunctionBool.function_output[:(2 ** FitnessFunctionBool.k)])))
 
 

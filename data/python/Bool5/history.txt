@@ -1,0 +1,5 @@
+[0]Best: 0, Worst: Unable to compute, Average: Unable to compute, Time: 12.05869792699923
+Best program: {
+	write(((57 / 56) / (43 / 64)));
+	read(FVTo);
+}
