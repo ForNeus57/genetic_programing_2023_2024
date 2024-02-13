@@ -48,6 +48,7 @@ Mutation probability: 0.8
 Ułamek populacji, który przeżywa do następnej generacji: 0.8
 Minimalna wartość tokenu całkowitej: -64
 Maksymalna wartość tokenu całkowitej: 64
+Maksymalna głębokość osobnika dla populacji 0: 
 ```
 
 - `Seed` - Stan generatora losowego - wartość początkowa - losowa

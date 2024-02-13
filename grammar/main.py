@@ -14,7 +14,7 @@ def main() -> None:
     # seed(0)
     evolution: Evolution = Evolution(
         FitnessFunctionBool(),
-        generate_truth_tables(1),
+        generate_truth_tables(2),
     )
     print(evolution.evolve())
 
