@@ -47,6 +47,7 @@ class Population:
         self.individuals[key] = value
 
     def save_to_pickle(self, directory: Path) -> None:
+        directory.mkdir(exist_ok=True)
         for index, individual in enumerate(self.individuals):
             individual.save_to_file(directory.joinpath(f'{index}.pkl'))
 
