@@ -1,0 +1,26 @@
+[0]Best: 1, Worst: 4317409823, Average: 10600295.943761863, Time: 3.755594442000074
+Best program: {
+	if (!(!(false))) {
+		ik = 59;
+		P = ik;
+	} else {
+		read(Szo);
+		Szo = (Szo + Szo);
+	}
+	if (((-57 / -32) == (43 * -28))) {
+		if (!((true || true))) {
+			write(55);
+			read(ze);
+		}
+		while (((51 + -62) >= -10)) {
+			write(((-47 / 52) + (1 + 43)));
+			m = -22;
+		}
+	} else {
+		if (false) {
+			LPSOc = ((-11 - 19) - (-15 - -18));
+			read(p);
+		}
+		write(0);
+	}
+}

@@ -19,7 +19,7 @@ def main() -> None:
 
     individual: Individual = Individual.from_file(filename)
     print(individual)
-    output: BufferInputOutputOperation = BufferInputOutputOperation((0,))
+    output: BufferInputOutputOperation = BufferInputOutputOperation((1,))
     try:
         individual.program.visit(InterpreterContext(output))
     except StopIteration:

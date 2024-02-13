@@ -376,13 +376,17 @@ class FitnessFunctionBool(FitnessFunctionBase):
         True, True, True, False, False, False, False, True, False, False, True, True, True, True, False, False, False,
         True,
         True, True, True, True, True)))
-    k: ClassVar[int] = 1
+    k: ClassVar[int] = 2
 
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         if len(gp_output) != 1:
             return 9_999_999
         binary_string = ''.join('1' if value else '0' for value in gp_input)
         return abs(gp_output[0] - FitnessFunctionBool.function_output[int(binary_string, 2)])
+
+    @staticmethod
+    def generate_truth_tables() -> list[Any]:
+        return list(product((0, 1), repeat=FitnessFunctionBool.k))
 
 
 def get_fitness_function_by_name(name: str) -> Callable:
@@ -414,10 +418,6 @@ def get_fitness_function_by_name(name: str) -> Callable:
 
 def get_fitness_function(name: str) -> FitnessFunctionBase:
     return get_fitness_function_by_name(name)()
-
-
-def generate_truth_tables(k: int) -> list[Any]:
-    return list(product((0, 1), repeat=k))
 
 # with open("grammar/src/genetic/evaluation/generated/truth_tables.py", "w") as file:
 #     print("from typing import Tuple", file=file)
