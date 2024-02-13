@@ -151,7 +151,7 @@ class FitnessFunction1_4_A(FitnessFunctionBase):
 # 1. odczytanie 10 liczb
 class FitnessFunction1_4_A_1(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return 0 if len(gp_output) == 10 else 9999999
+        return 0 if gp_output == gp_input[:10] else 9999999
 
 
 # 2. obliczenie ich sumy
@@ -190,14 +190,14 @@ class FitnessFunction1_4_B(FitnessFunctionBase):
 # 1. odczytanie pierwszej liczby
 class FitnessFunction1_4_B_1(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return 0 if len(gp_output) == 1 else 9999999
+        return 0 if gp_output == gp_input[0] else 9999999
 
 
 # 2. odczytanie tylu liczb ile wynosi pierwsza liczba
 class FitnessFunction1_4_B_2(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         inputs = gp_input[0]
-        return 0 if len(gp_output) == inputs else 9999999
+        return 0 if gp_output == gp_input[1:inputs + 1] else 9999999
 
 
 # 3. obliczenie ich sumy
@@ -246,7 +246,7 @@ class FitnessFunctionB_21(FitnessFunctionBase):
 # 1. odczytanie wektora liczb
 class FitnessFunctionB_21_1(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return 0 if len(gp_output) == len(gp_input) else 9999999
+        return 0 if gp_output == gp_input else 9999999
 
 
 # 2. zamiana liczb ujemnych na 0
