@@ -4,7 +4,7 @@ from types import FrameType
 from typing import NoReturn, Any, Callable
 
 
-def timeout(timeout_seconds: int, default: Any = None) -> Callable:
+def timeout(timeout_seconds: int) -> Callable:
     """
     Return a decorator that raises a TimedOutExc exception
     after timeout seconds, if the decorated function did not return.
@@ -19,14 +19,9 @@ def timeout(timeout_seconds: int, default: Any = None) -> Callable:
             old_handler = signal(SIGALRM, handler)
             alarm(timeout_seconds)
 
-            try:
-                result = function(*args, **kwargs)  # f() always returns, in this scheme
-            except TimeoutError as error:
-                print(error)
-                result = default
-            finally:
-                alarm(0)  # Alarm removed
-                signal(SIGALRM, old_handler)  # Old signal handler is restored
+            result = function(*args, **kwargs)  # f() always returns, in this scheme
+            alarm(0)  # Alarm removed
+            signal(SIGALRM, old_handler)  # Old signal handler is restored
 
             return result
 

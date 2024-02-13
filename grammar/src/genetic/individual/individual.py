@@ -46,10 +46,14 @@ class Individual:
 
         return output.output
 
-    @timeout(4, 9_999_999)
+    @timeout(5)
     def evaluate(self, params: tuple[FitnessFunctionBase, Optional[tuple]]) -> int | float:
         fitness_function, input_vector = params
-        result_vector: list = self.execute(input_vector)
+        try:
+            result_vector: list = self.execute(input_vector)
+        except TimeoutError as error:
+            print(f'Error: {error}')
+            return 999_999_999
 
         return fitness_function.calculate_fitness(tuple(result_vector), input_vector)
 
