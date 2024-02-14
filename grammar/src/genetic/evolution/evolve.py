@@ -27,7 +27,7 @@ class Evolution:
     population: Population = field(init=False)
 
     generations: ClassVar[int] = 200
-    crossover_probability: ClassVar[float] = 0.1
+    crossover_probability: ClassVar[float] = 0.6
     pool_size: ClassVar[int] = os.cpu_count()
 
     def __post_init__(self):
@@ -41,7 +41,7 @@ class Evolution:
                 name
             }/'
         )
-        # self.population = Population.from_pickle(Path('./data/python/1_4_A_1/final_population/'))
+        #self.population = Population.from_pickle(Path('./data/python/1_4_A_1/final_population/'))
         self.population = Population.from_ramped_half_and_half()
 
         # with Pool(processes=Evolution.pool_size) a:
@@ -87,7 +87,7 @@ class Evolution:
 
                 self.population[index_to_change] = first
 
-            for _ in range(ceil(len(self.population) * 0.6)):
+            for _ in range(ceil(len(self.population) * 0.5)):
                 fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, iter(self.population))))
                 index_to_change = deepcopy(Individual.tournament(
                     list(fitness_join_individuals),

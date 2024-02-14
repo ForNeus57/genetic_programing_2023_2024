@@ -3,5 +3,5 @@ Save directory: /home/dominik/PyCharm/genetic_programing_2023_2024/data/python/B
 Seed: 2147483648
 Generations: 200
 Population size: 10000
-Crossover probability: 0.1
-Mutation probability: 0.9
+Crossover probability: 0.6
+Mutation probability: 0.4

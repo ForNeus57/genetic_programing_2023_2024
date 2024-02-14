@@ -1,5 +1,5 @@
 Configuration:
-Save directory: /home/dominik/PyCharm/genetic_programing_2023_2024/data/python/Bool2
+Save directory: /home/dominik/PyCharm/genetic_programing_2023_2024/data/python/1_4_A_2
 Seed: 2147483648
 Generations: 200
 Population size: 10000

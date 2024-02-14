@@ -1,0 +1,1994 @@
+Configuration:
+Save directory: /home/dominik/PyCharm/genetic_programing_2023_2024/data/python/1_4_B_1
+Seed: 2147483648
+Generations: 200
+Population size: 10000
+Crossover probability: 0.6
+Mutation probability: 0.4
+...........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[0]Best: 50000000, Worst: 4999999500, Average: 3633423851.4032564, Time: 396.78298769
+Best program: {
+	while (((false || (false && true)) && (false && !(true)))) {
+		read(yG);
+		f92C = (-10 + 1);
+	}
+	while ((49 < ((-40 + 49) * (34 - 29)))) {
+		while (((-62 >= -4) || false)) {
+			while (!(!((24 < -61)))) {
+				write((22 - 28));
+				sM = (-50 - -23);
+				write(5);
+				read(Wv);
+				Wv = (((Wv + -20) / Wv) * Wv);
+				b2 = sM;
+				read(H);
+			}
+			if (true) {
+				write(5);
+				read(a);
+				a = (a - -19);
+				T7aHK = (a - a);
+			}
+			while ((55 == -57)) {
+				read(itW);
+				write(37);
+			}
+			if (!((!(true) && !(false)))) {
+				i = ((48 / 16) * (64 + 37));
+				read(vvxu);
+				read(UEM);
+			} else {
+				write(38);
+				write((35 - ((-59 / -50) + (40 / 53))));
+				write(-21);
+				write(((-29 + 14) / ((-63 - 4) + -40)));
+			}
+			if (((true || (36 >= 46)) && (!(false) || (-18 == 61)))) {
+				nbn = (61 + 42);
+				nbn = (-34 + -26);
+			}
+			while (!((-18 < 33))) {
+				u = -35;
+				write(u);
+			}
+			while (!(true)) {
+				write(5);
+				bpgH2 = -45;
+			}
+		}
+		while (true) {
+			Nj4 = (((-9 / 51) / (42 / -25)) * ((22 - -32) - -49));
+			read(W3d);
+			Nj4 = (57 + (Nj4 - W3d));
+		}
+		read(v);
+		if (false) {
+			v = v;
+			while (true) {
+				v = (-2 - ((v / v) - -35));
+				write((((44 / v) - (-17 / v)) / v));
+				v = 58;
+				read(Iv);
+			}
+			v = v;
+			YG = ((38 * -21) + (v - v));
+		}
+		if ((v <= (-21 + 60))) {
+			read(v);
+			if ((!((v > v)) || (true && (false && true)))) {
+				S = ((62 / v) + -37);
+				fD = -43;
+				fD = (v / (v + (-7 / v)));
+				x2S = 25;
+			} else {
+				write((62 * (v / (-53 - 57))));
+				v = 34;
+				v = v;
+			}
+			v = (v - v);
+			while ((v != v)) {
+				v = (v - v);
+				v = ((v - v) * (v * 53));
+				bU = -42;
+				IeCy = -62;
+			}
+			while (false) {
+				n_qiH = 9;
+				v = v;
+				unK = 25;
+			}
+		}
+		if (false) {
+			write(v);
+			if (false) {
+				L04 = -57;
+				write(v);
+				write(((-18 - (v - -1)) / v));
+				read(L04);
+			} else {
+				write(58);
+				v = ((29 / 22) * 17);
+				write(v);
+			}
+		}
+	}
+	while (!(((52 * -61) < (-29 / 27)))) {
+		while (!(((-62 > -15) && !(false)))) {
+			while (!(!((-57 != 29)))) {
+				read(XOnK);
+				write(34);
+				write((17 + ((XOnK - XOnK) + (XOnK - XOnK))));
+			}
+			write(36);
+			Bl = ((-29 / 54) + ((-50 / -50) + (-3 - 4)));
+			Bl = Bl;
+		}
+		if ((((14 - -42) == -53) || ((false && false) || !(false)))) {
+			if ((((61 < -36) || (-9 >= 24)) || !((-52 > -63)))) {
+				read(o);
+				write(43);
+			}
+			dF4H = (((55 / 50) * 10) - (-59 + -61));
+			write((38 / -31));
+		} else {
+			O2_ = -10;
+			read(O2_);
+		}
+		write((61 - -64));
+		uph = 61;
+		read(uph);
+	}
+}
+
+...........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+Error: 'Function (evaluate) timeout after 5 seconds!'.
+..............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[1]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 5095.421950853
+Best program: {
+	if ((((-26 > -29) || (true && false)) && !(!(false)))) {
+		write(49);
+		if ((true && !((true && true)))) {
+			if (true) {
+				RD6I = (12 - -30);
+				ru = (20 + RD6I);
+				write(-23);
+			}
+			M7d = (((0 * 51) + (30 / -2)) - ((-39 - -49) + (-20 * 55)));
+			if ((!((false || false)) || true)) {
+				write((M7d * M7d));
+				M7d = 28;
+				read(Ll);
+				write(M7d);
+				SW9J = (-25 / (-43 * Ll));
+			}
+		}
+		while ((-31 <= 64)) {
+			p7 = 6;
+			write((p7 - p7));
+			write(((p7 / 12) + (-51 / p7)));
+		}
+		d = 48;
+		read(f0t);
+	} else {
+		while (((-41 != (52 - -19)) || false)) {
+			IFc = 26;
+			IFc = IFc;
+			IFc = -6;
+		}
+		write(6);
+	}
+	if (((!(false) || (43 < 37)) || (10 < -4))) {
+		if (false) {
+			while (((-18 >= 35) && !((false && true)))) {
+				read(P);
+				read(KT);
+				write(16);
+				read(SNr);
+				write(((KT - (5 / 26)) + ((P * P) + KT)));
+			}
+			jOm = jOm;
+			UVX = Ic6;
+		} else {
+			read(OyBn);
+			while ((OyBn <= ((-42 * 12) / OyBn))) {
+				write(IZPV);
+				UV = ((17 + 58) / OyBn);
+				read(UV);
+				read(Tg);
+			}
+			while (true) {
+				read(d);
+				Th = ((OyBn - (OyBn * OyBn)) / 11);
+				OyBn = (-16 + 6);
+			}
+		}
+		if ((-47 == (-26 + -44))) {
+			if (true) {
+				BJ = 23;
+				L = (-4 + -29);
+				Wu9 = (10 + L);
+			} else {
+				L = (L * L);
+				nd4 = (nd4 / 63);
+				write((-4 - 14));
+			}
+			while (false) {
+				W_2 = (-9 * 17);
+				read(W_2);
+				write(c);
+			}
+		} else {
+			while (!(false)) {
+				write(-60);
+				L = (L * 11);
+				read(WhJm4ZA);
+			}
+			L = (L * 63);
+		}
+		if (((64 < L) && true)) {
+			write(L);
+			if (((L != 31) || ((aC1 < aC1) || !(false)))) {
+				ih = (((L * L) * t) - 38);
+				L = ((13 + (47 - -11)) + L);
+				L = ((59 * (L * 12)) / (31 + (21 / 58)));
+				t = t;
+			} else {
+				read(q6i);
+				L = (-13 / 46);
+			}
+			if (((L == L) && (-30 != L))) {
+				L = 46;
+				L = L;
+			} else {
+				L = L;
+				jufmt = L;
+				qF = 51;
+				read(L);
+			}
+		}
+		while ((24 > (5 - L))) {
+			read(O);
+			while ((((L + 35) > 30) && ((L < 19) && !(false)))) {
+				IgM7 = 29;
+				OO = 4;
+				write((23 - IgM7));
+				read(eOb);
+			}
+		}
+		if (!(!((false || false)))) {
+			write((3 * ((26 * MyjVc) / (L - 63))));
+			while (((L - L) > L)) {
+				read(L);
+				write(C);
+				read(C);
+			}
+			if (false) {
+				F = 23;
+				read(oRZ);
+				F = 9;
+			} else {
+				JNS = (44 - L);
+				L = 37;
+				read(JNS);
+			}
+			if (false) {
+				Pdd = (-30 * -44);
+				write(t9);
+				o = o;
+				write(-54);
+				aD = ((kid * L) / o);
+				read(aD);
+			} else {
+				L = (-36 - -19);
+				MjYXpVkr = (L / (LT / -46));
+				write((LT + LT));
+			}
+		} else {
+			L = gt;
+			read(L);
+			gt = -53;
+			if (true) {
+				HKB6F = (q / 23);
+				read(GTvD);
+				read(hp);
+			} else {
+				read(klmVF);
+				read(RV);
+				write(klmVF);
+				L = (52 - (31 / wl3));
+			}
+		}
+	} else {
+		r0 = 19;
+		if ((false || true)) {
+			if ((((r0 / 45) < r0) || true)) {
+				ZEt1chuP = -60;
+				eN = ZEt1chuP;
+			}
+			while ((false && (false && !(false)))) {
+				r0 = ((r0 + r0) + 56);
+				r0 = -12;
+			}
+			if ((false || (false || !(false)))) {
+				r0 = r0;
+				qc6x = (((10 * r0) / (15 + r0)) + (22 / r0));
+				qc6x = (((r0 - 41) + r0) + qc6x);
+				qc6x = (25 * -20);
+				ojs = -4;
+			}
+			if ((30 != (r0 * 61))) {
+				bPJvjR = ((r0 + (13 / r0)) * r0);
+				write(-13);
+				read(r0);
+				read(bPJvjR);
+			}
+			if ((((false || true) || false) || (!(true) && !(false)))) {
+				write(r0);
+				write((r0 / -54));
+				write((21 * ((52 / 13) * (r0 / r0))));
+			} else {
+				read(jhp);
+				read(Zp);
+			}
+		}
+		write(-60);
+		while ((r0 <= 61)) {
+			if (false) {
+				qbM = 47;
+				read(qbM);
+				read(mKF);
+				qbM = 40;
+				read(qbM);
+			}
+			while (!(!(!(false)))) {
+				read(EUxbKW);
+				write((((43 - DJq) * (EUxbKW - EUxbKW)) / -29));
+			}
+			Ms = r0;
+			write(-11);
+			if ((((true || false) && !(false)) || ((17 - -34) > (Ms * 8)))) {
+				T = 36;
+				r0 = ((Ms / (-11 - J1Hv)) + -32);
+				write((r0 + (58 * (Ms + r0))));
+				T = 64;
+			} else {
+				read(BoRN);
+				In = -51;
+				J = ((-39 / (22 / BoRN)) * -5);
+				read(Ms);
+				read(BoRN);
+				read(BoRN);
+			}
+			while (((true && !(true)) && !(!(true)))) {
+				read(C5B3);
+				TO = 7;
+				read(C5B3);
+			}
+		}
+	}
+}
+
+.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[2]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 2365.0751386850006
+Best program: {
+	while (true) {
+		read(M);
+		M = 58;
+	}
+	while (false) {
+		if (false) {
+			if (((-58 > -23) && true)) {
+				read(juq);
+				juq = -52;
+				read(juq);
+				juq = -47;
+				write((juq * 22));
+			}
+			if (true) {
+				read(juq);
+				nq_E = (juq - juq);
+				xN = (16 + nq_E);
+			} else {
+				read(yfnf);
+				write((-53 - (yfnf * (-13 - juq))));
+				read(fWeW);
+			}
+			juq = (((juq / 28) - juq) / juq);
+		}
+		if (!(false)) {
+			Sf = 18;
+			while (((-9 * 10) < 19)) {
+				k4 = Sf;
+				k4 = Sf;
+				k4 = (((52 * Sf) * (21 - juq)) / Sf);
+			}
+		}
+	}
+	while (!(true)) {
+		if (!(!((juq > 34)))) {
+			if ((!(!(true)) || !((42 > juq)))) {
+				H = 39;
+				read(Rt);
+				read(J4Mi);
+				write(11);
+			} else {
+				zn8O = (-59 * (-10 + 18));
+				write(-64);
+				read(g7s);
+			}
+			read(juq);
+			while ((-17 < 9)) {
+				read(P02);
+				read(juq);
+				read(VGGOk);
+				juq = (juq + P02);
+				VGGOk = -41;
+			}
+		} else {
+			read(juq);
+			if (false) {
+				juq = -54;
+				UU = -11;
+				read(i);
+			} else {
+				write((juq / ((49 + juq) - (-5 / juq))));
+				read(juq);
+				A = -60;
+				wB = 49;
+			}
+			while ((-44 < -53)) {
+				read(ag);
+				juq = -64;
+				read(juq);
+			}
+			juq = (43 * (-58 + -28));
+		}
+		while (!((true && (juq > 27)))) {
+			read(juq);
+			if (false) {
+				write((10 - -51));
+				read(Yk);
+				write(-30);
+				b = Yk;
+			}
+			while (!((!(true) && (true || false)))) {
+				nNe = -49;
+				read(n);
+				n = 8;
+			}
+		}
+	}
+	while ((-10 >= (37 - 24))) {
+		if (false) {
+			if (!((juq >= juq))) {
+				iV = juq;
+				write(iV);
+				read(juq);
+				YJr = (-8 - 58);
+			}
+			write(juq);
+		} else {
+			write(juq);
+			juq = (19 / -56);
+			if (true) {
+				read(x);
+				write(-7);
+				VHx2O5 = x;
+			}
+			h = (((juq + juq) - (juq * -63)) + 19);
+			if (true) {
+				juq = -62;
+				h = -59;
+				h = -40;
+			}
+			AI = -27;
+			AI = ((61 + juq) + (3 * AI));
+		}
+		read(juq);
+		hSE = (((57 / juq) + (juq + juq)) + juq);
+		while ((((-5 - -2) == hSE) || !(!(true)))) {
+			while ((false || true)) {
+				T = (13 * 37);
+				read(hSE);
+				write(hSE);
+				T = -61;
+			}
+			hSE = juq;
+			write(29);
+			write(58);
+		}
+	}
+	while (!(false)) {
+		write(((19 * -54) / -49));
+		if (!(true)) {
+			if ((-64 != -47)) {
+				XrmI = ((37 + (-64 - 3)) - 20);
+				read(XrmI);
+				qV = XrmI;
+			} else {
+				read(uf0);
+				uf0 = uf0;
+			}
+			write(39);
+			Iy = -62;
+		}
+	}
+}
+
+..............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................Error: 'Function (evaluate) timeout after 5 seconds!'.
+...........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[3]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 2873.000118886999
+Best program: {
+	if (!(true)) {
+		while (!(false)) {
+			if ((((d + d) / d) > (d / 49))) {
+				write((Gukfn + Ualr));
+				write(Ualr);
+				read(Gukfn);
+				Ualr = ((49 + -5) - -61);
+				Ualr = Gukfn;
+			} else {
+				read(N);
+				write(36);
+				write(-59);
+				write((IrK * 3));
+				IrK = -42;
+				Is = (IrK - (-23 + (-59 * IrK)));
+			}
+			write(-47);
+		}
+		read(s1AV3);
+		while ((((UBAqA + H9D) * 6) < 10)) {
+			while ((-1 < UBAqA)) {
+				read(L);
+				H9D = UBAqA;
+				UBAqA = L;
+				B6LkY = 30;
+				L = UBAqA;
+			}
+			if (true) {
+				ENX = 43;
+				XRY = 51;
+			} else {
+				write(42);
+				read(lc);
+				H9D = 62;
+				read(a1);
+			}
+			while (!(((-64 < -35) && (true && true)))) {
+				read(XrP);
+				read(Tke);
+				read(UBAqA);
+				nNN0DA = XrP;
+			}
+			Zs7Oz9 = (lc - ((9 / lc) - lc));
+		}
+		read(UBAqA);
+	} else {
+		while ((false && !((false && true)))) {
+			while ((-25 > (-6 + -28))) {
+				eEad9L = (-33 * ((K4 - S) * (eEad9L * 13)));
+				write(S);
+				read(S);
+				pC = ((Wx * pC) + pC);
+			}
+			if (!(!(!(true)))) {
+				read(K);
+				K = YV;
+				write((K + Tk));
+			} else {
+				write((((-58 - e) / FhB) - (FhB - (-54 / 63))));
+				write(e);
+				ld = -33;
+				FhB = FhB;
+				e = (e * -26);
+				write((51 * ld));
+				e = FhB;
+			}
+			read(fJ);
+			if (((vnbe + IUU) <= fnc)) {
+				write(60);
+				read(K);
+				bBx = (S6hyzc2 * 18);
+				read(mBs);
+			} else {
+				oA = (IUU / hi);
+				read(fJ);
+				t = ((hi - (-13 + -9)) + -12);
+				IUU = (hi * IUU);
+			}
+			fJ = ((17 / (30 + -1)) / ((11 - 55) + -61));
+		}
+		b = (((-34 - 14) * (37 + -9)) / ((37 - 31) - 44));
+	}
+	while (((-59 < 0) || (!(true) || (false || true)))) {
+		Byl = -43;
+		Byl = Byl;
+	}
+	if (false) {
+		while (false) {
+			read(FM);
+			while (false) {
+				B = J;
+				write(((-30 * -29) / (-20 / kFz)));
+				J = B;
+			}
+			xiD = (xiD * 39);
+		}
+		while (((xiD > xiD) && true)) {
+			if (true) {
+				xiD = -36;
+				write(47);
+			} else {
+				O9 = 8;
+				Nl = 8;
+				T5M = (Nl + (O9 * (-57 - T5M)));
+			}
+			write((((Nl * xiD) / -24) - 32));
+			while (!(!(!(false)))) {
+				read(jva1);
+				write(56);
+				read(I0);
+			}
+			read(xiD);
+			if ((((xiD / -5) - (35 / Nl)) == -11)) {
+				lsnDm = (-20 * -3);
+				wRzl6S = (41 * wRzl6S);
+				k = wRzl6S;
+				write(z4d);
+				read(sd5BY);
+			} else {
+				oR = (-36 - Jo5y9GW);
+				write(oR);
+				read(lsnDm);
+				oR = ((2 + 47) + -33);
+			}
+		}
+		write(-61);
+	} else {
+		read(B);
+		if (true) {
+			write((38 / ((-1 + -55) + (B + 62))));
+			while ((((B - X) * ExkC) <= ExkC)) {
+				X = xiD;
+				Zyw = (xiD * ExkC);
+				Zyw = 5;
+			}
+			if ((B > -18)) {
+				PDUY = xiD;
+				read(wKJ);
+				xiD = ExkC;
+				wKJ = 0;
+				read(PDUY);
+				r3 = (wKJ * ExkC);
+				read(B_);
+			}
+		}
+		if (true) {
+			read(ExkC);
+			write((-52 / 36));
+			if (false) {
+				write(B);
+				et6N = -11;
+				read(exH);
+			}
+		} else {
+			if (((46 > 58) || ((35 >= 57) && (true || false)))) {
+				read(X);
+				write((-6 * ExkC));
+			} else {
+				ExkC = 46;
+				zx6 = (X * (X * 35));
+				sPRh = xiD;
+			}
+			while (!((-10 == ExkC))) {
+				FIo = -53;
+				write(19);
+				xiD = 14;
+			}
+			read(B);
+			write(-15);
+		}
+		while (!(((false && false) && false))) {
+			if (!((-58 > (50 * B)))) {
+				xiD = (B + ((X * X) + (27 - ExkC)));
+				read(xiD);
+				write(-12);
+				ExkC = 6;
+			}
+			while (((19 * (-26 + -23)) <= (2 * ExkC))) {
+				write(-53);
+				Ak = X;
+				ExkC = -57;
+			}
+			if ((X == 41)) {
+				B = ExkC;
+				FU = (B / xiD);
+				FU = (28 - -21);
+				read(P_);
+			} else {
+				B = B;
+				CCN = X;
+				WOj = (CCN * X);
+				read(Rw);
+				write(Rw);
+			}
+			write(((-60 + X) / B));
+		}
+	}
+	ExkC = (xiD * xiD);
+}
+
+.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[4]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 2868.0179095050007
+Best program: {
+	if (!(true)) {
+		while (!(false)) {
+			if ((((d + d) / d) > (d / 49))) {
+				write((Gukfn + Ualr));
+				write(Ualr);
+				read(Gukfn);
+				Ualr = ((49 + -5) - -61);
+				Ualr = Gukfn;
+			} else {
+				read(N);
+				write(36);
+				write(-59);
+				write((IrK * 3));
+				IrK = -42;
+				Is = (IrK - (-23 + (-59 * IrK)));
+			}
+			write(-47);
+		}
+		read(s1AV3);
+		while ((((UBAqA + H9D) * 6) < 10)) {
+			while ((-1 < UBAqA)) {
+				read(L);
+				H9D = UBAqA;
+				UBAqA = L;
+				B6LkY = 30;
+				L = UBAqA;
+			}
+			if (true) {
+				ENX = 43;
+				XRY = 51;
+			} else {
+				write(42);
+				read(lc);
+				H9D = 62;
+				read(a1);
+			}
+			while (!(((-64 < -35) && (true && true)))) {
+				read(XrP);
+				read(Tke);
+				read(UBAqA);
+				nNN0DA = XrP;
+			}
+			Zs7Oz9 = (lc - ((9 / lc) - lc));
+		}
+		read(UBAqA);
+	} else {
+		while ((false && !((false && true)))) {
+			while ((-25 > (-6 + -28))) {
+				eEad9L = (-33 * ((K4 - S) * (eEad9L * 13)));
+				write(S);
+				read(S);
+				pC = ((Wx * pC) + pC);
+			}
+			if (!(!(!(true)))) {
+				read(K);
+				K = YV;
+				write((K + Tk));
+			} else {
+				write((((-58 - e) / FhB) - (FhB - (-54 / 63))));
+				write(e);
+				ld = -33;
+				FhB = FhB;
+				e = (e * -26);
+				write((51 * ld));
+				e = FhB;
+			}
+			read(fJ);
+			if (((vnbe + IUU) <= fnc)) {
+				write(60);
+				read(K);
+				bBx = (S6hyzc2 * 18);
+				read(mBs);
+			} else {
+				oA = (IUU / hi);
+				read(fJ);
+				t = ((hi - (-13 + -9)) + -12);
+				IUU = (hi * IUU);
+			}
+			fJ = ((17 / (30 + -1)) / ((11 - 55) + -61));
+		}
+		b = (((-34 - 14) * (37 + -9)) / ((37 - 31) - 44));
+	}
+	while (((-59 < 0) || (!(true) || (false || true)))) {
+		Byl = -43;
+		Byl = Byl;
+	}
+	if (false) {
+		while (false) {
+			read(FM);
+			while (false) {
+				B = J;
+				write(((-30 * -29) / (-20 / kFz)));
+				J = B;
+			}
+			xiD = (xiD * 39);
+		}
+		while (((xiD > xiD) && true)) {
+			if (true) {
+				xiD = -36;
+				write(47);
+			} else {
+				O9 = 8;
+				Nl = 8;
+				T5M = (Nl + (O9 * (-57 - T5M)));
+			}
+			write((((Nl * xiD) / -24) - 32));
+			while (!(!(!(false)))) {
+				read(jva1);
+				write(56);
+				read(I0);
+			}
+			read(xiD);
+			if ((((xiD / -5) - (35 / Nl)) == -11)) {
+				lsnDm = (-20 * -3);
+				wRzl6S = (41 * wRzl6S);
+				k = wRzl6S;
+				write(z4d);
+				read(sd5BY);
+			} else {
+				oR = (-36 - Jo5y9GW);
+				write(oR);
+				read(lsnDm);
+				oR = ((2 + 47) + -33);
+			}
+		}
+		write(-61);
+	} else {
+		read(B);
+		if (true) {
+			write((38 / ((-1 + -55) + (B + 62))));
+			while ((((B - X) * ExkC) <= ExkC)) {
+				X = xiD;
+				Zyw = (xiD * ExkC);
+				Zyw = 5;
+			}
+			if ((B > -18)) {
+				PDUY = xiD;
+				read(wKJ);
+				xiD = ExkC;
+				wKJ = 0;
+				read(PDUY);
+				r3 = (wKJ * ExkC);
+				read(B_);
+			}
+		}
+		if (true) {
+			read(ExkC);
+			write((-52 / 36));
+			if (false) {
+				write(B);
+				et6N = -11;
+				read(exH);
+			}
+		} else {
+			if (((46 > 58) || ((35 >= 57) && (true || false)))) {
+				read(X);
+				write((-6 * ExkC));
+			} else {
+				ExkC = 46;
+				zx6 = (X * (X * 35));
+				sPRh = xiD;
+			}
+			while (!((-10 == ExkC))) {
+				FIo = -53;
+				write(19);
+				xiD = 14;
+			}
+			read(B);
+			write(-15);
+		}
+		while (!(((false && false) && false))) {
+			if (!((-58 > (50 * B)))) {
+				xiD = (B + ((X * X) + (27 - ExkC)));
+				read(xiD);
+				write(-12);
+				ExkC = 6;
+			}
+			while (((19 * (-26 + -23)) <= (2 * ExkC))) {
+				write(-53);
+				Ak = X;
+				ExkC = -57;
+			}
+			if ((X == 41)) {
+				B = ExkC;
+				FU = (B / xiD);
+				FU = (28 - -21);
+				read(P_);
+			} else {
+				B = B;
+				CCN = X;
+				WOj = (CCN * X);
+				read(Rw);
+				write(Rw);
+			}
+			write(((-60 + X) / B));
+		}
+	}
+	ExkC = (xiD * xiD);
+}
+
+.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[5]Best: 50000000, Worst: 50000000, Average: 50000000.0, Time: 2979.480625379001
+Best program: {
+	read(LNk2);
+	if ((!(true) && ((false || true) || true))) {
+		LNk2 = LNk2;
+		if (false) {
+			read(LNk2);
+			while (!((true && (LNk2 == LNk2)))) {
+				LNk2 = (-1 / LNk2);
+				w = (18 - (LNk2 + -11));
+				write(-60);
+				write(LNk2);
+				nai = LNk2;
+			}
+			write(LNk2);
+			if (false) {
+				LNk2 = (LNk2 - LNk2);
+				Q = LNk2;
+			}
+			oZ9 = LNk2;
+			Zy = oZ9;
+		}
+		while ((!((25 == 39)) || (-13 <= 26))) {
+			if ((((LNk2 + LNk2) + -42) <= -26)) {
+				LNk2 = -16;
+				LNk2 = (-31 - -48);
+				read(LNk2);
+				read(LNk2);
+			} else {
+				LNk2 = LNk2;
+				LNk2 = LNk2;
+			}
+			if (!((false && true))) {
+				read(LNk2);
+				RC3g = LNk2;
+				LNk2 = RC3g;
+				RC3g = (LNk2 * -18);
+				RC3g = RC3g;
+				read(lK);
+				WW = (-10 / 21);
+			} else {
+				read(w7);
+				Scu = LNk2;
+			}
+			while (!(true)) {
+				Qt = 48;
+				write((((1 - Qt) / -36) + ((-6 * -55) * 49)));
+				N = Qt;
+				read(hxJ_);
+				read(ovlM);
+			}
+			if (!(((LNk2 > -9) || !(false)))) {
+				read(y);
+				read(WBO5);
+				y = (((y - -60) / (WBO5 + WBO5)) + -18);
+				YIp = -56;
+				read(Dd);
+				write(y);
+			} else {
+				write(LNk2);
+				write((LNk2 * -31));
+				read(LNk2);
+			}
+			if (!(!((LNk2 != LNk2)))) {
+				W = LNk2;
+				W = (19 - W);
+				W = -46;
+				AEj = -16;
+			} else {
+				read(Ux6);
+				l = Ux6;
+			}
+		}
+		while ((LNk2 != (31 + LNk2))) {
+			write((-58 / LNk2));
+			write((LNk2 + LNk2));
+			YIaK = -10;
+			write(LNk2);
+			read(MzI);
+		}
+		if (!((!(false) && (LNk2 == -31)))) {
+			if (false) {
+				read(BBVd);
+				G6gp = (38 * 63);
+				write(BBVd);
+				read(G6gp);
+				tl18J = -15;
+				write((tl18J * ((-57 + tl18J) - -49)));
+			} else {
+				LNk2 = (LNk2 / (50 / LNk2));
+				read(Z);
+			}
+			while (!((LNk2 >= LNk2))) {
+				write((LNk2 / (LNk2 * -51)));
+				write(9);
+			}
+			Pjo = LNk2;
+			read(Ptat3);
+			write(LNk2);
+			write(16);
+		} else {
+			read(LNk2);
+			if (!(!((40 != -18)))) {
+				bZm = 59;
+				LNk2 = LNk2;
+				bZm = (LNk2 / 63);
+				write(bZm);
+			} else {
+				f7 = (LNk2 * 12);
+				ok = f7;
+				write(57);
+			}
+			read(LNk2);
+			if ((((53 * LNk2) <= -64) || !((false || false)))) {
+				write((19 - 62));
+				read(s);
+			} else {
+				read(fknQ);
+				fknQ = (LNk2 / 33);
+				AeEw = LNk2;
+				jvLJw = -30;
+			}
+		}
+	}
+	if (((LNk2 < LNk2) && false)) {
+		write((16 * LNk2));
+		read(kLJh);
+	} else {
+		if ((31 == LNk2)) {
+			while (((true || (14 < -8)) || false)) {
+				E = (LNk2 - -33);
+				write(-2);
+				A = (-30 / (LNk2 * 28));
+				read(A);
+			}
+			write(-27);
+			while (((52 / LNk2) != (34 - 7))) {
+				LNk2 = ((17 + 45) * (LNk2 * (LNk2 * LNk2)));
+				LNk2 = LNk2;
+				LNk2 = (((38 - -3) * (LNk2 * 26)) / LNk2);
+				write(0);
+				write(LNk2);
+				yXF = 18;
+			}
+			if (((LNk2 / (LNk2 / -13)) >= (LNk2 * (LNk2 / LNk2)))) {
+				read(LNk2);
+				LNk2 = LNk2;
+				read(x7bA);
+				N = 30;
+			}
+			write((LNk2 + LNk2));
+		}
+		read(R3l);
+	}
+}
+
+.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[6]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 3123.475484595001
+Best program: {
+	if (!(true)) {
+		while (!(false)) {
+			if ((((d + d) / d) > (d / 49))) {
+				write((Gukfn + Ualr));
+				write(Ualr);
+				read(Gukfn);
+				Ualr = ((49 + -5) - -61);
+				Ualr = Gukfn;
+			} else {
+				read(N);
+				write(36);
+				write(-59);
+				write((IrK * 3));
+				IrK = -42;
+				Is = (IrK - (-23 + (-59 * IrK)));
+			}
+			write(-47);
+		}
+		read(s1AV3);
+		while ((((UBAqA + H9D) * 6) < 10)) {
+			while ((-1 < UBAqA)) {
+				read(L);
+				H9D = UBAqA;
+				UBAqA = L;
+				B6LkY = 30;
+				L = UBAqA;
+			}
+			if (true) {
+				ENX = 43;
+				XRY = 51;
+			} else {
+				write(42);
+				read(lc);
+				H9D = 62;
+				read(a1);
+			}
+			while (!(((-64 < -35) && (true && true)))) {
+				read(XrP);
+				read(Tke);
+				read(UBAqA);
+				nNN0DA = XrP;
+			}
+			Zs7Oz9 = (lc - ((9 / lc) - lc));
+		}
+		read(UBAqA);
+	} else {
+		while ((false && !((false && true)))) {
+			while ((-25 > (-6 + -28))) {
+				eEad9L = (-33 * ((K4 - S) * (eEad9L * 13)));
+				write(S);
+				read(S);
+				pC = ((Wx * pC) + pC);
+			}
+			if (!(!(!(true)))) {
+				read(K);
+				K = YV;
+				write((K + Tk));
+			} else {
+				write((((-58 - e) / FhB) - (FhB - (-54 / 63))));
+				write(e);
+				ld = -33;
+				FhB = FhB;
+				e = (e * -26);
+				write((51 * ld));
+				e = FhB;
+			}
+			read(fJ);
+			if (((vnbe + IUU) <= fnc)) {
+				write(60);
+				read(K);
+				bBx = (S6hyzc2 * 18);
+				read(mBs);
+			} else {
+				oA = (IUU / hi);
+				read(fJ);
+				t = ((hi - (-13 + -9)) + -12);
+				IUU = (hi * IUU);
+			}
+			fJ = ((17 / (30 + -1)) / ((11 - 55) + -61));
+		}
+		b = (((-34 - 14) * (37 + -9)) / ((37 - 31) - 44));
+	}
+	while (((-59 < 0) || (!(true) || (false || true)))) {
+		Byl = -43;
+		Byl = Byl;
+	}
+	if (false) {
+		while (false) {
+			read(FM);
+			while (false) {
+				B = J;
+				write(((-30 * -29) / (-20 / kFz)));
+				J = B;
+			}
+			xiD = (xiD * 39);
+		}
+		while (((xiD > xiD) && true)) {
+			if (true) {
+				xiD = -36;
+				write(47);
+			} else {
+				O9 = 8;
+				Nl = 8;
+				T5M = (Nl + (O9 * (-57 - T5M)));
+			}
+			write((((Nl * xiD) / -24) - 32));
+			while (!(!(!(false)))) {
+				read(jva1);
+				write(56);
+				read(I0);
+			}
+			read(xiD);
+			if ((((xiD / -5) - (35 / Nl)) == -11)) {
+				lsnDm = (-20 * -3);
+				wRzl6S = (41 * wRzl6S);
+				k = wRzl6S;
+				write(z4d);
+				read(sd5BY);
+			} else {
+				oR = (-36 - Jo5y9GW);
+				write(oR);
+				read(lsnDm);
+				oR = ((2 + 47) + -33);
+			}
+		}
+		write(-61);
+	} else {
+		read(B);
+		if (true) {
+			write((38 / ((-1 + -55) + (B + 62))));
+			while ((((B - X) * ExkC) <= ExkC)) {
+				X = xiD;
+				Zyw = (xiD * ExkC);
+				Zyw = 5;
+			}
+			if ((B > -18)) {
+				PDUY = xiD;
+				read(wKJ);
+				xiD = ExkC;
+				wKJ = 0;
+				read(PDUY);
+				r3 = (wKJ * ExkC);
+				read(B_);
+			}
+		}
+		if (true) {
+			read(ExkC);
+			write((-52 / 36));
+			if (false) {
+				write(B);
+				et6N = -11;
+				read(exH);
+			}
+		} else {
+			if (((46 > 58) || ((35 >= 57) && (true || false)))) {
+				read(X);
+				write((-6 * ExkC));
+			} else {
+				ExkC = 46;
+				zx6 = (X * (X * 35));
+				sPRh = xiD;
+			}
+			while (!((-10 == ExkC))) {
+				FIo = -53;
+				write(19);
+				xiD = 14;
+			}
+			read(B);
+			write(-15);
+		}
+		while (!(((false && false) && false))) {
+			if (!((-58 > (50 * B)))) {
+				xiD = (B + ((X * X) + (27 - ExkC)));
+				read(xiD);
+				write(-12);
+				ExkC = 6;
+			}
+			while (((19 * (-26 + -23)) <= (2 * ExkC))) {
+				write(-53);
+				Ak = X;
+				ExkC = -57;
+			}
+			if ((X == 41)) {
+				B = ExkC;
+				FU = (B / xiD);
+				FU = (28 - -21);
+				read(P_);
+			} else {
+				B = B;
+				CCN = X;
+				WOj = (CCN * X);
+				read(Rw);
+				write(Rw);
+			}
+			write(((-60 + X) / B));
+		}
+	}
+	ExkC = (xiD * xiD);
+}
+
+.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+[7]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 3765.343735947001
+Best program: {
+	if (!(true)) {
+		while (!(false)) {
+			if ((((d + d) / d) > (d / 49))) {
+				write((Gukfn + Ualr));
+				write(Ualr);
+				read(Gukfn);
+				Ualr = ((49 + -5) - -61);
+				Ualr = Gukfn;
+			} else {
+				read(N);
+				write(36);
+				write(-59);
+				write((IrK * 3));
+				IrK = -42;
+				Is = (IrK - (-23 + (-59 * IrK)));
+			}
+			write(-47);
+		}
+		read(s1AV3);
+		while ((((UBAqA + H9D) * 6) < 10)) {
+			while ((-1 < UBAqA)) {
+				read(L);
+				H9D = UBAqA;
+				UBAqA = L;
+				B6LkY = 30;
+				L = UBAqA;
+			}
+			if (true) {
+				ENX = 43;
+				XRY = 51;
+			} else {
+				write(42);
+				read(lc);
+				H9D = 62;
+				read(a1);
+			}
+			while (!(((-64 < -35) && (true && true)))) {
+				read(XrP);
+				read(Tke);
+				read(UBAqA);
+				nNN0DA = XrP;
+			}
+			Zs7Oz9 = (lc - ((9 / lc) - lc));
+		}
+		read(UBAqA);
+	} else {
+		while ((false && !((false && true)))) {
+			while ((-25 > (-6 + -28))) {
+				eEad9L = (-33 * ((K4 - S) * (eEad9L * 13)));
+				write(S);
+				read(S);
+				pC = ((Wx * pC) + pC);
+			}
+			if (!(!(!(true)))) {
+				read(K);
+				K = YV;
+				write((K + Tk));
+			} else {
+				write((((-58 - e) / FhB) - (FhB - (-54 / 63))));
+				write(e);
+				ld = -33;
+				FhB = FhB;
+				e = (e * -26);
+				write((51 * ld));
+				e = FhB;
+			}
+			read(fJ);
+			if (((vnbe + IUU) <= fnc)) {
+				write(60);
+				read(K);
+				bBx = (S6hyzc2 * 18);
+				read(mBs);
+			} else {
+				oA = (IUU / hi);
+				read(fJ);
+				t = ((hi - (-13 + -9)) + -12);
+				IUU = (hi * IUU);
+			}
+			fJ = ((17 / (30 + -1)) / ((11 - 55) + -61));
+		}
+		b = (((-34 - 14) * (37 + -9)) / ((37 - 31) - 44));
+	}
+	while (((-59 < 0) || (!(true) || (false || true)))) {
+		Byl = -43;
+		Byl = Byl;
+	}
+	if (false) {
+		while (false) {
+			read(FM);
+			while (false) {
+				B = J;
+				write(((-30 * -29) / (-20 / kFz)));
+				J = B;
+			}
+			xiD = (xiD * 39);
+		}
+		while (((xiD > xiD) && true)) {
+			if (true) {
+				xiD = -36;
+				write(47);
+			} else {
+				O9 = 8;
+				Nl = 8;
+				T5M = (Nl + (O9 * (-57 - T5M)));
+			}
+			write((((Nl * xiD) / -24) - 32));
+			while (!(!(!(false)))) {
+				read(jva1);
+				write(56);
+				read(I0);
+			}
+			read(xiD);
+			if ((((xiD / -5) - (35 / Nl)) == -11)) {
+				lsnDm = (-20 * -3);
+				wRzl6S = (41 * wRzl6S);
+				k = wRzl6S;
+				write(z4d);
+				read(sd5BY);
+			} else {
+				oR = (-36 - Jo5y9GW);
+				write(oR);
+				read(lsnDm);
+				oR = ((2 + 47) + -33);
+			}
+		}
+		write(-61);
+	} else {
+		read(B);
+		if (true) {
+			write((38 / ((-1 + -55) + (B + 62))));
+			while ((((B - X) * ExkC) <= ExkC)) {
+				X = xiD;
+				Zyw = (xiD * ExkC);
+				Zyw = 5;
+			}
+			if ((B > -18)) {
+				PDUY = xiD;
+				read(wKJ);
+				xiD = ExkC;
+				wKJ = 0;
+				read(PDUY);
+				r3 = (wKJ * ExkC);
+				read(B_);
+			}
+		}
+		if (true) {
+			read(ExkC);
+			write((-52 / 36));
+			if (false) {
+				write(B);
+				et6N = -11;
+				read(exH);
+			}
+		} else {
+			if (((46 > 58) || ((35 >= 57) && (true || false)))) {
+				read(X);
+				write((-6 * ExkC));
+			} else {
+				ExkC = 46;
+				zx6 = (X * (X * 35));
+				sPRh = xiD;
+			}
+			while (!((-10 == ExkC))) {
+				FIo = -53;
+				write(19);
+				xiD = 14;
+			}
+			read(B);
+			write(-15);
+		}
+		while (!(((false && false) && false))) {
+			if (!((-58 > (50 * B)))) {
+				xiD = (B + ((X * X) + (27 - ExkC)));
+				read(xiD);
+				write(-12);
+				ExkC = 6;
+			}
+			while (((19 * (-26 + -23)) <= (2 * ExkC))) {
+				write(-53);
+				Ak = X;
+				ExkC = -57;
+			}
+			if ((X == 41)) {
+				B = ExkC;
+				FU = (B / xiD);
+				FU = (28 - -21);
+				read(P_);
+			} else {
+				B = B;
+				CCN = X;
+				WOj = (CCN * X);
+				read(Rw);
+				write(Rw);
+			}
+			write(((-60 + X) / B));
+		}
+	}
+	ExkC = (xiD * xiD);
+}
+
+...............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
