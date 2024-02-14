@@ -1022,29 +1022,81 @@ Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wy
 
 ### 1.4.A Program powinien odczytać dziesięć pierwszych liczy z wejścia i zwrócić na wyjściu (jedynie) ich średnią arytmetyczną (zaokrągloną do pełnej liczby całkowitej). Na wejściu mogą być tylko całkowite liczby w zakresie [-99,99]
 
-- status: <span style="color:green">**rozwiązanie znalezione**</span>.
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
 
+Postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy program, aby odczytał 10 liczb z wejścia, w drugim etapie, aby zwrócił ich sumę, a w trzecim etapie, aby zwrócił ich średnią arytmetyczną.
 
-- funkcja dopasowania:
-```python
+1. Uczenie odczytywania 10 liczb z wejścia:
 
-```
+	- status: <span style="color:green">**rozwiązanie znalezione**</span>.
 
-- najlepsze dopasowanie: 
+	- funkcja dopasowania:
+	```python
+	class FitnessFunction1_4_A_1(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        return 0 if gp_output == gp_input[:10] else 9999999
+	```
+	
+	- najlepsze dopasowanie: 0 (znalezione w 1 generacji)
+	
+	- najlepsze rozwiązanie:
+	```
+	{
+		if ((true || (59 != 42))) {
+			while (((false && false) || false)) {
+				VU = 39;
+				read(wgK);
+			}
+			while (!(true)) {
+				read(j);
+				nP = j;
+			}
+		} else {
+			n = (55 - (-43 * 15));
+			write(n);
+		}
+		while (((21 * -7) <= (-11 - 0))) {
+			M8b = 51;
+			if ((46 != -34)) {
+				read(M8b);
+				write(M8b);
+			}
+		}
+	}
+	```
 
-- najlepsze rozwiązanie:
-```
+	- najgorsze dopasowanie: 4999999500
 
-```
+	- średnie dopasowanie: 2306674549.796524
 
-- najgorsze dopasowanie: 
+	- czas wykonania: 5941.097537187001
 
-- średnie dopasowanie: 
+	- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+![1_4_A_1](./raport_img/1_4_A_1.png)
 
-- czas wykonania:
+2. Uczenie zwracania sumy:
 
-- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
-![1_4_A](./raport_img/1_4_A.png)
+	- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+	- funkcja dopasowania:
+	```python
+	class FitnessFunction1_4_A_2(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        expected_result = sum(gp_input)
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+	```
+
+3. Uczenie zwracania średniej arytmetycznej:
+
+	- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+	
+	- funkcja dopasowania:
+	```python
+	class FitnessFunction1_4_A_3(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        expected_result = int(sum(gp_input) / 10)
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+	```
 
 ---
 
