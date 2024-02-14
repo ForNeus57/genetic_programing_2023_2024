@@ -1135,3 +1135,39 @@ Best program: {
 		}
 	}
 }
+[20]Best: 5, Worst: 159999984, Average: 15987.419039057037, Time: 1516.630864216997
+Best program: {
+	while (!(!(!(true)))) {
+		if ((36 >= 10)) {
+			while ((((-62 / -29) + (-25 * -31)) > ((35 - 26) - (31 - -23)))) {
+				write(-54);
+				xj = (((-10 + 39) * -63) * ((-57 - 62) * -35));
+			}
+			while ((((-6 * 19) + 45) < (1 * -20))) {
+				V2 = 7;
+				read(V2);
+				V2 = (26 - ((V2 - V2) / 8));
+				read(V2);
+			}
+			read(ZL);
+			while (!(((true && false) || (-16 < 57)))) {
+				read(ZL);
+				ZL = 33;
+				read(ZL);
+			}
+			read(m34m43);
+		}
+		if (!(false)) {
+			if (true) {
+				eG = 38;
+				eG = ((eG / (eG / 63)) / 24);
+			}
+			write(1);
+		}
+		Ohi = (-8 / 55);
+		write((Ohi / 16));
+	}
+	read(T);
+	write((T * pr));
+	PR = PR;
+}
