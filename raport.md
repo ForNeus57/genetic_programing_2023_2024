@@ -859,6 +859,7 @@ class FitnessFunction1_2_E(FitnessFunctionBase):
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![1_2_E](./raport_img/1_2_E.png)
+Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 ---
 
@@ -1279,7 +1280,6 @@ Tu również postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etap
 
 	- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 	![1_4_B_1](./raport_img/1_4_B_1.png)
-	Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
 2. Uczenie odczytywania tylu liczb, ile wynosi pierwsza odczytana liczba:
 
