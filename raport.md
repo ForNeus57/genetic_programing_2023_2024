@@ -1072,7 +1072,7 @@ Postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy pro
 	- czas wykonania: 5941.097537187001
 
 	- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
-![1_4_A_1](./raport_img/1_4_A_1.png)
+	![1_4_A_1](./raport_img/1_4_A_1.png)
 
 2. Uczenie zwracania sumy:
 
@@ -1086,6 +1086,74 @@ Postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy pro
         return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
 	```
 
+	- najlepsze dopasowanie: 56415 (znalezione w 15 generacji)
+
+	- najlepsze rozwiązanie:
+	```
+	{
+		if (((-21 / 23) <= -60)) {
+			while (true) {
+				read(hH_7yj);
+				write(41);
+			}
+			write(At);
+		} else {
+			if ((true && !(false))) {
+				mho = 39;
+				mho = (mho * (mho - 23));
+			}
+			while (((false || (false && true)) || ((-38 + -54) == 21))) {
+				A_8 = -11;
+				A_8 = 15;
+			}
+		}
+		if ((ju == 61)) {
+			write((UU * ((-19 / ju) - (-13 / Qb))));
+			read(otKZ);
+		} else {
+			write(((i + kR) + (ju + T1)));
+			if (true) {
+				jw = jw;
+				read(O);
+			} else {
+				if (false) {
+					write((ju + 51));
+					write(kR);
+					write(-22);
+					rj = Pcy;
+				} else {
+					p9PJ = ((-54 * -57) - kR);
+					read(R68);
+					write((Pcy * ((jw + -24) * 49)));
+				}
+				if ((((28 > -48) || (true || false)) || ((T1 * kR) > -3))) {
+					write(-6);
+					Pcy = -30;
+					Fy = ju;
+					read(kR);
+				} else {
+					T1 = ((kR - (-23 / 60)) + jw);
+					read(N2);
+					write(ju);
+					write(-54);
+					write(-18);
+				}
+			}
+		}
+	}
+	```
+
+	- najgorsze dopasowanie: 4999999500
+
+	- średnie dopasowanie: 555903.0418539606
+
+	- czas wykonania: 2283.3479254699996
+
+	- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+	![1_4_A_2](./raport_img/1_4_A_2.png)
+	Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
+
+
 3. Uczenie zwracania średniej arytmetycznej:
 
 	- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
@@ -1098,34 +1166,164 @@ Postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy pro
         return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
 	```
 
+	Ze względu na brak rozwiązania w poprzednim etapie, nie jest możliwe przeprowadzenie uczenia w tym etapie.
+
 ---
 
 ### 1.4.B Program powinien odczytać na początek z wejścia pierwszą liczbę (ma być to wartość nieujemna) a następnie tyle liczb (całkowitych) jaka jest wartość pierwszej odczytanej liczby i zwrócić na wyjściu (jedynie) ich średnią arytmetyczną zaokrągloną do pełnej liczby całkowitej (do średniej nie jest wliczana pierwsza odczytana liczba, która mówi z ilu liczb chcemy obliczyć średnią). Na wejściu mogą być tylko całkowite liczby w zakresie [-99,99], pierwsza liczba może być tylko w zakresie [0,99].
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
 
+Tu również postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy program, aby odczytał pierwszą liczbę z wejścia, w drugim etapie, aby odczytał tyle liczb, ile wynosi pierwsza odczytana liczba, w trzech etapie, aby zwrócił ich sumę, a w czwartym etapie, aby zwrócił ich średnią arytmetyczną.
 
-- funkcja dopasowania:
-```python
+1. Uczenie odczytywania pierwszej liczby z wejścia:
 
-```
+	- status: <span style="color:green">**rozwiązanie znalezione**</span>.
 
-- najlepsze dopasowanie: 
+	- funkcja dopasowania:
+	```python
+	class FitnessFunction1_4_B_1(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        return 0 if gp_output == gp_input[0] else abs(gp_output[0] - gp_input[0]) if len(gp_output) == 1 else 9999999
+	```
+	
+	- najlepsze dopasowanie: 0 (znalezione w 1 generacji)
+	
+	- najlepsze rozwiązanie:
+	```
+	{
+		if (((-8 == 58) && (-5 < -18))) {
+			mZ = -23;
+			write(44);
+		} else {
+			n = 9;
+			kcy = n;
+			if (!(false)) {
+				if ((true || !(true))) {
+					kcy = -41;
+					read(OlC);
+					read(LCL);
+					kcy = OlC;
+					write(OlC);
+				} else {
+					n = kcy;
+					read(Vc0);
+					n = (-39 - -46);
+				}
+				while ((!((n >= kcy)) && ((kcy <= n) && (47 <= n)))) {
+					read(n);
+					write(n);
+					read(kcy);
+					uZRI = (kcy + kcy);
+					read(Y4KJ6);
+				}
+				while (!((n < (14 * kcy)))) {
+					kcy = (((40 - 12) - kcy) / 32);
+					n = (-62 - n);
+					Z9Ax = kcy;
+					write(kcy);
+					n = 53;
+					read(kcy);
+				}
+			}
+			D = 27;
+		}
+		while (((-6 < (58 - -43)) || !((false && false)))) {
+			while ((((60 * -49) - (-32 / 6)) > ((38 + -19) * -46))) {
+				wVPt = 29;
+				if (((-47 != -58) && ((wVPt + wVPt) >= (-15 - wVPt)))) {
+					CHR = wVPt;
+					write(CHR);
+					wVPt = (16 * CHR);
+					ASVeb = ((40 + CHR) * wVPt);
+				} else {
+					read(wVPt);
+					read(wVPt);
+					write((((20 + 8) / (wVPt + -62)) / wVPt));
+					read(smn3);
+				}
+			}
+			read(bGA);
+			while (false) {
+				write((30 / (28 + (bGA / 1))));
+				bGA = (17 / bGA);
+				read(bGA);
+			}
+			yCh = (bGA - (bGA + (5 * bGA)));
+			while ((!(!(false)) || !(true))) {
+				write(27);
+				read(x);
+				if (((20 == 28) || (-60 <= bGA))) {
+					x = 8;
+					DN = ((x - x) - ((bGA + 33) + 19));
+					read(t9);
+				} else {
+					write((yCh - yCh));
+					x = -57;
+				}
+				while (!(!((yCh >= 59)))) {
+					read(x);
+					aA_5g7 = x;
+				}
+				OZ = bGA;
+			}
+		}
+	}
+	```
 
-- najlepsze rozwiązanie:
-```
+	- najgorsze dopasowanie: 32633737000
 
-```
+	- średnie dopasowanie: 3025311947.121267
 
-- najgorsze dopasowanie: 
+	- czas wykonania: 240.35295928699998
 
-- średnie dopasowanie: 
+	- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+	![1_4_B_1](./raport_img/1_4_B_1.png)
+	Wykres jest w skali logarytmicznej, aby lepiej zobrazować różnice w czasie wykonania.
 
-- czas wykonania:
+2. Uczenie odczytywania tylu liczb, ile wynosi pierwsza odczytana liczba:
 
-- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
-![1_4_B](./raport_img/1_4_B.png)
+	- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
 
+	- funkcja dopasowania:
+	```python
+	class FitnessFunction1_4_B_2(FitnessFunctionBase):
+		def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+			inputs = gp_input[0]
+			return 0 if gp_output == gp_input[1:inputs + 1] else 9999999
+	```
+
+	#TODO: dodać wyniki
+	
+3. Uczenie zwracania sumy:
+
+	- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+	- funkcja dopasowania:
+	```python
+	class FitnessFunction1_4_B_3(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        inputs = gp_input[0]
+        expected_result = sum(gp_input[1:inputs + 1])
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+	```
+
+	Ponieważ nie znaleźliśmy rozwiązania w poprzednim etapie, nie jest możliwe przeprowadzenie uczenia w tym etapie.
+
+4. Uczenie zwracania średniej arytmetycznej:
+
+	- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+	- funkcja dopasowania:
+	```python
+	class FitnessFunction1_4_B_4(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        inputs = gp_input[0]
+        expected_result = int(sum(gp_input[1:inputs + 1]) / inputs)
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+	```
+
+	Ponieważ nie znaleźliśmy rozwiązania w poprzednim etapie, nie jest możliwe przeprowadzenie uczenia w tym etapie.
 
 ## Finealne testy systemu
 
@@ -1136,21 +1334,34 @@ Postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy pro
 
 - funkcja dopasowania:
 ```python
-
+class FitnessFunctionB_1(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        float_to_add = gp_input[1] + (gp_input[2] / 10 ** len(str(gp_input[2])))
+        expected_result = gp_input[0] + float_to_add
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
 ```
 
-- najlepsze dopasowanie: 
+- najlepsze dopasowanie: 263.92000000000024 (znalezione w 3 generacji)
 
 - najlepsze rozwiązanie:
 ```
-
+{
+	ISp = (-3 + -50);
+	if (true) {
+		R9 = -15;
+		write((cV0VC + B));
+	} else {
+		read(GDA_);
+		read(ISp);
+	}
+}
 ```
 
-- najgorsze dopasowanie: 
+- najgorsze dopasowanie: 50000000
 
-- średnie dopasowanie: 
+- średnie dopasowanie: 25459.93821396464
 
-- czas wykonania:
+- czas wykonania: 2048.4465325810015
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![B_1](./raport_img/B_1.png)
@@ -1164,21 +1375,40 @@ Postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy pro
 
 - funkcja dopasowania:
 ```python
-
+class FitnessFunctionB_21(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        expected_result = tuple(x if x >= 0 else 0 for x in gp_input)
+        return sum(abs(o - e) for o, e in zip(gp_output, expected_result)) if len(gp_output) == len(
+            expected_result) else 9999999
 ```
 
-- najlepsze dopasowanie: 
+- najlepsze dopasowanie: 49800196 (znalezione w 1 generacji)
 
 - najlepsze rozwiązanie:
 ```
-
+{
+	read(u_EX);
+	if ((23 == u_EX)) {
+		if ((true || (u_EX <= u_EX))) {
+			u_EX = (u_EX - u_EX);
+			write(-35);
+		}
+		if (((false || true) && true)) {
+			write(30);
+			read(u_EX);
+		}
+	} else {
+		u_EX = u_EX;
+		QZ = 17;
+	}
+}
 ```
 
-- najgorsze dopasowanie: 
+- najgorsze dopasowanie: 83472567641
 
-- średnie dopasowanie: 
+- średnie dopasowanie: 2146546501.4709818
 
-- czas wykonania:
+- czas wykonania: 151.52874365800017
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![B_21](./raport_img/B_21.png)
@@ -1192,21 +1422,51 @@ Postanowiliśmy zastosować uczenie etapowe, gdzie w pierwszym etapie uczymy pro
 
 - funkcja dopasowania:
 ```python
-
+class FitnessFunctionB_28(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        expected_result = min(gp_input)
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
 ```
 
-- najlepsze dopasowanie: 
+- najlepsze dopasowanie: 12042
 
 - najlepsze rozwiązanie:
 ```
-
+{
+	if (false) {
+		read(liO_);
+		Y = 63;
+	} else {
+		dW = (40 - (63 + 45));
+		if (!((true && false))) {
+			YY = 53;
+			write(dW);
+		}
+	}
+	if ((-1 >= 61)) {
+		while (false) {
+			IYvG = -6;
+			HaP6z_ = (64 * (-14 * Su0));
+		}
+		if (!(true)) {
+			Su0 = (IYvG / Su0);
+			read(Su0);
+		}
+	} else {
+		while (((true && true) && true)) {
+			read(E);
+			oz = aQ;
+		}
+		aH = 13;
+	}
+}
 ```
 
-- najgorsze dopasowanie: 
+- najgorsze dopasowanie: 58896
 
-- średnie dopasowanie: 
+- średnie dopasowanie: 18313.29177904305
 
-- czas wykonania:
+- czas wykonania: 1363.7948232400013
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
 ![B_28](./raport_img/B_28.png)
