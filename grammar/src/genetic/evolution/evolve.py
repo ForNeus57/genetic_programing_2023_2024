@@ -11,7 +11,7 @@ from random import random, sample, getstate
 from time import perf_counter
 from typing import ClassVar, Optional
 
-from src.genetic.evaluation.evaluation import FitnessFunctionBase, FitnessFunctionBool
+from src.genetic.evaluation.evaluation import FitnessFunctionBase
 from src.genetic.evolution.population import Population
 from src.genetic.individual.individual import Individual
 from src.genetic.individual.structure.metadata import GenerationMethod, Metadata
@@ -27,20 +27,21 @@ class Evolution:
     population: Population = field(init=False)
 
     generations: ClassVar[int] = 200
-    crossover_probability: ClassVar[float] = 0.2
+    crossover_probability: ClassVar[float] = 0.1
     pool_size: ClassVar[int] = os.cpu_count()
 
     def __post_init__(self):
         name: str = self.fitness_grader.__class__.__name__.replace('FitnessFunction', '')
 
         if name == 'Bool':
-            name += str(FitnessFunctionBool.k)
+            name += str(self.fitness_grader.k)
 
         self.statistics = Statistics(
             save_directory=f'./data/python/{
                 name
             }/'
         )
+        # self.population = Population.from_pickle(Path('./data/python/1_4_A_1/final_population/'))
         self.population = Population.from_ramped_half_and_half()
 
         # with Pool(processes=Evolution.pool_size) a:
@@ -65,12 +66,12 @@ class Evolution:
             for _ in range(len(self.population)):
                 fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, iter(self.population))))
                 _, (_, first) = deepcopy(Individual.tournament(
-                    sample(fitness_join_individuals, max(1, ceil(0.1 * len(self.population)))),
+                    sample(fitness_join_individuals, max(1, ceil(0.05 * len(self.population)))),
                     'min'
                 ))
                 if random() < Evolution.crossover_probability:
                     _, (_, second) = deepcopy(Individual.tournament(
-                        sample(fitness_join_individuals, max(1, ceil(0.1 * len(self.population)))),
+                        sample(fitness_join_individuals, max(1, ceil(0.05 * len(self.population)))),
                         'min'
                     ))
                     first.crossover(second)
@@ -78,7 +79,7 @@ class Evolution:
                     first.mutate()
 
                 index_to_change = deepcopy(Individual.tournament(
-                    sample(fitness_join_individuals, max(1, ceil(0.1 * len(self.population)))),
+                    sample(fitness_join_individuals, max(1, ceil(0.05 * len(self.population)))),
                     'max'
                 ))[0]
 
@@ -86,7 +87,7 @@ class Evolution:
 
                 self.population[index_to_change] = first
 
-            for _ in range(ceil(len(self.population) * 0.2)):
+            for _ in range(ceil(len(self.population) * 0.6)):
                 fitness_join_individuals: tuple = tuple(enumerate(zip(self.fitness, iter(self.population))))
                 index_to_change = deepcopy(Individual.tournament(
                     list(fitness_join_individuals),

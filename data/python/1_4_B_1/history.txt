@@ -1,0 +1,68 @@
+[0]Best: 50000000, Worst: 4999999500, Average: 2315231716.0493455, Time: 221.33892695100076
+Best program: {
+	read(Kuo);
+	if (((true || true) && (Kuo >= Kuo))) {
+		while ((!(false) || false)) {
+			qFybogJ = (-22 + (Kuo * Kuo));
+			qFybogJ = 57;
+		}
+		read(Kuo);
+	}
+}
+[1]Best: 50000000, Worst: 50000000, Average: 50000000.0, Time: 3483.543046210001
+Best program: {
+	ha = -15;
+	if (true) {
+		while ((-33 > 17)) {
+			write(((18 / ha) / 22));
+			ha = -41;
+		}
+		if ((true && (true || true))) {
+			ha = (7 * 29);
+			Skj = ((ha - ha) + 22);
+		} else {
+			ha = ha;
+			write(((51 + ha) / -16));
+		}
+	} else {
+		pNJ = ha;
+		Je = ((23 + pNJ) / 47);
+	}
+}
+[2]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 835.3041895690003
+Best program: {
+	read(Kuo);
+	if (((true || true) && (Kuo >= Kuo))) {
+		while ((!(false) || false)) {
+			qFybogJ = (-22 + (Kuo * Kuo));
+			qFybogJ = 57;
+		}
+		read(Kuo);
+	}
+}
+[3]Best: 50000000, Worst: 4999999500, Average: 50494456.04834682, Time: 777.7748288270013
+Best program: {
+	while (!(true)) {
+		while (!((PN <= -49))) {
+			read(M);
+			write(o6WBX);
+		}
+		if (true) {
+			write((PN - PN));
+			write((60 - (PN + PN)));
+		}
+	}
+	if (((false || true) && !(true))) {
+		write((-24 * 41));
+		write((-17 / (bj * 10)));
+	} else {
+		a = (-3 - (-46 + -1));
+		if (false) {
+			X = -64;
+			a = -41;
+		} else {
+			a = ((30 + a) / -28);
+			a = ((10 / 38) + -10);
+		}
+	}
+}

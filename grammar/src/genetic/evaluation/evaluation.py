@@ -48,8 +48,8 @@ from itertools import product
 
 
 class FitnessFunctionBase(ABC):
-    def convert_output(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None]) -> Tuple[
-        int, ...]:
+    def convert_output(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None]) \
+     -> Tuple[int, ...]:
         if gp_output is None:
             return tuple()
         return tuple(int(x) if not isinstance(x, bool) else int(x) for x in gp_output)
@@ -276,7 +276,7 @@ class FitnessFunctionB_28(FitnessFunctionBase):
 
 class FitnessFunctionBool(FitnessFunctionBase):
     function_output: ClassVar[Tuple] = tuple(map(lambda x: int(x), (
-        True, False, False, False, True, False, False, False, False, False, False, True, True, False, True, True, False,
+        True, False, False, True, True, False, False, False, False, False, False, True, True, False, True, True, False,
         False, False, True, False, False, True, False, False, True, True, False, True, True, False, True, False, True,
         True,
         True, True, True, False, False, True, True, True, False, True, False, True, False, False, False, False, True,
@@ -376,17 +376,18 @@ class FitnessFunctionBool(FitnessFunctionBase):
         True, True, True, False, False, False, False, True, False, False, True, True, True, True, False, False, False,
         True,
         True, True, True, True, True)))
-    k: ClassVar[int] = 10
+
+    def __init__(self, k: int) -> None:
+        self.k = k
 
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         if len(gp_output) != 1:
             return 9_999_999
         binary_string = ''.join('1' if value else '0' for value in gp_input)
-        return abs(gp_output[0] - FitnessFunctionBool.function_output[int(binary_string, 2)])
+        return abs(gp_output[0] - self.function_output[int(binary_string, 2)])
 
-    @staticmethod
-    def generate_truth_tables() -> list[Any]:
-        return list(product((0, 1), repeat=FitnessFunctionBool.k))
+    def generate_truth_tables(self) -> list[Any]:
+        return list(product((0, 1), repeat=self.k))
 
 
 def get_fitness_function_by_name(name: str) -> Callable:

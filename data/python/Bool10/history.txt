@@ -1,68 +1,37 @@
-[0]Best: 483, Worst: 33319272931, Average: 2624568656.9824195, Time: 377.6768742000004
+[0]Best: 484, Worst: 490921574884, Average: 2729135600.255319, Time: 348.89980570700027
 Best program: {
-	if (((25 - -59) != (-58 * -40))) {
+	write(((-12 / -59) * 57));
+	while (false) {
+		while ((false && (true || false))) {
+			read(h8T3);
+			write(h8T3);
+		}
+		kg = ((58 * 38) * -41);
+	}
+}
+[1]Best: 484, Worst: 10239998976, Average: 29155811.32324443, Time: 871.4338227259996
+Best program: {
+	if (((-5 == -22) && false)) {
+		write((h0 / -57));
 		if ((false && !(false))) {
-			dQP = 11;
-			write(dQP);
-		}
-		if (!((42 < -10))) {
-			I65 = (-58 * (20 - 38));
-			write(((-42 + I65) / I65));
-		}
-	}
-	while (((true && false) && (0 <= 61))) {
-		if (true) {
-			write(-56);
-			write((14 / 7));
+			qoH = qoH;
+			qoH = -21;
 		} else {
-			read(XSEb);
-			read(VNh);
+			read(KJe);
+			read(KJe);
 		}
-		if (((13 / -3) > (-14 - 54))) {
-			DnG = (-62 - (-62 - 4));
-			DnG = DnG;
+	} else {
+		write(((-40 - -61) / (-48 * -6)));
+		while (false) {
+			UaKOmd6 = (-14 - (-25 - 6));
+			UaKOmd6 = (51 / 64);
 		}
 	}
-}
-[1]Best: 483, Worst: 102400000, Average: 31620138.939666368, Time: 817.5208319659996
-Best program: {
-	Qj = (19 - (64 * -47));
-	if (false) {
-		while ((!(true) && false)) {
-			write(-36);
-			read(G);
+	while ((-64 == 64)) {
+		if ((z1 != z1)) {
+			write(z1);
+			Nbf = 42;
 		}
-		write(PlY);
-	} else {
-		write(((21 * 34) / (18 * 41)));
-		read(X2CZ2M);
-	}
-}
-[2]Best: 483, Worst: 10239998976, Average: 1031454.7929277795, Time: 921.6475692949998
-Best program: {
-	Qj = (19 - (64 * -47));
-	if (false) {
-		while ((!(true) && false)) {
-			write(-36);
-			read(G);
-		}
-		write(PlY);
-	} else {
-		write(((21 * 34) / (18 * 41)));
-		read(X2CZ2M);
-	}
-}
-[3]Best: 483, Worst: 102400000, Average: 10758.891219658375, Time: 786.3331033029999
-Best program: {
-	Qj = (19 - (64 * -47));
-	if (false) {
-		while ((!(true) && false)) {
-			write(-36);
-			read(G);
-		}
-		write(PlY);
-	} else {
-		write(((21 * 34) / (18 * 41)));
-		read(X2CZ2M);
+		read(z1);
 	}
 }
