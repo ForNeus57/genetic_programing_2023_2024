@@ -190,7 +190,7 @@ class FitnessFunction1_4_B(FitnessFunctionBase):
 # 1. odczytanie pierwszej liczby
 class FitnessFunction1_4_B_1(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return 0 if gp_output == gp_input[0] else 9999999
+        return 0 if gp_output == gp_input[0] else abs(gp_output[0] - gp_input[0]) if len(gp_output) == 1 else 9999999
 
 
 # 2. odczytanie tylu liczb ile wynosi pierwsza liczba
