@@ -55,6 +55,9 @@ class FitnessFunctionBase(ABC):
 - Maksymalna liczba węzłów w bloku: `4` (liczona osobno dla każdego bloku).
 - Minimalna generowana wartość tokenu całkowitej: `-64`.
 - Maksymalna generowana wartość tokenu całkowitej: `64`.
+- Maksymalna liczba możliwych do wykonania instrukcji przez interpreter: `150` (benchmarks: `300`).
+
+Zmiana parametrów uczenia dla problemów zaawansowanych (benchmarks) wynika z faktu, że problemy są bardziej złożone, więc będą wymagać większej ilości instrukcji do przetworzenia oraz głębokości. W celu kompensacji i zmniejszenia czasu liczenia zmniejszyliśmy populację o połowę (do 5000) oraz dodaliśmy więcej różnorodności w postaci większej selekcji osobników. Aby jednak zachować fenotyp zwiększyliśmy szansę na krzyżowanie.
 
 #### Metryki używane do ilustracji procesu uczenia:
 - **Najlepsze dopasowanie**: najlepsze dopasowanie znalezione w trakcie uczenia dla danej generacji (błąd jest najmniejszy).
@@ -134,7 +137,7 @@ class FitnessFunction1_1_A(FitnessFunctionBase):
 
 ### 1.1.B Program powinien wygenerować na wyjściu (na dowolnej pozycji w danych wyjściowych) liczbę 789. Poza liczbą 789 może też zwrócić inne liczby.
 
-- status: <span style="color:green">**rozwiązanie znalezione**</span>.
+- status: <span style="color:green">***rozwiązanie znalezione***rozwiązanie znalezione**</span>.
 
 
 - funkcja dopasowania:
@@ -1481,7 +1484,7 @@ class FitnessFunctionB_28(FitnessFunctionBase):
 
 ### Regresja symboliczna dla funkcji boolowskiej
 
-Pryjeliśmy następujące założenia:
+Przyjeliśmy następujące założenia:
 - Wartość `True` jest reprezentowana przez `1`
 - Wartość `False` jest reprezentowana przez `0`
 
@@ -1510,6 +1513,44 @@ Dla każdej wartości k wygenerowaliśmy odpowiednie tabelki prawdy:
 def generate_truth_tables(k: int) -> list[Any]:
     return list(product((0, 1), repeat=k))
 ```
+
+#### Metodologia
+
+- Pierwszym podejściem, było to opisane powyżej, niestety jednak praktyka pokazała, że algorytm zamyka się w pętli i uzyskuje tylko minimum lokalne - nie jest w stanie go przezwyciężyć i pomimo zwiększenia różnorodności (zmniejszenie ilości, która przeżywa do następnego pokolenia).
+- W drugim podejściu postanowiliśmy znacznie uprościć funkcję używaną do regresji i stopniowo dla rosnącego K, zapisywać jej populacje, a następnie używać ich jako punktów startowych dla kolejnych K. Niestety, również to podejście nie przyniosło oczekiwanych rezultatów (błąd był na podobnym poziomie). Więc z uwagi na to, że podejście metody pierwszej możemy liczyć równolegle, nie sekwencyjnie poniżej przedstawimy wyniki pierwszej metody.
+
+Poniżej przedstawiamy przykładowe użyte funkcje dla metody drugiej:
+```python
+# grammar/src/genetic/evaluation/evaluation.py
+
+class FitnessFunctionBool4(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3])))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool5(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                          or bool(gp_input[4]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool6(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                          or bool(gp_input[4]) and (not bool(gp_input[5])))
+        return abs(gp_output[0] - output)
+```
+
+
+Wyniki dla metody pierwszej:
 
 #### K = 1
 
@@ -2672,4 +2713,3 @@ def generate_truth_tables(k: int) -> list[Any]:
 
 - wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
   ![k10](./raport_img/K10.png)
-
