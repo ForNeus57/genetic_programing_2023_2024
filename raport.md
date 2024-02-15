@@ -6,13 +6,12 @@ Spis treści:
 
 1. [Funkcja dopasowania](#funkcja-dopasowania)
 2. [Metryki i ogólna konfiguracja problemów](#metryki-i-ogólna-konfiguracja-problemów)
-3. [Zasady interpretacji programów genetycznych](#zasady-interpretacji-programów)
-4. [Przykładowe zadania testowe](#przykładowe-zadania-testowe)
+3. [Przykładowe zadania testowe](#przykładowe-zadania-testowe)
     - [1.1](#11a-program-powinien-wygenerować-na-wyjściu-na-dowolnej-pozycji-w-danych-wyjściowych-liczbę-1-poza-liczbą-1-może-też-zwrócić-inne-liczby)
     - [1.2](#12a-program-powinien-odczytać-dwie-pierwsze-liczy-z-wejścia-i-zwrócić-na-wyjściu-jedynie-ich-sumę-na-wejściu-mogą-być-tylko-całkowite-liczby-dodatnie-w-zakresie-09)
     - [1.3](#13a-program-powinien-odczytać-dwie-pierwsze-liczy-z-wejścia-i-zwrócić-na-wyjściu-jedynie-większą-z-nich-na-wejściu-mogą-być-tylko-całkowite-liczby-dodatnie-w-zakresie-09)
     - [1.4](#14a-program-powinien-odczytać-dziesięć-pierwszych-liczy-z-wejścia-i-zwrócić-na-wyjściu-jedynie-ich-średnią-arytmetyczną-zaokrągloną-do-pełnej-liczby-całkowitej-na-wejściu-mogą-być-tylko-całkowite-liczby-w-zakresie-9999)
-5. [Finalne testy systemu](#finealne-testy-systemu)
+4. [Finalne testy systemu](#finealne-testy-systemu)
     - [Benchmarki](#benchmark-1-number-io---given-an-integer-and-a-float-print-their-sum)
     - [Regresja symboliczna dla funkcji bool-owskiej](#regresja-symboliczna-dla-funkcji-boolowskiej)
 
@@ -62,30 +61,6 @@ class FitnessFunctionBase(ABC):
 - **Najgorsze dopasowanie**: najgorsze dopasowanie znalezione w trakcie uczenia dla danej generacji (błąd jest największy).
 - **Średnie dopasowanie**: średnie dopasowanie znalezione w trakcie uczenia dla danej generacji (suma błędu całej populacji przez jej ilość).
 - **Czas wykonania**: czas liczenia się tej konkretnej generacji w sekundach.
-
-# Zasady interpretacji programów
-
-Poniżej zamieszczamy przypomnienie naszych zasad interpretacji programów genetycznych. Są one pochodne wcześniej zdefiniowanej gramatyce języka, która była przesyłana wcześniej.
-
-#### Blok kodu (Execution Block)
-Instrukcje są ewaluowane od lewej do prawej z góry do dołu. Od 1 w stronę 3.
-```text
-{
-	<instrukcja1>
-	<instrukcja2>
-	<instrukcja3>
-	...
-}
-```
-
-#### Przypisanie (Assigment)
-Zmienna (nazwa) jest przypisywana z wartością wyrażenia. Zmienne przechowuje słownik mapujący nazwy na poszczególne wartości.
-```text
-<zmienna> = <wyrażenie>;
-```
-
-#### 
-
 
 ## Przykładowe zadania testowe
 ### 1.1.A Program powinien wygenerować na wyjściu (na dowolnej pozycji w danych wyjściowych) liczbę 1. Poza liczbą 1 może też zwrócić inne liczby.
@@ -1506,9 +1481,15 @@ class FitnessFunctionB_28(FitnessFunctionBase):
 
 ### Regresja symboliczna dla funkcji boolowskiej
 
-
+Pryjeliśmy następujące założenia:
+- Wartość `True` jest reprezentowana przez `1`
+- Wartość `False` jest reprezentowana przez `0`
 
 #### Funkcja
+
+Mamy bardzo długi (1024 pozycje) wektor losowych wartości prawda / fałsz. Całość tego wektora znajduje się w `grammar/src/genetic/evaluation/evaluation.py`.
+Następnie z danego rekordu w tabelce prawdy generujemy odpowiednią liczbę binarną, która jest indeksem w tablicy wyników.
+Wartości w tablicy wyników są z góry ustalone i reprezentują wynik funkcji dla danego wektora wejściowego.
 
 ```python
 class FitnessFunctionBool(FitnessFunctionBase):
@@ -1524,7 +1505,11 @@ class FitnessFunctionBool(FitnessFunctionBase):
         return abs(gp_output[0] - self.function_output[int(binary_string, 2)])
 ```
 
-
+Dla każdej wartości k wygenerowaliśmy odpowiednie tabelki prawdy:
+```python
+def generate_truth_tables(k: int) -> list[Any]:
+    return list(product((0, 1), repeat=k))
+```
 
 #### K = 1
 
@@ -1562,29 +1547,1129 @@ class FitnessFunctionBool(FitnessFunctionBase):
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
 
+- najlepsze dopasowanie: 1
+
+- najlepsze rozwiązanie:
+```text
+ {
+	if (true) {
+		if (((56 / -42) != 41)) {
+			write((iTe6 * i));
+			read(KSBK4);
+		} else {
+			read(V);
+			write((V * (-21 * 18)));
+		}
+		if (!(!(true))) {
+			read(x7);
+			x7 = (53 + HR);
+		} else {
+			g = 6;
+			g = -60;
+		}
+	} else {
+		while (!((K0 < K0))) {
+			read(tju);
+			si3wQl = -36;
+		}
+		K0 = -63;
+	}
+	if (((-50 * -51) != (54 - -50))) {
+		m = (-64 - 32);
+		while (false) {
+			E = m;
+			write(-39);
+		}
+	} else {
+		while (true) {
+			write(-9);
+			Tf = ((-2 + 57) * (63 - 28));
+		}
+		Wm = (-46 + (60 * -42));
+	}
+}
+```
+
+- najgorsze dopasowanie: 39999996
+
+- średnie dopasowanie: 3996.607631605234
+
+- czas wykonania: 660.1124946639975
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+![k2](./raport_img/K2.png)
+
 #### K = 3
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+- najlepsze dopasowanie: 3
+
+- najlepsze rozwiązanie:
+```text
+{
+	Lf = ((-36 - -62) / -51);
+	if (!(!(false))) {
+		if (false) {
+			read(s);
+			odWgTf = Lf;
+		} else {
+			read(U);
+			U = ((Lf + Lf) - Lf);
+		}
+		while (((false || true) || (47 != -28))) {
+			read(DQ7);
+			write((28 / DQ7));
+		}
+	} else {
+		nF = (Lf + -42);
+		if ((false && (true && false))) {
+			g = 45;
+			write(((Lf - Lf) * (10 - nF)));
+		} else {
+			AdXxh = ((-6 * nF) - -58);
+			write((AdXxh - AdXxh));
+		}
+	}
+}
+
+```
+
+- najgorsze dopasowanie: 800000
+
+- średnie dopasowanie: 82.9117970232744
+
+- czas wykonania: 689.4508414000011
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+![k3](./raport_img/K3.png)
+
 #### K = 4
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+- najlepsze dopasowanie: 5
+
+- najlepsze rozwiązanie:
+```text
+{
+	while (!(!(!(true)))) {
+		if ((36 >= 10)) {
+			while ((((-62 / -29) + (-25 * -31)) > ((35 - 26) - (31 - -23)))) {
+				write(-54);
+				xj = (((-10 + 39) * -63) * ((-57 - 62) * -35));
+			}
+			while ((((-6 * 19) + 45) < (1 * -20))) {
+				V2 = 7;
+				read(V2);
+				V2 = (26 - ((V2 - V2) / 8));
+				read(V2);
+			}
+			read(ZL);
+			while (!(((true && false) || (-16 < 57)))) {
+				read(ZL);
+				ZL = 33;
+				read(ZL);
+			}
+			read(m34m43);
+		}
+		if (!(false)) {
+			if (true) {
+				eG = 38;
+				eG = ((eG / (eG / 63)) / 24);
+			}
+			write(1);
+		}
+		Ohi = (-8 / 55);
+		write((Ohi / 16));
+	}
+	read(T);
+	write((T * pr));
+	PR = PR;
+}
+
+```
+
+- najgorsze dopasowanie: 159999984
+
+- średnie dopasowanie: 15987.419039057037
+
+- czas wykonania: 1516.630864216997
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+![k4](./raport_img/K4.png)
+
 #### K = 5
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+- najlepsze dopasowanie: 10
+
+- najlepsze rozwiązanie:
+```text
+{
+	if ((29 >= (-32 * 53))) {
+		read(fo);
+		read(mpAqA);
+		if (true) {
+			E6gwfB = 54;
+			if ((mpAqA > (44 / -60))) {
+				XeJj = 1;
+				Ig1 = 42;
+				Ig1 = (44 * (-27 - (-34 / o0)));
+				write(((o0 / -21) * (mpAqA / -21)));
+				read(L);
+			} else {
+				mpAqA = 4;
+				read(tS);
+				write(20);
+				bGlD = (-62 / (46 + tS));
+			}
+		} else {
+			write(45);
+			write(41);
+			read(YEK);
+		}
+		read(T);
+		while ((mpAqA == mpAqA)) {
+			while (!(false)) {
+				read(mpAqA);
+				mpAqA = mpAqA;
+			}
+			while (false) {
+				read(e);
+				e = ((-39 * (29 * 16)) + 40);
+				write(-57);
+				write((41 + ((mpAqA + 64) / (mpAqA / mpAqA))));
+			}
+			read(mpAqA);
+			while ((false || !(!(false)))) {
+				o3 = mpAqA;
+				fXJsm = (((-53 / -10) / (o3 * mpAqA)) / o3);
+			}
+			while (!(((false || true) && (mpAqA >= mpAqA)))) {
+				RGF = ((mpAqA + -8) - 55);
+				mpAqA = (((-27 + RGF) + (mpAqA - mpAqA)) + RGF);
+				read(vrq);
+			}
+			write(mpAqA);
+		}
+	} else {
+		write(ee);
+		read(ee);
+		if (true) {
+			write(-37);
+			while (((!(false) && !(true)) && true)) {
+				read(rY);
+				vtb = jDlP;
+				L = 59;
+				read(ET);
+			}
+		} else {
+			while (!((ee > ee))) {
+				read(Ay);
+				ogZAf = ee;
+				Ay = Ub;
+				write(tiOP);
+			}
+			write(ee);
+			while ((ee < ee)) {
+				write(-58);
+				write(cR1);
+				cR1 = -35;
+			}
+		}
+		ee = ee;
+		if (!(((ee != ee) || (ee != ee)))) {
+			ee = ee;
+			while (!(true)) {
+				ee = 2;
+				ee = ((-34 - 41) + (-17 + ee));
+				write(ee);
+				write(ee);
+			}
+			if ((ee == ee)) {
+				oR = 31;
+				xDs5 = ee;
+				write(-40);
+				xDs5 = (19 / xDs5);
+			} else {
+				ee = ee;
+				read(l_ezJC);
+			}
+			while (((60 == LU) || !(false))) {
+				ee = -12;
+				ee = 45;
+				MAut = (((ee + ee) - (-42 / ee)) / ee);
+			}
+			while (!(false)) {
+				ee = 15;
+				ee = (ee + 48);
+				read(ee);
+				NVy = 59;
+				NVy = -18;
+			}
+			read(ee);
+		}
+		ee = ee;
+	}
+	write((-15 * ((nh - -31) + nh)));
+	if (false) {
+		while (((true || (47 < 59)) || !(!(true)))) {
+			read(NH);
+			write(NH);
+			while (false) {
+				write((-36 - NH));
+				write(34);
+				NH = NH;
+				write((NH / (48 + 63)));
+			}
+			o = NH;
+		}
+		while ((((-64 / -33) != 49) && false)) {
+			Op = (-54 - ((22 * -16) * -50));
+			while (!((Op != -55))) {
+				write((63 + (-26 - Op)));
+				Op = Op;
+				Op = -34;
+				Ul = Op;
+				write(((Ul - Ul) + 15));
+				Ul = -36;
+				read(Ul);
+			}
+			while ((((Op / Op) * Op) <= (12 / (Op * Op)))) {
+				read(Op);
+				G = Op;
+			}
+			U2 = (1 * (39 / Op));
+		}
+		pJMvzU = (((53 + -48) - -12) - 13);
+		while (false) {
+			while ((59 == -23)) {
+				write(pJMvzU);
+				write(pJMvzU);
+				read(IC);
+			}
+			write((pJMvzU * ((59 - pJMvzU) / (pJMvzU - 54))));
+			if ((((false && true) || false) && true)) {
+				UNSBS = (-59 / 44);
+				pJMvzU = ((UNSBS - 26) / ((-64 + 5) * pJMvzU));
+				pJMvzU = -16;
+			}
+			read(pJMvzU);
+			while (!(!((false || true)))) {
+				pJMvzU = (pJMvzU + 46);
+				write((pJMvzU + (49 * (-13 * pJMvzU))));
+				jmj = pJMvzU;
+				zNTFV = 46;
+				write((pJMvzU * pJMvzU));
+				Uxx = ((pJMvzU * (62 * -62)) / jmj);
+				jmj = ((-64 - 57) * (jmj - Uxx));
+			}
+		}
+		while ((((-10 + pJMvzU) / -59) < pJMvzU)) {
+			pJMvzU = ((22 - -54) / pJMvzU);
+			while (((false || (false || false)) && ((pJMvzU <= pJMvzU) || false))) {
+				write((-46 - ((pJMvzU * pJMvzU) / pJMvzU)));
+				write(pJMvzU);
+				md = (pJMvzU - 58);
+			}
+			write(-2);
+			while (false) {
+				pJMvzU = pJMvzU;
+				pJMvzU = pJMvzU;
+			}
+		}
+		read(pJMvzU);
+	} else {
+		w70i = ((36 + 52) - 31);
+		e66 = w70i;
+		C = (47 * e66);
+		Lb53N = C;
+		T = w70i;
+	}
+}
+```
+
+- najgorsze dopasowanie: 3200000
+
+- średnie dopasowanie: 329.64878633503145
+
+- czas wykonania: 3434.5828778299983
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+![k5](./raport_img/K5.png)
+
 #### K = 6
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+- najlepsze dopasowanie: 25
+
+- najlepsze rozwiązanie:
+```text
+{
+	if (((24 != -47) || !(true))) {
+		if (((-19 >= -46) && (YdMoM != OCT))) {
+			NqT = 49;
+			c58Z = 53;
+		} else {
+			OCT = (OCT / (24 / -12));
+			read(NqT);
+		}
+		OCT = c58Z;
+	} else {
+		read(E);
+		jmt = jmt;
+	}
+	if (false) {
+		read(BhI);
+		write(56);
+	} else {
+		write(WUT);
+		while (((WUT >= 49) && false)) {
+			write((17 - -50));
+			l = l;
+		}
+	}
+}
+```
+
+- najgorsze dopasowanie: 6400000
+
+- średnie dopasowanie: 666.1806013385276
+
+- czas wykonania:864.1517793260027
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+  ![k6](./raport_img/K6.png)
+
 #### K = 7
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+- najlepsze dopasowanie: 54
+
+- najlepsze rozwiązanie:
+```text
+{
+	read(jnaX);
+	if (!(((-11 + E1g) == E1g))) {
+		if ((!(false) && false)) {
+			if (!((17 != -58))) {
+				E1g = ((-13 - E1g) + YkOIU);
+				read(C);
+				read(C);
+				read(QrNW);
+				read(iN5);
+				O = YkOIU;
+			} else {
+				read(E1g);
+				ygKM = -7;
+			}
+			write(KudS);
+			if (!(false)) {
+				ydfyj = -57;
+				write(Jw);
+				ydfyj = ydfyj;
+			} else {
+				read(BMq);
+				read(H6);
+				write(7);
+				read(E1g);
+			}
+			write(SlJ);
+		} else {
+			read(E1g);
+			while (false) {
+				q1q = (-36 * -36);
+				read(B06);
+				write(E1g);
+				q1q = B06;
+				write(q1q);
+			}
+		}
+		if ((56 <= 19)) {
+			E1g = ((5 * (nczPR9 + E1g)) * -12);
+			nczPR9 = ((-6 - (E1g + E1g)) + (E1g * (hod8R / E1g)));
+			while ((-4 != 17)) {
+				read(a6);
+				read(mQ);
+				read(nczPR9);
+			}
+			ugN = (nczPR9 / nczPR9);
+			write(-20);
+			if (!((false || (true || false)))) {
+				QM = 17;
+				write((hod8R * (ugN * -18)));
+				w = E1g;
+				write(Q8d);
+				P7 = (QM / (Q8d - 25));
+				write(E1g);
+				ugN = (((16 - 63) - ugN) / w);
+			} else {
+				write(hod8R);
+				read(g1ZVh);
+				write((-23 / nczPR9));
+			}
+		}
+		if ((E1g >= -41)) {
+			E1g = E1g;
+			while (false) {
+				write((TLaBF + ((TLaBF + 7) - -35)));
+				write(-17);
+			}
+			TLaBF = ((u * E1g) * (u / (u - u)));
+		} else {
+			if (true) {
+				read(ld5s);
+				E1g = E1g;
+				p4 = -52;
+			} else {
+				read(PH);
+				PH = -63;
+				b = (((PH + 29) / (-55 + E1g)) + -31);
+				PH = ((50 + E1g) - PH);
+				write(b);
+			}
+			if (true) {
+				E1g = -44;
+				write((13 / E1g));
+				E1g = 60;
+			} else {
+				write(LN);
+				read(Vi);
+				v = E1g;
+				write(E1g);
+				E1g = 1;
+			}
+			if (!((E1g <= E1g))) {
+				read(E1g);
+				write((((JO / JO) / (63 + JO)) - -60));
+			} else {
+				write(E1g);
+				read(E1g);
+				write(-48);
+				E1g = E1g;
+			}
+		}
+	}
+	if ((false && !((true && true)))) {
+		if (!(true)) {
+			if (((I - -38) != (abH_ / I))) {
+				abH_ = 0;
+				write(-23);
+			}
+			while ((((abH_ / abH_) <= (26 * 56)) || !((-15 == 1)))) {
+				write(-28);
+				abH_ = (-31 * -19);
+			}
+			while ((!((I >= abH_)) && true)) {
+				read(O);
+				write(abH_);
+				read(abH_);
+			}
+			if ((2 == abH_)) {
+				abH_ = -45;
+				I = abH_;
+			} else {
+				write(-15);
+				write(-10);
+				abH_ = I;
+				Cx = 46;
+				read(abH_);
+				q = abH_;
+			}
+		}
+		write(I);
+		read(bG);
+		read(I);
+		if ((((33 == I) && (false && false)) && ((true && true) || true))) {
+			F = -28;
+			abH_ = 57;
+			I = I;
+			F = F;
+		} else {
+			while ((true || ((false && true) && (-10 >= -60)))) {
+				I = I;
+				I = ((I - I) / 60);
+				read(bG);
+			}
+			if (true) {
+				o1F = (((abH_ / -38) * bG) - -12);
+				write(55);
+				read(iHF);
+			}
+			bG = bG;
+			while (true) {
+				read(abH_);
+				abH_ = I;
+				bG = 31;
+				read(bG);
+			}
+		}
+	} else {
+		znhg = abH_;
+		write(I);
+		I = (znhg / (39 * (-13 * abH_)));
+		while ((((I >= I) || (abH_ < 59)) && ((21 >= I) && !(false)))) {
+			while (false) {
+				read(znhg);
+				abH_ = 59;
+				znhg = (((I / 47) + (18 + -37)) + 11);
+				J8Ucb = (-3 - 30);
+			}
+			I = abH_;
+			I = (-35 * 60);
+			if (!(!(false))) {
+				t = (I / abH_);
+				u = abH_;
+				write(17);
+				u = u;
+				znhg = (-52 + (znhg + 48));
+			}
+			h_ = (53 - 57);
+			c3 = h_;
+			read(h_);
+		}
+	}
+	while (!(true)) {
+		while (!((!(false) || false))) {
+			read(y__);
+			NYx = -18;
+			y__ = (49 * NYx);
+			if (!(!(!(true)))) {
+				read(YI);
+				write((58 * NYx));
+				YI = -50;
+			} else {
+				zhU = (18 * NYx);
+				read(h4);
+				read(NVgWH);
+				h4 = 37;
+				D = 49;
+				read(zhU);
+			}
+		}
+		while (((-27 + -38) < -26)) {
+			y__ = 57;
+			y__ = ((8 - -10) + y__);
+		}
+		dP = 64;
+		while ((-17 < (9 * dP))) {
+			if ((y__ > -43)) {
+				akVh = dP;
+				read(w5kh);
+				read(akVh);
+				w = dP;
+				read(w);
+			}
+			if ((-51 > dP)) {
+				read(pLi);
+				write(21);
+				I4S = dP;
+				vUN = y__;
+				y__ = 27;
+			}
+			if (true) {
+				M = (-50 * dP);
+				M = ((-60 - M) + -8);
+			}
+			if (false) {
+				BtU = 30;
+				tGF = y__;
+				QoxyPXi = (-57 + ((y__ - -37) - dP));
+				tGF = -58;
+			} else {
+				read(dP);
+				read(y__);
+			}
+			dP = y__;
+		}
+		dP = y__;
+		while ((((-18 * -20) / -9) < y__)) {
+			write((dP * (dP * -64)));
+			while (!(!((y__ == dP)))) {
+				uS = ((51 / dP) / ((dP + 1) * 46));
+				write((dP - ((dP + 18) / dP)));
+				read(k);
+				Vtqb = (56 * uS);
+			}
+		}
+		while (!(((false || true) || (2 < y__)))) {
+			if (true) {
+				write((49 / y__));
+				dP = (dP * 20);
+				dP = 30;
+				write(((41 * 18) + (y__ + y__)));
+			}
+			y__ = -46;
+			write(((35 - (62 - y__)) - ((y__ / 16) * (dP + 12))));
+			while (false) {
+				q = -35;
+				q = y__;
+				write((-15 * q));
+				OL = dP;
+				OL = 40;
+			}
+		}
+	}
+}
+```
+
+- najgorsze dopasowanie: 12800000
+
+- średnie dopasowanie: 1332.5929477574668
+
+- czas wykonania: 4270.350661428998
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+  ![k7](./raport_img/K7.png)
+
 #### K = 8
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+- najlepsze dopasowanie: 112
+
+- najlepsze rozwiązanie:
+```text
+ {
+	if ((!(true) || false)) {
+		read(yB);
+		write((50 * hgOaG));
+	} else {
+		read(NZZT);
+		write((NZZT * (qJ0 * Hwx62)));
+	}
+	while ((!(true) || (-19 >= 34))) {
+		while ((23 > (-62 - -62))) {
+			T = 33;
+			T = -47;
+		}
+		if (!(true)) {
+			Rc = -63;
+			d = 3;
+		} else {
+			write((41 / 7));
+			read(Bi);
+		}
+	}
+}
+```
+
+- najgorsze dopasowanie: 25600000
+
+- średnie dopasowanie: 2669.1842972729996
+
+- czas wykonania: 981.6562518639985
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+  ![k8](./raport_img/K8.png)
+
 #### K = 9
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+- najlepsze dopasowanie: 233
+
+- najlepsze rozwiązanie:
+```text
+ {
+	if ((-35 == (53 + (-40 * -53)))) {
+		while (!((Q <= Q))) {
+			while (!(!((true && false)))) {
+				mk45 = ((zTX - KLNq) + mk45);
+				T = -41;
+				T = 49;
+				write(ldeg0);
+			}
+			Tk = (((-53 + -8) / -8) - -23);
+			while (!(true)) {
+				read(H6);
+				zTX = zTX;
+				VWlKG = (-13 * J);
+				write(-25);
+			}
+			while ((!(false) || (zTX == -4))) {
+				I = -20;
+				Tk = zTX;
+				write(mk45);
+				X8l = (58 * zTX);
+				write(ldeg0);
+			}
+		}
+		if ((-4 >= iCbFd)) {
+			if (((!(false) && true) && (false || (mBVIHvX != Iz)))) {
+				Df = (22 + kgpJH4);
+				Rb = Df;
+			} else {
+				Ot08KGV = (57 * (13 - Ot08KGV));
+				write(((C - (-23 * -15)) / VY));
+				write((61 * Ge));
+				Pfh = (-64 - N3);
+				g = (W8 * Ge);
+				read(F_n9);
+				read(C);
+			}
+			if (!(((19 - 57) > Iz))) {
+				write(slM);
+				write(((M_bYV2D * (rDqX2Tqf - slM)) / 13));
+				write((((STp / -38) - STp) * (STp - (L9C - M_bYV2D))));
+			} else {
+				read(aiZ);
+				fJ = (14 - ((-15 + mBVIHvX) * mBVIHvX));
+				read(mBVIHvX);
+			}
+			Iz = (8 / 47);
+			if (!(true)) {
+				wIb = wIb;
+				write(52);
+				Iz = ((29 - x) * (22 - AXtRwl8));
+			} else {
+				read(t7y);
+				t7y = -51;
+				read(F0jF);
+			}
+			mBVIHvX = -23;
+		} else {
+			if (((-15 / -53) == Ng)) {
+				read(Gz);
+				write(34);
+				tvR = -23;
+			} else {
+				read(Ma);
+				read(NWU);
+				Ma = (((C - l9K) + Ng) / (-47 - (12 - l9K)));
+			}
+			read(l9K);
+		}
+		write((N - (-54 - -11)));
+		while ((11 > Q)) {
+			read(HKdG1);
+			j = (28 - 59);
+		}
+		read(Y_geDNIHk);
+	} else {
+		while ((-31 == -14)) {
+			write((-23 / Tc));
+			write((mFb + (32 * (Tc + Tc))));
+			exKQ = -44;
+			read(R0cDFb);
+			if (false) {
+				R0cDFb = R0cDFb;
+				R0cDFb = 38;
+				hzg = -39;
+			}
+			R0cDFb = -2;
+		}
+		while ((((18 - -4) < 6) && !((true || false)))) {
+			if ((-64 < -47)) {
+				N9l = 37;
+				read(N9l);
+				write((v76 + 30));
+				write((nrl * (27 * -31)));
+			} else {
+				read(Xv1fl);
+				Xv1fl = (((Xv1fl - Xv1fl) / Xv1fl) + f7);
+				write((oY - oY));
+				read(oY);
+			}
+			if (((false || (true || true)) && !(!(true)))) {
+				read(v0);
+				read(wLk);
+				wLk = 26;
+			} else {
+				kfE = ((-33 - (-27 + 8)) / (-30 * (-8 - -29)));
+				read(Sm);
+				vu93 = ((26 - -29) * 14);
+			}
+			if (false) {
+				Hm = 27;
+				hEf = (0 / -53);
+				Hm = 42;
+				s = (8 + (-17 * hEf));
+				write(31);
+			}
+		}
+		mFb = mFb;
+		write((((Tc * mFb) / -56) + mFb));
+	}
+	I = (-55 + ((-29 * -55) / (5 - -45)));
+	dGT = (0 / e);
+}
+```
+
+- najgorsze dopasowanie: 5119999488
+
+- średnie dopasowanie: 511670.3476176206
+
+- czas wykonania: 4329.898455909002
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+  ![k9](./raport_img/K9.png)
+
 #### K = 10
 
 - status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
 
+- najlepsze dopasowanie: 484
+
+- najlepsze rozwiązanie:
+```text
+{
+	if ((false && false)) {
+		if (((29 > (-61 - -64)) && !(true))) {
+			if (((37 * 19) > -35)) {
+				M = -14;
+				read(IL);
+				write(((61 - -17) * -25));
+				Z55 = ((IL * 8) * IL);
+				write(IL);
+				M = -38;
+				write(IL);
+			} else {
+				MY = -10;
+				u = (MY - (4 / -54));
+			}
+			while (false) {
+				read(rx);
+				i = 52;
+				write(-44);
+				write(i);
+			}
+			if (false) {
+				skCK = -2;
+				OrM = (skCK * skCK);
+				write(1);
+				o9 = skCK;
+			}
+			IU = (-14 - -27);
+			if ((((4 >= IU) && false) || ((IU + -10) > -49))) {
+				write(IU);
+				IU = -3;
+				D = IU;
+			} else {
+				f1R = 54;
+				l = IU;
+				write(l);
+				vcm = (-7 * f1R);
+			}
+		} else {
+			g5 = (g5 - (8 * g5));
+			while (!(true)) {
+				write(CSgKA);
+				read(xg);
+				write(6);
+				qUKz6 = (((g5 + SsG_) * g5) - ((-13 - SsG_) / (57 / 14)));
+			}
+		}
+		W2JW = 46;
+		if ((W2JW == 48)) {
+			HS = -19;
+			if ((((HS * W2JW) >= HS) && true)) {
+				write(34);
+				read(Ez_H);
+				write(W2JW);
+				read(Ez_H);
+			} else {
+				read(C);
+				W2JW = CDN2YL;
+				write(27);
+				W2JW = ((10 / (58 + wq1E)) * 43);
+				read(CDN2YL);
+			}
+		} else {
+			W2JW = (-56 + (14 / W2JW));
+			while ((((true && false) || !(true)) || ((28 / 53) != v_d))) {
+				W2JW = cW53;
+				qB = J;
+				read(IGS);
+				W2JW = W2JW;
+				write(4);
+			}
+			if ((-40 <= a7t)) {
+				read(YQ);
+				W2JW = YQ;
+				write(((-45 / YQ) / -64));
+				YQ = (-9 / ZaU);
+				write(ZaU);
+			} else {
+				l_g = -43;
+				read(Rk);
+				uu = 35;
+				Et = (((1 - -9) + (Rk - Rk)) * W2JW);
+				read(Rk);
+			}
+			a7t = (6 - -50);
+			write(W2JW);
+			write(28);
+			if ((((1 + -30) >= W2JW) || !(false))) {
+				write((W2JW * (W2JW / W2JW)));
+				read(v);
+			} else {
+				WnP_ = W2JW;
+				u2 = WnP_;
+				w = WnP_;
+				u2 = -24;
+				read(ZNfx);
+				Cc = (((WnP_ - ZNfx) - (-44 - ZNfx)) / ZNfx);
+			}
+		}
+	} else {
+		if ((false || ((56 / 12) != (-14 - -13)))) {
+			OYGfX0 = (((-47 / 58) / (12 / -35)) * 14);
+			write(((-12 / (-45 - -39)) / 9));
+			if (((OYGfX0 >= 3) || (-3 != 61))) {
+				OYGfX0 = OYGfX0;
+				OYGfX0 = (OYGfX0 - -48);
+				OYGfX0 = OYGfX0;
+			}
+			while (true) {
+				rrIO = OYGfX0;
+				e7G = -5;
+			}
+		} else {
+			write((3 + -21));
+			read(JGw);
+			while ((((JGw == 31) && false) || ((false && false) || (-46 < JGw)))) {
+				read(aX);
+				SKq = aX;
+				i = (39 * (SKq - -19));
+				JGw = -28;
+				wm = JGw;
+			}
+			while (((-45 == -26) && true)) {
+				read(JGw);
+				TVRp = (-11 * (58 * 61));
+				TVRp = 5;
+			}
+		}
+		while (!(!(!(false)))) {
+			aVc = -28;
+			write((aVc * aVc));
+			write(aVc);
+		}
+		while (true) {
+			if ((((-62 - -47) / -6) > ((45 + -15) + -34))) {
+				read(B);
+				read(B);
+				B = ((B / (-37 / B)) + 38);
+				write(B);
+			} else {
+				tW = (-5 * -9);
+				tW = tW;
+				write((-46 / tW));
+				RC = -55;
+				tW = (-9 * tW);
+				RC = ((-51 / RC) + tW);
+				RC = (((RC + tW) - tW) + RC);
+			}
+			if ((!((63 >= 27)) && ((true || false) || !(true)))) {
+				read(s);
+				read(tw);
+				read(s);
+			}
+		}
+	}
+	while ((((57 / 48) < (14 - -61)) || true)) {
+		ur9 = (((12 - 25) / -16) / ((64 - -19) * 48));
+		write(((-50 - 63) * ur9));
+		while ((!(!(true)) || !(true))) {
+			L = 28;
+			read(ur9);
+			if (!(((false && false) || (false || true)))) {
+				L = (45 + 18);
+				read(ur9);
+				read(O);
+			}
+		}
+		if (!(true)) {
+			read(ur9);
+			while ((((false || false) && (true && true)) || false)) {
+				W = (((ur9 + ur9) - 42) * ur9);
+				write(ur9);
+				read(W);
+				ur9 = ur9;
+				read(W);
+			}
+		}
+	}
+	if ((((35 / -4) / -44) <= ((50 - -29) + -53))) {
+		read(fZ2m);
+		read(fZ2m);
+		write(fZ2m);
+	} else {
+		while ((21 <= -35)) {
+			while (((-45 - -22) >= 61)) {
+				nETo = (-20 * -7);
+				write(-15);
+				m = -29;
+				read(m);
+			}
+			JVMRj = (-12 * -48);
+		}
+		while ((!((29 <= -29)) && false)) {
+			if (!(!((-52 >= -23)))) {
+				read(u);
+				iKCIp = ((u + u) + (u / u));
+				read(P);
+				P = ((u * (P * 1)) * P);
+				read(a);
+				VDxGT = (-50 * P);
+				write(-64);
+			} else {
+				vCX = ((9 * 43) / -50);
+				read(cMSn);
+				KWY = 17;
+				write(vCX);
+			}
+			while ((24 < 32)) {
+				read(Tg_b);
+				read(jOwx);
+				read(Tg_b);
+				write(((-47 / Tg_b) - Tg_b));
+				jOwx = (jOwx + 53);
+			}
+			wyo = 34;
+			if ((35 != 51)) {
+				read(wyo);
+				GnD = ((44 + (wyo / wyo)) / wyo);
+				write(-62);
+				write(wyo);
+				wyo = wyo;
+			} else {
+				read(WGVt);
+				b9q = (wyo * (50 * (WGVt - WGVt)));
+			}
+		}
+		read(F_);
+		b0 = (F_ + (-50 + F_));
+		b0 = 39;
+		while (((b0 - -57) >= 26)) {
+			read(PBc);
+			write(b0);
+			while (true) {
+				read(PBc);
+				PBc = (61 * (-62 * -20));
+			}
+			if (!(!(false))) {
+				write((PBc * b0));
+				b0 = (F_ + b0);
+				read(PBc);
+				F_ = b0;
+			}
+		}
+	}
+}
+```
+
+- najgorsze dopasowanie: 10239998976
+
+- średnie dopasowanie: 1023358.6870442514
+
+- czas wykonania: 4598.151223774999
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+  ![k10](./raport_img/K10.png)
 
