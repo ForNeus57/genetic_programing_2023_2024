@@ -1,0 +1,16 @@
+[0]Best: 12466, Worst: 4999999500, Average: 2293452537.7842426, Time: 92.66005767499882
+Best program: {
+	kf = -63;
+	kf = (-31 + kf);
+	while ((kf < (kf / 17))) {
+		read(kf);
+		write((kf + 49));
+		read(b4);
+	}
+}
+[1]Best: 0, Worst: 50000000, Average: 831417.5856565656, Time: 155.01927029999933
+Best program: {
+	kf = kf;
+	eR = kf;
+	write((Pg + kf));
+}

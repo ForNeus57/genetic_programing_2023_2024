@@ -1,0 +1,39 @@
+[0]Best: 0, Worst: Unable to compute!, Average: Unable to compute!, Time: 56.241345877999265
+Best program: {
+	v = 48;
+	if (!(true)) {
+		if (true) {
+			write(v);
+			v = ((v + -19) * (v / 3));
+			v = v;
+		} else {
+			write(27);
+			qs8 = v;
+			write(36);
+		}
+		if (((-55 - v) < (v / 6))) {
+			write((v - (-10 + v)));
+			v = 47;
+			write((-4 + (55 - v)));
+		} else {
+			write(32);
+			ZK = v;
+		}
+		while (((false && true) && (v < 31))) {
+			Rt = ((-58 * v) * (v * -24));
+			read(Rt);
+		}
+	} else {
+		while ((false || (-56 != 51))) {
+			read(g1);
+			MHl = g1;
+			write(g1);
+		}
+		if (((32 - v) > (-4 * 63))) {
+			write(34);
+			v = (-9 / v);
+			read(v);
+		}
+	}
+	read(v);
+}

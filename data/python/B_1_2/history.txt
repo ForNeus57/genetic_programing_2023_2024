@@ -1,0 +1,134 @@
+[0]Best: 49599771, Worst: 57010502, Average: 50000761.40141414, Time: 32.80828380700041
+Best program: {
+	kf = -63;
+	kf = (-31 + kf);
+	while (((5 * kf) <= kf)) {
+		read(kf);
+		write((kf + 49));
+		read(b4);
+	}
+}
+[1]Best: 12629, Worst: 49999500, Average: 13361954.497171717, Time: 647.1785282829987
+Best program: {
+	k = k;
+	write((F - -57));
+	write(Pg);
+}
+[2]Best: 12629, Worst: 50000000, Average: 24039.444444444445, Time: 165.18112176100112
+Best program: {
+	read(zMOr);
+	write((F - -57));
+	write(Pg);
+}
+[3]Best: 8000, Worst: 67267, Average: 10940.629494949495, Time: 191.14897509000002
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write(((P + kf) + -16));
+	write(Pg);
+}
+[4]Best: 8000, Worst: 50000000, Average: 18241.438585858585, Time: 2611.7252132440008
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write(((P + kf) + -16));
+	write(Pg);
+}
+[5]Best: 8000, Worst: 49999500, Average: 18182.395555555555, Time: 2664.162207177
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write(((P + kf) + -16));
+	write(Pg);
+}
+[6]Best: 8000, Worst: 49999500, Average: 18163.48404040404, Time: 212.97272284599967
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write(((P + kf) + -16));
+	write(Pg);
+}
+[7]Best: 8000, Worst: 50000000, Average: 18196.66868686869, Time: 2421.6662435820035
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write(((P + kf) + -16));
+	write(Pg);
+}
+[8]Best: 8000, Worst: 49999500, Average: 18131.35090909091, Time: 1561.131489022002
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write(((P + kf) + -16));
+	write(Pg);
+}
+[9]Best: 8000, Worst: 49999500, Average: 18162.4098989899, Time: 162.5239617039988
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write(((P + kf) + -16));
+	write(Pg);
+}
+[10]Best: 0, Worst: 49999500, Average: 13681.04404040404, Time: 177.3618926929994
+Best program: {
+	if (false) {
+		k = k;
+		mOI = k;
+		while (((k * -34) >= (k - 21))) {
+			k = (((-29 * (k * -13)) + gPwvy) * mOI);
+			read(k);
+			Jy = 39;
+		}
+	}
+	write((F + P));
+	write(Pg);
+}

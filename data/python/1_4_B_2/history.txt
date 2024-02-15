@@ -1,0 +1,2824 @@
+[0]Best: 217242, Worst: Unable to compute!, Average: Unable to compute!, Time: 8.083463782000763
+Best program: {
+	if (((5 != 3) || (39 != 18))) {
+		if (false) {
+			write(((-31 - -54) / -6));
+			read(nl);
+			write(-10);
+		}
+		read(c6Oc);
+		c6Oc = (c6Oc - c6Oc);
+	} else {
+		if ((52 != (36 * -7))) {
+			read(a);
+			Sm = a;
+			p2h = a;
+		}
+		while ((-44 != 52)) {
+			f5vv1 = (-21 - 32);
+			read(f5vv1);
+			read(NFL);
+		}
+	}
+	while (true) {
+		write(36);
+		write(6);
+		write(41);
+	}
+	if ((-6 >= -28)) {
+		while (true) {
+			y_ = (8 - 35);
+			y_ = (y_ / 51);
+			Q = -31;
+		}
+		Rto = (30 / (44 / 63));
+	} else {
+		write(23);
+		KrI = (-18 * (-53 - 40));
+		if (!((KrI >= 58))) {
+			write(-15);
+			KrI = KrI;
+			write(55);
+		}
+	}
+}
+[1]Best: 182178, Worst: Unable to compute!, Average: Unable to compute!, Time: 137.093749484
+Best program: {
+	read(vN);
+	vN = (29 / 12);
+	while (true) {
+		write(38);
+		write(13);
+		write(vN);
+	}
+}
+[2]Best: 173782, Worst: Unable to compute!, Average: Unable to compute!, Time: 117.40498766000019
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(6);
+		write(-12);
+		write(-10);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[3]Best: 173782, Worst: Unable to compute!, Average: Unable to compute!, Time: 96.11267486199722
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(6);
+		write(-12);
+		write(-10);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[4]Best: 173782, Worst: Unable to compute!, Average: Unable to compute!, Time: 99.10030238900072
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(6);
+		write(-12);
+		write(-10);
+	}
+	if ((true && true)) {
+		lW8 = -4;
+		read(lW8);
+		gcZQqa = (-14 * jym6V);
+	} else {
+		write(Ga033);
+		Frm = (43 / Ga033);
+	}
+}
+[5]Best: 173782, Worst: Unable to compute!, Average: Unable to compute!, Time: 95.56699504099743
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(6);
+		write(-12);
+		write(-10);
+	}
+	if ((true && true)) {
+		lW8 = -4;
+		read(lW8);
+		gcZQqa = (-14 * jym6V);
+	} else {
+		write(Ga033);
+		Frm = (43 / Ga033);
+	}
+}
+[6]Best: 173782, Worst: Unable to compute!, Average: Unable to compute!, Time: 103.57040639499974
+Best program: {
+	write(63);
+	while (true) {
+		write(6);
+		write(-12);
+		write(-10);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[7]Best: 173782, Worst: Unable to compute!, Average: Unable to compute!, Time: 95.0343862339978
+Best program: {
+	write(63);
+	while (true) {
+		write(6);
+		write(-12);
+		write(-10);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[8]Best: 173782, Worst: Unable to compute!, Average: Unable to compute!, Time: 92.68682915399768
+Best program: {
+	write(tO);
+	while (true) {
+		write(6);
+		write(-12);
+		write(-10);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[9]Best: 173743, Worst: Unable to compute!, Average: Unable to compute!, Time: 109.22619915900214
+Best program: {
+	write(vN);
+	while (true) {
+		write(-7);
+		write(-7);
+		write(-10);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[10]Best: 173743, Worst: Unable to compute!, Average: Unable to compute!, Time: 106.9875320659994
+Best program: {
+	write(11);
+	while (true) {
+		write(-7);
+		write(-7);
+		write(-10);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[11]Best: 173743, Worst: Unable to compute!, Average: Unable to compute!, Time: 108.50106430500091
+Best program: {
+	write(vN);
+	while (true) {
+		write(-7);
+		write(-7);
+		write(-10);
+	}
+	if ((25 != -11)) {
+		xOL = ((20 / E2) * (11 + -4));
+		read(wwv);
+		jym6V = -38;
+	} else {
+		write(-25);
+		if (!((true || false))) {
+			write((rgI + (-46 + -23)));
+			read(Y);
+			Y2 = 45;
+		} else {
+			P3X = -56;
+			Xt = -64;
+			j = 32;
+		}
+	}
+}
+[12]Best: 173743, Worst: Unable to compute!, Average: Unable to compute!, Time: 112.50666932099921
+Best program: {
+	write(vN);
+	while (true) {
+		write(-7);
+		write(-7);
+		write(-10);
+	}
+	if ((25 != -11)) {
+		xOL = ((20 / E2) * (11 + -4));
+		read(wwv);
+		jym6V = -38;
+	} else {
+		write(-25);
+		if (!((true || false))) {
+			write((rgI + (-46 + -23)));
+			read(Y);
+			Y2 = 45;
+		} else {
+			P3X = -56;
+			Xt = -64;
+			j = 32;
+		}
+	}
+}
+[13]Best: 173743, Worst: Unable to compute!, Average: Unable to compute!, Time: 117.05275665999943
+Best program: {
+	write(vN);
+	while (true) {
+		write(-7);
+		write(-7);
+		write(-10);
+	}
+	if ((25 != -11)) {
+		xOL = ((20 / E2) * (11 + -4));
+		read(wwv);
+		jym6V = -38;
+	} else {
+		write(-25);
+		if (!((true || false))) {
+			write((rgI + (-46 + -23)));
+			read(Y);
+			Y2 = 45;
+		} else {
+			P3X = -56;
+			Xt = -64;
+			j = 32;
+		}
+	}
+}
+[14]Best: 173202, Worst: Unable to compute!, Average: Unable to compute!, Time: 122.82222802199976
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-7);
+		write(3);
+		write(3);
+	}
+	if ((!(false) && (-36 < -11))) {
+		gcZQqa = 64;
+		write(-48);
+		gcZQqa = 51;
+	} else {
+		read(Frm);
+		Ga033 = (47 / Ga033);
+	}
+}
+[15]Best: 173202, Worst: Unable to compute!, Average: Unable to compute!, Time: 110.53071049400023
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-7);
+		write(3);
+		write(3);
+	}
+	if ((!(false) && (-36 < -11))) {
+		gcZQqa = 64;
+		write(-48);
+		gcZQqa = 51;
+	} else {
+		read(Frm);
+		Ga033 = (47 / Ga033);
+	}
+}
+[16]Best: 173202, Worst: Unable to compute!, Average: Unable to compute!, Time: 105.87078723899685
+Best program: {
+	read(vN);
+	while (true) {
+		write(-7);
+		write(3);
+		write(3);
+	}
+	if (((true || false) || (true && true))) {
+		if (((false && true) || (14 < E2))) {
+			write(41);
+			write((57 / -54));
+			wM = p;
+		}
+		read(R3);
+		if (!(!(true))) {
+			d6 = 29;
+			fs = zA;
+			E2 = -32;
+		} else {
+			read(HcJqZ8P);
+			read(xOL);
+			ZX = (mWx9 - (4 + jym6V));
+		}
+	} else {
+		read(g1u);
+		KP = wQ;
+	}
+}
+[17]Best: 173202, Worst: Unable to compute!, Average: Unable to compute!, Time: 99.24489672400159
+Best program: {
+	read(vN);
+	while (true) {
+		write(-7);
+		write(3);
+		write(3);
+	}
+	if (((true || false) || (true && true))) {
+		if (((false && true) || (14 < E2))) {
+			write(41);
+			write((57 / -54));
+			wM = p;
+		}
+		read(R3);
+		if (!(!(true))) {
+			d6 = 29;
+			fs = zA;
+			E2 = -32;
+		} else {
+			read(HcJqZ8P);
+			read(xOL);
+			ZX = (mWx9 - (4 + jym6V));
+		}
+	} else {
+		read(g1u);
+		KP = wQ;
+	}
+}
+[18]Best: 173202, Worst: Unable to compute!, Average: Unable to compute!, Time: 101.42258800399941
+Best program: {
+	read(vN);
+	while (true) {
+		write(-7);
+		write(3);
+		write(3);
+	}
+	if (((true || false) || (true && true))) {
+		if (((false && true) || (14 < E2))) {
+			write(41);
+			write((57 / -54));
+			wM = p;
+		}
+		read(R3);
+		if (!(!(true))) {
+			d6 = 29;
+			fs = zA;
+			E2 = -32;
+		} else {
+			read(HcJqZ8P);
+			read(xOL);
+			ZX = (mWx9 - (4 + jym6V));
+		}
+	} else {
+		read(g1u);
+		KP = wQ;
+	}
+}
+[19]Best: 173202, Worst: Unable to compute!, Average: Unable to compute!, Time: 120.34862669799986
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-7);
+		write(3);
+		write(3);
+	}
+	if ((!(false) && (-36 < -11))) {
+		gcZQqa = 64;
+		write(-48);
+		gcZQqa = 51;
+	} else {
+		read(Frm);
+		Ga033 = (47 / Ga033);
+	}
+}
+[20]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 107.24566688899722
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	if ((false || (12 == -45))) {
+		mWx9 = 64;
+		write(jym6V);
+		if (!(!(true))) {
+			jym6V = -34;
+			zA = xOL;
+			gcZQqa = d6;
+		} else {
+			read(HcJqZ8P);
+			read(xOL);
+			ZX = (mWx9 - (4 + jym6V));
+		}
+	} else {
+		read(Nuu);
+		Frm = Ga033;
+	}
+}
+[21]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.11001592200046
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[22]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 71.7066595130018
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (17 / vN);
+}
+[23]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.8763170860002
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (17 / vN);
+}
+[24]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.65097384199908
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (17 / vN);
+}
+[25]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 70.30249546900086
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (17 / vN);
+}
+[26]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 99.02003123900067
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (17 / vN);
+}
+[27]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 97.39952084700053
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (17 / vN);
+}
+[28]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.8735342100008
+Best program: {
+	read(cXtA);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (17 / vN);
+}
+[29]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.24538301400025
+Best program: {
+	read(vN);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[30]Best: 173075, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.06081746899872
+Best program: {
+	read(GsxtY);
+	while (true) {
+		write(-3);
+		write(4);
+		write(3);
+	}
+	vN = (38 * vN);
+}
+[31]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.3506801830008
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = 41;
+}
+[32]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.381370031002
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[33]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 130.4099640029999
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = vN;
+}
+[34]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 88.99727776500004
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = vN;
+}
+[35]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.7958057270007
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = vN;
+}
+[36]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.526459151999
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[37]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.4514809909997
+Best program: {
+	write((cXtA - 39));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = (38 * vN);
+}
+[38]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.93327334499918
+Best program: {
+	write((cXtA - 39));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = (38 * vN);
+}
+[39]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.87771809499827
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	cXtA = cXtA;
+}
+[40]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 368.19139306000216
+Best program: {
+	write((-53 - 25));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = vN;
+}
+[41]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.6390398759977
+Best program: {
+	write(n);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[42]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.70814709399929
+Best program: {
+	write(n);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[43]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.04599420100203
+Best program: {
+	write(n);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[44]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.79153753900027
+Best program: {
+	write(n);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[45]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.82355703400026
+Best program: {
+	write(n);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[46]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.76543275899894
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = (38 * vN);
+}
+[47]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.75446977899992
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = cXtA;
+}
+[48]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.5615738790002
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = cXtA;
+}
+[49]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.87972547199752
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = cXtA;
+}
+[50]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 228.2783234669987
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = cXtA;
+}
+[51]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 224.46182847700038
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = cXtA;
+}
+[52]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.45732171500276
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[53]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.87536397700023
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[54]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.7981694959999
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[55]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 76.74109824400148
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[56]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.0816775639978
+Best program: {
+	write((zdZSy + HYbl));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 13;
+		while (((60 + 58) >= 55)) {
+			read(va7G7vn);
+			write((xOL * -46));
+			write(-30);
+		}
+		while ((13 == (xOL * 19))) {
+			write(jym6V);
+			tew = -10;
+			jym6V = xOL;
+		}
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[57]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 227.81237785300254
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	cXtA = -30;
+}
+[58]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 193.05158652700266
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	cXtA = -30;
+}
+[59]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.87158487800116
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	cXtA = -30;
+}
+[60]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 80.77383584199924
+Best program: {
+	write(49);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = zdZSy;
+}
+[61]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 71.896835481999
+Best program: {
+	write(49);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = zdZSy;
+}
+[62]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.32227584300199
+Best program: {
+	write(U);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = (38 * vN);
+}
+[63]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 76.38336022500152
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if ((20 > -25)) {
+		xOL = 37;
+		read(E2);
+		jym6V = E2;
+	} else {
+		read(Ga033);
+		KP = (47 / Ga033);
+	}
+}
+[64]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.04104519700195
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[65]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.80332366700168
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = (38 * vN);
+}
+[66]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.02323184600027
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = (38 * vN);
+}
+[67]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.80894698200063
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = (38 * vN);
+}
+[68]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 92.11033505999876
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = (((aOo / zdZSy) - -50) / (vN / ((17 / aOo) / cXtA)));
+}
+[69]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.58178149800005
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = (((aOo / zdZSy) - -50) / (vN / ((17 / aOo) / cXtA)));
+}
+[70]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 202.01004636799917
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = (((aOo / zdZSy) - -50) / (vN / ((17 / aOo) / cXtA)));
+}
+[71]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 69.77396586699979
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = (((aOo / zdZSy) - -50) / (vN / ((17 / aOo) / cXtA)));
+}
+[72]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.58833450100065
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = (((aOo / zdZSy) - -50) / (vN / ((17 / aOo) / cXtA)));
+}
+[73]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 86.64529795999988
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = (((aOo / zdZSy) - -50) / (vN / ((17 / aOo) / cXtA)));
+}
+[74]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 76.32713738500024
+Best program: {
+	write((cXtA - 22));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[75]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.67311881099886
+Best program: {
+	write((cXtA - 22));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[76]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.14031513000009
+Best program: {
+	write((cXtA - 22));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[77]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 80.48266201899969
+Best program: {
+	write((cXtA - 22));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[78]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 84.86615462799818
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if (((43 + -44) < -38)) {
+		write(-38);
+		while (((60 + 58) >= 55)) {
+			read(lMz3S);
+			write(-19);
+			read(I7H);
+		}
+		write(((jym6V - jym6V) - (3 + 14)));
+	} else {
+		write(KP);
+		KP = (47 / Ga033);
+	}
+}
+[79]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.82502085099986
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	l = 29;
+}
+[80]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.90075274099945
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	l = 29;
+}
+[81]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.65532456399524
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	l = 29;
+}
+[82]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 87.73727822599903
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	l = 29;
+}
+[83]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.85393959299836
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	l = 29;
+}
+[84]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.04070377700555
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[85]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.32817774900468
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[86]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.04900432199793
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[87]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 71.87375300399435
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[88]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 71.57257873500203
+Best program: {
+	write(40);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	cXtA = cXtA;
+}
+[89]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.45763183199597
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	Vo = (Vo - vN);
+}
+[90]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 70.93613425100193
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	Vo = (Vo - vN);
+}
+[91]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.36742370999855
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	Vo = (Vo - vN);
+}
+[92]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.03231382900412
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	Vo = (Vo - vN);
+}
+[93]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 67.92508279100002
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	cXtA = (-50 * (bxz / -15));
+}
+[94]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 67.54383138399862
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[95]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.3649650619991
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	aOo = ((12 - Vo) - 46);
+}
+[96]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 76.35892256600346
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = aOo;
+}
+[97]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.23607976600033
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[98]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.67513878300088
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[99]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.01509369700216
+Best program: {
+	write(vN);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[100]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.7465478219965
+Best program: {
+	write(lJE);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = cXtA;
+}
+[101]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.68673440099519
+Best program: {
+	write((zdZSy / zdZSy));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[102]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 86.7576427439999
+Best program: {
+	write((zdZSy / zdZSy));
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[103]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 88.6609251750051
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if (((true && false) || (false || false))) {
+		tk = E2;
+		read(h1);
+		tk = -54;
+	} else {
+		Ga033 = Ga033;
+		KP = (KP / 49);
+	}
+}
+[104]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.20727117299975
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	if (((true && false) || (false || false))) {
+		tk = E2;
+		read(h1);
+		tk = -54;
+	} else {
+		Ga033 = Ga033;
+		KP = (KP / 49);
+	}
+}
+[105]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 172.80265736099682
+Best program: {
+	write(25);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	vN = (38 * vN);
+}
+[106]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 115.47625931400398
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	write(((-2 - -45) + F));
+}
+[107]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 90.10543986799894
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	write(((-2 - -45) + F));
+}
+[108]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.93706329899578
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[109]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.68670734500483
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[110]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.86788537599932
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[111]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.7681626190024
+Best program: {
+	write(-9);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	zdZSy = cXtA;
+}
+[112]Best: 173034, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.08469628300372
+Best program: {
+	write(bxz);
+	while (true) {
+		write(7);
+		write(4);
+		write(3);
+	}
+	cXtA = (Vo + cXtA);
+}
+[113]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 232.39051154299523
+Best program: {
+	write(bxz);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[114]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.80175092100399
+Best program: {
+	write(bxz);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[115]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 164.36712951200025
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (((true && false) || false)) {
+		rGrz = ((43 - 40) * (rGrz / -14));
+		write(42);
+		rGrz = 11;
+	} else {
+		write(27);
+		xQX = xQX;
+	}
+}
+[116]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.42876189799426
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (((true && false) || false)) {
+		rGrz = ((43 - 40) * (rGrz / -14));
+		write(42);
+		rGrz = 11;
+	} else {
+		write(27);
+		xQX = xQX;
+	}
+}
+[117]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 101.66000364299543
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (((true && false) || false)) {
+		rGrz = ((43 - 40) * (rGrz / -14));
+		write(42);
+		rGrz = 11;
+	} else {
+		write(27);
+		xQX = xQX;
+	}
+}
+[118]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 87.76087443200231
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (!(!(true))) {
+		o = 13;
+		while (!((true || true))) {
+			read(toQ);
+			read(SmW44);
+			read(mky);
+		}
+		while (((false && false) || (false || true))) {
+			write((48 * I));
+			o = ((tew + -58) * (30 / E2));
+			tew = 54;
+		}
+	} else {
+		write(34);
+		Ga033 = (KP * 25);
+	}
+}
+[119]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.14157479400455
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = ((-3 - 5) * cXtA);
+}
+[120]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 87.03486521200102
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = ((-3 - 5) * cXtA);
+}
+[121]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.93587463400036
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[122]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.7804999910004
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[123]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 103.49152365500049
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[124]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 92.30631791100313
+Best program: {
+	write((o / aQB));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[125]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 101.09714751299907
+Best program: {
+	write(vN);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (!(!(true))) {
+		o = 13;
+		while (!((true || true))) {
+			read(toQ);
+			read(SmW44);
+			read(mky);
+		}
+		while (((false && false) || (false || true))) {
+			write((48 * I));
+			o = ((tew + -58) * (30 / E2));
+			tew = 54;
+		}
+	} else {
+		write(34);
+		Ga033 = (KP * 25);
+	}
+}
+[126]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 89.59245643900067
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((51 < 16)) {
+		E2 = -44;
+		while (true) {
+			write(((35 + 46) * 45));
+			read(sz5);
+			read(jH);
+		}
+		a0g = jym6V;
+	} else {
+		read(LT);
+		Ga033 = -5;
+	}
+}
+[127]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.79226166100125
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((51 < 16)) {
+		E2 = -44;
+		while (true) {
+			write(((35 + 46) * 45));
+			read(sz5);
+			read(jH);
+		}
+		a0g = jym6V;
+	} else {
+		read(LT);
+		Ga033 = -5;
+	}
+}
+[128]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 75.83656297100242
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((51 < 16)) {
+		E2 = -44;
+		while (true) {
+			write(((35 + 46) * 45));
+			read(sz5);
+			read(jH);
+		}
+		a0g = jym6V;
+	} else {
+		read(LT);
+		Ga033 = -5;
+	}
+}
+[129]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.86537268000393
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	Vo = ((cXtA + Vo) + cXtA);
+}
+[130]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 69.870657569998
+Best program: {
+	write(-9);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	zdZSy = -53;
+}
+[131]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.07436028500524
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((-62 <= (54 + -26))) {
+		E2 = ((43 - 40) * (rGrz / -14));
+		read(d7N);
+		RfU = -2;
+	} else {
+		write(2);
+		Ga033 = ((xQX * 52) / (KP / Ga033));
+	}
+}
+[132]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 72.33916245499859
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((-62 <= (54 + -26))) {
+		E2 = ((43 - 40) * (rGrz / -14));
+		read(d7N);
+		RfU = -2;
+	} else {
+		write(2);
+		Ga033 = ((xQX * 52) / (KP / Ga033));
+	}
+}
+[133]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.26122388899967
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((-62 <= (54 + -26))) {
+		E2 = ((43 - 40) * (rGrz / -14));
+		read(d7N);
+		RfU = -2;
+	} else {
+		write(2);
+		Ga033 = ((xQX * 52) / (KP / Ga033));
+	}
+}
+[134]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 73.27428425200196
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	Vo = cXtA;
+}
+[135]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 76.0620912230006
+Best program: {
+	write(cXtA);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	Vo = cXtA;
+}
+[136]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 227.41390502700233
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	while (((AJvpw * vN) <= 63)) {
+		if (!((false && true))) {
+			write((13 + cXtA));
+			read(fjj);
+			read(MTZ);
+		} else {
+			AJvpw = -40;
+			RdNm = -62;
+		}
+		AJvpw = bxz;
+	}
+}
+[137]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 74.4594273249968
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	while (((AJvpw * vN) <= 63)) {
+		if (!((false && true))) {
+			write((13 + cXtA));
+			read(fjj);
+			read(MTZ);
+		} else {
+			AJvpw = -40;
+			RdNm = -62;
+		}
+		AJvpw = bxz;
+	}
+}
+[138]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.87369699400006
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = 3;
+}
+[139]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.3212448090053
+Best program: {
+	write(vN);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	aOo = 47;
+}
+[140]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.78628041299817
+Best program: {
+	write(vN);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	aOo = 47;
+}
+[141]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.4562944559948
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((!(true) && !(true))) {
+		o = 13;
+		while (!((true || true))) {
+			read(toQ);
+			read(SmW44);
+			read(mky);
+		}
+		while (((false && false) || (false || true))) {
+			write((48 * I));
+			o = ((tew + -58) * (30 / E2));
+			tew = 54;
+		}
+	} else {
+		write(-14);
+		KP = (KP * 25);
+	}
+}
+[142]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.82641564699588
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((!(true) && !(true))) {
+		o = 13;
+		while (!((true || true))) {
+			read(toQ);
+			read(SmW44);
+			read(mky);
+		}
+		while (((false && false) || (false || true))) {
+			write((48 * I));
+			o = ((tew + -58) * (30 / E2));
+			tew = 54;
+		}
+	} else {
+		write(-14);
+		KP = (KP * 25);
+	}
+}
+[143]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.40227156499896
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / -25);
+}
+[144]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 84.81799637599761
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / -25);
+}
+[145]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.5304904730001
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / -25);
+}
+[146]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 92.30025831399689
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / -25);
+}
+[147]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.83592881000368
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / -25);
+}
+[148]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.78078607600037
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / -25);
+}
+[149]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 84.06170580499747
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = cXtA;
+}
+[150]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.4308857050055
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = cXtA;
+}
+[151]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.34950891599874
+Best program: {
+	write(50);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[152]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.02415224300057
+Best program: {
+	write(50);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[153]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.15924191399972
+Best program: {
+	write(50);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[154]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.98566482699971
+Best program: {
+	write(50);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[155]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.48455708900292
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[156]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.24904450000031
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[157]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.96538325399888
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[158]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.52523421399383
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[159]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.94735945000139
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[160]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 76.15647524600354
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[161]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.95219627700135
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[162]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.69044438200217
+Best program: {
+	write(51);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) / ((zdZSy * cXtA) - 12));
+}
+[163]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.00367471000209
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	Vo = -51;
+}
+[164]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 80.90134810199379
+Best program: {
+	write(-30);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (((false || true) || !(false))) {
+		read(Bxt);
+		while ((!(false) && false)) {
+			write(-20);
+			read(QaQx);
+		}
+		n = (zdZSy - AJvpw);
+	} else {
+		write(-60);
+		write(((vN - 1) + -62));
+		write(53);
+	}
+}
+[165]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.34125959799712
+Best program: {
+	write(-30);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (((false || true) || !(false))) {
+		read(Bxt);
+		while ((!(false) && false)) {
+			write(-20);
+			read(QaQx);
+		}
+		n = (zdZSy - AJvpw);
+	} else {
+		write(-60);
+		write(((vN - 1) + -62));
+		write(53);
+	}
+}
+[166]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.03776071000175
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[167]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 80.15463126499526
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[168]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.2263698300012
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[169]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.21109926200006
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[170]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 78.59778204400209
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[171]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.52880284799903
+Best program: {
+	write(zdZSy);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[172]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.76740942699689
+Best program: {
+	write(-6);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = (-51 - vN);
+}
+[173]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.32345074399927
+Best program: {
+	write(-6);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = (-51 - vN);
+}
+[174]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 80.00606777099892
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = (-51 - vN);
+}
+[175]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.0669760019955
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = (-51 - vN);
+}
+[176]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 204.9570877560036
+Best program: {
+	write(13);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	vN = (-51 - vN);
+}
+[177]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.32956454899977
+Best program: {
+	write(bxz);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	while (true) {
+		if (true) {
+			cXtA = (-11 - bxz);
+			write(17);
+			bxz = vN;
+		}
+		if ((true && (false && true))) {
+			write(-63);
+			AJvpw = (-56 / zdZSy);
+			K = cXtA;
+		} else {
+			read(w4ll);
+			read(vN);
+			OgA = ((WBj / -21) * (bxz * 47));
+		}
+		while (!((56 == -40))) {
+			JNIVC = bxz;
+			AJvpw = (bxz + (vN / JNIVC));
+			vN = nv;
+		}
+	}
+}
+[178]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 77.37586448699585
+Best program: {
+	write(bxz);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	while (true) {
+		if (true) {
+			cXtA = (-11 - bxz);
+			write(17);
+			bxz = vN;
+		}
+		if ((true && (false && true))) {
+			write(-63);
+			AJvpw = (-56 / zdZSy);
+			K = cXtA;
+		} else {
+			read(w4ll);
+			read(vN);
+			OgA = ((WBj / -21) * (bxz * 47));
+		}
+		while (!((56 == -40))) {
+			JNIVC = bxz;
+			AJvpw = (bxz + (vN / JNIVC));
+			vN = nv;
+		}
+	}
+}
+[179]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 79.89542052299657
+Best program: {
+	write(bxz);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	while (true) {
+		if (true) {
+			cXtA = (-11 - bxz);
+			write(17);
+			bxz = vN;
+		}
+		if ((true && (false && true))) {
+			write(-63);
+			AJvpw = (-56 / zdZSy);
+			K = cXtA;
+		} else {
+			read(w4ll);
+			read(vN);
+			OgA = ((WBj / -21) * (bxz * 47));
+		}
+		while (!((56 == -40))) {
+			JNIVC = bxz;
+			AJvpw = (bxz + (vN / JNIVC));
+			vN = nv;
+		}
+	}
+}
+[180]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.98126492400479
+Best program: {
+	write(bxz);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	while (true) {
+		if (true) {
+			cXtA = (-11 - bxz);
+			write(17);
+			bxz = vN;
+		}
+		if ((true && (false && true))) {
+			write(-63);
+			AJvpw = (-56 / zdZSy);
+			K = cXtA;
+		} else {
+			read(w4ll);
+			read(vN);
+			OgA = ((WBj / -21) * (bxz * 47));
+		}
+		while (!((56 == -40))) {
+			JNIVC = bxz;
+			AJvpw = (bxz + (vN / JNIVC));
+			vN = nv;
+		}
+	}
+}
+[181]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 81.85968911999953
+Best program: {
+	write(22);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	bxz = -57;
+}
+[182]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.31362602299487
+Best program: {
+	write(22);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	bxz = -57;
+}
+[183]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.39657956400333
+Best program: {
+	write(22);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	bxz = -57;
+}
+[184]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.95971719099907
+Best program: {
+	write((55 / 9));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[185]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.76490351300163
+Best program: {
+	write((55 / 9));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[186]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 84.26321061699855
+Best program: {
+	write((46 - WBj));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[187]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 84.29692690399679
+Best program: {
+	write((46 - WBj));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[188]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.24247756200202
+Best program: {
+	write((46 - WBj));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[189]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 86.26933204899979
+Best program: {
+	write((46 - WBj));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[190]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 91.94414272699942
+Best program: {
+	write((46 - WBj));
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[191]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.45833533700352
+Best program: {
+	write(-9);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (((true && false) || false)) {
+		xOL = rGrz;
+		read(XGFg);
+		FUysrh = 60;
+	} else {
+		write(61);
+		if ((!(true) || (false || true))) {
+			write(19);
+			xQX = xQX;
+			read(r_WAw8Bf);
+		} else {
+			read(xQX);
+			xQX = (Ga033 / (xQX * 35));
+			read(KP);
+		}
+	}
+}
+[192]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 87.16620013200009
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (!(!(true))) {
+		o = 13;
+		while (!((true || true))) {
+			read(toQ);
+			read(SmW44);
+			read(mky);
+		}
+		while (((false && false) || (false || true))) {
+			write((48 * I));
+			o = ((tew + -58) * (30 / E2));
+			tew = 54;
+		}
+	} else {
+		write(34);
+		Ga033 = (KP * 25);
+	}
+}
+[193]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.78997114399681
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (!(!(true))) {
+		o = 13;
+		while (!((true || true))) {
+			read(toQ);
+			read(SmW44);
+			read(mky);
+		}
+		while (((false && false) || (false || true))) {
+			write((48 * I));
+			o = ((tew + -58) * (30 / E2));
+			tew = 54;
+		}
+	} else {
+		write(34);
+		Ga033 = (KP * 25);
+	}
+}
+[194]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.90414921799675
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if (!(!(true))) {
+		o = 13;
+		while (!((true || true))) {
+			read(toQ);
+			read(SmW44);
+			read(mky);
+		}
+		while (((false && false) || (false || true))) {
+			write((48 * I));
+			o = ((tew + -58) * (30 / E2));
+			tew = 54;
+		}
+	} else {
+		write(34);
+		Ga033 = (KP * 25);
+	}
+}
+[195]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.80042411800241
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((false && !(false))) {
+		read(xOL);
+		while ((true && !(false))) {
+			JFdb = (c - (24 * KOlft));
+			o = va7G7vn;
+			write(55);
+		}
+		while (true) {
+			read(tew);
+			o = 31;
+			o = E2;
+		}
+	} else {
+		read(hgD);
+		write(KP);
+	}
+}
+[196]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 85.22848371100554
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((false && !(false))) {
+		read(xOL);
+		while ((true && !(false))) {
+			JFdb = (c - (24 * KOlft));
+			o = va7G7vn;
+			write(55);
+		}
+		while (true) {
+			read(tew);
+			o = 31;
+			o = E2;
+		}
+	} else {
+		read(hgD);
+		write(KP);
+	}
+}
+[197]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.52997788700304
+Best program: {
+	write(-2);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	if ((false && !(false))) {
+		read(xOL);
+		while ((true && !(false))) {
+			JFdb = (c - (24 * KOlft));
+			o = va7G7vn;
+			write(55);
+		}
+		while (true) {
+			read(tew);
+			o = 31;
+			o = E2;
+		}
+	} else {
+		read(hgD);
+		write(KP);
+	}
+}
+[198]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 82.56270535499789
+Best program: {
+	write(bxz);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	cXtA = ((-3 / Vo) - cXtA);
+}
+[199]Best: 173015, Worst: Unable to compute!, Average: Unable to compute!, Time: 83.21613275299751
+Best program: {
+	write(-61);
+	while (true) {
+		write(6);
+		write(4);
+		write(3);
+	}
+	Vo = 44;
+}
