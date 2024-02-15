@@ -375,29 +375,32 @@ class Condition(Rule, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        match self.body:
-            case (Expression() as left, _, Expression() as right):
-                if random() < 0.5:
-                    left.mutate()
-                else:
-                    right.mutate()
-                self.body = (left, choice(('==', '!=', '>', '<', '>=', '<=')), right)
+        if random() < 0.5:
+            match self.body:
+                case (Expression() as left, _, Expression() as right):
+                    if random() < 0.5:
+                        left.mutate()
+                    else:
+                        right.mutate()
+                    self.body = (left, choice(('==', '!=', '>', '<', '>=', '<=')), right)
 
-            case (Condition() as left, _, Condition() as right):
-                if random() < 0.5:
-                    left.mutate()
-                else:
-                    right.mutate()
-                self.body = (left, choice(('&&', '||')), right)
+                case (Condition() as left, _, Condition() as right):
+                    if random() < 0.5:
+                        left.mutate()
+                    else:
+                        right.mutate()
+                    self.body = (left, choice(('&&', '||')), right)
 
-            case Condition() as value:
-                if random() < 0.5:
-                    value.mutate()
-                else:
-                    self.body = self.body.body
+                case Condition() as value:
+                    if random() < 0.5:
+                        value.mutate()
+                    else:
+                        self.body = self.body.body
 
-            case BooleanToken() as value:
-                self.body = value.from_random()
+                case BooleanToken() as value:
+                    self.body = value.from_random()
+        else:
+            self.body = Condition.from_random(Metadata(self.meta.variables_scope)).body
 
     def visit_commands(self, context: InterpreterContext) -> bool:
         match self.body:
@@ -512,19 +515,22 @@ class Expression(Rule, RestrictedRandomize):
                 return output
 
     def mutate(self) -> None:
-        match self.body:
-            case (Expression() as left, _, Expression() as right):
-                if random() < 0.5:
-                    left.mutate()
-                else:
-                    right.mutate()
-                self.body = (left, choice(('+', '-', '*', '/')), right)
+        if random() < 0.5:
+            match self.body:
+                case (Expression() as left, _, Expression() as right):
+                    if random() < 0.5:
+                        left.mutate()
+                    else:
+                        right.mutate()
+                    self.body = (left, choice(('+', '-', '*', '/')), right)
 
-            case VariableNameToken():
-                self.body = self.meta.get_random_name()
+                case VariableNameToken():
+                    self.body = self.meta.get_random_name()
 
-            case IntegerToken() as value:
-                self.body = value.from_random()
+                case IntegerToken() as value:
+                    self.body = value.from_random()
+        else:
+            self.body = Expression.from_random(Metadata(self.meta.variables_scope)).body
 
     def visit_commands(self, context: InterpreterContext) -> int:
         match self.body:

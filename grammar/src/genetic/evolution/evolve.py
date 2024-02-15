@@ -33,16 +33,13 @@ class Evolution:
     def __post_init__(self):
         name: str = self.fitness_grader.__class__.__name__.replace('FitnessFunction', '')
 
-        if name == 'Bool':
-            name += str(self.fitness_grader.k)
-
         self.statistics = Statistics(
             save_directory=f'./data/python/{
                 name
             }/'
         )
-        #self.population = Population.from_pickle(Path('./data/python/1_4_A_1/final_population/'))
-        self.population = Population.from_ramped_half_and_half()
+        self.population = Population.from_pickle(Path('./data/python/B_1_1/final_population/'))
+        # self.population = Population.from_ramped_half_and_half()
 
         # with Pool(processes=Evolution.pool_size) a:
         self.fitness = list(
@@ -169,6 +166,8 @@ class Statistics:
             best[0],
             worst,
             sum(fitness_vector) / len(fitness_vector),
+            # 'Unable to compute!',
+            # 'Unable to compute!',
             str(best[1]),
             perf_counter() - self.prev
         )

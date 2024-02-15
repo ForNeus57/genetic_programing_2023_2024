@@ -33,7 +33,7 @@ class HardLimiter(Limiter):
 @dataclass(slots=True, init=False)
 class AdaptiveLimiter(Limiter):
 
-    def __init__(self, change: float = 0.8, iterations_limit: int = 6):
+    def __init__(self, change: float = 0.8, iterations_limit: int = 2):
         self.random_limiter: RandomLimiter = RandomLimiter(change)
         self.hard_limiter: HardLimiter = HardLimiter(iterations_limit)
 

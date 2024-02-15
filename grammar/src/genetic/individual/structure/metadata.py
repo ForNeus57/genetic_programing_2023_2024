@@ -19,7 +19,7 @@ class Metadata:
     method: GenerationMethod = GenerationMethod.GROW
     limiter: Limiter = field(default_factory=AdaptiveLimiter)
 
-    max_depth: int = 3
+    max_depth: int = 2
 
     @classmethod
     def from_dummy(cls) -> Metadata:

@@ -48,8 +48,9 @@ from itertools import product
 
 
 class FitnessFunctionBase(ABC):
-    def convert_output(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None]) \
-     -> Tuple[int, ...]:
+    @staticmethod
+    def convert_output(gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None]) \
+            -> Tuple[int, ...]:
         if gp_output is None:
             return tuple()
         return tuple(int(x) if not isinstance(x, bool) else int(x) for x in gp_output)
@@ -158,7 +159,7 @@ class FitnessFunction1_4_A_1(FitnessFunctionBase):
 class FitnessFunction1_4_A_2(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = sum(gp_input)
-        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 99_999_999
 
 
 # 3. obliczenie średniej arytmetycznej
@@ -196,8 +197,14 @@ class FitnessFunction1_4_B_1(FitnessFunctionBase):
 # 2. odczytanie tylu liczb ile wynosi pierwsza liczba
 class FitnessFunction1_4_B_2(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        inputs = gp_input[0]
-        return 0 if gp_output == gp_input[1:inputs + 1] else 9999999
+        inputs_length = gp_input[0]
+        result: int = 0
+        for i in range(inputs_length):
+            if i < len(gp_output) - 1:
+                result += abs(gp_output[i + 1] - gp_input[i])
+            else:
+                result += 999
+        return result
 
 
 # 3. obliczenie ich sumy
@@ -235,6 +242,22 @@ class FitnessFunctionB_1(FitnessFunctionBase):
         return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
 
 
+class FitnessFunctionB_1_1(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        expected_result = sum(gp_input[:2])
+        return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+
+
+class FitnessFunctionB_1_2(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        # float_to_add = gp_input[1] + (gp_input[2] / 10 ** len(str(gp_input[2])))
+        # expected_result = gp_input[0] + float_to_add
+        # return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+        if len(gp_output) != 2:
+            return 99_999
+        return abs((gp_input[0] + gp_input[1]) - gp_output[0]) + abs(gp_input[2] - gp_output[1])
+
+
 class FitnessFunctionB_21(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = tuple(x if x >= 0 else 0 for x in gp_input)
@@ -246,15 +269,26 @@ class FitnessFunctionB_21(FitnessFunctionBase):
 # 1. odczytanie wektora liczb
 class FitnessFunctionB_21_1(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        return 0 if gp_output == gp_input else 9999999
+        result: int = 0
+        for i in range(len(gp_input)):
+            if i < len(gp_output):
+                result += abs(gp_output[i] - gp_input[i])
+            else:
+                result += 999
+        return result
 
 
 # 2. zamiana liczb ujemnych na 0
 class FitnessFunctionB_21_2(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = tuple(x if x >= 0 else 0 for x in gp_input)
-        return sum(abs(o - e) for o, e in zip(gp_output, expected_result)) if len(gp_output) == len(
-            expected_result) else 9999999
+        result: int = 0
+        for i in range(len(expected_result)):
+            if i < len(gp_output):
+                result += abs(gp_output[i] - expected_result[i])
+            else:
+                result += 999_99
+        return result
 
 
 # fitness function B.21
@@ -272,6 +306,27 @@ class FitnessFunctionB_28(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         expected_result = min(gp_input)
         return abs(gp_output[0] - expected_result) if len(gp_output) == 1 else 9999999
+
+
+class FitnessFunctionB_28_1(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        return abs(gp_output[0] - min(gp_input[:2]))
+
+
+class FitnessFunctionB_28_2(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        return abs(gp_output[0] - min(gp_input[:3]))
+
+
+class FitnessFunctionB_28_3(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        return abs(gp_output[0] - min(gp_input))
 
 
 class FitnessFunctionBool(FitnessFunctionBase):
@@ -377,17 +432,99 @@ class FitnessFunctionBool(FitnessFunctionBase):
         True,
         True, True, True, True, True)))
 
-    def __init__(self, k: int) -> None:
-        self.k = k
-
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         if len(gp_output) != 1:
             return 9_999_999
         binary_string = ''.join('1' if value else '0' for value in gp_input)
         return abs(gp_output[0] - self.function_output[int(binary_string, 2)])
 
-    def generate_truth_tables(self) -> list[Any]:
-        return list(product((0, 1), repeat=self.k))
+
+class FitnessFunctionBool1(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool2(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(bool(gp_input[0]) != bool(gp_input[1]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool3(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool4(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3])))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool5(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                          or bool(gp_input[4]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool6(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                          or bool(gp_input[4]) and (not bool(gp_input[5])))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool7(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int((not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                           or bool(gp_input[4]) and (not bool(gp_input[5]))) != bool(gp_input[6]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool8(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int((not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                           or bool(gp_input[4]) and (not bool(gp_input[5]))) != bool(gp_input[6]) and bool(gp_input[7]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool9(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(((not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                            or bool(gp_input[4]) and (not bool(gp_input[5]))) != bool(gp_input[6]) and bool(
+            gp_input[7])) != bool(gp_input[8]))
+        return abs(gp_output[0] - output)
+
+
+class FitnessFunctionBool10(FitnessFunctionBase):
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 99_999
+        output: int = int(((not bool(gp_input[0]) and bool(gp_input[1]) or bool(gp_input[2]) and (not bool(gp_input[3]))
+                            or bool(gp_input[4]) and (not bool(gp_input[5]))) != bool(gp_input[6]) and bool(
+            gp_input[7])) != bool(gp_input[8]) and (not bool(gp_input[9])))
+        return abs(gp_output[0] - output)
 
 
 def get_fitness_function_by_name(name: str) -> Callable:
@@ -419,6 +556,10 @@ def get_fitness_function_by_name(name: str) -> Callable:
 
 def get_fitness_function(name: str) -> FitnessFunctionBase:
     return get_fitness_function_by_name(name)()
+
+
+def generate_truth_tables(k: int) -> list[Any]:
+    return list(product((0, 1), repeat=k))
 
 # with open("grammar/src/genetic/evaluation/generated/truth_tables.py", "w") as file:
 #     print("from typing import Tuple", file=file)

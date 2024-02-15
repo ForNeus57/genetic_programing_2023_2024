@@ -1,23 +1,64 @@
-[0]Best: 0, Worst: 4999999500, Average: 2306674549.796524, Time: 5941.097537187001
+[0]Best: 50000000, Worst: 4999999500, Average: 3223455679.448889, Time: 75.86488295199888
 Best program: {
-	if ((true || (59 != 42))) {
-		while (((false && false) || false)) {
-			VU = 39;
-			read(wgK);
+	tcb = (4 * 59);
+	read(TzgM);
+	TzgM = (TzgM - -6);
+}
+[1]Best: 50000000, Worst: 4999999500, Average: 50999999.8989899, Time: 203.3482316360023
+Best program: {
+	if (((53 == -26) || (true || true))) {
+		read(a);
+		while (true) {
+			v = v;
+			v = PXQl;
+			PXQl = (-57 / -64);
 		}
-		while (!(true)) {
-			read(j);
-			nP = j;
-		}
+		aTk = (aTk - 4);
 	} else {
-		n = (55 - (-43 * 15));
-		write(n);
-	}
-	while (((21 * -7) <= (-11 - 0))) {
-		M8b = 51;
-		if ((46 != -34)) {
-			read(M8b);
-			write(M8b);
+		rMhv = ((38 * -9) + (-26 + 1));
+		if (false) {
+			read(FN6y);
+			read(FN6y);
+			vDx = 21;
 		}
+		write((rMhv + 42));
+	}
+	while ((-36 >= (62 * 44))) {
+		read(heo);
+		while (((heo < heo) || (heo != 61))) {
+			write(-45);
+			fnpH = heo;
+			read(heo);
+		}
+		read(Km);
+	}
+	V = ((-9 + 5) + -54);
+}
+[2]Best: 0, Worst: 4999999500, Average: 50989898.88888889, Time: 228.0769721309989
+Best program: {
+	if (((-58 * 16) >= (-10 * -18))) {
+		read(S_);
+		while (true) {
+			read(S_);
+			Z = -45;
+			read(R);
+		}
+		S_ = S_;
+	} else {
+		while ((36 == -43)) {
+			read(t);
+			MAQb = t;
+			read(L7Wt1);
+		}
+		nk6 = 38;
+	}
+	while (((-24 != 47) || (true || false))) {
+		read(Pe);
+		while ((false && (false && true))) {
+			write(Pe);
+			fv = -12;
+			write((fv / (12 * fv)));
+		}
+		write(Pe);
 	}
 }

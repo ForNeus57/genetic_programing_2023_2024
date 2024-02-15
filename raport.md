@@ -2,61 +2,90 @@
 
 Autorzy: Dominik Breksa, Kaja Dzielnicka
 
+Spis treści:
+
 1. [Funkcja dopasowania](#funkcja-dopasowania)
-2. [Metryki](#metryki)
-3. [Przkładowe zadania testowe](#przykładowe-zadania-testowe)
+2. [Metryki i ogólna konfiguracja problemów](#metryki-i-ogólna-konfiguracja-problemów)
+3. [Zasady interpretacji programów genetycznych](#zasady-interpretacji-programów)
+4. [Przykładowe zadania testowe](#przykładowe-zadania-testowe)
     - [1.1](#11a-program-powinien-wygenerować-na-wyjściu-na-dowolnej-pozycji-w-danych-wyjściowych-liczbę-1-poza-liczbą-1-może-też-zwrócić-inne-liczby)
     - [1.2](#12a-program-powinien-odczytać-dwie-pierwsze-liczy-z-wejścia-i-zwrócić-na-wyjściu-jedynie-ich-sumę-na-wejściu-mogą-być-tylko-całkowite-liczby-dodatnie-w-zakresie-09)
     - [1.3](#13a-program-powinien-odczytać-dwie-pierwsze-liczy-z-wejścia-i-zwrócić-na-wyjściu-jedynie-większą-z-nich-na-wejściu-mogą-być-tylko-całkowite-liczby-dodatnie-w-zakresie-09)
     - [1.4](#14a-program-powinien-odczytać-dziesięć-pierwszych-liczy-z-wejścia-i-zwrócić-na-wyjściu-jedynie-ich-średnią-arytmetyczną-zaokrągloną-do-pełnej-liczby-całkowitej-na-wejściu-mogą-być-tylko-całkowite-liczby-w-zakresie-9999)
-4. [Finealne testy systemu](#finealne-testy-systemu)
+5. [Finalne testy systemu](#finealne-testy-systemu)
     - [Benchmarki](#benchmark-1-number-io---given-an-integer-and-a-float-print-their-sum)
-    - [Regresja symboliczna dla funkcji boolowskiej](#regresja-symboliczna-dla-funkcji-boolowskiej)
+    - [Regresja symboliczna dla funkcji bool-owskiej](#regresja-symboliczna-dla-funkcji-boolowskiej)
 
 ## Funkcja dopasowania
-Klasa `FitnessFunctionBase` jest klasą bazową dla funkcji dopasowania. Funkcja `convert_output` służy do konwersji wyniku zwracanego przez program genetyczny na krotkę liczb całkowitych. Funkcja `calculate_fitness` sprawdza czy wynik jest niepusty i jeśli tak to wywołuje metodę `_calculate_fitness_impl`. Jest to metoda abstrakcyjna, która musi być zaimplementowana w klasie dziedziczącej. Funkcja ta przyjmuje wynik programu genetycznego oraz dane wejściowe (jeśli są) i zwraca wartość liczbową reprezentującą dopasowanie wyniku do oczekiwanego. 
+Klasa `FitnessFunctionBase` jest klasą bazową dla funkcji dopasowania. Funkcja `convert_output` służy do konwersji wyniku zwracanego przez program genetyczny na krotkę liczb całkowitych. Metoda `calculate_fitness` sprawdza czy wynik jest niepusty i jeśli tak to wywołuje metodę `_calculate_fitness_impl`. Jest to metoda abstrakcyjna, która musi być zaimplementowana w klasie dziedziczącej. Funkcja ta przyjmuje wynik programu genetycznego oraz dane wejściowe (jeśli są) i zwraca wartość liczbową reprezentującą dopasowanie wyniku do oczekiwanego.
 
 ```python
+from abc import ABC, abstractmethod
+from typing import Tuple, Union, Optional
+
+
 class FitnessFunctionBase(ABC):
-    def convert_output(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None]) -> Tuple[int, ...]:
-        if gp_output is None:
-            return tuple()
-        return tuple(int(x) if not isinstance(x, bool) else int(x) for x in gp_output)
-    
-    def calculate_fitness(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        if gp_output is None or len(gp_output) == 0: 
-            return 100000
-        converted_output = self.convert_output(gp_output)
-        return self._calculate_fitness_impl(converted_output, gp_input)
-    
-    @abstractmethod
-    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
-        pass
+	@staticmethod
+	def convert_output(gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None]) -> Tuple[int, ...]:
+		if gp_output is None:
+			return tuple()
+		return tuple(int(x) if not isinstance(x, bool) else int(x) for x in gp_output)
+
+	def calculate_fitness(self, gp_output: Union[Tuple[int, ...], Tuple[float, ...], Tuple[bool, ...], None],
+						  gp_input: Optional[Tuple[int, ...]] = None) -> int:
+		if gp_output is None or len(gp_output) == 0:
+			return 100000
+		converted_output = self.convert_output(gp_output)
+		return self._calculate_fitness_impl(converted_output, gp_input)
+
+	@abstractmethod
+	def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+		pass
 ```
 
+## Metryki i ogólna konfiguracja problemów
 
-## Metryki i ogólna konfiguracja
+#### Konfiguracja głównych parametrów uczenia:
+- Ziarno generatora: `2147483648` (losowy, zawsze).
+- Maksymalna liczba generacji: `200` (licząc od generacji zero).
+- Liczba populacji: `10000`, dla problemów zaawansowanych (benchmarks) `5000`.
+- Crossover probability: `0,2` (benchmarks: `0,6`).
+- Mutation probability: `0,8` (benchmarks: `0,4`).
+- Ułamek populacji, który przeżywa do następnej generacji: `0,8` (benchmarks: `0,5`).
+- Maksymalna głębokość osobnika: `2` (benchmarks: `3`).
+- Maksymalna liczba węzłów w bloku: `4` (liczona osobno dla każdego bloku).
+- Minimalna generowana wartość tokenu całkowitej: `-64`.
+- Maksymalna generowana wartość tokenu całkowitej: `64`.
 
-Konfiguracja parametrów uczenia:
-```txt
-Seed: 2147483648
-Generations: 200
-Population size: 10000
-Crossover probability: 0.2
-Mutation probability: 0.8
-////////////// Dodatkowe informacje nie wypisywane
-Ułamek populacji, który przeżywa do następnej generacji: 0.8
-Minimalna wartość tokenu całkowitej: -64
-Maksymalna wartość tokenu całkowitej: 64
-Maksymalna głębokość osobnika dla populacji 0: 2
+#### Metryki używane do ilustracji procesu uczenia:
+- **Najlepsze dopasowanie**: najlepsze dopasowanie znalezione w trakcie uczenia dla danej generacji (błąd jest najmniejszy).
+- **Najgorsze dopasowanie**: najgorsze dopasowanie znalezione w trakcie uczenia dla danej generacji (błąd jest największy).
+- **Średnie dopasowanie**: średnie dopasowanie znalezione w trakcie uczenia dla danej generacji (suma błędu całej populacji przez jej ilość).
+- **Czas wykonania**: czas liczenia się tej konkretnej generacji w sekundach.
 
+# Zasady interpretacji programów
+
+Poniżej zamieszczamy przypomnienie naszych zasad interpretacji programów genetycznych. Są one pochodne wcześniej zdefiniowanej gramatyce języka, która była przesyłana wcześniej.
+
+#### Blok kodu (Execution Block)
+Instrukcje są ewaluowane od lewej do prawej z góry do dołu. Od 1 w stronę 3.
+```text
+{
+	<instrukcja1>
+	<instrukcja2>
+	<instrukcja3>
+	...
+}
 ```
 
-- `Seed` - Stan generatora losowego - wartość początkowa - losowa
-- `Generations` - Maksymalna liczba generacji - 200
-- `Population size` - Rozmiar populacji - 10000 - użyta metoda ramped half and half.
-- `Crossover probability` - Prawdopodobieństwo krzyżowania - 0.2
-- `Mutation probability` - Prawdopodobieństwo mutacji - 0.8 (1 - crossover probability)
+#### Przypisanie (Assigment)
+Zmienna (nazwa) jest przypisywana z wartością wyrażenia. Zmienne przechowuje słownik mapujący nazwy na poszczególne wartości.
+```text
+<zmienna> = <wyrażenie>;
+```
+
+#### 
+
 
 ## Przykładowe zadania testowe
 ### 1.1.A Program powinien wygenerować na wyjściu (na dowolnej pozycji w danych wyjściowych) liczbę 1. Poza liczbą 1 może też zwrócić inne liczby.
@@ -66,6 +95,8 @@ Maksymalna głębokość osobnika dla populacji 0: 2
 
 - funkcja dopasowania:
 ```python
+from typing import Tuple, Optional 
+
 class FitnessFunction1_1_A(FitnessFunctionBase):
     def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
         closest_value = min(gp_output, key=lambda x: abs(x - 1))
@@ -1474,3 +1505,86 @@ class FitnessFunctionB_28(FitnessFunctionBase):
 ---
 
 ### Regresja symboliczna dla funkcji boolowskiej
+
+
+
+#### Funkcja
+
+```python
+class FitnessFunctionBool(FitnessFunctionBase):
+    function_output: ClassVar[Tuple] = tuple(map(lambda x: int(x), (
+        True, False, False, True, True, False, False, False, False, False, False, True, True, False, True, True, False,
+		#...........
+        True, True, True, True, True)))
+
+    def _calculate_fitness_impl(self, gp_output: Tuple[int, ...], gp_input: Optional[Tuple[int, ...]] = None) -> int:
+        if len(gp_output) != 1:
+            return 9_999_999
+        binary_string = ''.join('1' if value else '0' for value in gp_input)
+        return abs(gp_output[0] - self.function_output[int(binary_string, 2)])
+```
+
+
+
+#### K = 1
+
+- status: <span style="color:green">**rozwiązanie znalezione**</span>.
+
+- najlepsze dopasowanie: 0
+
+- najlepsze rozwiązanie:
+```text
+{
+	if ((!(true) || false)) {
+		while (((-1 >= -39) && (false && true))) {
+			wN = -40;
+			q9h7 = (-48 + (R6C / -29));
+		}
+		while (true) {
+			write(-49);
+			f4 = 50;
+		}
+	}
+	write(((-24 / -13) - ry));
+}
+```
+
+- najgorsze dopasowanie: 19999998
+
+- średnie dopasowanie: 2009.6256118269903
+
+- czas wykonania: 171.58681777199945
+
+- wykres najlepszego dopasowania, średniego dopasowania i czasu wykonania w zależności od numeru generacji:
+![k1](./raport_img/K1.png)
+
+#### K = 2
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+#### K = 3
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+#### K = 4
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+#### K = 5
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+#### K = 6
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+#### K = 7
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+#### K = 8
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+#### K = 9
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+#### K = 10
+
+- status: <span style="color:red">**rozwiązanie nieznalezione**</span>.
+
+

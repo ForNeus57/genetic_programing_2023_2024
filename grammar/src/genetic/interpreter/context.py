@@ -9,7 +9,7 @@ from src.genetic.interpreter.input_output import InputOutputOperation
 @dataclass(slots=True)
 class InterpreterContext:
     mode: InputOutputOperation
-    instructions_limit: Final[int] = 200
+    instructions_limit: Final[int] = 300
 
     variables: dict[str, int] = field(default_factory=dict, init=False)
     used_instructions: int = field(default=0, init=False)
